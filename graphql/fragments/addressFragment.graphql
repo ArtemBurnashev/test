@@ -1,0 +1,7 @@
+fragment Address on Address {
+  id
+  firstName
+  lastName
+  phone
+  __typename
+}

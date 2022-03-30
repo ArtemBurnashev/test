@@ -1,0 +1,77 @@
+fragment product on Product {
+  name
+  id
+  slug
+  media {
+    url
+    alt
+  }
+  thumbnail {
+    url
+    alt
+  }
+  pricing {
+    onSale
+    discount {
+      currency
+      gross {
+        currency
+        amount
+      }
+    }
+    priceRange {
+      start {
+        net {
+          currency
+          amount
+        }
+        gross {
+          currency
+          amount
+        }
+      }
+      stop {
+        gross {
+          currency
+          amount
+        }
+      }
+    }
+  }
+
+  __typename
+}
+
+fragment singleProduct on Product {
+  ...product
+  attributes {
+    attribute {
+      id
+      name
+      unit
+    }
+    values {
+      id
+      name
+      value
+    }
+  }
+  variants {
+    ...productVariant
+  }
+  defaultVariant {
+    ...productVariant
+  }
+  productType {
+    name
+    slug
+    hasVariants
+    weight {
+      unit
+      value
+      __typename
+    }
+    isDigital
+    __typename
+  }
+}
