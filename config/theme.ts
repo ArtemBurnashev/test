@@ -20,6 +20,7 @@ const colors = {
     input: '#534343',
     brand: '#F8F8F8',
     controller: '#EDEDED',
+    darc:'#808080'
   },
 };
 

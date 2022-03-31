@@ -10,6 +10,7 @@ import { WithAuth } from 'components/private-route';
 
 const ProfilePage: NextPage = () => {
   const { data, loading } = useMeQuery();
+
   return (
     <Main>
       <Container maxWidth="xl">
@@ -46,6 +47,7 @@ const ProfilePage: NextPage = () => {
             </Button>
           </Stack>
         </ProfileLayout>
+
       </Container>
     </Main>
   );

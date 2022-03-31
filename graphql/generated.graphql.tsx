@@ -13961,6 +13961,8 @@ export type ProductVariantFragment = { __typename?: 'ProductVariant', name: stri
 
 export type AddressFragment = { __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null };
 
+export type PageInfoFragment = { __typename?: 'PageInfo', endCursor?: string | null, startCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean };
+
 export type UserFragment = { __typename: 'User', id: string, lastLogin?: any | null, phone: string, firstName: string, lastName: string, avatar?: { __typename: 'Image', url: string } | null, addresses?: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null } | null> | null, defaultShippingAddress?: { __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null } | null };
 
 export type RegisterMutationVariables = Exact<{
@@ -14000,6 +14002,14 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, phone: string, firstName: string, lastName: string } | null };
+
+export type OrdersQueryVariables = Exact<{
+  first: Scalars['Int'];
+  cursor?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type OrdersQuery = { __typename?: 'Query', me?: { __typename?: 'User', orders?: { __typename?: 'OrderCountableConnection', edges: Array<{ __typename?: 'OrderCountableEdge', node: { __typename?: 'Order', id: string, status: OrderStatus, isPaid: boolean, created: any, fulfillments: Array<{ __typename?: 'Fulfillment', status: FulfillmentStatus } | null>, lines: Array<{ __typename?: 'OrderLine', productName: string, thumbnail?: { __typename?: 'Image', url: string, alt?: string | null } | null } | null> } }>, pageInfo: { __typename: 'PageInfo', endCursor?: string | null, startCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } } | null } | null };
 
 export type AllProductsQueryVariables = Exact<{
   first: Scalars['Int'];
@@ -14147,6 +14157,14 @@ export const SingleProductFragmentDoc = gql`
 }
     ${ProductFragmentDoc}
 ${ProductVariantFragmentDoc}`;
+export const PageInfoFragmentDoc = gql`
+    fragment PageInfo on PageInfo {
+  endCursor
+  startCursor
+  hasNextPage
+  hasPreviousPage
+}
+    `;
 export const AddressFragmentDoc = gql`
     fragment Address on Address {
   id
@@ -14402,6 +14420,65 @@ export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const OrdersDocument = gql`
+    query Orders($first: Int!, $cursor: String) {
+  me {
+    orders(first: $first, after: $cursor) {
+      edges {
+        node {
+          id
+          status
+          isPaid
+          created
+          fulfillments {
+            status
+          }
+          lines {
+            productName
+            thumbnail {
+              url
+              alt
+            }
+          }
+        }
+      }
+      pageInfo {
+        ...PageInfo
+        __typename
+      }
+    }
+  }
+}
+    ${PageInfoFragmentDoc}`;
+
+/**
+ * __useOrdersQuery__
+ *
+ * To run a query within a React component, call `useOrdersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrdersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrdersQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      cursor: // value for 'cursor'
+ *   },
+ * });
+ */
+export function useOrdersQuery(baseOptions: Apollo.QueryHookOptions<OrdersQuery, OrdersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<OrdersQuery, OrdersQueryVariables>(OrdersDocument, options);
+      }
+export function useOrdersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<OrdersQuery, OrdersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<OrdersQuery, OrdersQueryVariables>(OrdersDocument, options);
+        }
+export type OrdersQueryHookResult = ReturnType<typeof useOrdersQuery>;
+export type OrdersLazyQueryHookResult = ReturnType<typeof useOrdersLazyQuery>;
+export type OrdersQueryResult = Apollo.QueryResult<OrdersQuery, OrdersQueryVariables>;
 export const AllProductsDocument = gql`
     query allProducts($first: Int!, $search: String!, $cursor: String!) {
   products(
