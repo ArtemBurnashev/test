@@ -59,6 +59,11 @@ const createApolloClient = (ctx?: GetServerSidePropsContext) => {
             categories: relayStylePagination(),
           },
         },
+        Me: {
+          fields: {
+            orders: relayStylePagination()
+          }
+        }
       },
     }),
   });

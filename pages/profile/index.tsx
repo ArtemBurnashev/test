@@ -9,6 +9,7 @@ import { useMeQuery } from 'graphql/generated.graphql';
 
 const ProfilePage: NextPage = () => {
   const { data, loading } = useMeQuery();
+
   return (
     <Main>
       <Container maxWidth="xl">
@@ -45,9 +46,11 @@ const ProfilePage: NextPage = () => {
             </Button>
           </Stack>
         </ProfileLayout>
+
       </Container>
     </Main>
   );
 };
+
 
 export default ProfilePage;
