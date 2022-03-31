@@ -6,6 +6,7 @@ import { ProfileLayout } from 'layouts/profile';
 import { NextPage } from 'next';
 import React from 'react';
 import { useMeQuery } from 'graphql/generated.graphql';
+import { WithAuth } from 'components/private-route';
 
 const ProfilePage: NextPage = () => {
   const { data, loading } = useMeQuery();
@@ -50,4 +51,4 @@ const ProfilePage: NextPage = () => {
   );
 };
 
-export default ProfilePage;
+export default WithAuth(ProfilePage);
