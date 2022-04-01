@@ -27,10 +27,11 @@ import { useAppSelector } from 'redux-state/hook';
 const Checkout = () => {
   const productsCount = useAppSelector((state) => state.cart.productsCount);
   return (
-    <Main>
+    <Main pb={0}>
       <Container maxWidth="xl">
         {productsCount < 1 ? (
           <Stack
+            mt={2}
             spacing={2}
             justifyContent="center"
             alignItems="center"
@@ -43,8 +44,8 @@ const Checkout = () => {
           </Stack>
         ) : (
           <Grid container columnSpacing={2}>
-            <Grid item xs={6}>
-              <Typography fontWeight={600} variant="h1">
+            <Grid mb={4} sx={{paddingRight:'16px'}} item xs={6}>
+              <Typography mt={2} fontWeight={600} variant="h1">
                 Оформление заказа
               </Typography>
               <Stack spacing={2} margin="1rem 0">
@@ -174,7 +175,7 @@ const Checkout = () => {
                 </Button>
               </Stack>
             </Grid>
-            <Grid item xs={6}>
+            <Grid sx={{borderLeft:"1px solid #808080",paddingLeft:'16px'}} item xs={6}>
               <CheckoutInfo />
             </Grid>
           </Grid>
