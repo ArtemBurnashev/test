@@ -5,15 +5,24 @@ import { Main } from 'layouts/main';
 import { ProfileLayout } from 'layouts/profile';
 import { NextPage } from 'next';
 import React from 'react';
+import { Paths } from 'config/site-paths';
 import { useMeQuery } from 'graphql/generated.graphql';
+import { Breadcrumb } from 'components/breadcrumbs';
 import { WithAuth } from 'components/private-route';
 
 const ProfilePage: NextPage = () => {
   const { data, loading } = useMeQuery();
+  const links = [
+    {
+      name:'Личный кабинет',
+      link:Paths.PROFILE,
+    }
+  ]
 
   return (
     <Main>
       <Container maxWidth="xl">
+        <Breadcrumb data={links}/>
         <ProfileLayout
           loading={loading}
           loadingFallBack={

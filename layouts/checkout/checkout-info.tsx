@@ -10,7 +10,7 @@ const CheckoutInfo = () => {
     <Stack spacing={2}>
       {cartProducts.map((product) => (
         <CheckoutCartItem key={product.id}>
-          <Stack direction="row" spacing={2} alignItems="center">
+          <Stack mt={2} direction="row" spacing={2} alignItems="center">
             <CheckoutCartItemImage>
               <Image layout="fixed" width={100} height={100} src={product.image} alt={product.name} />
             </CheckoutCartItemImage>

@@ -29,6 +29,7 @@ import { useModal } from 'hooks/use-modal';
 import Catalog from './components/catalog';
 import Close from 'components/icons/close';
 import Hamburger from 'components/icons/hamburger';
+import { CategoryNavbar } from 'components/category-navbar';
 
 const Header = () => {
   const theme = useTheme();
@@ -164,6 +165,7 @@ const Header = () => {
           )}
         </Stack>
       </Container>
+      <CategoryNavbar/>
     </Box>
   );
 };

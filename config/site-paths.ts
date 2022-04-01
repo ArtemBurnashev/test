@@ -5,5 +5,6 @@ export enum Paths {
   CHECKOUT = '/checkout',
   PROFILE = '/profile',
   CATEGORY_PRODUCTS = '/category/',
-  SEARCH = '/search/'
+  SEARCH = '/search/',
+  ORDERS = '/profile/orders'
 }

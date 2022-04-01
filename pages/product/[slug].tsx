@@ -14,6 +14,8 @@ import { useSingleProductQuery } from 'graphql/generated.graphql';
 import SingleProductPageLoading from 'components/loading/single-product-page-loading';
 import { LazyImage, ProductImage } from 'components/image';
 import { ImageCarousel } from 'components/carousel/img-carousel';
+import { Breadcrumb } from 'components/breadcrumbs';
+import { Paths } from 'config/site-paths';
 
 const SingleProduct: NextPage = () => {
   const router = useRouter();
@@ -24,10 +26,21 @@ const SingleProduct: NextPage = () => {
   });
 
   if (loading) return <SingleProductPageLoading />;
+  
+  const links = [
+    {
+      name: data?.product?.category?.name,
+      link: `${Paths.CATEGORY_PRODUCTS}${data?.product?.category?.slug}`
+    },
+    {
+      name: data?.product?.name,
+    }
+  ]
 
   return (
     <Main>
       <Container maxWidth="xl">
+        <Breadcrumb data={links} />
         <Typography variant="h2" fontWeight={600} lineHeight="36px">
           {data?.product?.name}
         </Typography>
