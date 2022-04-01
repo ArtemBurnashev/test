@@ -8,6 +8,7 @@ import React from 'react';
 import { Paths } from 'config/site-paths';
 import { useMeQuery } from 'graphql/generated.graphql';
 import { Breadcrumb } from 'components/breadcrumbs';
+import { WithAuth } from 'components/private-route';
 
 const ProfilePage: NextPage = () => {
   const { data, loading } = useMeQuery();
@@ -61,5 +62,4 @@ const ProfilePage: NextPage = () => {
   );
 };
 
-
-export default ProfilePage;
+export default WithAuth(ProfilePage);
