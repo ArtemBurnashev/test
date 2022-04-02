@@ -2430,7 +2430,7 @@ export enum ConfigurationTypeFieldEnum {
   String = 'STRING'
 }
 
-/** Confirm user account with token sent by email during registration. */
+/** Confirm user account with token sent by phone during registration. */
 export type ConfirmAccount = {
   __typename?: 'ConfirmAccount';
   /** @deprecated This field will be removed in Saleor 4.0. Use `errors` field instead. */
@@ -2748,6 +2748,35 @@ export type CreditCard = {
   /** Last 4 digits of the card number. */
   lastDigits: Scalars['String'];
 };
+
+export type CurrencyError = {
+  __typename?: 'CurrencyError';
+  /** The error code. */
+  code: CurrenyErrorCode;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: Maybe<Scalars['String']>;
+  /** The error message. */
+  message?: Maybe<Scalars['String']>;
+};
+
+export type CurrencyType = {
+  __typename?: 'CurrencyType';
+  currency: Scalars['Int'];
+};
+
+/** Update currency in sum */
+export type CurrencyUpdate = {
+  __typename?: 'CurrencyUpdate';
+  currency?: Maybe<Scalars['Int']>;
+  /** @deprecated This field will be removed in Saleor 4.0. Use `errors` field instead. */
+  currencyErrors: Array<CurrencyError>;
+  errors: Array<CurrencyError>;
+};
+
+/** An enumeration. */
+export enum CurrenyErrorCode {
+  InvalidCurrency = 'INVALID_CURRENCY'
+}
 
 /** Deletes customers. */
 export type CustomerBulkDelete = {
@@ -4338,785 +4367,9 @@ export enum JobStatusEnum {
 
 /** An enumeration. */
 export enum LanguageCodeEnum {
-  Af = 'AF',
-  AfNa = 'AF_NA',
-  AfZa = 'AF_ZA',
-  Agq = 'AGQ',
-  AgqCm = 'AGQ_CM',
-  Ak = 'AK',
-  AkGh = 'AK_GH',
-  Am = 'AM',
-  AmEt = 'AM_ET',
-  Ar = 'AR',
-  ArAe = 'AR_AE',
-  ArBh = 'AR_BH',
-  ArDj = 'AR_DJ',
-  ArDz = 'AR_DZ',
-  ArEg = 'AR_EG',
-  ArEh = 'AR_EH',
-  ArEr = 'AR_ER',
-  ArIl = 'AR_IL',
-  ArIq = 'AR_IQ',
-  ArJo = 'AR_JO',
-  ArKm = 'AR_KM',
-  ArKw = 'AR_KW',
-  ArLb = 'AR_LB',
-  ArLy = 'AR_LY',
-  ArMa = 'AR_MA',
-  ArMr = 'AR_MR',
-  ArOm = 'AR_OM',
-  ArPs = 'AR_PS',
-  ArQa = 'AR_QA',
-  ArSa = 'AR_SA',
-  ArSd = 'AR_SD',
-  ArSo = 'AR_SO',
-  ArSs = 'AR_SS',
-  ArSy = 'AR_SY',
-  ArTd = 'AR_TD',
-  ArTn = 'AR_TN',
-  ArYe = 'AR_YE',
-  As = 'AS',
-  Asa = 'ASA',
-  AsaTz = 'ASA_TZ',
-  Ast = 'AST',
-  AstEs = 'AST_ES',
-  AsIn = 'AS_IN',
-  Az = 'AZ',
-  AzCyrl = 'AZ_CYRL',
-  AzCyrlAz = 'AZ_CYRL_AZ',
-  AzLatn = 'AZ_LATN',
-  AzLatnAz = 'AZ_LATN_AZ',
-  Bas = 'BAS',
-  BasCm = 'BAS_CM',
-  Be = 'BE',
-  Bem = 'BEM',
-  BemZm = 'BEM_ZM',
-  Bez = 'BEZ',
-  BezTz = 'BEZ_TZ',
-  BeBy = 'BE_BY',
-  Bg = 'BG',
-  BgBg = 'BG_BG',
-  Bm = 'BM',
-  BmMl = 'BM_ML',
-  Bn = 'BN',
-  BnBd = 'BN_BD',
-  BnIn = 'BN_IN',
-  Bo = 'BO',
-  BoCn = 'BO_CN',
-  BoIn = 'BO_IN',
-  Br = 'BR',
-  Brx = 'BRX',
-  BrxIn = 'BRX_IN',
-  BrFr = 'BR_FR',
-  Bs = 'BS',
-  BsCyrl = 'BS_CYRL',
-  BsCyrlBa = 'BS_CYRL_BA',
-  BsLatn = 'BS_LATN',
-  BsLatnBa = 'BS_LATN_BA',
-  Ca = 'CA',
-  CaAd = 'CA_AD',
-  CaEs = 'CA_ES',
-  CaEsValencia = 'CA_ES_VALENCIA',
-  CaFr = 'CA_FR',
-  CaIt = 'CA_IT',
-  Ccp = 'CCP',
-  CcpBd = 'CCP_BD',
-  CcpIn = 'CCP_IN',
-  Ce = 'CE',
-  Ceb = 'CEB',
-  CebPh = 'CEB_PH',
-  CeRu = 'CE_RU',
-  Cgg = 'CGG',
-  CggUg = 'CGG_UG',
-  Chr = 'CHR',
-  ChrUs = 'CHR_US',
-  Ckb = 'CKB',
-  CkbIq = 'CKB_IQ',
-  CkbIr = 'CKB_IR',
-  Cs = 'CS',
-  CsCz = 'CS_CZ',
-  Cu = 'CU',
-  CuRu = 'CU_RU',
-  Cy = 'CY',
-  CyGb = 'CY_GB',
-  Da = 'DA',
-  Dav = 'DAV',
-  DavKe = 'DAV_KE',
-  DaDk = 'DA_DK',
-  DaGl = 'DA_GL',
-  De = 'DE',
-  DeAt = 'DE_AT',
-  DeBe = 'DE_BE',
-  DeCh = 'DE_CH',
-  DeDe = 'DE_DE',
-  DeIt = 'DE_IT',
-  DeLi = 'DE_LI',
-  DeLu = 'DE_LU',
-  Dje = 'DJE',
-  DjeNe = 'DJE_NE',
-  Dsb = 'DSB',
-  DsbDe = 'DSB_DE',
-  Dua = 'DUA',
-  DuaCm = 'DUA_CM',
-  Dyo = 'DYO',
-  DyoSn = 'DYO_SN',
-  Dz = 'DZ',
-  DzBt = 'DZ_BT',
-  Ebu = 'EBU',
-  EbuKe = 'EBU_KE',
-  Ee = 'EE',
-  EeGh = 'EE_GH',
-  EeTg = 'EE_TG',
-  El = 'EL',
-  ElCy = 'EL_CY',
-  ElGr = 'EL_GR',
   En = 'EN',
-  EnAe = 'EN_AE',
-  EnAg = 'EN_AG',
-  EnAi = 'EN_AI',
-  EnAs = 'EN_AS',
-  EnAt = 'EN_AT',
-  EnAu = 'EN_AU',
-  EnBb = 'EN_BB',
-  EnBe = 'EN_BE',
-  EnBi = 'EN_BI',
-  EnBm = 'EN_BM',
-  EnBs = 'EN_BS',
-  EnBw = 'EN_BW',
-  EnBz = 'EN_BZ',
-  EnCa = 'EN_CA',
-  EnCc = 'EN_CC',
-  EnCh = 'EN_CH',
-  EnCk = 'EN_CK',
-  EnCm = 'EN_CM',
-  EnCx = 'EN_CX',
-  EnCy = 'EN_CY',
-  EnDe = 'EN_DE',
-  EnDg = 'EN_DG',
-  EnDk = 'EN_DK',
-  EnDm = 'EN_DM',
-  EnEr = 'EN_ER',
-  EnFi = 'EN_FI',
-  EnFj = 'EN_FJ',
-  EnFk = 'EN_FK',
-  EnFm = 'EN_FM',
-  EnGb = 'EN_GB',
-  EnGd = 'EN_GD',
-  EnGg = 'EN_GG',
-  EnGh = 'EN_GH',
-  EnGi = 'EN_GI',
-  EnGm = 'EN_GM',
-  EnGu = 'EN_GU',
-  EnGy = 'EN_GY',
-  EnHk = 'EN_HK',
-  EnIe = 'EN_IE',
-  EnIl = 'EN_IL',
-  EnIm = 'EN_IM',
-  EnIn = 'EN_IN',
-  EnIo = 'EN_IO',
-  EnJe = 'EN_JE',
-  EnJm = 'EN_JM',
-  EnKe = 'EN_KE',
-  EnKi = 'EN_KI',
-  EnKn = 'EN_KN',
-  EnKy = 'EN_KY',
-  EnLc = 'EN_LC',
-  EnLr = 'EN_LR',
-  EnLs = 'EN_LS',
-  EnMg = 'EN_MG',
-  EnMh = 'EN_MH',
-  EnMo = 'EN_MO',
-  EnMp = 'EN_MP',
-  EnMs = 'EN_MS',
-  EnMt = 'EN_MT',
-  EnMu = 'EN_MU',
-  EnMw = 'EN_MW',
-  EnMy = 'EN_MY',
-  EnNa = 'EN_NA',
-  EnNf = 'EN_NF',
-  EnNg = 'EN_NG',
-  EnNl = 'EN_NL',
-  EnNr = 'EN_NR',
-  EnNu = 'EN_NU',
-  EnNz = 'EN_NZ',
-  EnPg = 'EN_PG',
-  EnPh = 'EN_PH',
-  EnPk = 'EN_PK',
-  EnPn = 'EN_PN',
-  EnPr = 'EN_PR',
-  EnPw = 'EN_PW',
-  EnRw = 'EN_RW',
-  EnSb = 'EN_SB',
-  EnSc = 'EN_SC',
-  EnSd = 'EN_SD',
-  EnSe = 'EN_SE',
-  EnSg = 'EN_SG',
-  EnSh = 'EN_SH',
-  EnSi = 'EN_SI',
-  EnSl = 'EN_SL',
-  EnSs = 'EN_SS',
-  EnSx = 'EN_SX',
-  EnSz = 'EN_SZ',
-  EnTc = 'EN_TC',
-  EnTk = 'EN_TK',
-  EnTo = 'EN_TO',
-  EnTt = 'EN_TT',
-  EnTv = 'EN_TV',
-  EnTz = 'EN_TZ',
-  EnUg = 'EN_UG',
-  EnUm = 'EN_UM',
-  EnUs = 'EN_US',
-  EnVc = 'EN_VC',
-  EnVg = 'EN_VG',
-  EnVi = 'EN_VI',
-  EnVu = 'EN_VU',
-  EnWs = 'EN_WS',
-  EnZa = 'EN_ZA',
-  EnZm = 'EN_ZM',
-  EnZw = 'EN_ZW',
-  Eo = 'EO',
-  Es = 'ES',
-  EsAr = 'ES_AR',
-  EsBo = 'ES_BO',
-  EsBr = 'ES_BR',
-  EsBz = 'ES_BZ',
-  EsCl = 'ES_CL',
-  EsCo = 'ES_CO',
-  EsCr = 'ES_CR',
-  EsCu = 'ES_CU',
-  EsDo = 'ES_DO',
-  EsEa = 'ES_EA',
-  EsEc = 'ES_EC',
-  EsEs = 'ES_ES',
-  EsGq = 'ES_GQ',
-  EsGt = 'ES_GT',
-  EsHn = 'ES_HN',
-  EsIc = 'ES_IC',
-  EsMx = 'ES_MX',
-  EsNi = 'ES_NI',
-  EsPa = 'ES_PA',
-  EsPe = 'ES_PE',
-  EsPh = 'ES_PH',
-  EsPr = 'ES_PR',
-  EsPy = 'ES_PY',
-  EsSv = 'ES_SV',
-  EsUs = 'ES_US',
-  EsUy = 'ES_UY',
-  EsVe = 'ES_VE',
-  Et = 'ET',
-  EtEe = 'ET_EE',
-  Eu = 'EU',
-  EuEs = 'EU_ES',
-  Ewo = 'EWO',
-  EwoCm = 'EWO_CM',
-  Fa = 'FA',
-  FaAf = 'FA_AF',
-  FaIr = 'FA_IR',
-  Ff = 'FF',
-  FfAdlm = 'FF_ADLM',
-  FfAdlmBf = 'FF_ADLM_BF',
-  FfAdlmCm = 'FF_ADLM_CM',
-  FfAdlmGh = 'FF_ADLM_GH',
-  FfAdlmGm = 'FF_ADLM_GM',
-  FfAdlmGn = 'FF_ADLM_GN',
-  FfAdlmGw = 'FF_ADLM_GW',
-  FfAdlmLr = 'FF_ADLM_LR',
-  FfAdlmMr = 'FF_ADLM_MR',
-  FfAdlmNe = 'FF_ADLM_NE',
-  FfAdlmNg = 'FF_ADLM_NG',
-  FfAdlmSl = 'FF_ADLM_SL',
-  FfAdlmSn = 'FF_ADLM_SN',
-  FfLatn = 'FF_LATN',
-  FfLatnBf = 'FF_LATN_BF',
-  FfLatnCm = 'FF_LATN_CM',
-  FfLatnGh = 'FF_LATN_GH',
-  FfLatnGm = 'FF_LATN_GM',
-  FfLatnGn = 'FF_LATN_GN',
-  FfLatnGw = 'FF_LATN_GW',
-  FfLatnLr = 'FF_LATN_LR',
-  FfLatnMr = 'FF_LATN_MR',
-  FfLatnNe = 'FF_LATN_NE',
-  FfLatnNg = 'FF_LATN_NG',
-  FfLatnSl = 'FF_LATN_SL',
-  FfLatnSn = 'FF_LATN_SN',
-  Fi = 'FI',
-  Fil = 'FIL',
-  FilPh = 'FIL_PH',
-  FiFi = 'FI_FI',
-  Fo = 'FO',
-  FoDk = 'FO_DK',
-  FoFo = 'FO_FO',
-  Fr = 'FR',
-  FrBe = 'FR_BE',
-  FrBf = 'FR_BF',
-  FrBi = 'FR_BI',
-  FrBj = 'FR_BJ',
-  FrBl = 'FR_BL',
-  FrCa = 'FR_CA',
-  FrCd = 'FR_CD',
-  FrCf = 'FR_CF',
-  FrCg = 'FR_CG',
-  FrCh = 'FR_CH',
-  FrCi = 'FR_CI',
-  FrCm = 'FR_CM',
-  FrDj = 'FR_DJ',
-  FrDz = 'FR_DZ',
-  FrFr = 'FR_FR',
-  FrGa = 'FR_GA',
-  FrGf = 'FR_GF',
-  FrGn = 'FR_GN',
-  FrGp = 'FR_GP',
-  FrGq = 'FR_GQ',
-  FrHt = 'FR_HT',
-  FrKm = 'FR_KM',
-  FrLu = 'FR_LU',
-  FrMa = 'FR_MA',
-  FrMc = 'FR_MC',
-  FrMf = 'FR_MF',
-  FrMg = 'FR_MG',
-  FrMl = 'FR_ML',
-  FrMq = 'FR_MQ',
-  FrMr = 'FR_MR',
-  FrMu = 'FR_MU',
-  FrNc = 'FR_NC',
-  FrNe = 'FR_NE',
-  FrPf = 'FR_PF',
-  FrPm = 'FR_PM',
-  FrRe = 'FR_RE',
-  FrRw = 'FR_RW',
-  FrSc = 'FR_SC',
-  FrSn = 'FR_SN',
-  FrSy = 'FR_SY',
-  FrTd = 'FR_TD',
-  FrTg = 'FR_TG',
-  FrTn = 'FR_TN',
-  FrVu = 'FR_VU',
-  FrWf = 'FR_WF',
-  FrYt = 'FR_YT',
-  Fur = 'FUR',
-  FurIt = 'FUR_IT',
-  Fy = 'FY',
-  FyNl = 'FY_NL',
-  Ga = 'GA',
-  GaGb = 'GA_GB',
-  GaIe = 'GA_IE',
-  Gd = 'GD',
-  GdGb = 'GD_GB',
-  Gl = 'GL',
-  GlEs = 'GL_ES',
-  Gsw = 'GSW',
-  GswCh = 'GSW_CH',
-  GswFr = 'GSW_FR',
-  GswLi = 'GSW_LI',
-  Gu = 'GU',
-  Guz = 'GUZ',
-  GuzKe = 'GUZ_KE',
-  GuIn = 'GU_IN',
-  Gv = 'GV',
-  GvIm = 'GV_IM',
-  Ha = 'HA',
-  Haw = 'HAW',
-  HawUs = 'HAW_US',
-  HaGh = 'HA_GH',
-  HaNe = 'HA_NE',
-  HaNg = 'HA_NG',
-  He = 'HE',
-  HeIl = 'HE_IL',
-  Hi = 'HI',
-  HiIn = 'HI_IN',
-  Hr = 'HR',
-  HrBa = 'HR_BA',
-  HrHr = 'HR_HR',
-  Hsb = 'HSB',
-  HsbDe = 'HSB_DE',
-  Hu = 'HU',
-  HuHu = 'HU_HU',
-  Hy = 'HY',
-  HyAm = 'HY_AM',
-  Ia = 'IA',
-  Id = 'ID',
-  IdId = 'ID_ID',
-  Ig = 'IG',
-  IgNg = 'IG_NG',
-  Ii = 'II',
-  IiCn = 'II_CN',
-  Is = 'IS',
-  IsIs = 'IS_IS',
-  It = 'IT',
-  ItCh = 'IT_CH',
-  ItIt = 'IT_IT',
-  ItSm = 'IT_SM',
-  ItVa = 'IT_VA',
-  Ja = 'JA',
-  JaJp = 'JA_JP',
-  Jgo = 'JGO',
-  JgoCm = 'JGO_CM',
-  Jmc = 'JMC',
-  JmcTz = 'JMC_TZ',
-  Jv = 'JV',
-  JvId = 'JV_ID',
-  Ka = 'KA',
-  Kab = 'KAB',
-  KabDz = 'KAB_DZ',
-  Kam = 'KAM',
-  KamKe = 'KAM_KE',
-  KaGe = 'KA_GE',
-  Kde = 'KDE',
-  KdeTz = 'KDE_TZ',
-  Kea = 'KEA',
-  KeaCv = 'KEA_CV',
-  Khq = 'KHQ',
-  KhqMl = 'KHQ_ML',
-  Ki = 'KI',
-  KiKe = 'KI_KE',
-  Kk = 'KK',
-  Kkj = 'KKJ',
-  KkjCm = 'KKJ_CM',
-  KkKz = 'KK_KZ',
-  Kl = 'KL',
-  Kln = 'KLN',
-  KlnKe = 'KLN_KE',
-  KlGl = 'KL_GL',
-  Km = 'KM',
-  KmKh = 'KM_KH',
-  Kn = 'KN',
-  KnIn = 'KN_IN',
-  Ko = 'KO',
-  Kok = 'KOK',
-  KokIn = 'KOK_IN',
-  KoKp = 'KO_KP',
-  KoKr = 'KO_KR',
-  Ks = 'KS',
-  Ksb = 'KSB',
-  KsbTz = 'KSB_TZ',
-  Ksf = 'KSF',
-  KsfCm = 'KSF_CM',
-  Ksh = 'KSH',
-  KshDe = 'KSH_DE',
-  KsArab = 'KS_ARAB',
-  KsArabIn = 'KS_ARAB_IN',
-  Ku = 'KU',
-  KuTr = 'KU_TR',
-  Kw = 'KW',
-  KwGb = 'KW_GB',
-  Ky = 'KY',
-  KyKg = 'KY_KG',
-  Lag = 'LAG',
-  LagTz = 'LAG_TZ',
-  Lb = 'LB',
-  LbLu = 'LB_LU',
-  Lg = 'LG',
-  LgUg = 'LG_UG',
-  Lkt = 'LKT',
-  LktUs = 'LKT_US',
-  Ln = 'LN',
-  LnAo = 'LN_AO',
-  LnCd = 'LN_CD',
-  LnCf = 'LN_CF',
-  LnCg = 'LN_CG',
-  Lo = 'LO',
-  LoLa = 'LO_LA',
-  Lrc = 'LRC',
-  LrcIq = 'LRC_IQ',
-  LrcIr = 'LRC_IR',
-  Lt = 'LT',
-  LtLt = 'LT_LT',
-  Lu = 'LU',
-  Luo = 'LUO',
-  LuoKe = 'LUO_KE',
-  Luy = 'LUY',
-  LuyKe = 'LUY_KE',
-  LuCd = 'LU_CD',
-  Lv = 'LV',
-  LvLv = 'LV_LV',
-  Mai = 'MAI',
-  MaiIn = 'MAI_IN',
-  Mas = 'MAS',
-  MasKe = 'MAS_KE',
-  MasTz = 'MAS_TZ',
-  Mer = 'MER',
-  MerKe = 'MER_KE',
-  Mfe = 'MFE',
-  MfeMu = 'MFE_MU',
-  Mg = 'MG',
-  Mgh = 'MGH',
-  MghMz = 'MGH_MZ',
-  Mgo = 'MGO',
-  MgoCm = 'MGO_CM',
-  MgMg = 'MG_MG',
-  Mi = 'MI',
-  MiNz = 'MI_NZ',
-  Mk = 'MK',
-  MkMk = 'MK_MK',
-  Ml = 'ML',
-  MlIn = 'ML_IN',
-  Mn = 'MN',
-  Mni = 'MNI',
-  MniBeng = 'MNI_BENG',
-  MniBengIn = 'MNI_BENG_IN',
-  MnMn = 'MN_MN',
-  Mr = 'MR',
-  MrIn = 'MR_IN',
-  Ms = 'MS',
-  MsBn = 'MS_BN',
-  MsId = 'MS_ID',
-  MsMy = 'MS_MY',
-  MsSg = 'MS_SG',
-  Mt = 'MT',
-  MtMt = 'MT_MT',
-  Mua = 'MUA',
-  MuaCm = 'MUA_CM',
-  My = 'MY',
-  MyMm = 'MY_MM',
-  Mzn = 'MZN',
-  MznIr = 'MZN_IR',
-  Naq = 'NAQ',
-  NaqNa = 'NAQ_NA',
-  Nb = 'NB',
-  NbNo = 'NB_NO',
-  NbSj = 'NB_SJ',
-  Nd = 'ND',
-  Nds = 'NDS',
-  NdsDe = 'NDS_DE',
-  NdsNl = 'NDS_NL',
-  NdZw = 'ND_ZW',
-  Ne = 'NE',
-  NeIn = 'NE_IN',
-  NeNp = 'NE_NP',
-  Nl = 'NL',
-  NlAw = 'NL_AW',
-  NlBe = 'NL_BE',
-  NlBq = 'NL_BQ',
-  NlCw = 'NL_CW',
-  NlNl = 'NL_NL',
-  NlSr = 'NL_SR',
-  NlSx = 'NL_SX',
-  Nmg = 'NMG',
-  NmgCm = 'NMG_CM',
-  Nn = 'NN',
-  Nnh = 'NNH',
-  NnhCm = 'NNH_CM',
-  NnNo = 'NN_NO',
-  Nus = 'NUS',
-  NusSs = 'NUS_SS',
-  Nyn = 'NYN',
-  NynUg = 'NYN_UG',
-  Om = 'OM',
-  OmEt = 'OM_ET',
-  OmKe = 'OM_KE',
-  Or = 'OR',
-  OrIn = 'OR_IN',
-  Os = 'OS',
-  OsGe = 'OS_GE',
-  OsRu = 'OS_RU',
-  Pa = 'PA',
-  PaArab = 'PA_ARAB',
-  PaArabPk = 'PA_ARAB_PK',
-  PaGuru = 'PA_GURU',
-  PaGuruIn = 'PA_GURU_IN',
-  Pcm = 'PCM',
-  PcmNg = 'PCM_NG',
-  Pl = 'PL',
-  PlPl = 'PL_PL',
-  Prg = 'PRG',
-  Ps = 'PS',
-  PsAf = 'PS_AF',
-  PsPk = 'PS_PK',
-  Pt = 'PT',
-  PtAo = 'PT_AO',
-  PtBr = 'PT_BR',
-  PtCh = 'PT_CH',
-  PtCv = 'PT_CV',
-  PtGq = 'PT_GQ',
-  PtGw = 'PT_GW',
-  PtLu = 'PT_LU',
-  PtMo = 'PT_MO',
-  PtMz = 'PT_MZ',
-  PtPt = 'PT_PT',
-  PtSt = 'PT_ST',
-  PtTl = 'PT_TL',
-  Qu = 'QU',
-  QuBo = 'QU_BO',
-  QuEc = 'QU_EC',
-  QuPe = 'QU_PE',
-  Rm = 'RM',
-  RmCh = 'RM_CH',
-  Rn = 'RN',
-  RnBi = 'RN_BI',
-  Ro = 'RO',
-  Rof = 'ROF',
-  RofTz = 'ROF_TZ',
-  RoMd = 'RO_MD',
-  RoRo = 'RO_RO',
   Ru = 'RU',
-  RuBy = 'RU_BY',
-  RuKg = 'RU_KG',
-  RuKz = 'RU_KZ',
-  RuMd = 'RU_MD',
-  RuRu = 'RU_RU',
-  RuUa = 'RU_UA',
-  Rw = 'RW',
-  Rwk = 'RWK',
-  RwkTz = 'RWK_TZ',
-  RwRw = 'RW_RW',
-  Sah = 'SAH',
-  SahRu = 'SAH_RU',
-  Saq = 'SAQ',
-  SaqKe = 'SAQ_KE',
-  Sat = 'SAT',
-  SatOlck = 'SAT_OLCK',
-  SatOlckIn = 'SAT_OLCK_IN',
-  Sbp = 'SBP',
-  SbpTz = 'SBP_TZ',
-  Sd = 'SD',
-  SdArab = 'SD_ARAB',
-  SdArabPk = 'SD_ARAB_PK',
-  SdDeva = 'SD_DEVA',
-  SdDevaIn = 'SD_DEVA_IN',
-  Se = 'SE',
-  Seh = 'SEH',
-  SehMz = 'SEH_MZ',
-  Ses = 'SES',
-  SesMl = 'SES_ML',
-  SeFi = 'SE_FI',
-  SeNo = 'SE_NO',
-  SeSe = 'SE_SE',
-  Sg = 'SG',
-  SgCf = 'SG_CF',
-  Shi = 'SHI',
-  ShiLatn = 'SHI_LATN',
-  ShiLatnMa = 'SHI_LATN_MA',
-  ShiTfng = 'SHI_TFNG',
-  ShiTfngMa = 'SHI_TFNG_MA',
-  Si = 'SI',
-  SiLk = 'SI_LK',
-  Sk = 'SK',
-  SkSk = 'SK_SK',
-  Sl = 'SL',
-  SlSi = 'SL_SI',
-  Smn = 'SMN',
-  SmnFi = 'SMN_FI',
-  Sn = 'SN',
-  SnZw = 'SN_ZW',
-  So = 'SO',
-  SoDj = 'SO_DJ',
-  SoEt = 'SO_ET',
-  SoKe = 'SO_KE',
-  SoSo = 'SO_SO',
-  Sq = 'SQ',
-  SqAl = 'SQ_AL',
-  SqMk = 'SQ_MK',
-  SqXk = 'SQ_XK',
-  Sr = 'SR',
-  SrCyrl = 'SR_CYRL',
-  SrCyrlBa = 'SR_CYRL_BA',
-  SrCyrlMe = 'SR_CYRL_ME',
-  SrCyrlRs = 'SR_CYRL_RS',
-  SrCyrlXk = 'SR_CYRL_XK',
-  SrLatn = 'SR_LATN',
-  SrLatnBa = 'SR_LATN_BA',
-  SrLatnMe = 'SR_LATN_ME',
-  SrLatnRs = 'SR_LATN_RS',
-  SrLatnXk = 'SR_LATN_XK',
-  Su = 'SU',
-  SuLatn = 'SU_LATN',
-  SuLatnId = 'SU_LATN_ID',
-  Sv = 'SV',
-  SvAx = 'SV_AX',
-  SvFi = 'SV_FI',
-  SvSe = 'SV_SE',
-  Sw = 'SW',
-  SwCd = 'SW_CD',
-  SwKe = 'SW_KE',
-  SwTz = 'SW_TZ',
-  SwUg = 'SW_UG',
-  Ta = 'TA',
-  TaIn = 'TA_IN',
-  TaLk = 'TA_LK',
-  TaMy = 'TA_MY',
-  TaSg = 'TA_SG',
-  Te = 'TE',
-  Teo = 'TEO',
-  TeoKe = 'TEO_KE',
-  TeoUg = 'TEO_UG',
-  TeIn = 'TE_IN',
-  Tg = 'TG',
-  TgTj = 'TG_TJ',
-  Th = 'TH',
-  ThTh = 'TH_TH',
-  Ti = 'TI',
-  TiEr = 'TI_ER',
-  TiEt = 'TI_ET',
-  Tk = 'TK',
-  TkTm = 'TK_TM',
-  To = 'TO',
-  ToTo = 'TO_TO',
-  Tr = 'TR',
-  TrCy = 'TR_CY',
-  TrTr = 'TR_TR',
-  Tt = 'TT',
-  TtRu = 'TT_RU',
-  Twq = 'TWQ',
-  TwqNe = 'TWQ_NE',
-  Tzm = 'TZM',
-  TzmMa = 'TZM_MA',
-  Ug = 'UG',
-  UgCn = 'UG_CN',
-  Uk = 'UK',
-  UkUa = 'UK_UA',
-  Ur = 'UR',
-  UrIn = 'UR_IN',
-  UrPk = 'UR_PK',
-  Uz = 'UZ',
-  UzArab = 'UZ_ARAB',
-  UzArabAf = 'UZ_ARAB_AF',
-  UzCyrl = 'UZ_CYRL',
-  UzCyrlUz = 'UZ_CYRL_UZ',
-  UzLatn = 'UZ_LATN',
-  UzLatnUz = 'UZ_LATN_UZ',
-  Vai = 'VAI',
-  VaiLatn = 'VAI_LATN',
-  VaiLatnLr = 'VAI_LATN_LR',
-  VaiVaii = 'VAI_VAII',
-  VaiVaiiLr = 'VAI_VAII_LR',
-  Vi = 'VI',
-  ViVn = 'VI_VN',
-  Vo = 'VO',
-  Vun = 'VUN',
-  VunTz = 'VUN_TZ',
-  Wae = 'WAE',
-  WaeCh = 'WAE_CH',
-  Wo = 'WO',
-  WoSn = 'WO_SN',
-  Xh = 'XH',
-  XhZa = 'XH_ZA',
-  Xog = 'XOG',
-  XogUg = 'XOG_UG',
-  Yav = 'YAV',
-  YavCm = 'YAV_CM',
-  Yi = 'YI',
-  Yo = 'YO',
-  YoBj = 'YO_BJ',
-  YoNg = 'YO_NG',
-  Yue = 'YUE',
-  YueHans = 'YUE_HANS',
-  YueHansCn = 'YUE_HANS_CN',
-  YueHant = 'YUE_HANT',
-  YueHantHk = 'YUE_HANT_HK',
-  Zgh = 'ZGH',
-  ZghMa = 'ZGH_MA',
-  Zh = 'ZH',
-  ZhHans = 'ZH_HANS',
-  ZhHansCn = 'ZH_HANS_CN',
-  ZhHansHk = 'ZH_HANS_HK',
-  ZhHansMo = 'ZH_HANS_MO',
-  ZhHansSg = 'ZH_HANS_SG',
-  ZhHant = 'ZH_HANT',
-  ZhHantHk = 'ZH_HANT_HK',
-  ZhHantMo = 'ZH_HANT_MO',
-  ZhHantTw = 'ZH_HANT_TW',
-  Zu = 'ZU',
-  ZuZa = 'ZU_ZA'
+  Uz = 'UZ'
 }
 
 export type LanguageDisplay = {
@@ -5737,12 +4990,14 @@ export type Mutation = {
   collectionTranslate?: Maybe<CollectionTranslate>;
   /** Updates a collection. */
   collectionUpdate?: Maybe<CollectionUpdate>;
-  /** Confirm user account with token sent by email during registration. */
+  /** Confirm user account with token sent by phone during registration. */
   confirmAccount?: Maybe<ConfirmAccount>;
   /** Confirm the phone change of the logged-in user. */
   confirmPhoneChange?: Maybe<ConfirmPhoneChange>;
   /** Creates new warehouse. */
   createWarehouse?: Maybe<WarehouseCreate>;
+  /** Update currency in sum */
+  currencyUpdate?: Maybe<CurrencyUpdate>;
   /** Deletes customers. */
   customerBulkDelete?: Maybe<CustomerBulkDelete>;
   /** Creates a new customer. */
@@ -6576,7 +5831,7 @@ export type MutationCollectionUpdateArgs = {
 
 
 export type MutationConfirmAccountArgs = {
-  email: Scalars['String'];
+  phone: Scalars['String'];
   token: Scalars['String'];
 };
 
@@ -6589,6 +5844,11 @@ export type MutationConfirmPhoneChangeArgs = {
 
 export type MutationCreateWarehouseArgs = {
   input: WarehouseCreateInput;
+};
+
+
+export type MutationCurrencyUpdateArgs = {
+  currency?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -10744,6 +10004,7 @@ export type Query = {
   collection?: Maybe<Collection>;
   /** List of the shop's collections. */
   collections?: Maybe<CollectionCountableConnection>;
+  currency?: Maybe<CurrencyType>;
   /** List of the shop's customers. */
   customers?: Maybe<UserCountableConnection>;
   /** Look up digital content by ID. */
@@ -13953,11 +13214,11 @@ export type _Service = {
 
 export type CategoryAtributesFragment = { __typename?: 'Category', id: string, name: string, slug: string, level: number, backgroundImage?: { __typename?: 'Image', url: string, alt?: string | null } | null };
 
-export type ProductFragment = { __typename: 'Product', name: string, id: string, slug: string, media?: Array<{ __typename?: 'ProductMedia', url: string, alt: string }> | null, thumbnail?: { __typename?: 'Image', url: string, alt?: string | null } | null, pricing?: { __typename?: 'ProductPricingInfo', onSale?: boolean | null, discount?: { __typename?: 'TaxedMoney', currency: string, gross: { __typename?: 'Money', currency: string, amount: number } } | null, priceRange?: { __typename?: 'TaxedMoneyRange', start?: { __typename?: 'TaxedMoney', net: { __typename?: 'Money', currency: string, amount: number }, gross: { __typename?: 'Money', currency: string, amount: number } } | null, stop?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null } | null };
+export type ProductFragment = { __typename: 'Product', name: string, id: string, slug: string, media?: Array<{ __typename?: 'ProductMedia', url: string, alt: string }> | null, thumbnail?: { __typename?: 'Image', url: string, alt?: string | null } | null, defaultVariant?: { __typename?: 'ProductVariant', id: string, name: string, sku?: string | null, attributes: Array<{ __typename?: 'SelectedAttribute', attribute: { __typename?: 'Attribute', name?: string | null, id: string }, values: Array<{ __typename?: 'AttributeValue', value?: string | null, name?: string | null, id: string } | null> }>, pricing?: { __typename?: 'VariantPricingInfo', discount?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null, price?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null } | null, pricing?: { __typename?: 'ProductPricingInfo', onSale?: boolean | null, discount?: { __typename?: 'TaxedMoney', currency: string, gross: { __typename?: 'Money', currency: string, amount: number } } | null, priceRange?: { __typename?: 'TaxedMoneyRange', start?: { __typename?: 'TaxedMoney', net: { __typename?: 'Money', currency: string, amount: number }, gross: { __typename?: 'Money', currency: string, amount: number } } | null, stop?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null } | null };
 
-export type SingleProductFragment = { __typename: 'Product', name: string, id: string, slug: string, attributes: Array<{ __typename?: 'SelectedAttribute', attribute: { __typename?: 'Attribute', id: string, name?: string | null, unit?: MeasurementUnitsEnum | null }, values: Array<{ __typename?: 'AttributeValue', id: string, name?: string | null, value?: string | null } | null> }>, variants?: Array<{ __typename?: 'ProductVariant', name: string, sku?: string | null, attributes: Array<{ __typename?: 'SelectedAttribute', attribute: { __typename?: 'Attribute', name?: string | null, id: string }, values: Array<{ __typename?: 'AttributeValue', value?: string | null, name?: string | null, id: string } | null> }>, pricing?: { __typename?: 'VariantPricingInfo', discount?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null, price?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null } | null> | null, defaultVariant?: { __typename?: 'ProductVariant', name: string, sku?: string | null, attributes: Array<{ __typename?: 'SelectedAttribute', attribute: { __typename?: 'Attribute', name?: string | null, id: string }, values: Array<{ __typename?: 'AttributeValue', value?: string | null, name?: string | null, id: string } | null> }>, pricing?: { __typename?: 'VariantPricingInfo', discount?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null, price?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null } | null, productType: { __typename: 'ProductType', name: string, slug: string, hasVariants: boolean, isDigital: boolean, weight?: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null }, media?: Array<{ __typename?: 'ProductMedia', url: string, alt: string }> | null, thumbnail?: { __typename?: 'Image', url: string, alt?: string | null } | null, pricing?: { __typename?: 'ProductPricingInfo', onSale?: boolean | null, discount?: { __typename?: 'TaxedMoney', currency: string, gross: { __typename?: 'Money', currency: string, amount: number } } | null, priceRange?: { __typename?: 'TaxedMoneyRange', start?: { __typename?: 'TaxedMoney', net: { __typename?: 'Money', currency: string, amount: number }, gross: { __typename?: 'Money', currency: string, amount: number } } | null, stop?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null } | null };
+export type SingleProductFragment = { __typename: 'Product', name: string, id: string, slug: string, attributes: Array<{ __typename?: 'SelectedAttribute', attribute: { __typename?: 'Attribute', id: string, name?: string | null, unit?: MeasurementUnitsEnum | null }, values: Array<{ __typename?: 'AttributeValue', id: string, name?: string | null, value?: string | null } | null> }>, variants?: Array<{ __typename?: 'ProductVariant', id: string, name: string, sku?: string | null, attributes: Array<{ __typename?: 'SelectedAttribute', attribute: { __typename?: 'Attribute', name?: string | null, id: string }, values: Array<{ __typename?: 'AttributeValue', value?: string | null, name?: string | null, id: string } | null> }>, pricing?: { __typename?: 'VariantPricingInfo', discount?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null, price?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null } | null> | null, defaultVariant?: { __typename?: 'ProductVariant', id: string, name: string, sku?: string | null, attributes: Array<{ __typename?: 'SelectedAttribute', attribute: { __typename?: 'Attribute', name?: string | null, id: string }, values: Array<{ __typename?: 'AttributeValue', value?: string | null, name?: string | null, id: string } | null> }>, pricing?: { __typename?: 'VariantPricingInfo', discount?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null, price?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null } | null, productType: { __typename: 'ProductType', name: string, slug: string, hasVariants: boolean, isDigital: boolean, weight?: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null }, media?: Array<{ __typename?: 'ProductMedia', url: string, alt: string }> | null, thumbnail?: { __typename?: 'Image', url: string, alt?: string | null } | null, pricing?: { __typename?: 'ProductPricingInfo', onSale?: boolean | null, discount?: { __typename?: 'TaxedMoney', currency: string, gross: { __typename?: 'Money', currency: string, amount: number } } | null, priceRange?: { __typename?: 'TaxedMoneyRange', start?: { __typename?: 'TaxedMoney', net: { __typename?: 'Money', currency: string, amount: number }, gross: { __typename?: 'Money', currency: string, amount: number } } | null, stop?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null } | null };
 
-export type ProductVariantFragment = { __typename?: 'ProductVariant', name: string, sku?: string | null, attributes: Array<{ __typename?: 'SelectedAttribute', attribute: { __typename?: 'Attribute', name?: string | null, id: string }, values: Array<{ __typename?: 'AttributeValue', value?: string | null, name?: string | null, id: string } | null> }>, pricing?: { __typename?: 'VariantPricingInfo', discount?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null, price?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null };
+export type ProductVariantFragment = { __typename?: 'ProductVariant', id: string, name: string, sku?: string | null, attributes: Array<{ __typename?: 'SelectedAttribute', attribute: { __typename?: 'Attribute', name?: string | null, id: string }, values: Array<{ __typename?: 'AttributeValue', value?: string | null, name?: string | null, id: string } | null> }>, pricing?: { __typename?: 'VariantPricingInfo', discount?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null, price?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null };
 
 export type AddressFragment = { __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null };
 
@@ -13968,10 +13229,36 @@ export type UserFragment = { __typename: 'User', id: string, lastLogin?: any | n
 export type RegisterMutationVariables = Exact<{
   phone: Scalars['String'];
   password: Scalars['String'];
+  firstName: Scalars['String'];
+  lastName?: InputMaybe<Scalars['String']>;
 }>;
 
 
 export type RegisterMutation = { __typename?: 'Mutation', accountRegister?: { __typename?: 'AccountRegister', errors: Array<{ __typename?: 'AccountError', message?: string | null, field?: string | null }>, user?: { __typename: 'User', id: string, lastLogin?: any | null, phone: string, firstName: string, lastName: string, avatar?: { __typename: 'Image', url: string } | null, addresses?: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null } | null> | null, defaultShippingAddress?: { __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null } | null } | null } | null };
+
+export type CheckoutCompleteMutationVariables = Exact<{
+  checkoutId?: InputMaybe<Scalars['ID']>;
+}>;
+
+
+export type CheckoutCompleteMutation = { __typename?: 'Mutation', checkoutComplete?: { __typename?: 'CheckoutComplete', errors: Array<{ __typename?: 'CheckoutError', field?: string | null, message?: string | null }>, order?: { __typename?: 'Order', id: string, created: any } | null } | null };
+
+export type CheckoutErrorFragment = { __typename: 'CheckoutError', field?: string | null, code: CheckoutErrorCode, message?: string | null };
+
+export type CheckoutCreateMutationVariables = Exact<{
+  input: CheckoutCreateInput;
+}>;
+
+
+export type CheckoutCreateMutation = { __typename?: 'Mutation', checkoutCreate?: { __typename: 'CheckoutCreate', checkout?: { __typename: 'Checkout', id: string, token: any, isShippingRequired: boolean, totalPrice?: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } | null, shippingPrice?: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number } } | null } | null, errors: Array<{ __typename: 'CheckoutError', field?: string | null, code: CheckoutErrorCode, message?: string | null }> } | null };
+
+export type ConfirmAccountMutationVariables = Exact<{
+  code: Scalars['String'];
+  phone: Scalars['String'];
+}>;
+
+
+export type ConfirmAccountMutation = { __typename?: 'Mutation', confirmAccount?: { __typename: 'ConfirmAccount', accountErrors: Array<{ __typename: 'AccountError', field?: string | null, message?: string | null, code: AccountErrorCode }>, user?: { __typename: 'User', id: string, lastLogin?: any | null, phone: string, firstName: string, lastName: string, avatar?: { __typename: 'Image', url: string } | null, addresses?: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null } | null> | null, defaultShippingAddress?: { __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null } | null } | null } | null };
 
 export type LoginMutationVariables = Exact<{
   phone: Scalars['String'];
@@ -13996,7 +13283,7 @@ export type CategoryQueryVariables = Exact<{
 }>;
 
 
-export type CategoryQuery = { __typename?: 'Query', category?: { __typename?: 'Category', name: string, products?: { __typename?: 'ProductCountableConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'ProductCountableEdge', cursor: string, node: { __typename: 'Product', name: string, id: string, slug: string, media?: Array<{ __typename?: 'ProductMedia', url: string, alt: string }> | null, thumbnail?: { __typename?: 'Image', url: string, alt?: string | null } | null, pricing?: { __typename?: 'ProductPricingInfo', onSale?: boolean | null, discount?: { __typename?: 'TaxedMoney', currency: string, gross: { __typename?: 'Money', currency: string, amount: number } } | null, priceRange?: { __typename?: 'TaxedMoneyRange', start?: { __typename?: 'TaxedMoney', net: { __typename?: 'Money', currency: string, amount: number }, gross: { __typename?: 'Money', currency: string, amount: number } } | null, stop?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null } | null } }> } | null } | null };
+export type CategoryQuery = { __typename?: 'Query', category?: { __typename?: 'Category', name: string, products?: { __typename?: 'ProductCountableConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'ProductCountableEdge', cursor: string, node: { __typename: 'Product', name: string, id: string, slug: string, media?: Array<{ __typename?: 'ProductMedia', url: string, alt: string }> | null, thumbnail?: { __typename?: 'Image', url: string, alt?: string | null } | null, defaultVariant?: { __typename?: 'ProductVariant', id: string, name: string, sku?: string | null, attributes: Array<{ __typename?: 'SelectedAttribute', attribute: { __typename?: 'Attribute', name?: string | null, id: string }, values: Array<{ __typename?: 'AttributeValue', value?: string | null, name?: string | null, id: string } | null> }>, pricing?: { __typename?: 'VariantPricingInfo', discount?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null, price?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null } | null, pricing?: { __typename?: 'ProductPricingInfo', onSale?: boolean | null, discount?: { __typename?: 'TaxedMoney', currency: string, gross: { __typename?: 'Money', currency: string, amount: number } } | null, priceRange?: { __typename?: 'TaxedMoneyRange', start?: { __typename?: 'TaxedMoney', net: { __typename?: 'Money', currency: string, amount: number }, gross: { __typename?: 'Money', currency: string, amount: number } } | null, stop?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null } | null } }> } | null } | null };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -14018,14 +13305,14 @@ export type AllProductsQueryVariables = Exact<{
 }>;
 
 
-export type AllProductsQuery = { __typename?: 'Query', products?: { __typename: 'ProductCountableConnection', totalCount?: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', name: string, id: string, slug: string, media?: Array<{ __typename?: 'ProductMedia', url: string, alt: string }> | null, thumbnail?: { __typename?: 'Image', url: string, alt?: string | null } | null, pricing?: { __typename?: 'ProductPricingInfo', onSale?: boolean | null, discount?: { __typename?: 'TaxedMoney', currency: string, gross: { __typename?: 'Money', currency: string, amount: number } } | null, priceRange?: { __typename?: 'TaxedMoneyRange', start?: { __typename?: 'TaxedMoney', net: { __typename?: 'Money', currency: string, amount: number }, gross: { __typename?: 'Money', currency: string, amount: number } } | null, stop?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null } | null } }> } | null };
+export type AllProductsQuery = { __typename?: 'Query', products?: { __typename: 'ProductCountableConnection', totalCount?: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', name: string, id: string, slug: string, media?: Array<{ __typename?: 'ProductMedia', url: string, alt: string }> | null, thumbnail?: { __typename?: 'Image', url: string, alt?: string | null } | null, defaultVariant?: { __typename?: 'ProductVariant', id: string, name: string, sku?: string | null, attributes: Array<{ __typename?: 'SelectedAttribute', attribute: { __typename?: 'Attribute', name?: string | null, id: string }, values: Array<{ __typename?: 'AttributeValue', value?: string | null, name?: string | null, id: string } | null> }>, pricing?: { __typename?: 'VariantPricingInfo', discount?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null, price?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null } | null, pricing?: { __typename?: 'ProductPricingInfo', onSale?: boolean | null, discount?: { __typename?: 'TaxedMoney', currency: string, gross: { __typename?: 'Money', currency: string, amount: number } } | null, priceRange?: { __typename?: 'TaxedMoneyRange', start?: { __typename?: 'TaxedMoney', net: { __typename?: 'Money', currency: string, amount: number }, gross: { __typename?: 'Money', currency: string, amount: number } } | null, stop?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null } | null } }> } | null };
 
 export type SingleProductQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type SingleProductQuery = { __typename?: 'Query', product?: { __typename: 'Product', seoTitle?: string | null, seoDescription?: string | null, description?: any | null, rating?: number | null, channel?: string | null, name: string, id: string, slug: string, category?: { __typename?: 'Category', id: string, name: string, slug: string, level: number, backgroundImage?: { __typename?: 'Image', url: string, alt?: string | null } | null } | null, attributes: Array<{ __typename?: 'SelectedAttribute', attribute: { __typename?: 'Attribute', id: string, name?: string | null, unit?: MeasurementUnitsEnum | null }, values: Array<{ __typename?: 'AttributeValue', id: string, name?: string | null, value?: string | null } | null> }>, variants?: Array<{ __typename?: 'ProductVariant', name: string, sku?: string | null, attributes: Array<{ __typename?: 'SelectedAttribute', attribute: { __typename?: 'Attribute', name?: string | null, id: string }, values: Array<{ __typename?: 'AttributeValue', value?: string | null, name?: string | null, id: string } | null> }>, pricing?: { __typename?: 'VariantPricingInfo', discount?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null, price?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null } | null> | null, defaultVariant?: { __typename?: 'ProductVariant', name: string, sku?: string | null, attributes: Array<{ __typename?: 'SelectedAttribute', attribute: { __typename?: 'Attribute', name?: string | null, id: string }, values: Array<{ __typename?: 'AttributeValue', value?: string | null, name?: string | null, id: string } | null> }>, pricing?: { __typename?: 'VariantPricingInfo', discount?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null, price?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null } | null, productType: { __typename: 'ProductType', name: string, slug: string, hasVariants: boolean, isDigital: boolean, weight?: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null }, media?: Array<{ __typename?: 'ProductMedia', url: string, alt: string }> | null, thumbnail?: { __typename?: 'Image', url: string, alt?: string | null } | null, pricing?: { __typename?: 'ProductPricingInfo', onSale?: boolean | null, discount?: { __typename?: 'TaxedMoney', currency: string, gross: { __typename?: 'Money', currency: string, amount: number } } | null, priceRange?: { __typename?: 'TaxedMoneyRange', start?: { __typename?: 'TaxedMoney', net: { __typename?: 'Money', currency: string, amount: number }, gross: { __typename?: 'Money', currency: string, amount: number } } | null, stop?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null } | null } | null };
+export type SingleProductQuery = { __typename?: 'Query', product?: { __typename: 'Product', seoTitle?: string | null, seoDescription?: string | null, description?: any | null, rating?: number | null, channel?: string | null, name: string, id: string, slug: string, category?: { __typename?: 'Category', id: string, name: string, slug: string, level: number, backgroundImage?: { __typename?: 'Image', url: string, alt?: string | null } | null } | null, attributes: Array<{ __typename?: 'SelectedAttribute', attribute: { __typename?: 'Attribute', id: string, name?: string | null, unit?: MeasurementUnitsEnum | null }, values: Array<{ __typename?: 'AttributeValue', id: string, name?: string | null, value?: string | null } | null> }>, variants?: Array<{ __typename?: 'ProductVariant', id: string, name: string, sku?: string | null, attributes: Array<{ __typename?: 'SelectedAttribute', attribute: { __typename?: 'Attribute', name?: string | null, id: string }, values: Array<{ __typename?: 'AttributeValue', value?: string | null, name?: string | null, id: string } | null> }>, pricing?: { __typename?: 'VariantPricingInfo', discount?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null, price?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null } | null> | null, defaultVariant?: { __typename?: 'ProductVariant', id: string, name: string, sku?: string | null, attributes: Array<{ __typename?: 'SelectedAttribute', attribute: { __typename?: 'Attribute', name?: string | null, id: string }, values: Array<{ __typename?: 'AttributeValue', value?: string | null, name?: string | null, id: string } | null> }>, pricing?: { __typename?: 'VariantPricingInfo', discount?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null, price?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null } | null, productType: { __typename: 'ProductType', name: string, slug: string, hasVariants: boolean, isDigital: boolean, weight?: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null }, media?: Array<{ __typename?: 'ProductMedia', url: string, alt: string }> | null, thumbnail?: { __typename?: 'Image', url: string, alt?: string | null } | null, pricing?: { __typename?: 'ProductPricingInfo', onSale?: boolean | null, discount?: { __typename?: 'TaxedMoney', currency: string, gross: { __typename?: 'Money', currency: string, amount: number } } | null, priceRange?: { __typename?: 'TaxedMoneyRange', start?: { __typename?: 'TaxedMoney', net: { __typename?: 'Money', currency: string, amount: number }, gross: { __typename?: 'Money', currency: string, amount: number } } | null, stop?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null } | null } | null };
 
 export type SearchProductsQueryVariables = Exact<{
   search: Scalars['String'];
@@ -14046,6 +13333,38 @@ export const CategoryAtributesFragmentDoc = gql`
   }
 }
     `;
+export const ProductVariantFragmentDoc = gql`
+    fragment productVariant on ProductVariant {
+  id
+  name
+  sku
+  attributes {
+    attribute {
+      name
+      id
+    }
+    values {
+      value
+      name
+      id
+    }
+  }
+  pricing {
+    discount {
+      gross {
+        currency
+        amount
+      }
+    }
+    price {
+      gross {
+        currency
+        amount
+      }
+    }
+  }
+}
+    `;
 export const ProductFragmentDoc = gql`
     fragment product on Product {
   name
@@ -14058,6 +13377,9 @@ export const ProductFragmentDoc = gql`
   thumbnail {
     url
     alt
+  }
+  defaultVariant {
+    ...productVariant
   }
   pricing {
     onSale
@@ -14089,38 +13411,7 @@ export const ProductFragmentDoc = gql`
   }
   __typename
 }
-    `;
-export const ProductVariantFragmentDoc = gql`
-    fragment productVariant on ProductVariant {
-  name
-  sku
-  attributes {
-    attribute {
-      name
-      id
-    }
-    values {
-      value
-      name
-      id
-    }
-  }
-  pricing {
-    discount {
-      gross {
-        currency
-        amount
-      }
-    }
-    price {
-      gross {
-        currency
-        amount
-      }
-    }
-  }
-}
-    `;
+    ${ProductVariantFragmentDoc}`;
 export const SingleProductFragmentDoc = gql`
     fragment singleProduct on Product {
   ...product
@@ -14196,9 +13487,19 @@ export const UserFragmentDoc = gql`
   __typename
 }
     ${AddressFragmentDoc}`;
+export const CheckoutErrorFragmentDoc = gql`
+    fragment CheckoutError on CheckoutError {
+  field
+  code
+  message
+  __typename
+}
+    `;
 export const RegisterDocument = gql`
-    mutation register($phone: String!, $password: String!) {
-  accountRegister(input: {phone: $phone, password: $password}) {
+    mutation register($phone: String!, $password: String!, $firstName: String!, $lastName: String) {
+  accountRegister(
+    input: {phone: $phone, password: $password, firstName: $firstName, lastName: $lastName}
+  ) {
     errors {
       message
       field
@@ -14226,6 +13527,8 @@ export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, Regis
  *   variables: {
  *      phone: // value for 'phone'
  *      password: // value for 'password'
+ *      firstName: // value for 'firstName'
+ *      lastName: // value for 'lastName'
  *   },
  * });
  */
@@ -14236,6 +13539,148 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const CheckoutCompleteDocument = gql`
+    mutation checkoutComplete($checkoutId: ID) {
+  checkoutComplete(checkoutId: $checkoutId) {
+    errors {
+      field
+      message
+    }
+    order {
+      id
+      created
+    }
+  }
+}
+    `;
+export type CheckoutCompleteMutationFn = Apollo.MutationFunction<CheckoutCompleteMutation, CheckoutCompleteMutationVariables>;
+
+/**
+ * __useCheckoutCompleteMutation__
+ *
+ * To run a mutation, you first call `useCheckoutCompleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCheckoutCompleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [checkoutCompleteMutation, { data, loading, error }] = useCheckoutCompleteMutation({
+ *   variables: {
+ *      checkoutId: // value for 'checkoutId'
+ *   },
+ * });
+ */
+export function useCheckoutCompleteMutation(baseOptions?: Apollo.MutationHookOptions<CheckoutCompleteMutation, CheckoutCompleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CheckoutCompleteMutation, CheckoutCompleteMutationVariables>(CheckoutCompleteDocument, options);
+      }
+export type CheckoutCompleteMutationHookResult = ReturnType<typeof useCheckoutCompleteMutation>;
+export type CheckoutCompleteMutationResult = Apollo.MutationResult<CheckoutCompleteMutation>;
+export type CheckoutCompleteMutationOptions = Apollo.BaseMutationOptions<CheckoutCompleteMutation, CheckoutCompleteMutationVariables>;
+export const CheckoutCreateDocument = gql`
+    mutation checkoutCreate($input: CheckoutCreateInput!) {
+  checkoutCreate(input: $input) {
+    checkout {
+      id
+      token
+      totalPrice {
+        gross {
+          amount
+          currency
+          __typename
+        }
+        __typename
+      }
+      isShippingRequired
+      shippingPrice {
+        gross {
+          amount
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    errors {
+      ...CheckoutError
+      __typename
+    }
+    __typename
+  }
+}
+    ${CheckoutErrorFragmentDoc}`;
+export type CheckoutCreateMutationFn = Apollo.MutationFunction<CheckoutCreateMutation, CheckoutCreateMutationVariables>;
+
+/**
+ * __useCheckoutCreateMutation__
+ *
+ * To run a mutation, you first call `useCheckoutCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCheckoutCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [checkoutCreateMutation, { data, loading, error }] = useCheckoutCreateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCheckoutCreateMutation(baseOptions?: Apollo.MutationHookOptions<CheckoutCreateMutation, CheckoutCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CheckoutCreateMutation, CheckoutCreateMutationVariables>(CheckoutCreateDocument, options);
+      }
+export type CheckoutCreateMutationHookResult = ReturnType<typeof useCheckoutCreateMutation>;
+export type CheckoutCreateMutationResult = Apollo.MutationResult<CheckoutCreateMutation>;
+export type CheckoutCreateMutationOptions = Apollo.BaseMutationOptions<CheckoutCreateMutation, CheckoutCreateMutationVariables>;
+export const ConfirmAccountDocument = gql`
+    mutation confirmAccount($code: String!, $phone: String!) {
+  confirmAccount(token: $code, phone: $phone) {
+    accountErrors {
+      field
+      message
+      code
+      __typename
+    }
+    user {
+      ...User
+      __typename
+    }
+    __typename
+  }
+}
+    ${UserFragmentDoc}`;
+export type ConfirmAccountMutationFn = Apollo.MutationFunction<ConfirmAccountMutation, ConfirmAccountMutationVariables>;
+
+/**
+ * __useConfirmAccountMutation__
+ *
+ * To run a mutation, you first call `useConfirmAccountMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useConfirmAccountMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [confirmAccountMutation, { data, loading, error }] = useConfirmAccountMutation({
+ *   variables: {
+ *      code: // value for 'code'
+ *      phone: // value for 'phone'
+ *   },
+ * });
+ */
+export function useConfirmAccountMutation(baseOptions?: Apollo.MutationHookOptions<ConfirmAccountMutation, ConfirmAccountMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ConfirmAccountMutation, ConfirmAccountMutationVariables>(ConfirmAccountDocument, options);
+      }
+export type ConfirmAccountMutationHookResult = ReturnType<typeof useConfirmAccountMutation>;
+export type ConfirmAccountMutationResult = Apollo.MutationResult<ConfirmAccountMutation>;
+export type ConfirmAccountMutationOptions = Apollo.BaseMutationOptions<ConfirmAccountMutation, ConfirmAccountMutationVariables>;
 export const LoginDocument = gql`
     mutation login($phone: String!, $password: String!) {
   tokenCreate(password: $password, phone: $phone) {

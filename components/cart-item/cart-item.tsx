@@ -1,5 +1,4 @@
 import React from 'react';
-import ProductImage from 'assets/png/singleproduct.png';
 import { CartItemImage, CartItemWrapper } from './cart-item.styles';
 import Image from 'next/image';
 import { Stack, Typography } from '@mui/material';
@@ -12,6 +11,7 @@ import { CartProduct, removeItem } from 'redux-state/features/cart/cart-slice';
 import { useAppDispatch } from 'redux-state/hook';
 import Link from 'next/link';
 import { Paths } from 'config/site-paths';
+import { LazyImage } from 'components/image';
 
 const CartItem: React.FC<CartProduct> = ({
   count,
@@ -31,10 +31,7 @@ const CartItem: React.FC<CartProduct> = ({
   return (
     <CartItemWrapper>
       <CartItemImage>
-        <Image
-          layout="fixed"
-          width={200}
-          height={200}
+        <LazyImage
           src={image}
           alt="product_image"
         />
@@ -45,6 +42,7 @@ const CartItem: React.FC<CartProduct> = ({
           justifyContent="space-between"
           direction="row"
           width="100%"
+          flexWrap="wrap"
         >
           <Link href={`${Paths.PRODUCT_DETAILS}${slug}`}>
             <a>
@@ -56,8 +54,8 @@ const CartItem: React.FC<CartProduct> = ({
           </Typography>
         </Stack>
         <Typography variant="subtitle2">{variant}</Typography>
-        <Stack direction="row">
-          <Stack width="100%" direction="row">
+        <Stack flexWrap="wrap" direction="row">
+          <Stack flexWrap="wrap" marginRight="auto" direction="row">
             <Button
               sx={{ color: colors.grey.default, padding: '0.625em .2em' }}
               size="small"

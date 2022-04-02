@@ -26,12 +26,12 @@ const Cart: NextPage = () => {
           </Stack>
         ) : (
           <Grid container columnSpacing={2}>
-            <Grid item xs={9}>
+            <Grid  sm={12} md={8} item  xl={9}>
               {cartProducts.map((products) => (
                 <CartItem key={products.id} {...products} />
               ))}
             </Grid>
-            <Grid item xs={3}>
+            <Grid sm={12}  md={4} item  xl={3}>
               <CartSummary />
             </Grid>
           </Grid>

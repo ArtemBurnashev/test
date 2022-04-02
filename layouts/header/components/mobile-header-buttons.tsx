@@ -5,6 +5,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Stack,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
@@ -13,10 +14,12 @@ import Heart from 'components/icons/heart';
 import Phone from 'components/icons/phone';
 import Profile from 'components/icons/profile';
 import { Paths } from 'config/site-paths';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { useAppSelector } from 'redux-state/hook';
 import { headerTopLinks } from '../header.data';
+import LogoImage from 'assets/png/logo.png';
 
 const MobileHeaderButtons = () => {
   const { productsCount } = useAppSelector((state) => state.cart);
@@ -25,6 +28,13 @@ const MobileHeaderButtons = () => {
 
   return (
     <List>
+      <Stack direction="row" justifyContent="center">
+        <Link href="/">
+          <a>
+            <Image layout="fixed" src={LogoImage} alt="logo" />
+          </a>
+        </Link>
+      </Stack>
       <ListItem button>
         <ListItemIcon>
           <Profile />

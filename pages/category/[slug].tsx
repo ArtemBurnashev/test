@@ -61,8 +61,9 @@ const CategoryProducts: NextPage = () => {
                       name={product.name}
                       media={product?.media}
                       thumbnail={product.thumbnail?.url}
-                      discount={product.pricing?.discount?.gross}
+                      discount={product.defaultVariant?.pricing?.discount?.gross}
                       slug={product.slug}
+                      startPrice={product.defaultVariant?.pricing?.price?.gross}
                       id={product.id}
                     />
                   </Grid>

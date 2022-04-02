@@ -19,13 +19,13 @@ const Home: NextPage = () => {
         <ProductCarousel label="Смартфоны и планшеты" />
         <Action />
         <Grid columnSpacing={4} container>
-          <Grid item xs={4}>
+          <Grid item md={6} lg={4}>
             <ProductColumn label="Смартфоны и планшеты" />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item md={6} lg={4}>
             <ProductColumn label="Ноутбуки, планшеты и компьютеры" />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item md={6} lg={4}>
             <ProductColumn label="Смартфоны и планшеты" />
           </Grid>
         </Grid>
