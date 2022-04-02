@@ -10,6 +10,11 @@ export const CartItemWrapper = styled.div`
 export const CartItemImage = styled.div`
     width: 12.5rem;
     height: 12.5rem;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 `;
 
 export const ControllerWrapper = styled.div`
@@ -34,5 +39,6 @@ export const ControllerButton = styled.button`
 
 export const SummaryWrapper = styled.div`
     background-color: #f7f7f7;
-    padding: 1.5rem 1.5rem 0 1.5rem;
+    padding-top: 1.5rem;
+    width: 100%
 `

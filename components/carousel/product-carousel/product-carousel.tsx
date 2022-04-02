@@ -115,10 +115,10 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ label }) => {
             name={product.node.name}
             media={product.node?.media}
             thumbnail={product.node.thumbnail?.url}
-            discount={product.node.pricing?.discount?.gross}
+            discount={product.node.defaultVariant?.pricing?.discount?.gross}
             slug={product.node.slug}
-            id={product.node.id}
-            startPrice={product.node.pricing?.priceRange?.start?.gross}
+            id={product.node.defaultVariant?.id}
+            startPrice={product.node.defaultVariant?.pricing?.price?.gross}
           />
         ))}
       </Slider>
