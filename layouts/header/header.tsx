@@ -31,6 +31,7 @@ import Catalog from './components/catalog';
 import Close from 'components/icons/close';
 import Hamburger from 'components/icons/hamburger';
 import Auth from './components/auth';
+import { CategoryNavbar } from 'components/category-navbar';
 
 const Header = () => {
   const theme = useTheme();
@@ -175,6 +176,7 @@ const Header = () => {
           )}
         </Stack>
       </Container>
+      <CategoryNavbar/>
     </Box>
   );
 };

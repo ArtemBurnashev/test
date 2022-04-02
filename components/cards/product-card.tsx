@@ -71,7 +71,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <ProductCardWrapper
-      onClick={() => navigator.push(`${Paths.PRODUCT_DETAILS}${slug}`)}
+      
     >
       {discount && startPrice && (
         <ProductCardLabel isNew={!!!discount}>
@@ -92,6 +92,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </ProductCardImageWrapper>
         <Typography
           variant="subtitle2"
+          sx={{":hover":{
+            color: "#FEEE00",
+          }}}
+          onClick={() => navigator.push(`${Paths.PRODUCT_DETAILS}${slug}`)}
         >
           {name}
         </Typography>

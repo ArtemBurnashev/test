@@ -70,12 +70,11 @@ const CategoryCarousel: FC = () => {
       >
         {data?.categories?.edges.map((item) => (
           <div
-            onClick={() =>
-              router.push(`${Paths.CATEGORY_PRODUCTS}${item.node.slug}`)
-            }
+            
             key={item.node.id}
           >
             <CategoryCard
+              slug={item.node.slug}
               label={item.node.name}
               image={item.node?.backgroundImage}
             />
