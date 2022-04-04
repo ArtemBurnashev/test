@@ -44,7 +44,6 @@ const ProfilePage: NextPage = () => {
               value={`${data?.me?.firstName} ${data?.me?.lastName}`}
             />
             <DataLineWithArrow field="Номер телефона" value={data?.me?.phone} />
-            <DataLineWithArrow field="Пол" value="Мужской" />
             <DataLineWithArrow field="Электронная почтa" value="" />
             <Button sx={{ maxWidth: 'max-content' }} color="secondary">
               ИЗМЕНИТЬ

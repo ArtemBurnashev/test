@@ -1,30 +1,28 @@
-import { Breadcrumbs, Typography } from "@mui/material";
-import Link from "next/link";
-import React from "react";
+import { Breadcrumbs, Typography } from '@mui/material';
+import Link from 'next/link';
+import React from 'react';
 interface BreadProp {
   data: {
-    name?: string
-    link?: string
-  }[]
+    name?: string;
+    link?: string;
+  }[];
 }
-
 
 export const Breadcrumb: React.FC<BreadProp> = ({ data }) => {
   const allElements = [...data];
   const lastElement = allElements.splice(data.length - 1, 1);
 
-
   return (
     <Breadcrumbs sx={{ pt: '12px', pb: '12px' }}>
       <Typography>
-        <Link href='/'>
-          Home
+        <Link href="/">
+          <a>Home</a>
         </Link>
       </Typography>
       {data.slice(0, data.length - 1).map((links) => (
         <Typography variant="subtitle2">
-          <Link href={links.link || ""}>
-            {links?.name}
+          <Link href={links.link || ''}>
+            <a>{links?.name}</a>
           </Link>
         </Typography>
       ))}
@@ -32,5 +30,5 @@ export const Breadcrumb: React.FC<BreadProp> = ({ data }) => {
         {lastElement[0].name}
       </Typography>
     </Breadcrumbs>
-  )
-}
+  );
+};

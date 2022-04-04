@@ -1,41 +1,29 @@
-import React from 'react';
-import Router from 'next/router';
-import { Paths } from 'config/site-paths';
 import { NextPage } from 'next';
-import { store } from 'redux-state/store';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { loadState } from 'utils/storage';
+const withAuth = (WrappedComponent: NextPage) => {
+  return (props: any) => {
+    // checks whether we are on client / browser or server.
+    if (typeof window !== 'undefined') {
+      const Router = useRouter();
 
-/**
- * Check user authentication and authorization
- * It depends on you and your auth service provider.
- * @returns {{auth: null}}
- */
+      const { isAuthenticated } = loadState('user');
 
-export default (WrappedComponent: NextPage) => {
-  const userAuth = store.getState().user;
-  const hocComponent = ({ ...props }) => <WrappedComponent {...props} />;
-
-  hocComponent.getInitialProps = async (context: any) => {
-    // Are you an authorized user or not?
-    if (!userAuth?.isAuthenticated) {
-      // Handle server-side and client-side rendering.
-      if (context.res) {
-        context.res?.writeHead(302, {
-          Location: Paths.HOME,
-        });
-        context.res?.end();
-      } else {
-        Router.replace(Paths.HOME);
+      // If there is no access token we redirect to "/" page.
+      if (!isAuthenticated) {
+        Router.replace('/');
+        return null;
       }
-    } else if (WrappedComponent.getInitialProps) {
-      const wrappedProps = await WrappedComponent.getInitialProps({
-        ...context,
-        auth: userAuth,
-      });
-      return { ...wrappedProps, userAuth };
+
+      // If this is an accessToken we just render the component that was passed with all its props
+
+      return <WrappedComponent {...props} />;
     }
 
-    return { userAuth };
+    // If we are on server, return null
+    return null;
   };
-
-  return hocComponent;
 };
+
+export default withAuth;

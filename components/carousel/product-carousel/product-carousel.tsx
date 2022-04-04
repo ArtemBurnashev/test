@@ -4,7 +4,7 @@ import Slider from 'react-slick';
 import Arrow from 'components/icons/inline-arrow';
 import { ProductCard } from 'components/cards';
 import { Box, Stack, Typography, useTheme } from '@mui/material';
-import { useAllProductsQuery } from 'graphql/generated.graphql';
+import { useAllProductsQuery, useCategoryLazyQuery, useCategoryQuery } from 'graphql/generated.graphql';
 import { ProductCardLoading } from 'components/cards/loading-cards';
 
 const Card = styled.div<{ height?: number; fullBorderRadius?: boolean }>`
@@ -17,15 +17,18 @@ const NextArrow = styled(Arrow)`
 
 interface ProductCarouselProps {
   label?: string;
+  slug: string
 }
 
-const ProductCarousel: FC<ProductCarouselProps> = ({ label }) => {
+const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug }) => {
   const nextArrowRef = useRef<HTMLDivElement>(null);
   const prevArrowRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
-  const { data, loading } = useAllProductsQuery({
-    variables: { first: 10, search: '', cursor: '' },
+  const {data, loading} = useCategoryQuery({
+    variables: { first: 10, cursor: '', slug },
   });
+
+  const products = data?.category?.products?.edges.map(edge => edge.node)
 
   if (loading) {
     return (
@@ -109,16 +112,16 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ label }) => {
           },
         ]}
       >
-        {data?.products?.edges.map((product) => (
+        {products?.map((product) => (
           <ProductCard
-            key={product.node.id}
-            name={product.node.name}
-            media={product.node?.media}
-            thumbnail={product.node.thumbnail?.url}
-            discount={product.node.defaultVariant?.pricing?.discount?.gross}
-            slug={product.node.slug}
-            id={product.node.defaultVariant?.id}
-            startPrice={product.node.defaultVariant?.pricing?.price?.gross}
+            key={product.id}
+            name={product.name}
+            media={product?.media}
+            thumbnail={product.thumbnail?.url}
+            discount={product.defaultVariant?.pricing?.discount?.gross}
+            slug={product.slug}
+            id={product.id}
+            startPrice={product.defaultVariant?.pricing?.price?.gross}
           />
         ))}
       </Slider>

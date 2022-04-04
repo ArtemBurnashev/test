@@ -7,7 +7,7 @@ import { useAppSelector } from 'redux-state/hook';
 import { SummaryWrapper } from './cart-item.styles';
 
 const CartSummary = () => {
-  const { totalPrice, productsCount } = useAppSelector((state) => state.cart);
+  const { totalPrice, productsCount, currency } = useAppSelector((state) => state.cart);
   const router = useRouter();
 
   return (
@@ -22,7 +22,7 @@ const CartSummary = () => {
         Введите промокод
       </Button>
       <Typography padding="0 1.5rem" variant="subtitle1" fontWeight={600}>
-        {totalPrice} Сум
+        {totalPrice} {currency}
       </Typography>
       <Button
         onClick={() => router.push(Paths.CHECKOUT)}

@@ -124,8 +124,15 @@ const Checkout = () => {
           </Stack>
         ) : (
           <Grid alignItems="column-reverse" container columnSpacing={2}>
-            <Grid mb={4} sx={{paddingRight:'16px'}} item md={6} sm={12} lg={6}>
-              <Typography fontWeight={600} variant="h1">
+            <Grid
+              mb={4}
+              sx={{ paddingRight: '16px' }}
+              item
+              md={6}
+              sm={12}
+              lg={6}
+            >
+              <Typography margin="1.5rem 0" fontWeight={600} variant="h1">
                 Оформление заказа
               </Typography>
               <form onSubmit={handleSubmit(handleCheckout)}>
@@ -134,7 +141,7 @@ const Checkout = () => {
                     sx={{ maxWidth: 'max-content' }}
                     color="secondary"
                     size="small"
-                    type='button'
+                    type="button"
                   >
                     Уже покупали у нас?
                   </Button>
@@ -309,11 +316,14 @@ const Checkout = () => {
                 </Stack>
               </form>
             </Grid>
-<<<<<<< pages/checkout.tsx
-            <Grid item lg={6} width="100%" sm={12} md={6}>
-=======
-            <Grid sx={{borderLeft:"1px solid #808080",paddingLeft:'16px'}} item xs={6}>
->>>>>>> pages/checkout.tsx
+            <Grid
+              sx={{ borderLeft: '1px solid #808080', paddingLeft: '16px' }}
+              item
+              lg={6}
+              width="100%"
+              sm={12}
+              md={6}
+            >
               <CheckoutInfo />
             </Grid>
           </Grid>

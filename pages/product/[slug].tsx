@@ -1,10 +1,18 @@
-import { Container, Grid, Rating, Stack, Typography } from '@mui/material';
+import {
+  Container,
+  Grid,
+  MenuItem,
+  Rating,
+  SelectChangeEvent,
+  Stack,
+  Typography,
+} from '@mui/material';
 import Spacer from 'components/common/spacer';
 import Heart from 'components/icons/heart';
 import colors from 'config/theme';
 import { Main } from 'layouts/main';
 import { NextPage } from 'next';
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import DataLine from 'components/common/dataline';
 import AddtoCardSingle from 'components/add-to-card/add-to-card-single';
@@ -16,6 +24,7 @@ import { LazyImage, ProductImage } from 'components/image';
 import { ImageCarousel } from 'components/carousel/img-carousel';
 import { Breadcrumb } from 'components/breadcrumbs';
 import { Paths } from 'config/site-paths';
+import Select from 'components/select';
 
 const SingleProduct: NextPage = () => {
   const router = useRouter();
@@ -24,18 +33,36 @@ const SingleProduct: NextPage = () => {
     variables: { slug: Array.isArray(slug) ? slug[0] : slug || '' },
     skip: !slug,
   });
+  const [open, setOpen] = React.useState(false);
+  const [variant, setVariant] = useState<any>(
+    data?.product?.defaultVariant || []
+  );
 
   if (loading) return <SingleProductPageLoading />;
-  
+
   const links = [
     {
       name: data?.product?.category?.name,
-      link: `${Paths.CATEGORY_PRODUCTS}${data?.product?.category?.slug}`
+      link: `${Paths.CATEGORY_PRODUCTS}${data?.product?.category?.slug}`,
     },
     {
       name: data?.product?.name,
+    },
+  ];
+
+  const handleChange = (event: SelectChangeEvent<any>) => {
+    if (data?.product?.variants) {
+      setVariant(data?.product?.variants[event.target.value]);
     }
-  ]
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
   return (
     <Main>
@@ -61,7 +88,18 @@ const SingleProduct: NextPage = () => {
               ({data?.product?.rating || 0})
             </Typography>
             <Heart style={{ marginLeft: '3rem' }} />
-            <Typography variant="subtitle2">В избранное</Typography>
+            {
+              <Typography
+                variant="subtitle2"
+                sx={(theme) => ({
+                  [theme.breakpoints.down('sm')]: {
+                    display: 'none',
+                  },
+                })}
+              >
+                В избранное
+              </Typography>
+            }
           </Stack>
           <Typography color={colors.grey.default}>
             арт.{' '}
@@ -71,8 +109,8 @@ const SingleProduct: NextPage = () => {
           </Typography>
         </Stack>
         <Spacer />
-        <Grid margin="1rem 0" container columnSpacing={2}>
-          <Grid item xs={4}>
+        <Grid margin="1rem 0" container>
+          <Grid sm={12} xs={12} item md={7} lg={4}>
             <ImageCarousel>
               {data?.product?.media?.map((media) => (
                 <ProductImage key={media.alt}>
@@ -84,13 +122,33 @@ const SingleProduct: NextPage = () => {
               ))}
             </ImageCarousel>
           </Grid>
-          <Grid item xs={5}>
-            {data?.product?.productType.hasVariants && (
+          <Grid item md={5} lg={5}>
+            {data?.product?.variants?.length === 1 && (
+              <Typography variant="body1" fontWeight={500}>
+                {variant.name}
+              </Typography>
+            )}
+            {data?.product?.variants && data?.product?.variants?.length > 1 && (
               <>
-                {' '}
-                <Typography variant="body1" fontWeight={500}>
-                  {data.product.defaultVariant?.attributes[0].attribute.name}
-                </Typography>
+                {
+                  <Typography variant="body1" fontWeight={500}>
+                    {data.product.defaultVariant?.attributes[0].attribute.name}
+                  </Typography>
+                }
+{/* 
+                <Select
+                  onOpen={handleClose}
+                  onChange={handleChange}
+                  onClose={handleOpen}
+                  defaultValue={data.product?.defaultVariant?.id}
+                  value={variant?.id}
+                >
+                  {data.product.variants.map((variant) => (
+                    <MenuItem key={variant?.id} value={variant?.id}>
+                      {variant?.name}
+                    </MenuItem>
+                  ))}
+                </Select> */}
                 <Stack
                   sx={{
                     padding: '8px 15px',
@@ -117,23 +175,23 @@ const SingleProduct: NextPage = () => {
               </Typography>
             </Stack>
           </Grid>
-          <Grid item xs={3}>
+          <Grid xs={12} sm={12} md={6} item lg={3}>
             <AddtoCardSingle
               price={data?.product?.defaultVariant?.pricing?.price?.gross}
               discount={data?.product?.defaultVariant?.pricing?.discount?.gross}
-              id={data?.product?.id || ''}
+              id={data?.product?.defaultVariant?.id || ''}
               image={
                 (data?.product?.media && data?.product?.media[0].url) || ''
               }
               name={data?.product?.name || ''}
-              variant={`${data?.product?.defaultVariant?.attributes[0].attribute.name}:${data?.product?.defaultVariant?.name}`}
+              variant={`${data?.product?.defaultVariant?.attributes.map(val => val?.attribute.name).join(" ")}:${data?.product?.defaultVariant?.name}`}
               slug={data?.product?.slug}
             />
           </Grid>
         </Grid>
         <Grid marginTop="2rem" marginBottom="2rem" container columnSpacing={4}>
           {data?.product?.attributes.map((attr) => (
-            <Grid item xs={6} key={attr.attribute.name}>
+            <Grid item xs={12} md={12} lg={6} key={attr.attribute.name}>
               <DataLineWithArrow
                 field={attr.attribute.name || ''}
                 value={attr.values.map((val) => val?.name).join(' ')}

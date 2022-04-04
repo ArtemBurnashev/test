@@ -74,6 +74,7 @@ const CategoryCarousel: FC = () => {
             key={item.node.id}
           >
             <CategoryCard
+              withMargin
               slug={item.node.slug}
               label={item.node.name}
               image={item.node?.backgroundImage}

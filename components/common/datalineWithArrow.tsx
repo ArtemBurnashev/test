@@ -13,12 +13,12 @@ const DataLineWithArrow: React.FC<{ field?: string; value?: string }> = ({
         sx={{
           display: 'flex',
           flexGrow: 1,
-
           height: '1px',
+          maxWidth: "45rem",
           backgroundColor: colors.grey.default,
         }}
       />
-      <Typography variant="subtitle2">{value}</Typography>
+      <Typography width="10rem" paddingLeft="auto" variant="subtitle2">{value}</Typography>
     </Stack>
   );
 };

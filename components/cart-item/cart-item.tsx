@@ -31,10 +31,7 @@ const CartItem: React.FC<CartProduct> = ({
   return (
     <CartItemWrapper>
       <CartItemImage>
-        <LazyImage
-          src={image}
-          alt="product_image"
-        />
+        <LazyImage src={image} alt="product_image" />
       </CartItemImage>
       <Stack width="100%" spacing={1}>
         <Stack
@@ -44,12 +41,27 @@ const CartItem: React.FC<CartProduct> = ({
           width="100%"
           flexWrap="wrap"
         >
-          <Link href={`${Paths.PRODUCT_DETAILS}${slug}`}>
-            <a>
-              <Typography variant="h2">{name}</Typography>
-            </a>
-          </Link>
-          <Typography fontWeight={600} variant="h2">
+          <Typography
+            sx={(theme) => ({
+              [theme.breakpoints.down('sm')]: {
+                fontSize: '1rem',
+              },
+            })}
+            variant="h2"
+          >
+            <Link href={`${Paths.PRODUCT_DETAILS}${slug}`}>
+              <a>{name}</a>
+            </Link>
+          </Typography>
+          <Typography
+            sx={(theme) => ({
+              [theme.breakpoints.down('sm')]: {
+                fontSize: '1rem',
+              },
+            })}
+            fontWeight={600}
+            variant="h2"
+          >
             {price?.amount} {price?.currency}
           </Typography>
         </Stack>

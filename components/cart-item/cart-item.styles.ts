@@ -3,13 +3,14 @@ import styled from 'styled-components';
 
 export const CartItemWrapper = styled.div`
   border-bottom: 1px solid ${colors.grey.controller};
-  padding: 20px;
+  padding: 20px 0;
   display: flex;
 `;
 
 export const CartItemImage = styled.div`
     width: 12.5rem;
     height: 12.5rem;
+    padding: 1rem;
     img {
       width: 100%;
       height: 100%;

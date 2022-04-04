@@ -41,9 +41,7 @@ const CatalogItem: React.FC<CatalogItemProps> = ({
   return (
     <ItemWrapper>
       <Link href={`${Paths.CATEGORY_PRODUCTS}${slug}`}>
-        <a>
-          <CategoryCard label={title} image={image} />
-        </a>
+        <CategoryCard label={title} image={image} />
       </Link>
       {children?.slice(0, expanded ? children.length : 3).map((child) => (
         <Link href={`${Paths.CATEGORY_PRODUCTS}${child.slug}`}>
