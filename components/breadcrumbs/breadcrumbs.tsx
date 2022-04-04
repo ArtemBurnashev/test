@@ -20,9 +20,9 @@ export const Breadcrumb: React.FC<BreadProp> = ({ data }) => {
         </Link>
       </Typography>
       {data.slice(0, data.length - 1).map((links) => (
-        <Typography variant="subtitle2">
-          <Link href={links.link || ''}>
-            <a>{links?.name}</a>
+        <Typography key={links.name} variant="subtitle2">
+          <Link href={links.link || ""}>
+            {links?.name}
           </Link>
         </Typography>
       ))}
