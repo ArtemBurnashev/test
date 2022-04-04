@@ -3,13 +3,19 @@ import styled from 'styled-components';
 
 export const CartItemWrapper = styled.div`
   border-bottom: 1px solid ${colors.grey.controller};
-  padding: 20px;
+  padding: 20px 0;
   display: flex;
 `;
 
 export const CartItemImage = styled.div`
     width: 12.5rem;
     height: 12.5rem;
+    padding: 1rem;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 `;
 
 export const ControllerWrapper = styled.div`
@@ -34,5 +40,6 @@ export const ControllerButton = styled.button`
 
 export const SummaryWrapper = styled.div`
     background-color: #f7f7f7;
-    padding: 1.5rem 1.5rem 0 1.5rem;
+    padding-top: 1.5rem;
+    width: 100%
 `

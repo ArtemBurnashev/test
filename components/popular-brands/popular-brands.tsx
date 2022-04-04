@@ -13,7 +13,7 @@ const PopularBrend = () => {
 };
 
 const PopularBrands = () => (
-  <Stack direction="row" flexWrap="wrap">
+  <Stack direction="row" margin="0 auto" flexWrap="wrap">
     <PopularBrend />
     <PopularBrend />
     <PopularBrend />

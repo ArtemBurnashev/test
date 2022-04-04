@@ -6,28 +6,23 @@ import Location from 'components/icons/location';
 
 export default [
   {
-    href:'/profile',
+    href: '/profile',
     label: 'Персональные данные',
     icon: Document,
   },
   {
-    href:'/profile/orders',
+    href: '/profile/orders',
     label: 'Мои заказы',
     icon: Bag,
   },
   {
-    href:'/profile',
+    href: '/profile/addresses',
     label: 'Адреса',
     icon: Location,
   },
   {
-    href:'/profile',
+    href: '/profile/saved',
     label: 'Избранные товары',
     icon: Heart,
-  },
-  {
-    href:'/profile',
-    label: 'Уведомления',
-    icon: Bell,
   },
 ];

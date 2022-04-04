@@ -26,7 +26,7 @@ const Footer = () => {
       <FooterTopWrapper>
         <Container maxWidth="xl">
           <Grid container rowSpacing={4}>
-            <Grid item xs={3}>
+            <Grid sm={6} xs={12} item lg={3}>
               <Stack spacing={2}>
                 <Logo>
                   <Image layout="fixed" src={LogoImage} alt="logo" />
@@ -59,7 +59,7 @@ const Footer = () => {
                 </Stack>
               </Stack>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} sm={6} lg={3}>
               <Stack spacing={2}>
                 {useFullLinks.map((info) => (
                   <Link key={info.label} href={info.link}>
@@ -68,7 +68,7 @@ const Footer = () => {
                 ))}
               </Stack>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} sm={6} lg={3}>
               <Stack spacing={2}>
                 {aboutSite.map((info) => (
                   <Link key={info.label} href={info.link}>
@@ -77,7 +77,7 @@ const Footer = () => {
                 ))}
               </Stack>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} sm={6} lg={3}>
               <Stack spacing={2}>
                 {siteInfo.map((info) => (
                   <Link key={info.label} href={info.link}>

@@ -14,9 +14,7 @@ export const CategoryCardWrapper = styled.div`
   align-items: center;
   justify-content: space-around;
   padding: 14px 16px;
-  max-width: 241px;
   gap: 1rem;
-  margin: 0 0.5rem;
   cursor: pointer;
 `;
 
@@ -28,13 +26,13 @@ export const CategoryCardImageWrapper = styled.div`
   }
 `;
 
-export const ProductCardWrapper = styled.div`
-  width: 214px;
+export const ProductCardWrapper = styled.div<{loading?: string}>`
   position: relative;
-  padding: 4px;
+  padding: 8px;
   max-height: 323px;
   height: 100%;
   cursor: pointer;
+  width: ${({loading}) => !!loading ? "224px": "unset"}
 `;
 
 export const ProductCardLabel = styled.div<{ isNew: boolean }>`
@@ -77,7 +75,6 @@ export const HorizontalCardWrapper = styled.div`
   padding: 8px 4px;
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
   gap: 1rem;
   max-height: 157px;
 `;

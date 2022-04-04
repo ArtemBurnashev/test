@@ -31,7 +31,7 @@ interface ProductCardProps {
     amount: number;
   };
   slug: string;
-  id: string;
+  id?: string;
   startPrice?: {
     currency: string;
     amount: number;
@@ -55,11 +55,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
   ) => {
     e.stopPropagation();
     if (isInCard) return navigator.push(Paths.CART);
+    if(id) 
     dispatch(
       addToCart({
         id,
         image: (media && media[0].url) || '',
-        price: startPrice,
+        price: discount || startPrice,
         is_saved: false,
         name,
         variant: "",

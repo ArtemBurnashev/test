@@ -16,21 +16,21 @@ const Home: NextPage = () => {
       </Box>
       <Container maxWidth="xl">
         <CategoyrCarousel />
-        <ProductCarousel label="Смартфоны и планшеты" />
+        <ProductCarousel slug="apparel" label="Смартфоны и планшеты" />
         <Action />
         <Grid columnSpacing={4} container>
-          <Grid item xs={4}>
-            <ProductColumn label="Смартфоны и планшеты" />
+          <Grid item md={6} lg={4}>
+            <ProductColumn slug='accessories' label="Смартфоны и планшеты" />
           </Grid>
-          <Grid item xs={4}>
-            <ProductColumn label="Ноутбуки, планшеты и компьютеры" />
+          <Grid item md={6} lg={4}>
+            <ProductColumn slug="hoodies" label="Ноутбуки, планшеты и компьютеры" />
           </Grid>
-          <Grid item xs={4}>
-            <ProductColumn label="Смартфоны и планшеты" />
+          <Grid item md={6} lg={4}>
+            <ProductColumn slug="juices" label="Смартфоны и планшеты" />
           </Grid>
         </Grid>
-        <ProductCarousel label="Смартфоны и планшеты" />
-        <ProductCarousel label="Ноутбуки, планшеты и компьютеры" />
+        <ProductCarousel slug="groceries" label="Смартфоны и планшеты" />
+        <ProductCarousel slug="paints" label="Ноутбуки, планшеты и компьютеры" />
         <Typography margin="1rem 0" variant="h2" fontWeight={600}>
           Популярные бренды
         </Typography>

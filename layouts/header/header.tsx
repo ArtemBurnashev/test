@@ -7,6 +7,7 @@ import {
   useTheme,
   Modal,
   Dialog,
+  IconButton,
 } from '@mui/material';
 import Phone from 'components/icons/phone';
 import Link from 'next/link';
@@ -21,7 +22,7 @@ import { Sidebar } from 'layouts/sidebar';
 import MobileHeaderButtons from './components/mobile-header-buttons';
 import { Burger } from 'components/burger';
 import SearchField from './components/search-field';
-import Login from './components/login';
+import Login from './components/auth/login';
 import { useAppSelector } from 'redux-state/hook';
 import { useRouter } from 'next/router';
 import { Paths } from 'config/site-paths';
@@ -29,6 +30,7 @@ import { useModal } from 'hooks/use-modal';
 import Catalog from './components/catalog';
 import Close from 'components/icons/close';
 import Hamburger from 'components/icons/hamburger';
+import Auth from './components/auth';
 import { CategoryNavbar } from 'components/category-navbar';
 
 const Header = () => {
@@ -108,34 +110,35 @@ const Header = () => {
             justifyContent="space-between"
             padding="1rem 0"
           >
-            <Link href="/">
-              <a>
-                <Logo>
-                  <Image layout="fixed" src={LogoImage} alt="logo" />
-                </Logo>
-              </a>
-            </Link>
+            {isSmallDevice || (
+              <Link href="/">
+                <a>
+                  <Logo>
+                    <Image layout="fixed" src={LogoImage} alt="logo" />
+                  </Logo>
+                </a>
+              </Link>
+            )}
+
             <Stack
               direction="row"
               spacing={2}
               justifyContent="space-between"
               alignItems="center"
             >
-              {!isSmallDevice && (
-                <Button
-                  sx={{
-                    '&&&&&.MuiButtonBase-root': {
-                      pl: '3rem',
-                      pr: '3rem',
-                    },
-                  }}
-                  variant="contained"
-                  startIcon={catalogModal.isOpen ? <Close /> : <Hamburger />}
-                  onClick={() => catalogModal.toggle()}
-                >
-                  Каталог
-                </Button>
-              )}
+              <Button
+                sx={{
+                  '&&&&&.MuiButtonBase-root': {
+                    pl: '3rem',
+                    pr: '3rem',
+                  },
+                }}
+                variant="contained"
+                startIcon={catalogModal.isOpen ? <Close /> : <Hamburger />}
+                onClick={() => catalogModal.toggle()}
+              >
+                Каталог
+              </Button>
 
               <SearchField />
               {isMobile && <Burger open={isOpen} setOpen={setIsOpen} />}
@@ -160,7 +163,15 @@ const Header = () => {
               isOpen={showLoginMenu}
               toggleDrawer={toggleLoginMenu}
             >
-              <Login />
+              <Box sx={{ position: 'relative' }}>
+                <IconButton
+                  onClick={() => setShowLoginMenu(false)}
+                  sx={{ position: 'absolute', top: '-2rem', right: '1rem' }}
+                >
+                  <Close />
+                </IconButton>
+                <Auth />
+              </Box>
             </Sidebar>
           )}
         </Stack>

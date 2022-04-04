@@ -1,4 +1,5 @@
 fragment productVariant on ProductVariant {
+  id
   name
   sku
   attributes {

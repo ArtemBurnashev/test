@@ -29,7 +29,7 @@ const CategoryProducts: NextPage = () => {
   const loadingIndicator = () => (
     <Stack spacing={2}>
       <Skeleton variant="text" height={50} width={250} />
-      <Stack direction="row" spacing={2}>
+      <Stack direction="row" flexWrap="wrap" gap="2rem">
         <ProductCardLoading />
         <ProductCardLoading />
         <ProductCardLoading />
@@ -45,7 +45,7 @@ const CategoryProducts: NextPage = () => {
           loadingIndicator()
         ) : (
           <Stack spacing={2}>
-            <Typography variant="h2">
+            <Typography margin="1.5rem 0" variant="h2">
               "{query}" so'rovi bo'yicha qidiruv natijalari
             </Typography>
             <InfiniteLoader
@@ -59,17 +59,22 @@ const CategoryProducts: NextPage = () => {
               }
               loading={loading}
             >
-              <Grid rowGap="3rem" direction="row" container spacing={2}>
+              <Grid rowGap="3rem" direction="row" container>
                 {nodes && nodes?.length > 0 ? (
                   nodes?.map((product) => (
-                    <Grid item xs={12} md={3} lg={2} sm={6} key={product.id}>
+                    <Grid justifyContent="center" item xs={12} md={3} lg={2} sm={6} key={product.id}>
                       <ProductCard
                         name={product.name}
                         media={product?.media}
                         thumbnail={product.thumbnail?.url}
-                        discount={product.pricing?.discount?.gross}
+                        discount={
+                          product.defaultVariant?.pricing?.discount?.gross
+                        }
+                        startPrice={
+                          product.defaultVariant?.pricing?.price?.gross
+                        }
                         slug={product.slug}
-                        id={product.id}
+                        id={product.defaultVariant?.id}
                       />
                     </Grid>
                   ))

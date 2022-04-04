@@ -9,6 +9,7 @@ import { useLoginMutation } from 'graphql/generated.graphql';
 import { useAppDispatch } from 'redux-state/hook';
 import { login } from 'redux-state/features/user/user-slice';
 import colors from 'config/theme';
+import { AuthRoutes, PageProps } from './auth-sidebar';
 
 interface LoginInput {
   phone: string;
@@ -26,7 +27,7 @@ const schema = yup.object({
   password: yup.string().required('Password required.'),
 });
 
-const Login = () => {
+const Login: React.FC<PageProps> = ({ changeRoute }) => {
   const [mutate, { data, loading }] = useLoginMutation();
   const { control, handleSubmit } = useForm<LoginInput>({
     resolver: yupResolver(schema),
@@ -55,7 +56,7 @@ const Login = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack margin="2rem" spacing={2}>
-        <Typography variant="h3">Войти или создать профиль</Typography>
+        <Typography textAlign="center" variant="h2">Войти или создать профиль</Typography>
         <Controller
           control={control}
           name="phone"
@@ -100,14 +101,28 @@ const Login = () => {
             />
           )}
         />
-
-        <Button variant="text" type="button" sx={{ maxWidth: 'max-content', marginLeft: "100%", color: colors.black }}>
-          Забыли пароль?
-        </Button>
+        <Stack direction="row" justifyContent="end">
+          <Button
+            variant="text"
+            type="button"
+            sx={{
+              maxWidth: 'max-content',
+              color: colors.black,
+            }}
+          >
+            Забыли пароль?
+          </Button>
+        </Stack>
         <Button loading={loading} type="submit" fullWidth variant="contained">
           Войти
         </Button>
-        <Button type="button" fullWidth variant="outlined" sx={{color: colors.black}}>
+        <Button
+          onClick={() => changeRoute(AuthRoutes.SIGNUP)}
+          type="button"
+          fullWidth
+          variant="outlined"
+          sx={{ color: colors.black }}
+        >
           Зарегистрироваться
         </Button>
       </Stack>

@@ -1,4 +1,4 @@
-import { Container, Stack, Typography } from '@mui/material';
+import { Container, Grid, Stack, Typography } from '@mui/material';
 import colors from 'config/theme';
 import React from 'react';
 import styled from 'styled-components';
@@ -33,17 +33,24 @@ const action = () => {
         <Typography variant="h2" fontWeight={600}>
           Акции
         </Typography>
-        <Stack spacing={2} direction="row">
-          <ActionImage>
-            <Image layout="responsive" src={Action1} alt="action" />
-          </ActionImage>
-          <ActionImage>
-            <Image layout="responsive" src={Action2} alt="action" />
-          </ActionImage>
-          <ActionImage>
-            <Image layout="responsive" src={Action3} alt="action" />
-          </ActionImage>
-        </Stack>
+        <Grid direction="row" container>
+          <Grid item lg={4}>
+            <ActionImage>
+              <Image layout="responsive" src={Action1} alt="action" />
+            </ActionImage>
+          </Grid>
+
+          <Grid item lg={4}>
+            <ActionImage>
+              <Image layout="responsive" src={Action2} alt="action" />
+            </ActionImage>
+          </Grid>
+          <Grid item lg={4}>
+            <ActionImage>
+              <Image layout="responsive" src={Action3} alt="action" />
+            </ActionImage>
+          </Grid>
+        </Grid>
       </Container>
     </ActionWrapper>
   );

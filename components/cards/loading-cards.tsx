@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
 
 export const ProductCardLoading = () => (
-  <ProductCardWrapper>
+  <ProductCardWrapper loading="true">
     <Stack spacing={2}>
       <ProductCardImageWrapper>
         <Skeleton

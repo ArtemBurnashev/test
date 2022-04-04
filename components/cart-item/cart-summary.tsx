@@ -7,19 +7,23 @@ import { useAppSelector } from 'redux-state/hook';
 import { SummaryWrapper } from './cart-item.styles';
 
 const CartSummary = () => {
-  const { totalPrice, productsCount } = useAppSelector((state) => state.cart);
+  const { totalPrice, productsCount, currency } = useAppSelector((state) => state.cart);
   const router = useRouter();
 
   return (
-    <>
-      <SummaryWrapper>
-        <Typography variant="h2">В корзине</Typography>
-        <Typography variant="subtitle2">Товаров: {productsCount}</Typography>
-        <Button color="error">Введите промокод</Button>
-        <Typography variant="subtitle1" fontWeight={600}>
-          {totalPrice} Сум
-        </Typography>
-      </SummaryWrapper>
+    <SummaryWrapper>
+      <Typography padding="0 1.5rem" variant="h2">
+        В корзине
+      </Typography>
+      <Typography padding="0 1.5rem" variant="subtitle2">
+        Товаров: {productsCount}
+      </Typography>
+      <Button sx={{padding: "0 2rem"}} color="error">
+        Введите промокод
+      </Button>
+      <Typography padding="0 1.5rem" variant="subtitle1" fontWeight={600}>
+        {totalPrice} {currency}
+      </Typography>
       <Button
         onClick={() => router.push(Paths.CHECKOUT)}
         variant="contained"
@@ -27,7 +31,7 @@ const CartSummary = () => {
       >
         Оформить заказ
       </Button>
-    </>
+    </SummaryWrapper>
   );
 };
 export default CartSummary;

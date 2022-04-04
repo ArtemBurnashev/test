@@ -61,7 +61,6 @@ const ImageCarousel: FC<{
         initialSlide={initialSlide || 0}
         autoplay={false}
         arrows={false}
-        lazyLoad="progressive"
         afterChange={(currenSlide) => onSlide && onSlide(currenSlide)}
       >
         {children}

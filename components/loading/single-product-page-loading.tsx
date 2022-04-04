@@ -31,11 +31,11 @@ const SingleProductPageLoading = () => (
         </Typography>
       </Stack>
       <Spacer />
-      <Grid margin="1rem 0" container columnSpacing={2}>
-        <Grid item xs={4}>
+      <Grid margin="1rem 0" columnGap="1rem" container>
+        <Grid  item sm={12} xs={12} md={6} lg={4}>
           <Skeleton variant="rectangular" width="100%" height={435} />
         </Grid>
-        <Grid item xs={5}>
+        <Grid item sm={12} xs={12} md={6} lg={5}>
           <Typography variant="body1" fontWeight={500}>
             <Skeleton variant="text" width="10%" />
           </Typography>
@@ -59,30 +59,6 @@ const SingleProductPageLoading = () => (
               <Skeleton variant="text" width="20%" />
             </Typography>
           </Stack>
-        </Grid>
-      </Grid>
-      <Grid marginTop="2rem" marginBottom="2rem" container columnSpacing={4}>
-        <Grid item xs={6}>
-          <Typography variant="subtitle2">
-            <Skeleton variant="text" width="40%" />
-          </Typography>
-          <Typography variant="subtitle2">
-            <Skeleton variant="text" width="40%" />
-          </Typography>
-          <Typography variant="subtitle2">
-            <Skeleton variant="text" width="30%" />
-          </Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <Typography variant="subtitle2">
-            <Skeleton variant="text" width="40%" />
-          </Typography>
-          <Typography variant="subtitle2">
-            <Skeleton variant="text" width="40%" />
-          </Typography>
-          <Typography variant="subtitle2">
-            <Skeleton variant="text" width="30%" />
-          </Typography>
         </Grid>
       </Grid>
     </Container>

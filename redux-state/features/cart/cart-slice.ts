@@ -22,12 +22,14 @@ export interface CartProduct extends Product {
 interface CartState {
   productsCount: number;
   totalPrice: number;
+  currency: string;
   cartProducts: CartProduct[];
 }
 
 const initialState: CartState = loadState('cart') || {
   productsCount: 0,
   totalPrice: 0,
+  currency: 'USD',
   cartProducts: [],
 };
 
@@ -98,7 +100,8 @@ export const cartSlice = createSlice({
       );
 
       const productPriceSum = state.cartProducts.reduce(
-        (prev, curr) => curr.price ? prev + curr.count * curr?.price?.amount : 0,
+        (prev, curr) =>
+          curr.price ? prev + curr.count * curr?.price?.amount : 0,
         0
       );
       return {
@@ -113,9 +116,18 @@ export const cartSlice = createSlice({
       );
       return { ...state, cartProducts: tempCart };
     },
+    changeCurrency: (state, action: PayloadAction<string>) => {
+      return { ...state, currency: action.payload };
+    },
   },
 });
 
-export const { addToCart, toggleAmout, clearCart, calculateSum, removeItem } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  toggleAmout,
+  clearCart,
+  calculateSum,
+  removeItem,
+  changeCurrency,
+} = cartSlice.actions;
 export default cartSlice.reducer;

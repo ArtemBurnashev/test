@@ -31,7 +31,13 @@ const Catalog = () => {
 
   return (
     <Wrapper>
-      <Grid justifyContent="space-between" rowGap="2rem" container>
+      <Grid
+        mb="2rem"
+        justifyContent="space-between"
+        rowGap="1rem"
+        columnSpacing={2}
+        container
+      >
         <InfiniteLoader
           loadMore={() =>
             fetchMore({ variables: { cursor: pageInfo?.endCursor } })
@@ -39,7 +45,7 @@ const Catalog = () => {
           hasMore={pageInfo?.hasNextPage}
         >
           {nodes?.map((node) => (
-            <Grid item xs={4}>
+            <Grid item lg={4} md={6} sm={12} xs={12}>
               <CatalogItem
                 key={node.id}
                 title={node.name}
