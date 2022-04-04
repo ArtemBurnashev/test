@@ -66,7 +66,8 @@ export const CategoryNavbar: React.FC = () => {
             :
             <Slider {...settings}>
               {elements?.map((links) =>
-                <Typography
+                <Typography 
+                  key={links.id}
                   sx={{ textAlign: 'center', cursor: 'pointer' }}
                   variant='subtitle2'
                 >
