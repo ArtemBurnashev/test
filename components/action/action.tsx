@@ -2,27 +2,16 @@ import { Container, Grid, Stack, Typography } from '@mui/material';
 import colors from 'config/theme';
 import React from 'react';
 import styled from 'styled-components';
-import Action1 from 'assets/png/action1.png';
-import Action2 from 'assets/png/action2.png';
-import Action3 from 'assets/png/action3.png';
-import Image from 'next/image';
+import { LazyImage } from 'components/image';
 
 const ActionWrapper = styled.div`
   background-color: ${colors.primary.default};
   padding: 30px 40px;
   margin: 5rem 0;
-`;
-
-const ActionImage = styled.div`
-  max-width: 430px;
-  height: 240px;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
 `;
 
@@ -34,21 +23,16 @@ const action = () => {
           Акции
         </Typography>
         <Grid direction="row" container>
-          <Grid item lg={4}>
-            <ActionImage>
-              <Image layout="responsive" src={Action1} alt="action" />
-            </ActionImage>
+          <Grid height={240} item lg={4}>
+            <LazyImage src='http://staging.api.gipermart.uz/media/products/saleordemoproduct_cl_polo01.png' alt='foto'/>
           </Grid>
 
-          <Grid item lg={4}>
-            <ActionImage>
-              <Image layout="responsive" src={Action2} alt="action" />
-            </ActionImage>
+          <Grid height={240} item lg={4}>
+            <LazyImage src='http://staging.api.gipermart.uz/media/products/saleordemoproduct_cl_polo02.png' alt='foto'/>
           </Grid>
-          <Grid item lg={4}>
-            <ActionImage>
-              <Image layout="responsive" src={Action3} alt="action" />
-            </ActionImage>
+
+          <Grid height={240} item lg={4}>
+            <LazyImage src='http://staging.api.gipermart.uz/media/products/saleordemoproduct_cl_boot07_1.png' alt='foto'/>
           </Grid>
         </Grid>
       </Container>

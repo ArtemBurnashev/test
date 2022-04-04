@@ -22,12 +22,12 @@ const CategoryCarousel: FC = () => {
   return (
     <Card>
       <Slider
-        infinite={false}
+        infinite
         dots={false}
         initialSlide={0}
         slidesToShow={5}
         arrows={false}
-        slidesToScroll={1}
+        slidesToScroll={3}
         autoplay={false}
         lazyLoad="progressive"
         responsive={[
