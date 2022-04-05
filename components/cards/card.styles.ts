@@ -67,7 +67,9 @@ export const ProductCardImageWrapper = styled.div`
   max-height: 235px;
   height: 165px;
   img {
-    ${imageCss}
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 `;
 

@@ -2858,8 +2858,6 @@ export type CustomerInput = {
   defaultBillingAddress?: InputMaybe<AddressInput>;
   /** Shipping address of the customer. */
   defaultShippingAddress?: InputMaybe<AddressInput>;
-  /** The unique email address of the user. */
-  email?: InputMaybe<Scalars['String']>;
   /** Given name. */
   firstName?: InputMaybe<Scalars['String']>;
   /** User account is active. */
@@ -2870,6 +2868,8 @@ export type CustomerInput = {
   lastName?: InputMaybe<Scalars['String']>;
   /** A note about the user. */
   note?: InputMaybe<Scalars['String']>;
+  /** The unique phone number of the user. */
+  phone?: InputMaybe<Scalars['String']>;
 };
 
 /** Updates an existing customer. */
@@ -4809,6 +4809,8 @@ export type Money = {
   __typename?: 'Money';
   /** Amount of money. */
   amount: Scalars['Float'];
+  /** Amount of money in UZS */
+  amountInSum?: Maybe<Scalars['Float']>;
   /** Currency code. */
   currency: Scalars['String'];
 };
@@ -5279,7 +5281,7 @@ export type Mutation = {
   productVariantTranslate?: Maybe<ProductVariantTranslate>;
   /** Updates an existing variant for product. */
   productVariantUpdate?: Maybe<ProductVariantUpdate>;
-  /** Sends an email with the account password modification link. */
+  /** Sends an phone with the account password modification link. */
   requestPasswordReset?: Maybe<RequestPasswordReset>;
   /** Request phone change of the logged in user. */
   requestPhoneChange?: Maybe<RequestPhoneChange>;
@@ -5299,7 +5301,7 @@ export type Mutation = {
   saleTranslate?: Maybe<SaleTranslate>;
   /** Updates a sale. */
   saleUpdate?: Maybe<SaleUpdate>;
-  /** Sets the user's password from the token sent by email using the RequestPasswordReset mutation. */
+  /** Sets the user's password from the token sent by phone using the RequestPasswordReset mutation. */
   setPassword?: Maybe<SetPassword>;
   /** Manage shipping method's availability in channels. */
   shippingMethodChannelListingUpdate?: Maybe<ShippingMethodChannelListingUpdate>;
@@ -6634,7 +6636,7 @@ export type MutationProductVariantUpdateArgs = {
 
 export type MutationRequestPasswordResetArgs = {
   channel?: InputMaybe<Scalars['String']>;
-  email: Scalars['String'];
+  phone: Scalars['String'];
   redirectUrl: Scalars['String'];
 };
 
@@ -6694,8 +6696,8 @@ export type MutationSaleUpdateArgs = {
 
 
 export type MutationSetPasswordArgs = {
-  email: Scalars['String'];
   password: Scalars['String'];
+  phone: Scalars['String'];
   token: Scalars['String'];
 };
 
@@ -8774,6 +8776,7 @@ export type Product = Node & ObjectWithMetadata & {
   channel?: Maybe<Scalars['String']>;
   /** List of availability in channels for the product. */
   channelListings?: Maybe<Array<ProductChannelListing>>;
+  characteristics?: Maybe<Scalars['JSONString']>;
   chargeTaxes: Scalars['Boolean'];
   /** List of collections for the product. */
   collections?: Maybe<Array<Maybe<Collection>>>;
@@ -9036,6 +9039,8 @@ export type ProductCreateInput = {
   attributes?: InputMaybe<Array<AttributeValueInput>>;
   /** ID of the product's category. */
   category?: InputMaybe<Scalars['ID']>;
+  /** Product characteristics (JSON). */
+  characteristics?: InputMaybe<Scalars['JSONString']>;
   /** Determine if taxes are being charged for the product. */
   chargeTaxes?: InputMaybe<Scalars['Boolean']>;
   /** List of IDs of collections that the product belongs to. */
@@ -9166,6 +9171,8 @@ export type ProductInput = {
   attributes?: InputMaybe<Array<AttributeValueInput>>;
   /** ID of the product's category. */
   category?: InputMaybe<Scalars['ID']>;
+  /** Product characteristics (JSON). */
+  characteristics?: InputMaybe<Scalars['JSONString']>;
   /** Determine if taxes are being charged for the product. */
   chargeTaxes?: InputMaybe<Scalars['Boolean']>;
   /** List of IDs of collections that the product belongs to. */
@@ -10687,7 +10694,7 @@ export enum ReportingPeriod {
   Today = 'TODAY'
 }
 
-/** Sends an email with the account password modification link. */
+/** Sends an phone with the account password modification link. */
 export type RequestPasswordReset = {
   __typename?: 'RequestPasswordReset';
   /** @deprecated This field will be removed in Saleor 4.0. Use `errors` field instead. */
@@ -10994,7 +11001,7 @@ export type SeoInput = {
   title?: InputMaybe<Scalars['String']>;
 };
 
-/** Sets the user's password from the token sent by email using the RequestPasswordReset mutation. */
+/** Sets the user's password from the token sent by phone using the RequestPasswordReset mutation. */
 export type SetPassword = {
   __typename?: 'SetPassword';
   /** @deprecated This field will be removed in Saleor 4.0. Use `errors` field instead. */
@@ -11711,8 +11718,6 @@ export type StaffCreate = {
 export type StaffCreateInput = {
   /** List of permission group IDs to which user should be assigned. */
   addGroups?: InputMaybe<Array<Scalars['ID']>>;
-  /** The unique email address of the user. */
-  email?: InputMaybe<Scalars['String']>;
   /** Given name. */
   firstName?: InputMaybe<Scalars['String']>;
   /** User account is active. */
@@ -11721,6 +11726,8 @@ export type StaffCreateInput = {
   lastName?: InputMaybe<Scalars['String']>;
   /** A note about the user. */
   note?: InputMaybe<Scalars['String']>;
+  /** The unique phone number of the user. */
+  phone?: InputMaybe<Scalars['String']>;
   /** URL of a view where users should be redirected to set the password. URL in RFC 1808 format. */
   redirectUrl?: InputMaybe<Scalars['String']>;
 };
@@ -11819,8 +11826,6 @@ export type StaffUpdate = {
 export type StaffUpdateInput = {
   /** List of permission group IDs to which user should be assigned. */
   addGroups?: InputMaybe<Array<Scalars['ID']>>;
-  /** The unique email address of the user. */
-  email?: InputMaybe<Scalars['String']>;
   /** Given name. */
   firstName?: InputMaybe<Scalars['String']>;
   /** User account is active. */
@@ -11829,6 +11834,8 @@ export type StaffUpdateInput = {
   lastName?: InputMaybe<Scalars['String']>;
   /** A note about the user. */
   note?: InputMaybe<Scalars['String']>;
+  /** The unique phone number of the user. */
+  phone?: InputMaybe<Scalars['String']>;
   /** List of permission group IDs from which user should be unassigned. */
   removeGroups?: InputMaybe<Array<Scalars['ID']>>;
 };
@@ -12235,8 +12242,6 @@ export type UserCreateInput = {
   defaultBillingAddress?: InputMaybe<AddressInput>;
   /** Shipping address of the customer. */
   defaultShippingAddress?: InputMaybe<AddressInput>;
-  /** The unique email address of the user. */
-  email?: InputMaybe<Scalars['String']>;
   /** Given name. */
   firstName?: InputMaybe<Scalars['String']>;
   /** User account is active. */
@@ -12247,6 +12252,8 @@ export type UserCreateInput = {
   lastName?: InputMaybe<Scalars['String']>;
   /** A note about the user. */
   note?: InputMaybe<Scalars['String']>;
+  /** The unique phone number of the user. */
+  phone?: InputMaybe<Scalars['String']>;
   /** URL of a view where users should be redirected to set the password. URL in RFC 1808 format. */
   redirectUrl?: InputMaybe<Scalars['String']>;
 };
@@ -13260,6 +13267,14 @@ export type ConfirmAccountMutationVariables = Exact<{
 
 export type ConfirmAccountMutation = { __typename?: 'Mutation', confirmAccount?: { __typename: 'ConfirmAccount', accountErrors: Array<{ __typename: 'AccountError', field?: string | null, message?: string | null, code: AccountErrorCode }>, user?: { __typename: 'User', id: string, lastLogin?: any | null, phone: string, firstName: string, lastName: string, avatar?: { __typename: 'Image', url: string } | null, addresses?: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null } | null> | null, defaultShippingAddress?: { __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null } | null } | null } | null };
 
+export type ChangePasswordMutationVariables = Exact<{
+  newPassword: Scalars['String'];
+  oldPassword: Scalars['String'];
+}>;
+
+
+export type ChangePasswordMutation = { __typename?: 'Mutation', passwordChange?: { __typename?: 'PasswordChange', errors: Array<{ __typename?: 'AccountError', field?: string | null, message?: string | null }>, user?: { __typename?: 'User', id: string } | null } | null };
+
 export type LoginMutationVariables = Exact<{
   phone: Scalars['String'];
   password: Scalars['String'];
@@ -13681,6 +13696,46 @@ export function useConfirmAccountMutation(baseOptions?: Apollo.MutationHookOptio
 export type ConfirmAccountMutationHookResult = ReturnType<typeof useConfirmAccountMutation>;
 export type ConfirmAccountMutationResult = Apollo.MutationResult<ConfirmAccountMutation>;
 export type ConfirmAccountMutationOptions = Apollo.BaseMutationOptions<ConfirmAccountMutation, ConfirmAccountMutationVariables>;
+export const ChangePasswordDocument = gql`
+    mutation ChangePassword($newPassword: String!, $oldPassword: String!) {
+  passwordChange(newPassword: $newPassword, oldPassword: $oldPassword) {
+    errors {
+      field
+      message
+    }
+    user {
+      id
+    }
+  }
+}
+    `;
+export type ChangePasswordMutationFn = Apollo.MutationFunction<ChangePasswordMutation, ChangePasswordMutationVariables>;
+
+/**
+ * __useChangePasswordMutation__
+ *
+ * To run a mutation, you first call `useChangePasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangePasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changePasswordMutation, { data, loading, error }] = useChangePasswordMutation({
+ *   variables: {
+ *      newPassword: // value for 'newPassword'
+ *      oldPassword: // value for 'oldPassword'
+ *   },
+ * });
+ */
+export function useChangePasswordMutation(baseOptions?: Apollo.MutationHookOptions<ChangePasswordMutation, ChangePasswordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument, options);
+      }
+export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
+export type ChangePasswordMutationResult = Apollo.MutationResult<ChangePasswordMutation>;
+export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
 export const LoginDocument = gql`
     mutation login($phone: String!, $password: String!) {
   tokenCreate(password: $password, phone: $phone) {
