@@ -37,6 +37,7 @@ const Login: React.FC<PageProps> = ({ changeRoute }) => {
   const dispatch = useAppDispatch();
 
   const onSubmit = (data: LoginInput) => {
+   
     mutate({
       variables: data,
       onCompleted: (res) => {
@@ -46,6 +47,7 @@ const Login: React.FC<PageProps> = ({ changeRoute }) => {
               token: res.tokenCreate.token,
               refreshToken: res.tokenCreate.refreshToken,
               csrfToken: res.tokenCreate.csrfToken,
+              userId:res.tokenCreate.user?.id
             })
           );
         }

@@ -6,6 +6,7 @@ interface User {
   token?: string | null;
   refreshToken?: string | null;
   csrfToken?: string | null;
+  userId?: string | null
 }
 
 interface UserState {
@@ -19,6 +20,7 @@ const initialState: UserState = loadState('user') || {
     token: null,
     refreshToken: null,
     csrfToken: null,
+    userId:null
   },
 };
 
@@ -31,9 +33,10 @@ export const userSlice = createSlice({
       return { isAuthenticated: true, user: action.payload };
     },
     logout: () => {
+      localStorage.removeItem('user');
       return {
         isAuthenticated: false,
-        user: { token: null, refreshToken: null, csrfToken: null },
+        user: { token: null, userId:null, refreshToken: null, csrfToken: null },
       };
     },
   },

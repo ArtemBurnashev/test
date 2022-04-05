@@ -13227,11 +13227,13 @@ export type SingleProductFragment = { __typename: 'Product', name: string, id: s
 
 export type ProductVariantFragment = { __typename?: 'ProductVariant', id: string, name: string, sku?: string | null, attributes: Array<{ __typename?: 'SelectedAttribute', attribute: { __typename?: 'Attribute', name?: string | null, id: string }, values: Array<{ __typename?: 'AttributeValue', value?: string | null, name?: string | null, id: string } | null> }>, pricing?: { __typename?: 'VariantPricingInfo', discount?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null, price?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number } } | null } | null };
 
-export type AddressFragment = { __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null };
+export type AddressFragment = { __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null, streetAddress1: string, streetAddress2: string, postalCode: string, country: { __typename?: 'CountryDisplay', code: string, country: string } };
+
+export type ErrorsFragment = { __typename?: 'AccountError', field?: string | null, message?: string | null };
 
 export type PageInfoFragment = { __typename?: 'PageInfo', endCursor?: string | null, startCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean };
 
-export type UserFragment = { __typename: 'User', id: string, lastLogin?: any | null, phone: string, firstName: string, lastName: string, avatar?: { __typename: 'Image', url: string } | null, addresses?: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null } | null> | null, defaultShippingAddress?: { __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null } | null };
+export type UserFragment = { __typename: 'User', id: string, lastLogin?: any | null, phone: string, firstName: string, lastName: string, avatar?: { __typename: 'Image', url: string } | null, addresses?: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null, streetAddress1: string, streetAddress2: string, postalCode: string, country: { __typename?: 'CountryDisplay', code: string, country: string } } | null> | null, defaultShippingAddress?: { __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null, streetAddress1: string, streetAddress2: string, postalCode: string, country: { __typename?: 'CountryDisplay', code: string, country: string } } | null };
 
 export type RegisterMutationVariables = Exact<{
   phone: Scalars['String'];
@@ -13241,7 +13243,15 @@ export type RegisterMutationVariables = Exact<{
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', accountRegister?: { __typename?: 'AccountRegister', errors: Array<{ __typename?: 'AccountError', message?: string | null, field?: string | null }>, user?: { __typename: 'User', id: string, lastLogin?: any | null, phone: string, firstName: string, lastName: string, avatar?: { __typename: 'Image', url: string } | null, addresses?: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null } | null> | null, defaultShippingAddress?: { __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null } | null } | null } | null };
+export type RegisterMutation = { __typename?: 'Mutation', accountRegister?: { __typename?: 'AccountRegister', errors: Array<{ __typename?: 'AccountError', message?: string | null, field?: string | null }>, user?: { __typename: 'User', id: string, lastLogin?: any | null, phone: string, firstName: string, lastName: string, avatar?: { __typename: 'Image', url: string } | null, addresses?: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null, streetAddress1: string, streetAddress2: string, postalCode: string, country: { __typename?: 'CountryDisplay', code: string, country: string } } | null> | null, defaultShippingAddress?: { __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null, streetAddress1: string, streetAddress2: string, postalCode: string, country: { __typename?: 'CountryDisplay', code: string, country: string } } | null } | null } | null };
+
+export type AddressCreateMutationVariables = Exact<{
+  input: AddressInput;
+  userId: Scalars['ID'];
+}>;
+
+
+export type AddressCreateMutation = { __typename?: 'Mutation', addressCreate?: { __typename?: 'AddressCreate', address?: { __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null, streetAddress1: string, streetAddress2: string, postalCode: string, country: { __typename?: 'CountryDisplay', code: string, country: string } } | null, errors: Array<{ __typename?: 'AccountError', field?: string | null, message?: string | null }> } | null };
 
 export type CheckoutCompleteMutationVariables = Exact<{
   checkoutId?: InputMaybe<Scalars['ID']>;
@@ -13265,7 +13275,14 @@ export type ConfirmAccountMutationVariables = Exact<{
 }>;
 
 
-export type ConfirmAccountMutation = { __typename?: 'Mutation', confirmAccount?: { __typename: 'ConfirmAccount', accountErrors: Array<{ __typename: 'AccountError', field?: string | null, message?: string | null, code: AccountErrorCode }>, user?: { __typename: 'User', id: string, lastLogin?: any | null, phone: string, firstName: string, lastName: string, avatar?: { __typename: 'Image', url: string } | null, addresses?: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null } | null> | null, defaultShippingAddress?: { __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null } | null } | null } | null };
+export type ConfirmAccountMutation = { __typename?: 'Mutation', confirmAccount?: { __typename: 'ConfirmAccount', accountErrors: Array<{ __typename: 'AccountError', field?: string | null, message?: string | null, code: AccountErrorCode }>, user?: { __typename: 'User', id: string, lastLogin?: any | null, phone: string, firstName: string, lastName: string, avatar?: { __typename: 'Image', url: string } | null, addresses?: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null, streetAddress1: string, streetAddress2: string, postalCode: string, country: { __typename?: 'CountryDisplay', code: string, country: string } } | null> | null, defaultShippingAddress?: { __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null, streetAddress1: string, streetAddress2: string, postalCode: string, country: { __typename?: 'CountryDisplay', code: string, country: string } } | null } | null } | null };
+
+export type DeleteAddressMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteAddressMutation = { __typename?: 'Mutation', addressDelete?: { __typename?: 'AddressDelete', errors: Array<{ __typename?: 'AccountError', field?: string | null, message?: string | null }> } | null };
 
 export type ChangePasswordMutationVariables = Exact<{
   newPassword: Scalars['String'];
@@ -13281,7 +13298,20 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', tokenCreate?: { __typename?: 'CreateToken', token?: string | null, refreshToken?: string | null, csrfToken?: string | null, errors: Array<{ __typename?: 'AccountError', field?: string | null, message?: string | null }> } | null };
+export type LoginMutation = { __typename?: 'Mutation', tokenCreate?: { __typename?: 'CreateToken', token?: string | null, refreshToken?: string | null, csrfToken?: string | null, errors: Array<{ __typename?: 'AccountError', field?: string | null, message?: string | null }>, user?: { __typename?: 'User', id: string } | null } | null };
+
+export type AddressUpdateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: AddressInput;
+}>;
+
+
+export type AddressUpdateMutation = { __typename?: 'Mutation', addressUpdate?: { __typename?: 'AddressUpdate', errors: Array<{ __typename?: 'AccountError', field?: string | null, message?: string | null }>, address?: { __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null, streetAddress1: string, streetAddress2: string, postalCode: string, country: { __typename?: 'CountryDisplay', code: string, country: string } } | null } | null };
+
+export type AddressListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AddressListQuery = { __typename?: 'Query', me?: { __typename?: 'User', addresses?: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null, streetAddress1: string, streetAddress2: string, postalCode: string, country: { __typename?: 'CountryDisplay', code: string, country: string } } | null> | null } | null };
 
 export type AllCategoriesQueryVariables = Exact<{
   first: Scalars['Int'];
@@ -13463,6 +13493,12 @@ export const SingleProductFragmentDoc = gql`
 }
     ${ProductFragmentDoc}
 ${ProductVariantFragmentDoc}`;
+export const ErrorsFragmentDoc = gql`
+    fragment errors on AccountError {
+  field
+  message
+}
+    `;
 export const PageInfoFragmentDoc = gql`
     fragment PageInfo on PageInfo {
   endCursor
@@ -13477,6 +13513,13 @@ export const AddressFragmentDoc = gql`
   firstName
   lastName
   phone
+  streetAddress1
+  streetAddress2
+  country {
+    code
+    country
+  }
+  postalCode
   __typename
 }
     `;
@@ -13554,6 +13597,46 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const AddressCreateDocument = gql`
+    mutation AddressCreate($input: AddressInput!, $userId: ID!) {
+  addressCreate(input: $input, userId: $userId) {
+    address {
+      ...Address
+    }
+    errors {
+      ...errors
+    }
+  }
+}
+    ${AddressFragmentDoc}
+${ErrorsFragmentDoc}`;
+export type AddressCreateMutationFn = Apollo.MutationFunction<AddressCreateMutation, AddressCreateMutationVariables>;
+
+/**
+ * __useAddressCreateMutation__
+ *
+ * To run a mutation, you first call `useAddressCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddressCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addressCreateMutation, { data, loading, error }] = useAddressCreateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useAddressCreateMutation(baseOptions?: Apollo.MutationHookOptions<AddressCreateMutation, AddressCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddressCreateMutation, AddressCreateMutationVariables>(AddressCreateDocument, options);
+      }
+export type AddressCreateMutationHookResult = ReturnType<typeof useAddressCreateMutation>;
+export type AddressCreateMutationResult = Apollo.MutationResult<AddressCreateMutation>;
+export type AddressCreateMutationOptions = Apollo.BaseMutationOptions<AddressCreateMutation, AddressCreateMutationVariables>;
 export const CheckoutCompleteDocument = gql`
     mutation checkoutComplete($checkoutId: ID) {
   checkoutComplete(checkoutId: $checkoutId) {
@@ -13696,6 +13779,41 @@ export function useConfirmAccountMutation(baseOptions?: Apollo.MutationHookOptio
 export type ConfirmAccountMutationHookResult = ReturnType<typeof useConfirmAccountMutation>;
 export type ConfirmAccountMutationResult = Apollo.MutationResult<ConfirmAccountMutation>;
 export type ConfirmAccountMutationOptions = Apollo.BaseMutationOptions<ConfirmAccountMutation, ConfirmAccountMutationVariables>;
+export const DeleteAddressDocument = gql`
+    mutation DeleteAddress($id: ID!) {
+  addressDelete(id: $id) {
+    errors {
+      ...errors
+    }
+  }
+}
+    ${ErrorsFragmentDoc}`;
+export type DeleteAddressMutationFn = Apollo.MutationFunction<DeleteAddressMutation, DeleteAddressMutationVariables>;
+
+/**
+ * __useDeleteAddressMutation__
+ *
+ * To run a mutation, you first call `useDeleteAddressMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteAddressMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteAddressMutation, { data, loading, error }] = useDeleteAddressMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteAddressMutation(baseOptions?: Apollo.MutationHookOptions<DeleteAddressMutation, DeleteAddressMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteAddressMutation, DeleteAddressMutationVariables>(DeleteAddressDocument, options);
+      }
+export type DeleteAddressMutationHookResult = ReturnType<typeof useDeleteAddressMutation>;
+export type DeleteAddressMutationResult = Apollo.MutationResult<DeleteAddressMutation>;
+export type DeleteAddressMutationOptions = Apollo.BaseMutationOptions<DeleteAddressMutation, DeleteAddressMutationVariables>;
 export const ChangePasswordDocument = gql`
     mutation ChangePassword($newPassword: String!, $oldPassword: String!) {
   passwordChange(newPassword: $newPassword, oldPassword: $oldPassword) {
@@ -13746,6 +13864,9 @@ export const LoginDocument = gql`
     token
     refreshToken
     csrfToken
+    user {
+      id
+    }
   }
 }
     `;
@@ -13776,6 +13897,82 @@ export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginM
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export const AddressUpdateDocument = gql`
+    mutation AddressUpdate($id: ID!, $input: AddressInput!) {
+  addressUpdate(id: $id, input: $input) {
+    errors {
+      ...errors
+    }
+    address {
+      ...Address
+    }
+  }
+}
+    ${ErrorsFragmentDoc}
+${AddressFragmentDoc}`;
+export type AddressUpdateMutationFn = Apollo.MutationFunction<AddressUpdateMutation, AddressUpdateMutationVariables>;
+
+/**
+ * __useAddressUpdateMutation__
+ *
+ * To run a mutation, you first call `useAddressUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddressUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addressUpdateMutation, { data, loading, error }] = useAddressUpdateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAddressUpdateMutation(baseOptions?: Apollo.MutationHookOptions<AddressUpdateMutation, AddressUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddressUpdateMutation, AddressUpdateMutationVariables>(AddressUpdateDocument, options);
+      }
+export type AddressUpdateMutationHookResult = ReturnType<typeof useAddressUpdateMutation>;
+export type AddressUpdateMutationResult = Apollo.MutationResult<AddressUpdateMutation>;
+export type AddressUpdateMutationOptions = Apollo.BaseMutationOptions<AddressUpdateMutation, AddressUpdateMutationVariables>;
+export const AddressListDocument = gql`
+    query AddressList {
+  me {
+    addresses {
+      ...Address
+    }
+  }
+}
+    ${AddressFragmentDoc}`;
+
+/**
+ * __useAddressListQuery__
+ *
+ * To run a query within a React component, call `useAddressListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAddressListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAddressListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAddressListQuery(baseOptions?: Apollo.QueryHookOptions<AddressListQuery, AddressListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AddressListQuery, AddressListQueryVariables>(AddressListDocument, options);
+      }
+export function useAddressListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AddressListQuery, AddressListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AddressListQuery, AddressListQueryVariables>(AddressListDocument, options);
+        }
+export type AddressListQueryHookResult = ReturnType<typeof useAddressListQuery>;
+export type AddressListLazyQueryHookResult = ReturnType<typeof useAddressListLazyQuery>;
+export type AddressListQueryResult = Apollo.QueryResult<AddressListQuery, AddressListQueryVariables>;
 export const AllCategoriesDocument = gql`
     query allCategories($first: Int!, $cursor: String!) {
   categories(first: $first, after: $cursor) {
