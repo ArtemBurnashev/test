@@ -4,12 +4,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { FormStyle } from './styles';
 import Input from 'components/input/input';
-import { Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { Button } from 'components/button';
 import { useChangePasswordMutation } from 'graphql/generated.graphql';
+interface ChengePasswordProp {
+  modal: () => void
+}
 
 
-export const ChengePassword: React.FC = () => {
+export const ChengePassword: React.FC<ChengePasswordProp> = ({ modal }) => {
   const [changePassword, { loading, error: passwordChangeError }] = useChangePasswordMutation();
 
   const validationSchema = Yup.object().shape({
@@ -40,11 +43,13 @@ export const ChengePassword: React.FC = () => {
       }
     )
     reset()
+    modal()
     return false;
   }
   return (
     <FormStyle onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={2}>
+        <Typography sx={{ color: 'red' }} variant='body1'>{passwordChangeError?.message}</Typography>
         <label>Last Password</label>
         <Input
           type='password'

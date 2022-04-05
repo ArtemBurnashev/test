@@ -1,0 +1,158 @@
+import React from 'react';
+import Input from 'components/input/input';
+import { Button } from 'components/button';
+import { Typography, Stack, } from '@mui/material';
+import * as Yup from 'yup';
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import styled from 'styled-components';
+import { CountryCode, useAddressCreateMutation } from 'graphql/generated.graphql';
+import { useAddressUpdateMutation } from 'graphql/generated.graphql';
+import { useAppSelector } from 'redux-state/hook';
+
+
+const FormStyle = styled.form`
+  padding: 40px;
+  width: 400px;
+`
+interface AddressProp {
+  modalClose: () => void
+  backdrop?: {
+    isOpen: boolean
+    open: () => void
+    close: () => void
+    toggle: () => void
+  }
+  data?: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    phone?: string | null | undefined;
+    streetAddress1: string;
+    streetAddress2: string;
+    postalCode: string;
+    country: {
+      _typename?: "CountryDisplay" | undefined;
+      code: string;
+      country: string;
+    };
+  } | null
+
+}
+
+export const AddressCreate: React.FC<AddressProp> = ({ modalClose, backdrop, data }) => {
+  const [mutation, datamutation] = useAddressCreateMutation();
+  const { user } = useAppSelector((state) => state.user);
+  const [updeteAdderss, dataUpdateAddress] = useAddressUpdateMutation();
+  
+  const validationSchema = Yup.object().shape({
+    name: Yup.string()
+      .required('Name is required')
+      .max(60),
+    phone: Yup.string()
+      .matches(/(?:\+\998(9[012345789]|6[125679]|7[01234569])[0-9]{7})$/, 'Phone number is invalid')
+      .required('Phone number required.'),
+    address: Yup.string()
+      .required('Address is required'),
+    city: Yup.string()
+      .required('City is required')
+      .max(60),
+  });
+  const formOptions = { resolver: yupResolver(validationSchema) };
+
+  const { register, handleSubmit, reset, formState } = useForm(formOptions);
+  const { errors } = formState;
+
+  const onSubmit = (data: any) => {
+    console.log(data);
+
+    if (user.userId) {
+      reset();
+      backdrop?.open()
+      mutation({
+        variables: {
+          input: {
+            city: data.city,
+            firstName: data.name,
+            phone: data.phone,
+            streetAddress1: data.address,
+            country: CountryCode.Uz,
+          },
+          userId: user.userId
+        },
+        refetchQueries: ['AddressList'],
+        onCompleted: () => {
+          backdrop?.close()
+        }
+      })
+      modalClose();
+      return false;
+    }
+  }
+  const onEdit = (element: any) => {
+    if(data?.id){
+      reset();
+      backdrop?.open()
+      updeteAdderss({
+        variables:{
+          id:data?.id,
+          input:{
+            city: element.city,
+            firstName: element.name,
+            phone: element.phone,
+            streetAddress1: element.address,
+            country: CountryCode.Uz,
+          }
+        },
+        refetchQueries: ['AddressList'],
+        onCompleted: () => {
+          backdrop?.close()
+        }
+      })
+    }
+    modalClose();
+    return false;
+  }
+  return (
+    <FormStyle onSubmit={data ? handleSubmit(onEdit) : handleSubmit(onSubmit)}>
+
+      <Typography mb={2} variant='h2'>{data ? 'Edit Addres' : 'Create Addres'}</Typography>
+      <Stack spacing={1.7}>
+        <label>Name</label>
+        <Input
+          type='text'
+          {...register('name')}
+          error={!!errors.name?.type}
+          helperText={errors.name?.message}
+          defaultValue={data ? data.firstName : ''}
+        />
+        <label>Phone</label>
+        <Input
+          type='text'
+          {...register('phone')}
+          error={!!errors.phone?.type}
+          helperText={errors.phone?.message}
+          defaultValue={data?.phone ? data.phone : ''}
+        />
+        <label>Address</label>
+        <Input
+          type='text'
+          {...register('address')}
+          error={!!errors.address?.type}
+          helperText={errors.address?.message}
+          defaultValue={data ? data.streetAddress1 : ''}
+        />
+        <label>City</label>
+        <Input
+          type='text'
+          {...register('city')}
+          error={!!errors.city?.type}
+          helperText={errors.city?.message}
+          defaultValue={data ? CountryCode.Uz : ''}
+        />
+        <Button variant='contained'>{data ? 'Update' : 'Add'}</Button>
+      </Stack>
+    </FormStyle>
+
+  )
+}

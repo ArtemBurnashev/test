@@ -5,6 +5,7 @@ import { Main } from 'layouts/main';
 import { ProfileLayout } from 'layouts/profile';
 import { NextPage } from 'next';
 import React from 'react';
+import { useRouter } from 'next/router';
 import { Paths } from 'config/site-paths';
 import { useMeQuery } from 'graphql/generated.graphql';
 import { Breadcrumb } from 'components/breadcrumbs';
@@ -12,17 +13,27 @@ import { WithAuth } from 'components/private-route';
 import { ChengePassword, ChengeData } from 'components/chenge-user-content';
 import { useModal } from 'hooks/use-modal';
 import Close from 'components/icons/close';
+import { logout } from 'redux-state/features/user/user-slice';
+import { useDispatch } from 'react-redux';
 
 const ProfilePage: NextPage = () => {
   const [modalType, setModalTyupe] = React.useState(false);
   const catalogModal = useModal();
+  const { close: logoutClose, isOpen: logoutIsopen, open: logoutOpen } = useModal();
+  const router = useRouter();
   const { data, loading } = useMeQuery();
+  const dispatch = useDispatch();
   const links = [
     {
       name: 'Личный кабинет',
       link: Paths.PROFILE,
     }
   ]
+  const deleteLogin = () => {
+    logoutClose()
+    dispatch(logout());
+    router.replace(Paths.HOME);
+  }
 
   return (
     <Main>
@@ -55,28 +66,51 @@ const ProfilePage: NextPage = () => {
             </Button>
             <Typography variant="h2">Пароль</Typography>
             <DataLineWithArrow field="Текущий пароль" value="********" />
-            <Button onClick={() => { catalogModal.open(); setModalTyupe(false) }} sx={{ maxWidth: 'max-content' }} color="secondary">
-              ИЗМЕНИТЬ
-            </Button>
+            <Stack justifyContent='space-between' direction='row'>
+              <Button onClick={() => { catalogModal.open(); setModalTyupe(false) }} sx={{ maxWidth: 'max-content' }} color="secondary">
+                ИЗМЕНИТЬ
+              </Button>
+              <Button onClick={() => logoutOpen()} sx={{ maxWidth: 'max-content', marginRight: '50px' }} color="secondary">
+                Log Out
+              </Button>
+            </Stack>
           </Stack>
         </ProfileLayout>
+        <Dialog
+          open={logoutIsopen}
+          onClose={logoutClose}
+        >
+          <Close
+            style={{
+              right: '10px',
+              top: '10px',
+              cursor: 'pointer',
+              position: 'absolute',
+            }}
+            onClick={logoutClose}
+          />
+          <Stack sx={{ padding: '40px' }} spacing={4}>
+            <Typography variant='h2'>losdfgsdgsdgsdgzdvev</Typography>
+            <Button onClick={deleteLogin} color="secondary">Log Out</Button>
+          </Stack>
+        </Dialog>
         <Dialog
           open={catalogModal.isOpen}
           onClose={catalogModal.close}
         >
           <Close
-            style={{ 
-              right: '10px', 
-              top:'10px',
+            style={{
+              right: '10px',
+              top: '10px',
               cursor: 'pointer',
-              position: 'absolute', 
+              position: 'absolute',
             }}
             onClick={catalogModal.close}
           />
           {modalType ?
             <ChengeData />
             :
-            <ChengePassword />
+            <ChengePassword modal={catalogModal.close} />
           }
         </Dialog>
       </Container>

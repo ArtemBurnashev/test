@@ -3,5 +3,12 @@ fragment Address on Address {
   firstName
   lastName
   phone
+  streetAddress1
+      streetAddress2
+      country{
+        code
+        country
+      }
+      postalCode
   __typename
 }
