@@ -28,7 +28,7 @@ const CheckoutInfo = () => {
             <Typography variant="subtitle2">{product.count}</Typography>
             <Typography variant="subtitle2">x</Typography>
             <Typography fontSize="1.25rem" fontWeight={600}>
-              {product.price?.amount} {product.price?.currency}
+              {product.price?.amountInSum} {currency}
             </Typography>
           </Stack>
         </CheckoutCartItem>

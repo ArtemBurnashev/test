@@ -188,7 +188,7 @@ const Checkout = () => {
                       />
                     )}
                   />
-                  <FormControl fullWidth>
+                  {/* <FormControl fullWidth>
                     <RadioGroup defaultValue="1">
                       <Stack
                         direction="row"
@@ -238,7 +238,7 @@ const Checkout = () => {
                         <Typography fontSize={21}>+ 300 Сум</Typography>
                       </Stack>
                     </RadioGroup>
-                  </FormControl>
+                  </FormControl> */}
                   <Controller
                     control={control}
                     name="streetAddress2"
@@ -252,7 +252,7 @@ const Checkout = () => {
                       />
                     )}
                   />
-                  <Typography variant="h2" fontSize={27}>
+                  {/* <Typography variant="h2" fontSize={27}>
                     Покупатель
                   </Typography>
                   <Input label="Email" />
@@ -267,25 +267,25 @@ const Checkout = () => {
                         получать скидки
                       </Typography>
                     </Stack>
-                  </Stack>
+                  </Stack> */}
                   <FormControl>
                     <RadioGroup defaultValue="1">
-                      <CheckoutMethods>
-                        <FormControlLabel
-                          label=""
-                          value="1"
-                          control={<Radio />}
-                        />
-                        <Stack>
-                          <Typography variant="h3" fontSize="1.25rem">
-                            Наличными курьеру
-                          </Typography>
-                          <Typography variant="body2">
-                            Наличными курьеру
-                          </Typography>
-                        </Stack>
-                      </CheckoutMethods>
                       <Stack direction="row">
+                        <CheckoutMethods>
+                          <FormControlLabel
+                            label=""
+                            value="1"
+                            control={<Radio />}
+                          />
+                          <Stack>
+                            <Typography variant="h3" fontSize="1.25rem">
+                              Наличными курьеру
+                            </Typography>
+                            <Typography variant="body2">
+                              Наличными курьеру
+                            </Typography>
+                          </Stack>
+                        </CheckoutMethods>
                         <CheckoutMethods>
                           <FormControlLabel
                             label=""
@@ -294,14 +294,14 @@ const Checkout = () => {
                           />
                           <Image layout="fixed" src={Payme} alt="payme" />
                         </CheckoutMethods>
-                        <CheckoutMethods>
+                        {/* <CheckoutMethods>
                           <FormControlLabel
                             label=""
                             value="3"
                             control={<Radio />}
                           />
                           <Image layout="fixed" src={Click} alt="click" />
-                        </CheckoutMethods>
+                        </CheckoutMethods> */}
                       </Stack>
                     </RadioGroup>
                   </FormControl>

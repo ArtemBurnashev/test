@@ -10,8 +10,7 @@ interface Product {
   variant: string;
   slug?: string;
   price?: {
-    currency: string;
-    amount: number;
+    amountInSum?: number | null;
   };
 }
 
@@ -29,7 +28,7 @@ interface CartState {
 const initialState: CartState = loadState('cart') || {
   productsCount: 0,
   totalPrice: 0,
-  currency: 'USD',
+  currency: 'Сум',
   cartProducts: [],
 };
 
@@ -101,7 +100,7 @@ export const cartSlice = createSlice({
 
       const productPriceSum = state.cartProducts.reduce(
         (prev, curr) =>
-          curr.price ? prev + curr.count * curr?.price?.amount : 0,
+          curr.price && curr.price.amountInSum ? prev + curr.count * curr?.price?.amountInSum : 0,
         0
       );
       return {

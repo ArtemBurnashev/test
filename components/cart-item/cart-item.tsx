@@ -8,7 +8,7 @@ import Trash from 'components/icons/trash';
 import colors from 'config/theme';
 import CartController from './cart-controller';
 import { CartProduct, removeItem } from 'redux-state/features/cart/cart-slice';
-import { useAppDispatch } from 'redux-state/hook';
+import { useAppDispatch, useAppSelector } from 'redux-state/hook';
 import Link from 'next/link';
 import { Paths } from 'config/site-paths';
 import { LazyImage } from 'components/image';
@@ -23,6 +23,7 @@ const CartItem: React.FC<CartProduct> = ({
   slug,
 }) => {
   const dispatch = useAppDispatch();
+  const {currency} = useAppSelector(state => state.cart)
 
   const handleRemoveItem = () => {
     dispatch(removeItem(id));
@@ -62,7 +63,7 @@ const CartItem: React.FC<CartProduct> = ({
             fontWeight={600}
             variant="h2"
           >
-            {price?.amount} {price?.currency}
+            {price?.amountInSum} {currency}
           </Typography>
         </Stack>
         <Typography variant="subtitle2">{variant}</Typography>

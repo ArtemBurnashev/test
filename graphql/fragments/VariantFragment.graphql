@@ -18,11 +18,13 @@ fragment productVariant on ProductVariant {
       gross {
         currency
         amount
+        amountInSum
       }
     }
     price {
       gross {
         currency
+        amountInSum
         amount
       }
     }

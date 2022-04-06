@@ -29,12 +29,14 @@ interface ProductCardProps {
   discount?: {
     currency: string;
     amount: number;
+    amountInSum?: number | null;
   };
   slug: string;
   id?: string;
   startPrice?: {
     currency: string;
     amount: number;
+    amountInSum?: number | null;
   };
 }
 
@@ -48,36 +50,41 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const navigator = useRouter();
   const dispatch = useAppDispatch();
-  const { cartProducts } = useAppSelector((state) => state.cart);
+  const { cartProducts, currency } = useAppSelector((state) => state.cart);
   const isInCard = cartProducts.some((product) => product.id === id);
   const handleAddToCart = (
     e: React.MouseEvent<HTMLButtonElement | MouseEvent>
   ) => {
     e.stopPropagation();
     if (isInCard) return navigator.push(Paths.CART);
-    if(id) 
-    dispatch(
-      addToCart({
-        id,
-        image: (media && media[0].url) || '',
-        price: discount || startPrice,
-        is_saved: false,
-        name,
-        variant: "",
-        slug
-      })
-    );
+    if (id && startPrice?.amountInSum && discount?.amountInSum){
+      dispatch(
+        addToCart({
+          id,
+          image: (media && media[0].url) || '',
+          price: discount || startPrice,
+          is_saved: false,
+          name,
+          variant: '',
+          slug,
+        })
+      );
+    }
   };
 
   return (
-    <ProductCardWrapper
-      
-    >
+    <ProductCardWrapper>
       {discount && startPrice && (
         <ProductCardLabel isNew={!!!discount}>
-          <Typography color="white" fontSize="0.75rem">
-            {discount.amount !== startPrice.amount && "-"}{Math.floor(100 - (discount.amount / startPrice?.amount) * 100)}%
-          </Typography>
+          {discount.amountInSum && startPrice.amountInSum && (
+            <Typography color="white" fontSize="0.75rem">
+              {discount.amountInSum !== startPrice.amountInSum && '-'}
+              {Math.floor(
+                100 - (discount.amountInSum / startPrice?.amountInSum) * 100
+              )}
+              %
+            </Typography>
+          )}
         </ProductCardLabel>
       )}
       <ProductHeartWrapper isSaved={false}>
@@ -92,9 +99,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </ProductCardImageWrapper>
         <Typography
           variant="subtitle2"
-          sx={{":hover":{
-            color: "#FEEE00",
-          }}}
+          sx={{
+            ':hover': {
+              color: '#FEEE00',
+            },
+          }}
           onClick={() => navigator.push(`${Paths.PRODUCT_DETAILS}${slug}`)}
         >
           {name}
@@ -110,12 +119,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 sx={{ textDecoration: 'line-through' }}
                 variant="body2"
               >
-                {startPrice?.amount} {startPrice?.currency}
+                {startPrice?.amountInSum} {currency}
               </Typography>
             )}
             <Typography variant="h3" fontWeight={600}>
-              {discount ? discount?.amount : startPrice?.amount}{' '}
-              {discount ? discount?.currency : startPrice?.currency}
+              {discount ? discount?.amountInSum : startPrice?.amountInSum}{' '}
+              {currency}
             </Typography>
           </Stack>
           <Button

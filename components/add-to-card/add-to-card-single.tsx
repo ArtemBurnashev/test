@@ -11,16 +11,18 @@ interface AddtoCardSingleProps {
   price?: {
     amount: number;
     currency: string;
+    amountInSum?: number | null;
   };
   discount?: {
     amount: number;
     currency: string;
+    amountInSum?: number | null;
   };
   id: string;
   name: string;
   image: string;
   variant: string;
-  slug?: string
+  slug?: string;
 }
 
 const AddtoCardSingle: React.FC<AddtoCardSingleProps> = ({
@@ -30,25 +32,37 @@ const AddtoCardSingle: React.FC<AddtoCardSingleProps> = ({
   name,
   image,
   variant,
-  slug
+  slug,
 }) => {
-  const { cartProducts } = useAppSelector((state) => state.cart);
+  const { cartProducts, currency } = useAppSelector((state) => state.cart);
   const isInCard = cartProducts.find((product) => product.id === id);
   const dispatch = useAppDispatch();
 
   const handleAddToCart = () => {
-    dispatch(addToCart({id, name, is_saved: false, image, price: discount ? discount : price, variant, slug}))
-  }
+    if (price?.amountInSum) {
+      dispatch(
+        addToCart({
+          id,
+          name,
+          is_saved: false,
+          image,
+          price:  discount || price,
+          variant,
+          slug,
+        })
+      );
+    }
+  };
   return (
     <AddToCardWrapper>
-      {discount && price && (
+      {discount?.amountInSum && price?.amountInSum && (
         <Stack direction="row" justifyContent="space-between">
           <Typography
             sx={{ textDecoration: 'line-through' }}
             fontSize="1.25rem"
             color={colors.grey.default}
           >
-            {price.amount} {price.currency}
+            {price?.amountInSum} {currency}
           </Typography>
           <Stack
             sx={{
@@ -59,15 +73,16 @@ const AddtoCardSingle: React.FC<AddtoCardSingleProps> = ({
             }}
           >
             <Typography variant="h3" sx={{ color: colors.white }}>
-              {discount.amount !== price.amount && '-'}
-              {Math.floor(100 - (discount.amount / price?.amount) * 100)}%
+              {discount.amountInSum !== price?.amountInSum && '-'}
+              {Math.floor(100 - (discount?.amountInSum / price?.amountInSum) * 100)}%
             </Typography>
           </Stack>
         </Stack>
       )}
 
       <Typography variant="h1" fontWeight={600}>
-        {discount ? discount.amount : price?.amount} {discount ? discount.currency : price?.currency}
+        {discount ? discount.amountInSum : price?.amountInSum}{' '}
+        {currency}
       </Typography>
       {isInCard ? (
         <CartController id={id || ''} count={isInCard.count} />
