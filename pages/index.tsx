@@ -17,6 +17,7 @@ const Home: NextPage = () => {
       <Container maxWidth="xl">
         <CategoyrCarousel />
         <ProductCarousel slug="apparel" label="Смартфоны и планшеты" />
+
         <Action />
         <Grid columnSpacing={4} container>
           <Grid item md={6} lg={4}>

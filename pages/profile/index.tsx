@@ -12,6 +12,7 @@ import { Breadcrumb } from 'components/breadcrumbs';
 import { WithAuth } from 'components/private-route';
 import { ChengePassword, ChengeData } from 'components/chenge-user-content';
 import { useModal } from 'hooks/use-modal';
+import { useTranslation } from 'react-i18next';
 import Close from 'components/icons/close';
 import { logout } from 'redux-state/features/user/user-slice';
 import { useDispatch } from 'react-redux';
@@ -21,6 +22,7 @@ const ProfilePage: NextPage = () => {
   const catalogModal = useModal();
   const { close: logoutClose, isOpen: logoutIsopen, open: logoutOpen } = useModal();
   const router = useRouter();
+  const { t } = useTranslation()
   const { data, loading } = useMeQuery();
   const dispatch = useDispatch();
   const links = [
@@ -71,7 +73,7 @@ const ProfilePage: NextPage = () => {
                 ИЗМЕНИТЬ
               </Button>
               <Button onClick={() => logoutOpen()} sx={{ maxWidth: 'max-content', marginRight: '50px' }} color="secondary">
-                Log Out
+                {t('logOut')}
               </Button>
             </Stack>
           </Stack>
@@ -91,7 +93,7 @@ const ProfilePage: NextPage = () => {
           />
           <Stack sx={{ padding: '40px' }} spacing={4}>
             <Typography variant='h2'>losdfgsdgsdgsdgzdvev</Typography>
-            <Button onClick={deleteLogin} color="secondary">Log Out</Button>
+            <Button onClick={deleteLogin} color="secondary">{t('logOut')}</Button>
           </Stack>
         </Dialog>
         <Dialog

@@ -3,6 +3,7 @@ import Input from 'components/input/input';
 import { Button } from 'components/button';
 import { Typography, Stack, } from '@mui/material';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
@@ -44,7 +45,8 @@ export const AddressCreate: React.FC<AddressProp> = ({ modalClose, backdrop, dat
   const [mutation, datamutation] = useAddressCreateMutation();
   const { user } = useAppSelector((state) => state.user);
   const [updeteAdderss, dataUpdateAddress] = useAddressUpdateMutation();
-  
+
+  const { t } = useTranslation()
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .required('Name is required')
@@ -90,13 +92,13 @@ export const AddressCreate: React.FC<AddressProp> = ({ modalClose, backdrop, dat
     }
   }
   const onEdit = (element: any) => {
-    if(data?.id){
+    if (data?.id) {
       reset();
       backdrop?.open()
       updeteAdderss({
-        variables:{
-          id:data?.id,
-          input:{
+        variables: {
+          id: data?.id,
+          input: {
             city: element.city,
             firstName: element.name,
             phone: element.phone,
@@ -116,9 +118,9 @@ export const AddressCreate: React.FC<AddressProp> = ({ modalClose, backdrop, dat
   return (
     <FormStyle onSubmit={data ? handleSubmit(onEdit) : handleSubmit(onSubmit)}>
 
-      <Typography mb={2} variant='h2'>{data ? 'Edit Addres' : 'Create Addres'}</Typography>
+      <Typography mb={2} variant='h2'>{data ? t('editAddress') : t('createAddress')}</Typography>
       <Stack spacing={1.7}>
-        <label>Name</label>
+        <label>{t('name')}</label>
         <Input
           type='text'
           {...register('name')}
@@ -126,7 +128,7 @@ export const AddressCreate: React.FC<AddressProp> = ({ modalClose, backdrop, dat
           helperText={errors.name?.message}
           defaultValue={data ? data.firstName : ''}
         />
-        <label>Phone</label>
+        <label>{t('phone')}</label>
         <Input
           type='text'
           {...register('phone')}
@@ -134,7 +136,7 @@ export const AddressCreate: React.FC<AddressProp> = ({ modalClose, backdrop, dat
           helperText={errors.phone?.message}
           defaultValue={data?.phone ? data.phone : ''}
         />
-        <label>Address</label>
+        <label>{t('address')}</label>
         <Input
           type='text'
           {...register('address')}
@@ -142,7 +144,7 @@ export const AddressCreate: React.FC<AddressProp> = ({ modalClose, backdrop, dat
           helperText={errors.address?.message}
           defaultValue={data ? data.streetAddress1 : ''}
         />
-        <label>City</label>
+        <label>{t('city')}</label>
         <Input
           type='text'
           {...register('city')}
@@ -150,7 +152,7 @@ export const AddressCreate: React.FC<AddressProp> = ({ modalClose, backdrop, dat
           helperText={errors.city?.message}
           defaultValue={data ? CountryCode.Uz : ''}
         />
-        <Button variant='contained'>{data ? 'Update' : 'Add'}</Button>
+        <Button variant='contained'>{data ? t('update') : t('add')}</Button>
       </Stack>
     </FormStyle>
 

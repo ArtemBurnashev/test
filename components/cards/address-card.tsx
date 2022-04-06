@@ -2,6 +2,7 @@ import React from 'react';
 import Trash from 'components/icons/trash';
 import EditIcon from 'components/icons/edit';
 import { IconButton } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { useModal } from 'hooks/use-modal';
 import { useDeleteAddressMutation } from 'graphql/generated.graphql';
 import { Typography, Grid, Stack, Dialog } from '@mui/material';
@@ -35,6 +36,7 @@ interface AddressProps {
 export const AddresCard: React.FC<AddressProps> = ({ data, backdrop }) => {
   const [mutation, mutationData] = useDeleteAddressMutation();
   const editModal = useModal();
+  const { t } = useTranslation();
 
   const deleteCard = () => {
     if (data?.id) {
@@ -51,10 +53,10 @@ export const AddresCard: React.FC<AddressProps> = ({ data, backdrop }) => {
     }
 
   }
-  
+
   return (
     <Grid item xs={6}>
-      <Dialog 
+      <Dialog
         open={editModal.isOpen}
         onClose={editModal.close}
       >
@@ -62,28 +64,28 @@ export const AddresCard: React.FC<AddressProps> = ({ data, backdrop }) => {
       </Dialog>
       <Stack spacing={2} sx={{ border: '1px solid #e5e5e5', padding: '20px', position: 'relative' }}>
         <Stack alignItems='center' direction={'row'} sx={{ position: 'absolute', right: '10px', top: '10px' }}>
-          <IconButton onClick={()=> editModal.open()} sx={{ width: '40px', height: '40px' }}>
+          <IconButton onClick={() => editModal.open()} sx={{ width: '40px', height: '40px' }}>
             <EditIcon />
           </IconButton>
           <IconButton onClick={deleteCard} sx={{ width: '45px', height: '45px' }}>
-            <Trash  />
+            <Trash />
           </IconButton>
         </Stack>
         <Typography sx={{ borderBottom: '1px solid #e5e5e5' }} gap={3} alignItems={'center'} display={'flex'} variant='body1'>
           <Typography variant='h6'>
-            Name
+            {t('name')}
           </Typography>
           {data?.firstName}
         </Typography>
         <Typography sx={{ borderBottom: '1px solid #e5e5e5' }} gap={3} alignItems={'center'} display={'flex'} variant='body1'>
           <Typography variant='h6'>
-            Phone
+            {t('phone2')}
           </Typography>
           {data?.phone}
         </Typography>
         <Typography sx={{ borderBottom: '1px solid #e5e5e5' }} gap={3} alignItems={'center'} display={'flex'} variant='body1'>
           <Typography variant='h6'>
-            Addres
+            {t('address')}
           </Typography>
           {data?.streetAddress1}
         </Typography>
