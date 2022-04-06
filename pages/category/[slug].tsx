@@ -2,6 +2,7 @@ import { Container, Grid, Skeleton, Stack, Typography } from '@mui/material';
 import { ProductCard } from 'components/cards';
 import { ProductCardLoading } from 'components/cards/loading-cards';
 import { InfiniteLoader } from 'components/loaders/infinite-loader';
+import { SEO } from 'components/seo';
 import { useCategoryQuery } from 'graphql/generated.graphql';
 import { Main } from 'layouts/main';
 import { NextPage } from 'next';
@@ -37,12 +38,21 @@ const CategoryProducts: NextPage = () => {
 
   return (
     <Main>
+      {loading || (
+        <SEO
+          title={`${data?.category?.name} | GiperMart`}
+          description={data?.category?.name}
+        />
+      )}
+
       <Container maxWidth="xl">
         {loading ? (
           loadingIndicator()
         ) : (
           <Stack spacing={2}>
-            <Typography margin="1.5rem 0" variant="h2">{data?.category?.name}</Typography>
+            <Typography margin="1.5rem 0" variant="h2">
+              {data?.category?.name}
+            </Typography>
             <InfiniteLoader
               hasMore={pageInfo?.hasNextPage || false}
               loadMore={() =>
@@ -61,10 +71,15 @@ const CategoryProducts: NextPage = () => {
                       name={product.name}
                       media={product?.media}
                       thumbnail={product.thumbnail?.url}
-                      discount={product.defaultVariant?.pricing?.discount?.gross}
+                      discount={
+                        product.defaultVariant?.pricing?.discount?.gross
+                      }
                       slug={product.slug}
                       startPrice={product.defaultVariant?.pricing?.price?.gross}
                       id={product.defaultVariant?.id}
+                      variant={`${product?.defaultVariant?.attributes
+                        .map((val) => val?.attribute.name)
+                        .join(' ')}:${product?.defaultVariant?.name}`}
                     />
                   </Grid>
                 ))}

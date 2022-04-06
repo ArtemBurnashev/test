@@ -62,7 +62,15 @@ const CategoryProducts: NextPage = () => {
               <Grid rowGap="3rem" direction="row" container>
                 {nodes && nodes?.length > 0 ? (
                   nodes?.map((product) => (
-                    <Grid justifyContent="center" item xs={12} md={3} lg={2} sm={6} key={product.id}>
+                    <Grid
+                      justifyContent="center"
+                      item
+                      xs={12}
+                      md={3}
+                      lg={2}
+                      sm={6}
+                      key={product.id}
+                    >
                       <ProductCard
                         name={product.name}
                         media={product?.media}
@@ -75,6 +83,9 @@ const CategoryProducts: NextPage = () => {
                         }
                         slug={product.slug}
                         id={product.defaultVariant?.id}
+                        variant={`${product?.defaultVariant?.attributes
+                          .map((val) => val?.attribute.name)
+                          .join(' ')}:${product?.defaultVariant?.name}`}
                       />
                     </Grid>
                   ))

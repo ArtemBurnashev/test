@@ -3,7 +3,7 @@ import { WritableDraft } from 'immer/dist/internal';
 import { loadState } from 'utils/storage';
 
 interface Product {
-  id: string;
+  id?: string;
   image: string;
   name: string;
   is_saved: boolean;

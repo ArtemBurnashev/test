@@ -27,6 +27,7 @@ import { Breadcrumb } from 'components/breadcrumbs';
 import { Paths } from 'config/site-paths';
 import Select from 'components/select';
 import { DraftailEditor } from 'draftail';
+import { SEO } from 'components/seo';
 
 const SingleProduct: NextPage = () => {
   const router = useRouter();
@@ -67,10 +68,38 @@ const SingleProduct: NextPage = () => {
     setOpen(true);
   };
 
+  const getVariantName = () => {
+    if(variant) {
+      return `${variant.attributes
+        .map((val) => val?.attribute.name)
+        .join(' ')}:${variant.name}`;
+    }
+    return `${data?.product?.defaultVariant?.attributes
+      .map((val) => val?.attribute.name)
+      .join(' ')}:${data?.product?.defaultVariant?.name}`;
+  }
+
+  const description = {
+    blocks: [
+      {
+        data: {
+          text: 'Watch the slow setting sun of a wild summer evening sink into the horizon as you sip white wine that tastes like bittersweet memories of halcyon days.',
+        },
+        type: 'paragraph',
+      },
+    ],
+  };
+
   return (
     <Main>
+      <SEO
+        title={`${data?.product.name} | GiperMart`}
+        description={data?.product?.seoDescription}
+        image={data?.product?.media?.length > 0 && data?.product?.media[0].url}
+      />
       <Container maxWidth="xl">
-        <Breadcrumb data={links} />
+        {data?.product?.name && <Breadcrumb data={links} />}
+
         <Typography variant="h2" fontWeight={600} lineHeight="36px">
           {data?.product?.name}
         </Typography>
@@ -126,7 +155,7 @@ const SingleProduct: NextPage = () => {
             </ImageCarousel>
           </Grid>
           <Grid item md={5} lg={5}>
-            {data?.product?.variants?.length === 1 && (
+            {data?.product?.variants?.length === 1 && variant && (
               <Typography variant="body1" fontWeight={500}>
                 {variant.name}
               </Typography>
@@ -144,12 +173,16 @@ const SingleProduct: NextPage = () => {
                   onChange={handleChange}
                   onClose={handleOpen}
                   value={variant?.id}
+                  endAdornment={<div />}
                   defaultValue={data.product.defaultVariant?.id}
                   sx={{
-                    width: '8rem',
+                    width: '6rem',
                     border: `1px solid ${colors.red.default}`,
-                    '&&&&.MuiOutlinedInput-notchedOutline, &&&&&.Mui-focused': {
-                      borderColor: 'trasparent',
+                    ['div']: {
+                      ['fieldset, svg']:
+                        {
+                          display: "none"
+                        },
                     },
                   }}
                 >
@@ -169,13 +202,14 @@ const SingleProduct: NextPage = () => {
               {/* <Typography variant="body1">
                 {data?.product?.seoDescription}
               </Typography> */}
-              {/* {console.log(data?.product?.description)}
-              {data?.product?.description.toString() !== '{}' && (
+
+              {console.log(data?.product?.description)}
+              {!loading && (
                 <DraftailEditor
                   readOnly={true}
-                  data={JSON.parse(data?.product?.description)}
+                  rawContentState={description}
                 />
-              )} */}
+              )}
 
               <Typography fontWeight={500} variant="h3">
                 Характеристики
@@ -204,9 +238,7 @@ const SingleProduct: NextPage = () => {
                 (data?.product?.media && data?.product?.media[0].url) || ''
               }
               name={data?.product?.name || ''}
-              variant={`${data?.product?.defaultVariant?.attributes
-                .map((val) => val?.attribute.name)
-                .join(' ')}:${data?.product?.defaultVariant?.name}`}
+              variant={getVariantName()}
               slug={data?.product?.slug}
             />
           </Grid>
