@@ -9,7 +9,7 @@ import {
   SocialMediaIcon,
   CartWrapper,
 } from './footer.styles';
-import LogoImage from 'assets/png/logo.png';
+import LogoImage from 'assets/logo.png';
 import {
   aboutSite,
   siteInfo,
@@ -29,7 +29,9 @@ const Footer = () => {
             <Grid sm={6} xs={12} item lg={3}>
               <Stack spacing={2}>
                 <Logo>
-                  <Image layout="fixed" src={LogoImage} alt="logo" />
+                  <Link href='/'>
+                    <Image layout="fixed" src={LogoImage} alt="logo" />
+                  </Link>
                 </Logo>
                 <Stack>
                   <Typography fontSize={21}>+99 893 374-66-44</Typography>

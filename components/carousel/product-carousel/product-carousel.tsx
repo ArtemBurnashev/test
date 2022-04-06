@@ -28,14 +28,52 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug }) => {
   const { data, loading } = useCategoryQuery({
     variables: { first: 10, cursor: '', slug },
   });
-  const [count, setCount] = React.useState(0)
+
+  
   const settings = {
-    beforeChange: (curent:any,next:any) => setCount(next),
+    responsive:[
+      {
+        breakpoint: theme.breakpoints.values.md,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: theme.breakpoints.values.xs,
+        settings: {
+          slidesToShow: 1.5,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: theme.breakpoints.values.lg,
+        settings: {
+          slidesToShow: 4,
+        },
+      },
+      {
+        breakpoint: theme.breakpoints.values.sm,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: theme.breakpoints.values.xl,
+        settings: {
+          slidesToShow: 6,
+        },
+      },
+    ],
   };
-  console.log(count);
+ 
 
-  const products = data?.category?.products?.edges.map(edge => edge.node)
-
+  const products = data?.category?.products?.edges.map(edge => edge.node);
+  let lenProduct = 0
+  if(products?.length){
+    lenProduct = products.length;
+  }
   if (loading) {
     return (
       <Stack margin="1rem 0" flexWrap="wrap" direction="row" gap="2rem">
@@ -58,13 +96,13 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug }) => {
         <Typography variant="h2">{label}</Typography>
         <Stack direction="row" alignItems="center" spacing={2}>
           <Box
-            sx={count === 0 ? { cursor: 'pointer',opacity:'0.5'} : { cursor: 'pointer'}}
+            sx={{ cursor: 'pointer' }}
             onClick={() => prevArrowRef.current && prevArrowRef.current.click()}
           >
             <Arrow />
           </Box>
           <Box
-            sx={count === 4 ? { cursor: 'pointer',opacity:'0.5'} : { cursor: 'pointer'}}
+            sx={{ cursor: 'pointer' }}
             onClick={() => nextArrowRef.current && nextArrowRef.current.click()}
           >
             <NextArrow />
@@ -76,48 +114,14 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug }) => {
         infinite={false}
         dots={false}
         arrows={true}
-        slidesToScroll={3}
+        slidesToScroll={1}
         initialSlide={0}
         autoplay={false}
         slidesToShow={6}
         prevArrow={<div ref={prevArrowRef} />}
         nextArrow={<div ref={nextArrowRef} />}
         lazyLoad="progressive"
-        responsive={[
-          {
-            breakpoint: theme.breakpoints.values.md,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 1,
-            },
-          },
-          {
-            breakpoint: theme.breakpoints.values.xs,
-            settings: {
-              slidesToShow: 1.5,
-              slidesToScroll: 1,
-            },
-          },
-          {
-            breakpoint: theme.breakpoints.values.lg,
-            settings: {
-              slidesToShow: 4,
-            },
-          },
-          {
-            breakpoint: theme.breakpoints.values.sm,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 1,
-            },
-          },
-          {
-            breakpoint: theme.breakpoints.values.xl,
-            settings: {
-              slidesToShow: 6,
-            },
-          },
-        ]}
+        
       >
         {products?.map((product) => (
           <ProductCard

@@ -20,7 +20,7 @@ const ProductColumn: React.FC<{ label: string, slug: string }> = ({ label, slug 
     <Stack width="100%" spacing={2}>
       <Typography variant="subtitle1">{data?.category?.name}</Typography>
       <Spacer />
-      {products?.map((product) => (
+      {products?.slice(0,3).map((product) => (
         <ProductCardHorizontal name={product.name} slug={product.slug} image={product?.media && product.media[0].url} price={product.defaultVariant?.pricing?.price?.gross} discount={product.defaultVariant?.pricing?.discount?.gross} />
       ))}
     </Stack>

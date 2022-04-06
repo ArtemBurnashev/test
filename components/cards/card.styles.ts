@@ -16,6 +16,9 @@ export const CategoryCardWrapper = styled.div`
   padding: 14px 16px;
   gap: 1rem;
   cursor: pointer;
+  @media(max-width: 768px){
+    flex-direction: column;  
+  }
 `;
 
 export const CategoryCardImageWrapper = styled.div`
