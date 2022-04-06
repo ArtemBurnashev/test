@@ -38,6 +38,7 @@ interface ProductCardProps {
     amount: number;
     amountInSum?: number | null;
   };
+  variant: string;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -47,6 +48,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   slug,
   id,
   startPrice,
+  variant
 }) => {
   const navigator = useRouter();
   const dispatch = useAppDispatch();
@@ -57,7 +59,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   ) => {
     e.stopPropagation();
     if (isInCard) return navigator.push(Paths.CART);
-    if (id && startPrice?.amountInSum && discount?.amountInSum){
+    if (id && startPrice?.amountInSum || discount?.amountInSum){
       dispatch(
         addToCart({
           id,
@@ -65,7 +67,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           price: discount || startPrice,
           is_saved: false,
           name,
-          variant: '',
+          variant,
           slug,
         })
       );

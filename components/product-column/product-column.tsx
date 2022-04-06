@@ -17,7 +17,7 @@ const ProductColumn: React.FC<{ label: string, slug: string }> = ({ label, slug 
    const products = data?.category?.products?.edges.map(product => product.node)
   
   return (
-    <Stack spacing={2}>
+    <Stack width="100%" spacing={2}>
       <Typography variant="subtitle1">{data?.category?.name}</Typography>
       <Spacer />
       {products?.map((product) => (

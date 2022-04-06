@@ -63,7 +63,6 @@ const Image = styled(LazyImage)<{ height?: number }>`
 `;
 
 const images = [
-  "https://picsum.photos/id/200/700",
   "https://picsum.photos/id/209/700",
   "https://picsum.photos/id/234/700",
   "https://picsum.photos/id/210/700",
