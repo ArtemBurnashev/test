@@ -203,13 +203,13 @@ const SingleProduct: NextPage = () => {
                 {data?.product?.seoDescription}
               </Typography> */}
 
-              {console.log(data?.product?.description)}
+              {/* {console.log(data?.product?.description)}
               {!loading && (
                 <DraftailEditor
                   readOnly={true}
                   rawContentState={description}
                 />
-              )}
+              )} */}
 
               <Typography fontWeight={500} variant="h3">
                 Характеристики
