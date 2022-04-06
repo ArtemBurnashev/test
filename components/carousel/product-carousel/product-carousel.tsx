@@ -1,6 +1,7 @@
 import { FC, useRef } from 'react';
 import styled from 'styled-components';
 import Slider from 'react-slick';
+import React from 'react';
 import Arrow from 'components/icons/inline-arrow';
 import { ProductCard } from 'components/cards';
 import { Box, Stack, Typography, useTheme } from '@mui/material';
@@ -24,9 +25,14 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug }) => {
   const nextArrowRef = useRef<HTMLDivElement>(null);
   const prevArrowRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
-  const {data, loading} = useCategoryQuery({
+  const { data, loading } = useCategoryQuery({
     variables: { first: 10, cursor: '', slug },
   });
+  const [count, setCount] = React.useState(0)
+  const settings = {
+    beforeChange: (curent:any,next:any) => setCount(next),
+  };
+  console.log(count);
 
   const products = data?.category?.products?.edges.map(edge => edge.node)
 
@@ -52,13 +58,13 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug }) => {
         <Typography variant="h2">{label}</Typography>
         <Stack direction="row" alignItems="center" spacing={2}>
           <Box
-            sx={{ cursor: 'pointer' }}
+            sx={count === 0 ? { cursor: 'pointer',opacity:'0.5'} : { cursor: 'pointer'}}
             onClick={() => prevArrowRef.current && prevArrowRef.current.click()}
           >
             <Arrow />
           </Box>
           <Box
-            sx={{ cursor: 'pointer' }}
+            sx={count === 4 ? { cursor: 'pointer',opacity:'0.5'} : { cursor: 'pointer'}}
             onClick={() => nextArrowRef.current && nextArrowRef.current.click()}
           >
             <NextArrow />
@@ -66,6 +72,7 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug }) => {
         </Stack>
       </Stack>
       <Slider
+        {...settings}
         infinite={false}
         dots={false}
         arrows={true}

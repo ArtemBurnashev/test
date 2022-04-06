@@ -4,6 +4,7 @@ import { OrderTitle } from 'components/orders';
 import { OrdersCard } from 'components/cards';
 import { ProfileLayout } from 'layouts/profile';
 import { Main } from 'layouts/main';
+import { useTranslation } from 'react-i18next';
 import { Paths } from 'config/site-paths';
 import { InfiniteLoader } from 'components/loaders/infinite-loader';
 import { Container, Stack, Typography, Skeleton } from '@mui/material';
@@ -17,14 +18,15 @@ const orders: NextPage = () => {
       first: 10,
     }
   })
+  const { t } = useTranslation();
   const links = [
     {
-      name:'Личный кабинет',
-      link:Paths.PROFILE,
+      name: 'Личный кабинет',
+      link: Paths.PROFILE,
     },
     {
-      name:'Orders',
-      link:Paths.ORDERS,
+      name: 'Orders',
+      link: Paths.ORDERS,
     }
   ]
 
@@ -34,7 +36,7 @@ const orders: NextPage = () => {
   return (
     <Main>
       <Container maxWidth="xl">
-        <Breadcrumb data={links}/>
+        <Breadcrumb data={links} />
         <ProfileLayout
           loading={loading}
           loadingFallBack={
@@ -50,12 +52,14 @@ const orders: NextPage = () => {
         >
           <OrderTitle>Мои заказы</OrderTitle>
           {orders?.length ?
-            <InfiniteLoader loadMore={()=> fetchMore({variables:{
-              cursor:pageInfor?.endCursor,
-              }})}
+            <InfiniteLoader loadMore={() => fetchMore({
+              variables: {
+                cursor: pageInfor?.endCursor,
+              }
+            })}
               hasMore={pageInfor?.hasNextPage}
               loading={loading}
-              >
+            >
               {orders.map((order) => (
                 <OrdersCard
                   key={order.id}
@@ -64,7 +68,7 @@ const orders: NextPage = () => {
               ))}
             </InfiniteLoader>
 
-            : <Typography sx={{ textAlign: 'center' }} variant='h2'>Emty</Typography>}
+            : <Typography sx={{ textAlign: 'center' }} variant='h2'>{t('emty')}</Typography>}
 
         </ProfileLayout>
       </Container>
