@@ -19,6 +19,7 @@ fragment product on Product {
       currency
       gross {
         currency
+        amountInSum
         amount
       }
     }
@@ -26,17 +27,20 @@ fragment product on Product {
       start {
         net {
           currency
+          amountInSum
           amount
         }
         gross {
           currency
           amount
+          amountInSum
         }
       }
       stop {
         gross {
           currency
           amount
+          amountInSum
         }
       }
     }

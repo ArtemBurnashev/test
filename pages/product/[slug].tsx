@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
   Container,
   Grid,
@@ -12,7 +13,7 @@ import Heart from 'components/icons/heart';
 import colors from 'config/theme';
 import { Main } from 'layouts/main';
 import { NextPage } from 'next';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import DataLine from 'components/common/dataline';
 import AddtoCardSingle from 'components/add-to-card/add-to-card-single';
@@ -25,18 +26,17 @@ import { ImageCarousel } from 'components/carousel/img-carousel';
 import { Breadcrumb } from 'components/breadcrumbs';
 import { Paths } from 'config/site-paths';
 import Select from 'components/select';
+import { DraftailEditor } from 'draftail';
 
 const SingleProduct: NextPage = () => {
   const router = useRouter();
   const { slug } = router.query;
+  const [variant, setVariant] = useState();
   const { data, loading } = useSingleProductQuery({
     variables: { slug: Array.isArray(slug) ? slug[0] : slug || '' },
     skip: !slug,
   });
   const [open, setOpen] = React.useState(false);
-  const [variant, setVariant] = useState<any>(
-    data?.product?.defaultVariant || []
-  );
 
   if (loading) return <SingleProductPageLoading />;
 
@@ -52,7 +52,10 @@ const SingleProduct: NextPage = () => {
 
   const handleChange = (event: SelectChangeEvent<any>) => {
     if (data?.product?.variants) {
-      setVariant(data?.product?.variants[event.target.value]);
+      const varianttemp = data?.product?.variants.find(
+        (product) => product.id === event.target.value
+      );
+      setVariant(varianttemp);
     }
   };
 
@@ -135,69 +138,81 @@ const SingleProduct: NextPage = () => {
                     {data.product.defaultVariant?.attributes[0].attribute.name}
                   </Typography>
                 }
-{/* 
+
                 <Select
                   onOpen={handleClose}
                   onChange={handleChange}
                   onClose={handleOpen}
-                  defaultValue={data.product?.defaultVariant?.id}
                   value={variant?.id}
+                  defaultValue={data.product.defaultVariant?.id}
+                  sx={{
+                    width: '8rem',
+                    border: `1px solid ${colors.red.default}`,
+                    '&&&&.MuiOutlinedInput-notchedOutline, &&&&&.Mui-focused': {
+                      borderColor: 'trasparent',
+                    },
+                  }}
                 >
                   {data.product.variants.map((variant) => (
                     <MenuItem key={variant?.id} value={variant?.id}>
                       {variant?.name}
                     </MenuItem>
                   ))}
-                </Select> */}
-                <Stack
-                  sx={{
-                    padding: '8px 15px',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    border: `2px solid ${colors.red.default}`,
-                    maxWidth: '76px',
-                    marginBottom: '1rem',
-                  }}
-                >
-                  <Typography variant="body1">
-                    {data.product.defaultVariant?.name}
-                  </Typography>
-                </Stack>
+                </Select>
               </>
             )}
 
             <Stack spacing={2}>
               <Typography fontWeight={500} variant="h3">
+                описание
+              </Typography>
+              {/* <Typography variant="body1">
+                {data?.product?.seoDescription}
+              </Typography> */}
+              {/* {console.log(data?.product?.description)}
+              {data?.product?.description.toString() !== '{}' && (
+                <DraftailEditor
+                  readOnly={true}
+                  data={JSON.parse(data?.product?.description)}
+                />
+              )} */}
+
+              <Typography fontWeight={500} variant="h3">
                 Характеристики
               </Typography>
-              <Typography variant="body1">
-                {data?.product?.seoDescription}
-              </Typography>
+              {data?.product?.attributes.map((attr) => (
+                <DataLine
+                  field={attr.attribute.name || ''}
+                  value={attr.values.map((val) => val?.name).join(' ')}
+                  key={attr.attribute.name}
+                />
+              ))}
             </Stack>
           </Grid>
           <Grid xs={12} sm={12} md={6} item lg={3}>
             <AddtoCardSingle
-              price={data?.product?.defaultVariant?.pricing?.price?.gross}
-              discount={data?.product?.defaultVariant?.pricing?.discount?.gross}
+              price={
+                variant?.pricing?.price?.gross ||
+                data?.product?.defaultVariant?.pricing?.price?.gross
+              }
+              discount={
+                variant?.pricing?.discount?.gross ||
+                data?.product?.defaultVariant?.pricing?.discount?.gross
+              }
               id={data?.product?.defaultVariant?.id || ''}
               image={
                 (data?.product?.media && data?.product?.media[0].url) || ''
               }
               name={data?.product?.name || ''}
-              variant={`${data?.product?.defaultVariant?.attributes.map(val => val?.attribute.name).join(" ")}:${data?.product?.defaultVariant?.name}`}
+              variant={`${data?.product?.defaultVariant?.attributes
+                .map((val) => val?.attribute.name)
+                .join(' ')}:${data?.product?.defaultVariant?.name}`}
               slug={data?.product?.slug}
             />
           </Grid>
         </Grid>
         <Grid marginTop="2rem" marginBottom="2rem" container columnSpacing={4}>
-          {data?.product?.attributes.map((attr) => (
-            <Grid item xs={12} md={12} lg={6} key={attr.attribute.name}>
-              <DataLineWithArrow
-                field={attr.attribute.name || ''}
-                value={attr.values.map((val) => val?.name).join(' ')}
-              />
-            </Grid>
-          ))}
+          <Grid item xs={12}></Grid>
         </Grid>
       </Container>
     </Main>

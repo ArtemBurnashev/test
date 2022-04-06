@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { Paths } from 'config/site-paths';
 import { LazyImage } from 'components/image';
 import colors from 'config/theme';
+import { useAppSelector } from 'redux-state/hook';
 
 interface ProductCardProps {
   name: string;
@@ -17,12 +18,14 @@ interface ProductCardProps {
   discount?: {
     currency: string;
     amount: number;
+    amountInSum?: number | null
   };
   slug: string;
   id?: string;
   price?: {
     currency: string;
     amount: number;
+    amountInSum?:number | null
   };
 }
 
@@ -33,6 +36,7 @@ const ProductCardHorizontal: React.FC<ProductCardProps> = ({
   image,
   name,
 }) => {
+  const {currency} = useAppSelector(state => state.cart)
   return (
     <HorizontalCardWrapper>
       <HorizontalCardImageWrapper>
@@ -55,12 +59,12 @@ const ProductCardHorizontal: React.FC<ProductCardProps> = ({
         </Link>
         <Stack spacing={2} direction="row">
           <Typography fontWeight={500} variant="h3">
-            {discount ? discount?.amount : price?.amount}{' '}
-            {discount ? discount?.currency : price?.currency}
+            {discount ? discount?.amountInSum : price?.amountInSum}{' '}
+            {currency}
           </Typography>
           {discount && (
             <Typography sx={{ textDecoration: 'line-through' }} variant="body2">
-              {price?.amount} {price?.currency}
+              {price?.amountInSum} {currency}
             </Typography>
           )}
         </Stack>
