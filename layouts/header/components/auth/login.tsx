@@ -20,7 +20,7 @@ const schema = yup.object({
   phone: yup
     .string()
     .matches(
-      /(?:\+\998(9[012345789]|6[125679]|7[01234569])[0-9]{7})$/,
+      /(?:\+\998([0123456789][012345789]|6[125679]|7[01234569])[0-9]{7})$/,
       'Phone number is invalid'
     )
     .required('Phone number required.'),

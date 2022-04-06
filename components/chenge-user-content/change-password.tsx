@@ -2,11 +2,13 @@ import React from 'react';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import { FormStyle } from './styles';
 import Input from 'components/input/input';
 import { Stack, Typography } from '@mui/material';
 import { Button } from 'components/button';
 import { useChangePasswordMutation } from 'graphql/generated.graphql';
+
 interface ChengePasswordProp {
   modal: () => void
 }
@@ -14,6 +16,8 @@ interface ChengePasswordProp {
 
 export const ChengePassword: React.FC<ChengePasswordProp> = ({ modal }) => {
   const [changePassword, { loading, error: passwordChangeError }] = useChangePasswordMutation();
+
+  const { t } = useTranslation()
 
   const validationSchema = Yup.object().shape({
     password: Yup.string()
@@ -50,27 +54,27 @@ export const ChengePassword: React.FC<ChengePasswordProp> = ({ modal }) => {
     <FormStyle onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={2}>
         <Typography sx={{ color: 'red' }} variant='body1'>{passwordChangeError?.message}</Typography>
-        <label>Last Password</label>
+        <label>{t('lastPassword')}</label>
         <Input
           type='password'
           {...register('lastPassword')}
           error={!!errors.lastPassword?.type}
           helperText={errors.lastPassword?.message}
         />
-        <label>Password</label>
+        <label>{t("password")}</label>
         <Input
           error={!!errors.password?.type}
           helperText={errors.password?.message}
           type="password" {...register('password')}
         />
-        <label>Confirm Password</label>
+        <label>{t("confirmPassword")}</label>
         <Input
           error={!!errors.confirmPassword?.type}
           helperText={errors.confirmPassword?.message}
           type="password"
           {...register('confirmPassword')}
         />
-        <Button variant='contained' type="submit">Register</Button>
+        <Button variant='contained' type="submit">{t('change')}</Button>
       </Stack>
     </FormStyle>
   )
