@@ -19,27 +19,39 @@ import Link from 'next/link';
 import React from 'react';
 import { useAppSelector } from 'redux-state/hook';
 import { headerTopLinks } from '../header.data';
-import LogoImage from 'assets/png/logo.png';
+import LogoImage from 'assets/logo.svg';
+import styled from 'styled-components';
+
+const LogoLink = styled.a`
+  display: block;
+  span{
+    display: block;
+    max-width: 50px;
+    max-height: 50px;
+  }
+`
 
 const MobileHeaderButtons = () => {
+  const { isAuthenticated } = useAppSelector((state) => state.user)
   const { productsCount } = useAppSelector((state) => state.cart);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
 
   return (
     <List>
       <Stack direction="row" justifyContent="center">
         <Link href="/">
-          <a>
+          <LogoLink>
             <Image layout="fixed" src={LogoImage} alt="logo" />
-          </a>
+          </LogoLink>
         </Link>
       </Stack>
       <ListItem button>
         <ListItemIcon>
           <Profile />
         </ListItemIcon>
-        <ListItemText>Профиль</ListItemText>
+        <ListItemText>{isAuthenticated ? 'Профиль' : 'Kirish'}</ListItemText>
       </ListItem>
       <ListItem button>
         <ListItemIcon>
