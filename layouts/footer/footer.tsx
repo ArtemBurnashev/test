@@ -9,7 +9,7 @@ import {
   SocialMediaIcon,
   CartWrapper,
 } from './footer.styles';
-import LogoImage from 'assets/logo.png';
+import LogoImage from 'assets/logo.svg';
 import {
   aboutSite,
   siteInfo,

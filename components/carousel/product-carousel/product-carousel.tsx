@@ -7,14 +7,86 @@ import { ProductCard } from 'components/cards';
 import { Box, Stack, Typography, useTheme } from '@mui/material';
 import { useAllProductsQuery, useCategoryLazyQuery, useCategoryQuery } from 'graphql/generated.graphql';
 import { ProductCardLoading } from 'components/cards/loading-cards';
+import arrow from 'assets/png/arrow.svg'
+
+function SampleNextArrow(props: any) {
+  const { className, style, onClick } = props;
+  const Left = styled.div<{image:any}>`
+    width: 24px;
+    height: 24px;
+    top: -30px;
+    right: 0;
+    position: absolute;
+    
+    .slick-next:before{
+      content: "";
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background-repeat: no-repeat;
+      background-image: url(${(props) => props.image.src});
+      background-size: 24px;
+      background-position: center;
+      
+    }
+    .slick-next{
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      width: 100%;
+      height: 100%;
+    }
+  `
+  return (
+    <Left style={{...style}} image={arrow} onClick={onClick} >
+      <div  className={className} />
+    </Left>
+  );
+}
+
+function SamplePrevArrow(props: any) {
+  const { className, style, onClick } = props;
+  const Right = styled.div<{image:any}>`
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: -30px;
+    right: 40px;
+    z-index: 5;
+    background-repeat: no-repeat;
+    .slick-prev:before{
+      content: "";
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background-repeat: no-repeat;
+      background-image: url(${(props) => props.image.src});
+      background-size: 24px;
+      background-position: center;
+      transform: rotate(180deg);
+    }
+  
+    .slick-prev{
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      width: 100%;
+      height: 100%;
+    }
+  `
+  return (
+    <Right style={{...style}}  image={arrow} onClick={onClick}>
+      <div className={className} />
+    </Right>
+
+  );
+}
 
 const Card = styled.div<{ height?: number; fullBorderRadius?: boolean }>`
   max-width: 100%;
+  position: relative;
 `;
 
-const NextArrow = styled(Arrow)`
-  transform: rotate(180deg);
-`;
 
 interface ProductCarouselProps {
   label?: string;
@@ -22,16 +94,24 @@ interface ProductCarouselProps {
 }
 
 const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug }) => {
-  const nextArrowRef = useRef<HTMLDivElement>(null);
-  const prevArrowRef = useRef<HTMLDivElement>(null);
+
   const theme = useTheme();
   const { data, loading } = useCategoryQuery({
     variables: { first: 10, cursor: '', slug },
   });
 
-  
+
   const settings = {
-    responsive:[
+    infinite: false,
+    dots: false,
+    arrows: true,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    autoplay: false,
+    slidesToShow: 6,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+    responsive: [
       {
         breakpoint: theme.breakpoints.values.md,
         settings: {
@@ -65,15 +145,12 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug }) => {
           slidesToShow: 6,
         },
       },
-    ],
+    ]
   };
- 
+
 
   const products = data?.category?.products?.edges.map(edge => edge.node);
-  let lenProduct = 0
-  if(products?.length){
-    lenProduct = products.length;
-  }
+
   if (loading) {
     return (
       <Stack margin="1rem 0" flexWrap="wrap" direction="row" gap="2rem">
@@ -94,34 +171,10 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug }) => {
         justifyContent="space-between"
       >
         <Typography variant="h2">{label}</Typography>
-        <Stack direction="row" alignItems="center" spacing={2}>
-          <Box
-            sx={{ cursor: 'pointer' }}
-            onClick={() => prevArrowRef.current && prevArrowRef.current.click()}
-          >
-            <Arrow />
-          </Box>
-          <Box
-            sx={{ cursor: 'pointer' }}
-            onClick={() => nextArrowRef.current && nextArrowRef.current.click()}
-          >
-            <NextArrow />
-          </Box>
-        </Stack>
       </Stack>
       <Slider
-        {...settings}
-        infinite={false}
-        dots={false}
-        arrows={true}
-        slidesToScroll={1}
-        initialSlide={0}
-        autoplay={false}
-        slidesToShow={6}
-        prevArrow={<div ref={prevArrowRef} />}
-        nextArrow={<div ref={nextArrowRef} />}
         lazyLoad="progressive"
-        
+        {...settings}
       >
         {products?.map((product) => (
           <ProductCard

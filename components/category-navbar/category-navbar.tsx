@@ -7,6 +7,7 @@ import { useAllCategoriesQuery } from 'graphql/generated.graphql';
 import Slider from 'react-slick';
 import { Typography, Skeleton, Stack, } from '@mui/material';
 import Link from 'next/link';
+import styled from 'styled-components';
 import { Button } from '@mui/material';
 
 export const CategoryNavbar: React.FC = () => {
@@ -22,6 +23,14 @@ export const CategoryNavbar: React.FC = () => {
       fetchMore({ variables: { cursor: data?.categories?.pageInfo.endCursor } })
     }
   }
+  const LinkSet = styled(Typography)`
+    transition: all .4s ease;
+    &:hover{
+      a{
+        color: #FEEE00;
+      }
+    }
+  `
   const settings = {
     dots: false,
     infinite: false,
@@ -66,15 +75,16 @@ export const CategoryNavbar: React.FC = () => {
             :
             <Slider {...settings}>
               {elements?.map((links) =>
-                <Typography 
+                <LinkSet 
                   key={links.id}
                   sx={{ textAlign: 'center', cursor: 'pointer' }}
                   variant='subtitle2'
                 >
-                  <Link key={links.id} href={`${Paths.CATEGORY_PRODUCTS}${links.slug}`}>
+                  <Link 
+                    key={links.id} href={`${Paths.CATEGORY_PRODUCTS}${links.slug}`}>
                     {links.name}
                   </Link>
-                </Typography>
+                </LinkSet>
               )}
               {data?.categories?.pageInfo.hasNextPage &&
                 <Button
