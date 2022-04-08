@@ -21,7 +21,12 @@ import { useAppSelector } from 'redux-state/hook';
 import { headerTopLinks } from '../header.data';
 import LogoImage from 'assets/png/logo.png';
 
-const MobileHeaderButtons = () => {
+interface HeadeButtonsProps {
+  onProfileIconClick: () => void;
+  isAuthenticated?: boolean;
+}
+
+const MobileHeaderButtons:React.FC<HeadeButtonsProps> = ({onProfileIconClick, isAuthenticated}) => {
   const { productsCount } = useAppSelector((state) => state.cart);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -35,18 +40,20 @@ const MobileHeaderButtons = () => {
           </a>
         </Link>
       </Stack>
-      <ListItem button>
+      <ListItem onClick={onProfileIconClick} button>
         <ListItemIcon>
           <Profile />
         </ListItemIcon>
-        <ListItemText>Профиль</ListItemText>
+        <ListItemText>{isAuthenticated ? 'Профиль' : 'Войти'} </ListItemText>
       </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <Heart />
-        </ListItemIcon>
-        <ListItemText>Избранное</ListItemText>
-      </ListItem>
+      <Link href={Paths.LIKES}>
+        <ListItem button>
+          <ListItemIcon>
+            <Heart />
+          </ListItemIcon>
+          <ListItemText>Избранное</ListItemText>
+        </ListItem>
+      </Link>
       <Link href={Paths.CART}>
         <ListItem button>
           <ListItemIcon>

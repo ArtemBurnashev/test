@@ -155,7 +155,14 @@ const Header = () => {
             )}
           </Stack>
           <Sidebar isOpen={isOpen} toggleDrawer={toggleDrawer}>
-            <MobileHeaderButtons />
+            <MobileHeaderButtons
+              isAuthenticated={isAuthenticated}
+              onProfileIconClick={() =>
+                isAuthenticated
+                  ? router.push(Paths.PROFILE)
+                  : setShowLoginMenu(!showLoginMenu)
+              }
+            />
           </Sidebar>
           {!isAuthenticated && (
             <Sidebar
@@ -176,7 +183,7 @@ const Header = () => {
           )}
         </Stack>
       </Container>
-      <CategoryNavbar/>
+      <CategoryNavbar />
     </Box>
   );
 };

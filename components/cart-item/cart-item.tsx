@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from 'redux-state/hook';
 import Link from 'next/link';
 import { Paths } from 'config/site-paths';
 import { LazyImage } from 'components/image';
+import { dislike, like } from 'redux-state/features/likes/likes';
 
 const CartItem: React.FC<CartProduct> = ({
   count,
@@ -23,10 +24,32 @@ const CartItem: React.FC<CartProduct> = ({
   slug,
 }) => {
   const dispatch = useAppDispatch();
-  const {currency} = useAppSelector(state => state.cart)
+  const { currency } = useAppSelector((state) => state.cart);
+  const { likeList } = useAppSelector((state) => state.like);
+  const isInLikeList = likeList.some((product) => product.id === id);
 
   const handleRemoveItem = () => {
+    if(!id) return;
     dispatch(removeItem(id));
+  };
+
+  const handleLikeDislike = () => {
+    if (id && price) {
+      if (isInLikeList) {
+        return dispatch(dislike(id));
+      }
+      return dispatch(
+        like({
+          id,
+          image,
+          price,
+          discount: undefined,
+          name,
+          variant,
+          slug
+        })
+      );
+    }
   };
 
   return (
@@ -70,11 +93,12 @@ const CartItem: React.FC<CartProduct> = ({
         <Stack flexWrap="wrap" direction="row">
           <Stack flexWrap="wrap" marginRight="auto" direction="row">
             <Button
-              sx={{ color: colors.grey.default, padding: '0.625em .2em' }}
+              sx={{ color: isInLikeList ? colors.red.default : colors.grey.default, padding: '0.625em .2em' }}
               size="small"
               startIcon={<Heart />}
+              onClick={handleLikeDislike}
             >
-              В избранное
+              {isInLikeList ? 'не нравится' : 'В избранное'}
             </Button>
             <Button
               size="small"
@@ -85,7 +109,7 @@ const CartItem: React.FC<CartProduct> = ({
               Удалить
             </Button>
           </Stack>
-          <CartController id={id} count={count} />
+          <CartController id={id || ''} count={count} />
         </Stack>
       </Stack>
     </CartItemWrapper>

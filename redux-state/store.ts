@@ -12,6 +12,7 @@ import cartReducer, {
 } from './features/cart/cart-slice';
 
 import userReducer from './features/user/user-slice';
+import likeReducer from "./features/likes/likes"
 
 const storageMiddleware = createListenerMiddleware();
 
@@ -26,6 +27,7 @@ export const store = configureStore({
   reducer: {
     cart: cartReducer,
     user: userReducer,
+    like: likeReducer
   },
 
   middleware: (getDefaultMiddleware) =>
