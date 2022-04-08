@@ -32,6 +32,8 @@ import Close from 'components/icons/close';
 import Hamburger from 'components/icons/hamburger';
 import Auth from './components/auth';
 import { CategoryNavbar } from 'components/category-navbar';
+import styled from 'styled-components';
+
 
 const Header = () => {
   const theme = useTheme();
@@ -42,6 +44,30 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showLoginMenu, setShowLoginMenu] = useState(false);
   const { isAuthenticated } = useAppSelector((state) => state.user);
+
+  const CatologButton = styled(Button)`
+    animation-name: butonOpacity;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid #FEEE00;
+
+    @keyframes butonOpacity {
+      0%{
+        background-color: #FEEE00;
+      }
+      50%{
+        background-color: #feed004e;
+      }
+      100%{
+        background-color: #FEEE00;
+      }
+    }
+    &:hover{
+      animation: none;
+    }
+  `
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -79,6 +105,7 @@ const Header = () => {
           maxWidth="lg"
           open={catalogModal.isOpen}
           onClose={catalogModal.close}
+          sx={{opacity:'0.5'}}
         >
           <Catalog />
         </Dialog>
@@ -126,7 +153,8 @@ const Header = () => {
               justifyContent="space-between"
               alignItems="center"
             >
-              <Button
+              <CatologButton
+                className={''}
                 sx={{
                   '&&&&&.MuiButtonBase-root': {
                     pl: '3rem',
@@ -138,7 +166,7 @@ const Header = () => {
                 onClick={() => catalogModal.toggle()}
               >
                 Каталог
-              </Button>
+              </CatologButton>
 
               <SearchField />
               {isMobile && <Burger open={isOpen} setOpen={setIsOpen} />}
