@@ -17,6 +17,7 @@ const HeaderButtons: React.FC<HeadeButtonsProps> = ({
   isAuthenticated,
 }) => {
   const { productsCount } = useAppSelector((state) => state.cart);
+  const {productsCount: likedProductsCount} = useAppSelector(state=> state.like)
 
   return (
     <Stack direction="row" spacing={4}>
@@ -27,13 +28,23 @@ const HeaderButtons: React.FC<HeadeButtonsProps> = ({
       >
         <Profile />
         <Typography variant="subtitle2">
-          {isAuthenticated ? 'Профиль' : 'Kirish'}{' '}
+          {isAuthenticated ? 'Профиль' : 'Войти'}{' '}
         </Typography>
       </Stack>
-      <Stack sx={{ cursor: 'pointer' }} alignItems="center">
-        <Heart />
-        <Typography variant="subtitle2">Избранное</Typography>
-      </Stack>
+      <Link href={Paths.LIKES}>
+        <Stack sx={{ cursor: 'pointer' }} alignItems="center">
+          <Badge
+            color="secondary"
+            overlap="circular"
+            badgeContent={likedProductsCount}
+            invisible={likedProductsCount < 1}
+            max={99}
+          >
+            <Heart />
+          </Badge>
+          <Typography variant="subtitle2">Избранное</Typography>
+        </Stack>
+      </Link>
       <Link href={Paths.CART}>
         <Stack sx={{ cursor: 'pointer' }} alignItems="center">
           <Badge

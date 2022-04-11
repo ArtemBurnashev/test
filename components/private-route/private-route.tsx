@@ -8,10 +8,10 @@ const withAuth = (WrappedComponent: NextPage) => {
     if (typeof window !== 'undefined') {
       const Router = useRouter();
 
-      const { isAuthenticated } = loadState('user');
+      const user = loadState('user');
 
       // If there is no access token we redirect to "/" page.
-      if (!isAuthenticated) {
+      if (!user?.isAuthenticated) {
         Router.replace('/');
         return null;
       }

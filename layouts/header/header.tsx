@@ -32,6 +32,8 @@ import Close from 'components/icons/close';
 import Hamburger from 'components/icons/hamburger';
 import Auth from './components/auth';
 import { CategoryNavbar } from 'components/category-navbar';
+import styled from 'styled-components';
+
 
 const Header = () => {
   const theme = useTheme();
@@ -42,6 +44,30 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showLoginMenu, setShowLoginMenu] = useState(false);
   const { isAuthenticated } = useAppSelector((state) => state.user);
+
+  const CatologButton = styled(Button)`
+    animation-name: butonOpacity;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid #FEEE00;
+
+    @keyframes butonOpacity {
+      0%{
+        background-color: #FEEE00;
+      }
+      50%{
+        background-color: #feed004e;
+      }
+      100%{
+        background-color: #FEEE00;
+      }
+    }
+    &:hover{
+      animation: none;
+    }
+  `
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -91,14 +117,14 @@ const Header = () => {
               justifyContent="flex-end"
             >
               {headerTopLinks.map((top, i) => (
-                <Link key={top.label} href={top.link}>
+                <Link passHref key={top.label} href={top.link}>
                   {i === headerTopLinks.length - 1 ? (
-                    <Stack spacing={2} direction="row" alignItems="center">
+                    <Stack component="a" spacing={2} direction="row" alignItems="center">
                       <Phone />
                       <Typography variant="subtitle2">{top.label}</Typography>
                     </Stack>
                   ) : (
-                    <Typography variant="subtitle2">{top.label}</Typography>
+                    <Typography component="a" variant="subtitle2">{top.label}</Typography>
                   )}
                 </Link>
               ))}
@@ -126,7 +152,8 @@ const Header = () => {
               justifyContent="space-between"
               alignItems="center"
             >
-              <Button
+              <CatologButton
+                className={''}
                 sx={{
                   '&&&&&.MuiButtonBase-root': {
                     pl: '3rem',
@@ -138,7 +165,7 @@ const Header = () => {
                 onClick={() => catalogModal.toggle()}
               >
                 Каталог
-              </Button>
+              </CatologButton>
 
               <SearchField />
               {isMobile && <Burger open={isOpen} setOpen={setIsOpen} />}
@@ -155,7 +182,14 @@ const Header = () => {
             )}
           </Stack>
           <Sidebar isOpen={isOpen} toggleDrawer={toggleDrawer}>
-            <MobileHeaderButtons />
+            <MobileHeaderButtons
+              isAuthenticated={isAuthenticated}
+              onProfileIconClick={() =>
+                isAuthenticated
+                  ? router.push(Paths.PROFILE)
+                  : setShowLoginMenu(!showLoginMenu)
+              }
+            />
           </Sidebar>
           {!isAuthenticated && (
             <Sidebar
@@ -176,7 +210,7 @@ const Header = () => {
           )}
         </Stack>
       </Container>
-      <CategoryNavbar/>
+      <CategoryNavbar />
     </Box>
   );
 };

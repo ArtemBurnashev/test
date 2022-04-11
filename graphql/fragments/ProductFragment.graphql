@@ -51,6 +51,8 @@ fragment product on Product {
 
 fragment singleProduct on Product {
   ...product
+  description
+  characteristics
   attributes {
     attribute {
       id

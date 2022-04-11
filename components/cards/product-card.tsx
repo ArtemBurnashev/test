@@ -16,6 +16,7 @@ import { Button } from 'components/button';
 import Eye from 'components/icons/eye';
 import { LazyImage } from 'components/image';
 import { Paths } from 'config/site-paths';
+import { dislike, like } from 'redux-state/features/likes/likes';
 
 interface ProductCardProps {
   name: string;
@@ -48,24 +49,46 @@ const ProductCard: React.FC<ProductCardProps> = ({
   slug,
   id,
   startPrice,
-  variant
+  variant,
 }) => {
   const navigator = useRouter();
   const dispatch = useAppDispatch();
   const { cartProducts, currency } = useAppSelector((state) => state.cart);
+  const { likeList } = useAppSelector((state) => state.like);
   const isInCard = cartProducts.some((product) => product.id === id);
+  const isInLikeList = likeList.some((product) => product.id === id);
+
   const handleAddToCart = (
     e: React.MouseEvent<HTMLButtonElement | MouseEvent>
   ) => {
     e.stopPropagation();
     if (isInCard) return navigator.push(Paths.CART);
-    if (id && startPrice?.amountInSum || discount?.amountInSum){
+    if ((id && startPrice?.amountInSum) || discount?.amountInSum) {
       dispatch(
         addToCart({
           id,
           image: (media && media[0].url) || '',
           price: discount || startPrice,
           is_saved: false,
+          name,
+          variant,
+          slug,
+        })
+      );
+    }
+  };
+
+  const handleLikeDislike = () => {
+    if (id && startPrice?.amountInSum) {
+      if (isInLikeList) {
+        return dispatch(dislike(id ));
+      }
+      return dispatch(
+        like({
+          id,
+          image: (media && media[0].url) || '',
+          price: startPrice,
+          discount,
           name,
           variant,
           slug,
@@ -89,7 +112,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           )}
         </ProductCardLabel>
       )}
-      <ProductHeartWrapper isSaved={false}>
+      <ProductHeartWrapper isSaved={isInLikeList} onClick={handleLikeDislike}>
         <Heart />
       </ProductHeartWrapper>
       <Stack spacing={2}>

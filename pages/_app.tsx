@@ -31,7 +31,10 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-store.subscribe(() => saveState("cart", store.getState().cart))
+store.subscribe(() => {
+  saveState('cart', store.getState().cart);
+  saveState('likes', store.getState().like);
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
   const apolloClient = useApollo(pageProps);

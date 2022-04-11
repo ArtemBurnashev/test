@@ -20,12 +20,17 @@ export const FooterBottomWrapper = styled.div`
 
 export const Logo = styled.div`
   max-width: 3.125rem;
-  max-height: 88px;
+  max-height: 63px;
   width: 100%;
+  cursor: pointer;
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+  }
+  span{
+    max-width: 63px;
+    max-height: 63px;
   }
 `;
 
