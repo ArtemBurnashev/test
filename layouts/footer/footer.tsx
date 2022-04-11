@@ -29,7 +29,7 @@ const Footer = () => {
             <Grid sm={6} xs={12} item lg={3}>
               <Stack spacing={2}>
                 <Logo>
-                  <Link href='/'>
+                  <Link href="/">
                     <Image layout="fixed" src={LogoImage} alt="logo" />
                   </Link>
                 </Logo>
@@ -64,8 +64,10 @@ const Footer = () => {
             <Grid item xs={12} sm={6} lg={3}>
               <Stack spacing={2}>
                 {useFullLinks.map((info) => (
-                  <Link key={info.label} href={info.link}>
-                    <FooterLink key={info.label}>{info.label}</FooterLink>
+                  <Link passHref key={info.label} href={info.link}>
+                    <Typography component="a" variant="body1" key={info.label}>
+                      {info.label}
+                    </Typography>
                   </Link>
                 ))}
               </Stack>
@@ -73,8 +75,10 @@ const Footer = () => {
             <Grid item xs={12} sm={6} lg={3}>
               <Stack spacing={2}>
                 {aboutSite.map((info) => (
-                  <Link key={info.label} href={info.link}>
-                    <FooterLink key={info.label}>{info.label}</FooterLink>
+                  <Link passHref key={info.label} href={info.link}>
+                    <Typography variant="body1" component="a" key={info.label}>
+                      {info.label}
+                    </Typography>
                   </Link>
                 ))}
               </Stack>
@@ -82,8 +86,10 @@ const Footer = () => {
             <Grid item xs={12} sm={6} lg={3}>
               <Stack spacing={2}>
                 {siteInfo.map((info) => (
-                  <Link key={info.label} href={info.link}>
-                    <FooterLink key={info.label}>{info.label}</FooterLink>
+                  <Link passHref key={info.label} href={info.link}>
+                    <Typography variant="body1" component="a" key={info.label}>
+                      {info.label}
+                    </Typography>
                   </Link>
                 ))}
               </Stack>

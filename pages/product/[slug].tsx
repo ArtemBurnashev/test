@@ -14,7 +14,7 @@ import Heart from 'components/icons/heart';
 import colors from 'config/theme';
 import { Main } from 'layouts/main';
 import { GetServerSideProps, NextPage } from 'next';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import DataLine from 'components/common/dataline';
 import AddtoCardSingle from 'components/add-to-card/add-to-card-single';
 import {
@@ -31,15 +31,19 @@ import { initializeApollo } from 'lib/apollo';
 import { Button } from 'components/button';
 import { useAppDispatch, useAppSelector } from 'redux-state/hook';
 import { dislike, like } from 'redux-state/features/likes/likes';
+import dynamic from 'next/dynamic';
 
 type Props = {
   data: SingleProductQuery;
   [key: string]: any;
 };
 
+const EditorJs = dynamic(() => import('components/editor'), { ssr: false });
+
 const SingleProduct: NextPage<Props> = ({ data }) => {
   const [variant, setVariant] = useState<any>();
   const dispatch = useAppDispatch();
+  const characteristicsRef = useRef<HTMLDivElement>(null);
   const { likeList } = useAppSelector((state) => state.like);
   const isInLikeList = likeList.some(
     (product) => data.product && product.id === data?.product.id
@@ -96,6 +100,9 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
       );
     }
   };
+
+  const executeScroll = () =>
+    characteristicsRef.current?.scrollIntoView({ behavior: 'smooth' });
 
   return (
     <Main>
@@ -219,22 +226,31 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
               <Typography fontWeight={500} variant="h3">
                 описание
               </Typography>
-              {/* {data?.product?.description && (
-                <DraftailEditor
-                  readOnly
-                  rawContentState={JSON.parse(data.product.description)}
-                />
-              )} */}
-              <Typography fontWeight={500} variant="h3">
-                Характеристики
-              </Typography>
-              {data?.product?.attributes.map((attr) => (
-                <DataLine
-                  field={attr.attribute.name || ''}
-                  value={attr.values.map((val) => val?.name).join(' ')}
-                  key={attr.attribute.name}
-                />
-              ))}
+              {data?.product?.description && (
+                <EditorJs data={JSON.parse(data.product.description)} />
+              )}
+              {data.product?.attributes && data.product?.attributes.length > 0 && (
+                <>
+                  <Typography fontWeight={500} variant="h3">
+                    Характеристики
+                  </Typography>
+                  {data?.product?.attributes.map((attr) => (
+                    <DataLine
+                      field={attr.attribute.name || ''}
+                      value={attr.values.map((val) => val?.name).join(' ')}
+                      key={attr.attribute.name}
+                    />
+                  ))}
+                  <Typography
+                    onClick={executeScroll}
+                    color={colors.red.default}
+                    variant="subtitle2"
+                    sx={{ cursor: 'pointer' }}
+                  >
+                    Все характеристики
+                  </Typography>
+                </>
+              )}
             </Stack>
           </Grid>
           <Grid xs={12} sm={12} md={6} item lg={3}>
@@ -257,8 +273,21 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
             />
           </Grid>
         </Grid>
-        <Grid marginTop="2rem" marginBottom="2rem" container columnSpacing={4}>
-          <Grid item xs={12}></Grid>
+        <Typography fontWeight={500} variant="h2">
+          Характеристики
+        </Typography>
+        <Grid
+          ref={characteristicsRef}
+          marginTop="2rem"
+          marginBottom="2rem"
+          container
+          columnSpacing={4}
+        >
+          <Grid item xs={12}>
+            {data?.product?.characteristics && (
+              <EditorJs data={JSON.parse(data.product.characteristics)} />
+            )}
+          </Grid>
         </Grid>
       </Container>
     </Main>

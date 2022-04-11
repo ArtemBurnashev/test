@@ -105,7 +105,6 @@ const Header = () => {
           maxWidth="lg"
           open={catalogModal.isOpen}
           onClose={catalogModal.close}
-          sx={{opacity:'0.5'}}
         >
           <Catalog />
         </Dialog>
@@ -118,14 +117,14 @@ const Header = () => {
               justifyContent="flex-end"
             >
               {headerTopLinks.map((top, i) => (
-                <Link key={top.label} href={top.link}>
+                <Link passHref key={top.label} href={top.link}>
                   {i === headerTopLinks.length - 1 ? (
-                    <Stack spacing={2} direction="row" alignItems="center">
+                    <Stack component="a" spacing={2} direction="row" alignItems="center">
                       <Phone />
                       <Typography variant="subtitle2">{top.label}</Typography>
                     </Stack>
                   ) : (
-                    <Typography variant="subtitle2">{top.label}</Typography>
+                    <Typography component="a" variant="subtitle2">{top.label}</Typography>
                   )}
                 </Link>
               ))}
