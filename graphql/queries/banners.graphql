@@ -1,0 +1,20 @@
+query Banners($first:Int!,$after:String,$filter:BannerFilterInput!){
+  banners (filter:$filter,first:$first,after:$after){
+    pageInfo{
+      hasNextPage
+      endCursor
+    }
+    edges{
+      node{
+        id
+        title
+        description
+        backgroundImage {
+          url
+          alt
+        }
+        redirectUrl
+      }
+    }
+  }
+}
