@@ -93,7 +93,7 @@ const Checkout = () => {
           },
           phone,
           lines: cartProducts.map((product) => ({
-            variantId: product.id,
+            variantId: product.id || "",
             quantity: product.count,
           })),
           channel: 'default-channel',
