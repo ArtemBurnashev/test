@@ -19,7 +19,7 @@ import Link from 'next/link';
 import React from 'react';
 import { useAppSelector } from 'redux-state/hook';
 import { headerTopLinks } from '../header.data';
-import LogoImage from 'assets/logo.svg';
+import LogoImage from 'assets/logosvg.svg';
 import styled from 'styled-components';
 
 const LogoLink = styled.a`

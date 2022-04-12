@@ -10,9 +10,10 @@ const ActionWrapper = styled.div`
   background-color: ${colors.primary.default};
   padding: 30px 40px;
   margin: 5rem 0;
+  
   img {
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     object-fit: contain;
   }
 `;
@@ -41,9 +42,9 @@ const action = () => {
             </Grid>
           </Grid>
           :
-          <Grid direction="row" spacing={2} justifyContent='center' container>
+          <Grid direction="row" spacing={2} container>
             {discounts?.map((el) => (
-              <Grid key={el.id} item lg={4}>
+              <Grid sx={{minHeight:'248px'}} key={el.id} item xs={12} sm={12} md={6} lg={4}>
                 {
                   el.backgroundImage ?
                     <LazyImage src={el.backgroundImage?.url} alt={el.backgroundImage?.alt ? el.backgroundImage?.alt : 'product'} />

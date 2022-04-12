@@ -14,7 +14,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { Logo } from './header.styles';
-import LogoImage from 'assets/png/logo.png';
+import LogoImage from 'assets/logo.png';
 import { Button } from 'components/button';
 import { headerTopLinks } from './header.data';
 import HeaderButtons from './components/header-buttons';

@@ -1,13 +1,19 @@
 import styled from 'styled-components';
 
 export const Logo = styled.div`
-  max-width: 3.125rem;
+  max-width: 139px;
   max-height: 88px;
-  width: 100%;
   cursor: pointer;
+  span{
+    max-width: 200px;
+    max-height: 50px;
+  }
   img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  @media (max-width:577px){
+    display: none;
   }
 `;
