@@ -115,7 +115,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <ProductHeartWrapper isSaved={isInLikeList} onClick={handleLikeDislike}>
         <Heart />
       </ProductHeartWrapper>
-      <Stack spacing={2}>
+      <Stack justifyContent="space-between" height={323} spacing={2}>
         <ProductCardImageWrapper>
           <LazyImage
             src={(media && media[0]?.url) || ''}
