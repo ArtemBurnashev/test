@@ -4,6 +4,8 @@ import { css } from "styled-components";
 
 import OutlinedInput from "@mui/material/OutlinedInput";
 import colors from "config/theme";
+import EyeDisabled from "components/icons/eye-disabled.icon";
+import EyeEnabled from "components/icons/eye-enabled.icon";
 
 export const StyledInput = styled(OutlinedInput)`
   padding-left: 24px;
@@ -70,5 +72,18 @@ export const StyledLabel = styled(InputLabel)`
 
   &.Mui-error {
     color: ${(props) => props.theme.palette.error.main};
+  }
+`;
+
+export const ToggleIcon = styled(
+  ({ showPassword, ...props }: IconButtonProps & { showPassword: boolean }) => (
+    <IconButton className="toggle-btn" {...props}>
+      {showPassword ? <EyeDisabled /> : <EyeEnabled />}
+    </IconButton>
+  )
+)`
+  svg {
+    width: 20px;
+    height: 20px;
   }
 `;
