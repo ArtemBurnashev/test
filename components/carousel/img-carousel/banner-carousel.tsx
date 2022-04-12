@@ -4,6 +4,9 @@ import Slider from 'react-slick';
 import { LazyImage } from 'components/image';
 import colors from 'config/theme';
 import Arrow from 'components/icons/arrow';
+import { Skeleton } from '@mui/material';
+import { useBannersQuery } from 'graphql/generated.graphql';
+
 
 const Card = styled.div<{ height?: number; fullBorderRadius?: boolean }>`
   max-width: 100%;
@@ -56,7 +59,7 @@ const NextArrow = styled(Arrow)`
   transform: rotate(180deg) translate(0, 50%);
 `;
 
-const Image = styled(LazyImage)<{ height?: number }>`
+const Image = styled(LazyImage) <{ height?: number }>`
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -75,6 +78,18 @@ const ImageCarousel: FC<{
   initialSlide?: number;
   onSlide?: (currenSlide: number) => void;
 }> = ({ height, fullBorderRadius, initialSlide, onSlide }) => {
+  const { data } = useBannersQuery({
+    variables: {
+      filter: {
+        type: "CAROUSEL"
+      },
+      first: 10
+    }
+  })
+  const products = data?.banners?.edges.map((el) => el.node);
+
+
+
   return (
     <Card height={height}>
       <Slider
@@ -90,9 +105,16 @@ const ImageCarousel: FC<{
         lazyLoad="progressive"
         afterChange={(currenSlide) => onSlide && onSlide(currenSlide)}
       >
-        {images?.map((item) => (
-          <div key={item}>
-            <Image src={item} alt="slide" />
+        {products?.map((item) => (
+          <div key={item.id}>
+            {item.backgroundImage ?
+              <LazyImage
+                src={item.backgroundImage?.url}
+                alt={item.backgroundImage?.alt ? item.backgroundImage?.alt : 'products'}
+              />
+              :
+              <Skeleton variant="rectangular" width='100%' height='100%' />
+            }
           </div>
         ))}
       </Slider>

@@ -182,8 +182,6 @@ export type AccountRegisterInput = {
   password: Scalars['String'];
   /** The phone number of the user. */
   phone: Scalars['String'];
-  /** Base of frontend URL that will be needed to create confirmation URL. */
-  redirectUrl?: InputMaybe<Scalars['String']>;
 };
 
 /** Sends an phone with the account removal link for the logged-in user. */
@@ -1274,6 +1272,162 @@ export type AttributeValueUpdateInput = {
   richText?: InputMaybe<Scalars['JSONString']>;
   /** Represent value of the attribute value (e.g. color values for swatch attributes). */
   value?: InputMaybe<Scalars['String']>;
+};
+
+/** A static page that can be manually added by a shop operator through the dashboard. */
+export type Banner = Node & ObjectWithMetadata & {
+  __typename?: 'Banner';
+  backgroundImage?: Maybe<Image>;
+  created: Scalars['DateTime'];
+  description: Scalars['String'];
+  /** The ID of the object. */
+  id: Scalars['ID'];
+  /** List of public metadata items. Can be accessed without permissions. */
+  metadata: Array<Maybe<MetadataItem>>;
+  /** List of private metadata items.Requires proper staff permissions to access. */
+  privateMetadata: Array<Maybe<MetadataItem>>;
+  redirectUrl: Scalars['String'];
+  title: Scalars['String'];
+  /** Returns translated product variant fields for the given language code. */
+  translation?: Maybe<BannerTranslation>;
+  type: BannerType;
+};
+
+
+/** A static page that can be manually added by a shop operator through the dashboard. */
+export type BannerBackgroundImageArgs = {
+  size?: InputMaybe<Scalars['Int']>;
+};
+
+
+/** A static page that can be manually added by a shop operator through the dashboard. */
+export type BannerTranslationArgs = {
+  languageCode: LanguageCodeEnum;
+};
+
+/** Deletes banners. */
+export type BannerBulkDelete = {
+  __typename?: 'BannerBulkDelete';
+  /** @deprecated This field will be removed in Saleor 4.0. Use `errors` field instead. */
+  bannerErrors: Array<BannerError>;
+  /** Returns how many objects were affected. */
+  count: Scalars['Int'];
+  errors: Array<BannerError>;
+};
+
+export type BannerConnection = {
+  __typename?: 'BannerConnection';
+  edges: Array<BannerEdge>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+  /** A total count of items in the collection. */
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+/** Creates a new banner. */
+export type BannerCreate = {
+  __typename?: 'BannerCreate';
+  banner?: Maybe<Banner>;
+  /** @deprecated This field will be removed in Saleor 4.0. Use `errors` field instead. */
+  bannerErrors: Array<BannerError>;
+  errors: Array<BannerError>;
+};
+
+/** Deletes a banner. */
+export type BannerDelete = {
+  __typename?: 'BannerDelete';
+  banner?: Maybe<Banner>;
+  /** @deprecated This field will be removed in Saleor 4.0. Use `errors` field instead. */
+  bannerErrors: Array<BannerError>;
+  errors: Array<BannerError>;
+};
+
+export type BannerEdge = {
+  __typename?: 'BannerEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+  /** The item at the end of the edge. */
+  node: Banner;
+};
+
+export type BannerError = {
+  __typename?: 'BannerError';
+  /** The error code. */
+  code: BannerErrorCode;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: Maybe<Scalars['String']>;
+  /** The error message. */
+  message?: Maybe<Scalars['String']>;
+};
+
+/** An enumeration. */
+export enum BannerErrorCode {
+  GraphqlError = 'GRAPHQL_ERROR',
+  Invalid = 'INVALID',
+  NotFound = 'NOT_FOUND',
+  Required = 'REQUIRED',
+  Unique = 'UNIQUE'
+}
+
+export type BannerFilterInput = {
+  search?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<Scalars['String']>;
+};
+
+export type BannerInput = {
+  /** Background image file. */
+  backgroundImage?: InputMaybe<Scalars['Upload']>;
+  /** Banner description. */
+  description?: InputMaybe<Scalars['String']>;
+  /** Banner redirect url */
+  redirectUrl?: InputMaybe<Scalars['String']>;
+  /** Banner title. */
+  title?: InputMaybe<Scalars['String']>;
+  /** Determines intention of banner */
+  type?: InputMaybe<Scalars['String']>;
+};
+
+/** Creates/Updates translations for Banner. */
+export type BannerTranslate = {
+  __typename?: 'BannerTranslate';
+  banner?: Maybe<Banner>;
+  errors: Array<TranslationError>;
+  /** @deprecated This field will be removed in Saleor 4.0. Use `errors` field instead. */
+  translationErrors: Array<TranslationError>;
+};
+
+export type BannerTranslation = Node & {
+  __typename?: 'BannerTranslation';
+  /** The ID of the object. */
+  id: Scalars['ID'];
+  /** Translation language. */
+  language: LanguageDisplay;
+};
+
+export type BannerTranslationInput = {
+  /** Background image file. */
+  backgroundImage?: InputMaybe<Scalars['Upload']>;
+  description?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** An enumeration. */
+export enum BannerType {
+  /** Brand */
+  Brand = 'BRAND',
+  /** Carousel */
+  Carousel = 'CAROUSEL',
+  /** Discount */
+  Discount = 'DISCOUNT'
+}
+
+/** Updates an existing banner. */
+export type BannerUpdate = {
+  __typename?: 'BannerUpdate';
+  banner?: Maybe<Banner>;
+  /** @deprecated This field will be removed in Saleor 4.0. Use `errors` field instead. */
+  bannerErrors: Array<BannerError>;
+  errors: Array<BannerError>;
 };
 
 export type BulkAttributeValueInput = {
@@ -4914,6 +5068,16 @@ export type Mutation = {
   attributeValueTranslate?: Maybe<AttributeValueTranslate>;
   /** Updates value of an attribute. */
   attributeValueUpdate?: Maybe<AttributeValueUpdate>;
+  /** Deletes banners. */
+  bannerBulkDelete?: Maybe<BannerBulkDelete>;
+  /** Creates a new banner. */
+  bannerCreate?: Maybe<BannerCreate>;
+  /** Deletes a banner. */
+  bannerDelete?: Maybe<BannerDelete>;
+  /** Creates/Updates translations for Banner. */
+  bannerTranslate?: Maybe<BannerTranslate>;
+  /** Updates an existing banner. */
+  bannerUpdate?: Maybe<BannerUpdate>;
   /** Deletes categories. */
   categoryBulkDelete?: Maybe<CategoryBulkDelete>;
   /** Creates a new category. */
@@ -5604,6 +5768,34 @@ export type MutationAttributeValueTranslateArgs = {
 export type MutationAttributeValueUpdateArgs = {
   id: Scalars['ID'];
   input: AttributeValueUpdateInput;
+};
+
+
+export type MutationBannerBulkDeleteArgs = {
+  ids: Array<InputMaybe<Scalars['ID']>>;
+};
+
+
+export type MutationBannerCreateArgs = {
+  input: BannerInput;
+};
+
+
+export type MutationBannerDeleteArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationBannerTranslateArgs = {
+  id: Scalars['ID'];
+  input: BannerTranslationInput;
+  languageCode: LanguageCodeEnum;
+};
+
+
+export type MutationBannerUpdateArgs = {
+  id: Scalars['ID'];
+  input: BannerInput;
 };
 
 
@@ -9993,6 +10185,10 @@ export type Query = {
   attribute?: Maybe<Attribute>;
   /** List of the shop's attributes. */
   attributes?: Maybe<AttributeCountableConnection>;
+  /** Look up a warehouse by ID. */
+  banner?: Maybe<Banner>;
+  /** List of Banners. */
+  banners?: Maybe<BannerConnection>;
   /** List of the shop's categories. */
   categories?: Maybe<CategoryCountableConnection>;
   /** Look up a category by ID or slug. */
@@ -10194,6 +10390,22 @@ export type QueryAttributesArgs = {
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
   sortBy?: InputMaybe<AttributeSortingInput>;
+};
+
+
+export type QueryBannerArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  slug?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryBannersArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  filter?: InputMaybe<BannerFilterInput>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -13313,6 +13525,15 @@ export type AddressListQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AddressListQuery = { __typename?: 'Query', me?: { __typename?: 'User', addresses?: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null, streetAddress1: string, streetAddress2: string, postalCode: string, country: { __typename?: 'CountryDisplay', code: string, country: string } } | null> | null } | null };
 
+export type BannersQueryVariables = Exact<{
+  first: Scalars['Int'];
+  after?: InputMaybe<Scalars['String']>;
+  filter: BannerFilterInput;
+}>;
+
+
+export type BannersQuery = { __typename?: 'Query', banners?: { __typename?: 'BannerConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, edges: Array<{ __typename?: 'BannerEdge', node: { __typename?: 'Banner', id: string, title: string, description: string, redirectUrl: string, backgroundImage?: { __typename?: 'Image', url: string, alt?: string | null } | null } }> } | null };
+
 export type AllCategoriesQueryVariables = Exact<{
   first: Scalars['Int'];
   cursor: Scalars['String'];
@@ -13981,6 +14202,58 @@ export function useAddressListLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type AddressListQueryHookResult = ReturnType<typeof useAddressListQuery>;
 export type AddressListLazyQueryHookResult = ReturnType<typeof useAddressListLazyQuery>;
 export type AddressListQueryResult = Apollo.QueryResult<AddressListQuery, AddressListQueryVariables>;
+export const BannersDocument = gql`
+    query Banners($first: Int!, $after: String, $filter: BannerFilterInput!) {
+  banners(filter: $filter, first: $first, after: $after) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        id
+        title
+        description
+        backgroundImage {
+          url
+          alt
+        }
+        redirectUrl
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useBannersQuery__
+ *
+ * To run a query within a React component, call `useBannersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBannersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBannersQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useBannersQuery(baseOptions: Apollo.QueryHookOptions<BannersQuery, BannersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BannersQuery, BannersQueryVariables>(BannersDocument, options);
+      }
+export function useBannersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BannersQuery, BannersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BannersQuery, BannersQueryVariables>(BannersDocument, options);
+        }
+export type BannersQueryHookResult = ReturnType<typeof useBannersQuery>;
+export type BannersLazyQueryHookResult = ReturnType<typeof useBannersLazyQuery>;
+export type BannersQueryResult = Apollo.QueryResult<BannersQuery, BannersQueryVariables>;
 export const AllCategoriesDocument = gql`
     query allCategories($first: Int!, $cursor: String!) {
   categories(first: $first, after: $cursor) {

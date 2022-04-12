@@ -1,11 +1,9 @@
-import { Container, Grid, Stack, Typography } from '@mui/material';
+import { Container, Grid, Skeleton, Typography } from '@mui/material';
 import colors from 'config/theme';
 import React from 'react';
+import { useBannersQuery } from 'graphql/generated.graphql';
 import styled from 'styled-components';
-import action1 from 'assets/png/action1-1.jpg';
-import action2 from 'assets/png/action1-2.jpg';
-import action3 from 'assets/png/action1-3.jpg';
-
+import { LazyImage } from 'components/image';
 import Image from 'next/image';
 
 const ActionWrapper = styled.div`
@@ -20,25 +18,42 @@ const ActionWrapper = styled.div`
 `;
 
 const action = () => {
+  const { data, loading } = useBannersQuery({
+    variables: {
+      filter: {
+        type: "DISCOUNT"
+      },
+      first: 3
+    }
+  })
+  const discounts = data?.banners?.edges.map((el) => el.node);
+
   return (
     <ActionWrapper>
       <Container maxWidth="lg">
         <Typography variant="h2" mb={1} fontWeight={600}>
           Акции
         </Typography>
-        <Grid direction="row" spacing={2} justifyContent='center' container>
-          <Grid item lg={4}>
-            <Image src={action1} alt='foto' />
+        {loading ?
+          <Grid direction="row" spacing={2} justifyContent='center' container>
+            <Grid item xs={12}>
+              <Skeleton variant="rectangular" width='100%' height={264} />
+            </Grid>
           </Grid>
-
-          <Grid item lg={4}>
-            <Image src={action2} alt='foto' />
+          :
+          <Grid direction="row" spacing={2} justifyContent='center' container>
+            {discounts?.map((el) => (
+              <Grid key={el.id} item lg={4}>
+                {
+                  el.backgroundImage ?
+                    <LazyImage src={el.backgroundImage?.url} alt={el.backgroundImage?.alt ? el.backgroundImage?.alt : 'product'} />
+                    :
+                    <Skeleton variant="rectangular" width='100%' height={264} />
+                }
+              </Grid>
+            ))}
           </Grid>
-
-          <Grid item lg={4}>
-            <Image src={action3} alt='foto' />
-          </Grid>
-        </Grid>
+        }
       </Container>
     </ActionWrapper>
   );
