@@ -9,6 +9,7 @@ import { Typography, Skeleton, Stack, } from '@mui/material';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { Button } from '@mui/material';
+import truncate from 'utils/truncate';
 
 export const CategoryNavbar: React.FC = () => {
   const router = useRouter()
@@ -82,7 +83,7 @@ export const CategoryNavbar: React.FC = () => {
                 >
                   <Link 
                     key={links.id} href={`${Paths.CATEGORY_PRODUCTS}${links.slug}`}>
-                    {links.name}
+                    {truncate(links.name, 20)}
                   </Link>
                 </LinkSet>
               )}

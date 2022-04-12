@@ -32,7 +32,7 @@ export const CategoryCardImageWrapper = styled.div`
 export const ProductCardWrapper = styled.div<{loading?: string}>`
   position: relative;
   padding: 8px;
-  max-height: 323px;
+  height: 323px;
   height: 100%;
   cursor: pointer;
   width: ${({loading}) => !!loading ? "224px": "unset"}

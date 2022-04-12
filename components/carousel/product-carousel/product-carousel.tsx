@@ -98,6 +98,7 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug }) => {
   const theme = useTheme();
   const { data, loading } = useCategoryQuery({
     variables: { first: 10, cursor: '', slug },
+    skip: !slug
   });
 
 
