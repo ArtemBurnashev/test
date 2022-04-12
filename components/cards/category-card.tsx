@@ -5,6 +5,7 @@ import { Paths } from 'config/site-paths';
 import { useRouter } from 'next/router';
 import { CategoryCardImageWrapper, CategoryCardWrapper } from './card.styles';
 import { Box } from '@mui/material';
+import truncate from 'utils/truncate';
 
 interface CategoryCardProps {
   label?: string;
@@ -24,13 +25,15 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
     <Box sx={{ margin: withMargin ? '0 .5rem' : 0 }}>
       <CategoryCardWrapper>
         <CategoryCardImageWrapper>
-          <Image
-            layout="fixed"
-            width={96}
-            height={96}
-            src={image?.url || ''}
-            alt={image?.alt || ''}
-          />
+          {image && (
+            <Image
+              layout="fixed"
+              width={96}
+              height={96}
+              src={image?.url || ''}
+              alt={image?.alt || ''}
+            />
+          )}
         </CategoryCardImageWrapper>
         <Typography
           sx={{
@@ -41,7 +44,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
           onClick={() => router.push(`${Paths.CATEGORY_PRODUCTS}${slug}`)}
           variant="subtitle2"
         >
-          {label}
+          {truncate(label, 25)}
         </Typography>
       </CategoryCardWrapper>
     </Box>

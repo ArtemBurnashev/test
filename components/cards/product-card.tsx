@@ -123,6 +123,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           />
         </ProductCardImageWrapper>
         <Typography
+          height="auto"
           variant="subtitle2"
           sx={{
             ':hover': {

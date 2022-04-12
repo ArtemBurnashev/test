@@ -234,7 +234,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
                   <Typography fontWeight={500} variant="h3">
                     Характеристики
                   </Typography>
-                  {data?.product?.attributes.map((attr) => (
+                  {data?.product?.attributes.slice(0, 5).map((attr) => (
                     <DataLine
                       field={attr.attribute.name || ''}
                       value={attr.values.map((val) => val?.name).join(' ')}

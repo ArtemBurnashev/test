@@ -7,7 +7,12 @@ const nextConfig = {
   },
   swcMinify: true,
   images: {
-    domains: ['localhost', 'cdn.shopify.com', 'staging.api.gipermart.uz'],
+    domains: [
+      'localhost',
+      'cdn.shopify.com',
+      'staging.api.gipermart.uz',
+      'api.gipermart.uz',
+    ],
   },
 };
 
