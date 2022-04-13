@@ -17,6 +17,7 @@ import Eye from 'components/icons/eye';
 import { LazyImage } from 'components/image';
 import { Paths } from 'config/site-paths';
 import { dislike, like } from 'redux-state/features/likes/likes';
+import formatter from 'utils/currencyFormatter';
 
 interface ProductCardProps {
   name: string;
@@ -142,11 +143,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 sx={{ textDecoration: 'line-through' }}
                 variant="body2"
               >
-                {startPrice?.amountInSum} {currency}
+                {formatter(startPrice?.amountInSum || 0)} {currency}
               </Typography>
             )}
             <Typography variant="h3" fontWeight={600} onClick={(e)=> e.stopPropagation()}>
-              {discount ? discount?.amountInSum : startPrice?.amountInSum}{' '}
+              {discount ? formatter(discount?.amountInSum || 0) : formatter(startPrice?.amountInSum || 0)}{' '}
               {currency}
             </Typography>
           </Stack>

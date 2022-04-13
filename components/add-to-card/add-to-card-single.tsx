@@ -5,6 +5,7 @@ import colors from 'config/theme';
 import React from 'react';
 import { addToCart } from 'redux-state/features/cart/cart-slice';
 import { useAppDispatch, useAppSelector } from 'redux-state/hook';
+import formatter from 'utils/currencyFormatter';
 import { AddToCardWrapper } from './add-to-card.styles';
 
 interface AddtoCardSingleProps {
@@ -62,7 +63,7 @@ const AddtoCardSingle: React.FC<AddtoCardSingleProps> = ({
             fontSize="1.25rem"
             color={colors.grey.default}
           >
-            {price?.amountInSum} {currency}
+            {formatter(price?.amountInSum)} {currency}
           </Typography>
           <Stack
             sx={{
@@ -74,14 +75,19 @@ const AddtoCardSingle: React.FC<AddtoCardSingleProps> = ({
           >
             <Typography variant="h3" sx={{ color: colors.white }}>
               {discount.amountInSum !== price?.amountInSum && '-'}
-              {Math.floor(100 - (discount?.amountInSum / price?.amountInSum) * 100)}%
+              {Math.floor(
+                100 - (discount?.amountInSum / price?.amountInSum) * 100
+              )}
+              %
             </Typography>
           </Stack>
         </Stack>
       )}
 
       <Typography variant="h1" fontWeight={600}>
-        {discount ? discount.amountInSum : price?.amountInSum}{' '}
+        {discount
+          ? formatter(discount.amountInSum)
+          : formatter(price?.amountInSum)}{' '}
         {currency}
       </Typography>
       {isInCard ? (
