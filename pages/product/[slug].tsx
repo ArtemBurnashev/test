@@ -128,7 +128,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
           direction="row"
           alignItems="center"
           justifyContent="space-between"
-          margin="1rem 0"
+          mt={1}
         >
           <Stack
             direction="row"
@@ -136,7 +136,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
             justifyContent="space-between"
             spacing={2}
           >
-            <Rating defaultValue={data?.product?.rating || 0} precision={0.5} />
+            <Rating size='small' defaultValue={data?.product?.rating || 0} precision={0.5} />
             <Typography variant="subtitle2" color={colors.green.default}>
               ({data?.product?.rating || 0})
             </Typography>
@@ -166,7 +166,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
           </Typography>
         </Stack>
         <Spacer />
-        <Grid margin="1rem 0" container>
+        <Grid mt='24px' container>
           <Grid sm={12} xs={12} item md={7} lg={4}>
             <ImageCarousel>
               {data?.product?.media?.map((media) => (
@@ -207,9 +207,9 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
                         display: 'none',
                       },
                       ['.MuiOutlinedInput-root .MuiOutlinedInput-input .MuiInputBase-input ']:
-                        {
-                          paddingRight: 0,
-                        },
+                      {
+                        paddingRight: 0,
+                      },
                     },
                   }}
                 >
@@ -224,7 +224,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
 
             <Stack spacing={2}>
               <Typography fontWeight={500} variant="h3">
-                описание
+                Oписание
               </Typography>
               {data?.product?.description && (
                 <EditorJs data={JSON.parse(data.product.description)} />
@@ -235,11 +235,16 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
                     Характеристики
                   </Typography>
                   {data?.product?.attributes.slice(0, 5).map((attr) => (
-                    <DataLine
-                      field={attr.attribute.name || ''}
-                      value={attr.values.map((val) => val?.name).join(' ')}
-                      key={attr.attribute.name}
-                    />
+                    <React.Fragment key={attr.attribute.id}>
+                      {attr.values.map((val) => val?.name).join(' ') ?
+                        <DataLine
+                          field={attr.attribute.name || ''}
+                          value={attr.values.map((val) => val?.name).join(' ')}
+                          key={attr.attribute.name}
+                        /> :
+                        ""
+                      }
+                    </React.Fragment>
                   ))}
                   <Typography
                     onClick={executeScroll}

@@ -3,6 +3,7 @@ import { CategoryStyle } from './category-navbar-style';
 import { Container } from '@mui/material';
 import { useRouter } from 'next/router';
 import { Paths } from 'config/site-paths';
+import colors from 'config/theme';
 import { useAllCategoriesQuery } from 'graphql/generated.graphql';
 import Slider from 'react-slick';
 import { Typography, Skeleton, Stack, } from '@mui/material';
@@ -28,34 +29,45 @@ export const CategoryNavbar: React.FC = () => {
     transition: all .4s ease;
     &:hover{
       a{
-        color: #FEEE00;
+        color: ${colors.primary.hover};
       }
     }
   `
+  const LinkText = styled(Link)`
+    cursor: pointer;
+  `
+
   const settings = {
     dots: false,
     infinite: false,
-    slidesToShow: (loading ? 1 : 8),
+    slidesToShow: (loading ? 1 : 6),
     slidesToScroll: 3,
-    arrows:false,
+    arrows: false,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1160,
         settings: {
-          slidesToShow: 6,
+          slidesToShow: 5,
           slidesToScroll: 3,
         }
       },
       {
-        breakpoint: 600,
+        breakpoint: 969,
         settings: {
           slidesToShow: 4,
+          slidesToScroll: 3,
+        }
+      },
+      {
+        breakpoint: 760,
+        settings: {
+          slidesToShow: 3,
           slidesToScroll: 2,
           initialSlide: 2
         }
       },
       {
-        breakpoint: 480,
+        breakpoint: 611,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1
@@ -76,15 +88,15 @@ export const CategoryNavbar: React.FC = () => {
             :
             <Slider {...settings}>
               {elements?.map((links) =>
-                <LinkSet 
+                <LinkSet
                   key={links.id}
-                  sx={{ textAlign: 'center', cursor: 'pointer' }}
+                  sx={{ textAlign: 'center' }}
                   variant='subtitle2'
                 >
-                  <Link 
+                  <LinkText 
                     key={links.id} href={`${Paths.CATEGORY_PRODUCTS}${links.slug}`}>
                     {truncate(links.name, 20)}
-                  </Link>
+                  </LinkText>
                 </LinkSet>
               )}
               {data?.categories?.pageInfo.hasNextPage &&

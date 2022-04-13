@@ -98,7 +98,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   return (
-    <ProductCardWrapper>
+    <ProductCardWrapper onClick={() => navigator.push(`${Paths.PRODUCT_DETAILS}${slug}`)}>
       {discount && startPrice && (
         <ProductCardLabel isNew={!!!discount}>
           {discount.amountInSum && startPrice.amountInSum && (
@@ -125,12 +125,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <Typography
           height="auto"
           variant="subtitle2"
-          sx={{
-            ':hover': {
-              color: '#FEEE00',
-            },
-          }}
-          onClick={() => navigator.push(`${Paths.PRODUCT_DETAILS}${slug}`)}
         >
           {name}
         </Typography>
@@ -148,7 +142,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 {startPrice?.amountInSum} {currency}
               </Typography>
             )}
-            <Typography variant="h3" fontWeight={600}>
+            <Typography variant="h3" fontWeight={600} onClick={(e)=> e.stopPropagation()}>
               {discount ? discount?.amountInSum : startPrice?.amountInSum}{' '}
               {currency}
             </Typography>
