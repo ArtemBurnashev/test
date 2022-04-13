@@ -9,7 +9,6 @@ export const CheckoutCartItem = styled.div`
 
 export const CheckoutCartItemImage = styled.div`
   width: 100px;
-  height: 100px;
   img {
     width: 100%;
     height: 100%;

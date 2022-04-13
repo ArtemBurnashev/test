@@ -20,7 +20,7 @@ const Catalog = () => {
   const { data, loading, fetchMore } = useAllCategoriesQuery({
     variables: { first: 10, cursor: '' },
   });
-  const nodes = data?.categories?.edges.map((category) => category.node);
+  const nodes = data?.categories?.edges.filter(category => category.node.children?.edges && category.node.children?.edges?.length > 0).map((category) => category.node);
   const pageInfo = data?.categories?.pageInfo;
 
   if (loading) {
@@ -47,7 +47,7 @@ const Catalog = () => {
           hasMore={pageInfo?.hasNextPage}
         >
           {nodes?.map((node) => (
-            <Grid item lg={4} md={6} sm={12} xs={12}>
+            <Grid justifyContent="flex-start" item lg={4} md={6} sm={12} xs={12}>
               <CatalogItem
                 key={node.id}
                 title={node.name}
