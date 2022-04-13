@@ -109,7 +109,7 @@ const Checkout = () => {
   return (
     <Main pb={0}>
       <Container maxWidth="xl">
-        {productsCount < 1 ? (
+        {productsCount < 1 && productsCount ? (
           <Stack
             mt={2}
             spacing={2}

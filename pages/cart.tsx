@@ -17,7 +17,7 @@ const Cart: NextPage = () => {
     <Main>
       <Container sx={{ height: '100%' }} maxWidth="xl">
         <Typography mt={2} variant="h2">{t('cart')}</Typography>
-        {productsCount < 1 ? (
+        {productsCount < 1  && productsCount ? (
           <Stack spacing={2} justifyContent="center" alignItems="center" height="50vh">
             <Typography variant="h2">Your cart is empty</Typography>
             <Link href={Paths.HOME}>

@@ -5,7 +5,7 @@ import { NextPage } from 'next';
 import { useAppSelector } from 'redux-state/hook';
 
 const CategoryProducts: NextPage = () => {
-  const { likeList } = useAppSelector((state) => state.like);
+  const { likeList = [] } = useAppSelector((state) => state.like);
 
   return (
     <Main>
@@ -15,45 +15,46 @@ const CategoryProducts: NextPage = () => {
             Избранные товары
           </Typography>
           <Grid rowGap="3rem" direction="row" container>
-            {likeList.length > 0 ? (
-              likeList.map((like) => (
-                <Grid
-                  justifyContent="center"
-                  item
-                  xs={12}
-                  md={3}
-                  lg={2}
-                  sm={6}
-                  key={like.id}
-                >
-                  <ProductCard
-                    name={like.name}
-                    media={[{ url: like.image, alt: 'product_photo' }]}
-                    discount={
-                      like.discount?.amountInSum ? {
-                        amountInSum: like.discount?.amountInSum,
-                        currency: 'USD',
-                        amount: 1,
-                      } : undefined
-                    }
-                    startPrice={{
-                      amountInSum: like.price?.amountInSum,
+            {likeList.map((like) => (
+              <Grid
+                justifyContent="center"
+                item
+                xs={12}
+                md={3}
+                lg={2}
+                sm={6}
+                key={like.id}
+              >
+                <ProductCard
+                  name={like.name}
+                  media={[{ url: like.image, alt: 'product_photo' }]}
+                  discount={
+                    like.discount?.amountInSum ? {
+                      amountInSum: like.discount?.amountInSum,
                       currency: 'USD',
                       amount: 1,
-                    }}
-                    slug={like.slug || ''}
-                    id={like.id}
-                    variant={like.variant}
-                  />
-                </Grid>
-              ))
-            ) : (
+                    } : undefined
+                  }
+                  startPrice={{
+                    amountInSum: like.price?.amountInSum,
+                    currency: 'USD',
+                    amount: 1,
+                  }}
+                  slug={like.slug || ''}
+                  id={like.id}
+                  variant={like.variant}
+                />
+              </Grid>
+            ))}
+            {!likeList.length ?
               <Grid item xs={12}>
                 <Typography textAlign="center" variant="h2">
                   Нет избранных товаров
                 </Typography>
               </Grid>
-            )}
+              :
+              ""
+            }
           </Grid>
         </Stack>
       </Container>
