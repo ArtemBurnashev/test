@@ -78,10 +78,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
     }
   };
 
-  const handleLikeDislike = () => {
+  const handleLikeDislike = (
+    e: React.MouseEvent<HTMLButtonElement | MouseEvent>
+  ) => {
+    e.stopPropagation()
     if (id && startPrice?.amountInSum) {
       if (isInLikeList) {
-        return dispatch(dislike(id ));
+        return dispatch(dislike(id));
       }
       return dispatch(
         like({

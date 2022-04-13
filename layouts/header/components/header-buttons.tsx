@@ -37,7 +37,8 @@ const HeaderButtons: React.FC<HeadeButtonsProps> = ({
             color="secondary"
             overlap="circular"
             badgeContent={likedProductsCount}
-            invisible={likedProductsCount < 1}
+            // @ts-expect-error
+            invisible={likedProductsCount && likedProductsCount < 1}
             max={99}
           >
             <Heart />
@@ -51,7 +52,8 @@ const HeaderButtons: React.FC<HeadeButtonsProps> = ({
             color="secondary"
             overlap="circular"
             badgeContent={productsCount}
-            invisible={productsCount < 1}
+            // @ts-expect-error
+            invisible={productsCount && productsCount < 1}
             max={99}
           >
             <Cart />

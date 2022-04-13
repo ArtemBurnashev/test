@@ -9,11 +9,9 @@ export const CartItemWrapper = styled.div`
 
 export const CartItemImage = styled.div`
     width: 12.5rem;
-    height: 12.5rem;
     padding: 1rem;
     img {
       width: 100%;
-      height: 100%;
       object-fit: cover;
     }
 `;
