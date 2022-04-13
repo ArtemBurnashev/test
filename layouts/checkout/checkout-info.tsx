@@ -16,8 +16,8 @@ const CheckoutInfo = () => {
             <CheckoutCartItemImage>
               <Image
                 layout="fixed"
-                width={100}
-                height={100}
+                width={80}
+                height={50}
                 src={product.image}
                 alt={product.name}
               />

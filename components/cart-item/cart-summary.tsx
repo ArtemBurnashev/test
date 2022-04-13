@@ -18,9 +18,9 @@ const CartSummary = () => {
       <Typography padding="0 1.5rem" variant="subtitle2">
         Товаров: {productsCount}
       </Typography>
-      <Button sx={{padding: "0 2rem"}} color="error">
+      {/* <Button sx={{padding: "0 2rem"}} color="error">
         Введите промокод
-      </Button>
+      </Button> */}
       <Typography padding="0 1.5rem" variant="subtitle1" fontWeight={600}>
         {totalPrice} {currency}
       </Typography>

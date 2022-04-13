@@ -24,22 +24,27 @@ import styled from 'styled-components';
 
 const LogoLink = styled.a`
   display: block;
-  span{
+  span {
     display: block;
     max-width: 50px;
     max-height: 50px;
   }
-`
+`;
 interface HeadeButtonsProps {
   onProfileIconClick: () => void;
   isAuthenticated?: boolean;
 }
 
-const MobileHeaderButtons:React.FC<HeadeButtonsProps> = ({onProfileIconClick, isAuthenticated}) => {
+const MobileHeaderButtons: React.FC<HeadeButtonsProps> = ({
+  onProfileIconClick,
+  isAuthenticated,
+}) => {
   const { productsCount } = useAppSelector((state) => state.cart);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
+  const { productsCount: likedProductsCount } = useAppSelector(
+    (state) => state.like
+  );
 
   return (
     <List>
@@ -59,7 +64,16 @@ const MobileHeaderButtons:React.FC<HeadeButtonsProps> = ({onProfileIconClick, is
       <Link href={Paths.LIKES}>
         <ListItem button>
           <ListItemIcon>
-            <Heart />
+            <Badge
+              color="secondary"
+              overlap="circular"
+              badgeContent={likedProductsCount}
+              // @ts-expect-error
+              invisible={likedProductsCount && likedProductsCount < 1}
+              max={99}
+            >
+              <Heart />
+            </Badge>
           </ListItemIcon>
           <ListItemText>Избранное</ListItemText>
         </ListItem>
@@ -71,7 +85,8 @@ const MobileHeaderButtons:React.FC<HeadeButtonsProps> = ({onProfileIconClick, is
               color="secondary"
               overlap="circular"
               badgeContent={productsCount}
-              invisible={productsCount < 1}
+              // @ts-expect-error
+              invisible={productsCount && productsCount < 1}
               max={99}
             >
               <Cart />
