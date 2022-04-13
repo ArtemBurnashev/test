@@ -15,11 +15,17 @@ import truncate from 'utils/truncate';
 export const CategoryNavbar: React.FC = () => {
   const router = useRouter()
   const { data, fetchMore, loading } = useAllCategoriesQuery({
-    variables: { first: 7, cursor: '' },
+    variables: { first: 8, cursor: '' },
   });
   const elements = data?.categories?.edges.map((item) => item.node)
     .map((links) => links);
-
+   
+  const linksItem = elements?.filter((item)=> {
+    if(item.children?.edges.length){
+      return item;
+    }
+  })
+  
   const addElemets = (): void => {
     if (data?.categories?.pageInfo.hasNextPage) {
       fetchMore({ variables: { cursor: data?.categories?.pageInfo.endCursor } })
@@ -33,6 +39,8 @@ export const CategoryNavbar: React.FC = () => {
       }
     }
   `
+  
+  
   const LinkText = styled(Link)`
     cursor: pointer;
   `
@@ -87,7 +95,7 @@ export const CategoryNavbar: React.FC = () => {
             </Stack>
             :
             <Slider {...settings}>
-              {elements?.map((links) =>
+              {linksItem?.map((links) =>
                 <LinkSet
                   key={links.id}
                   sx={{ textAlign: 'center' }}
@@ -95,7 +103,7 @@ export const CategoryNavbar: React.FC = () => {
                 >
                   <LinkText 
                     key={links.id} href={`${Paths.CATEGORY_PRODUCTS}${links.slug}`}>
-                    {truncate(links.name, 20)}
+                    {links.name.slice(0,20)}
                   </LinkText>
                 </LinkSet>
               )}
