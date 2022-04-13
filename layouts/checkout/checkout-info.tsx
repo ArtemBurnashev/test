@@ -2,6 +2,7 @@ import { Divider, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
 import { useAppSelector } from 'redux-state/hook';
+import formatter from 'utils/currencyFormatter';
 import { CheckoutCartItem, CheckoutCartItemImage } from './checkout.styles';
 
 const CheckoutInfo = () => {
@@ -24,11 +25,11 @@ const CheckoutInfo = () => {
             </CheckoutCartItemImage>
             <Typography variant="subtitle2">{product.name}</Typography>
           </Stack>
-          <Stack direction="row" spacing={2}>
+          <Stack direction="row" spacing={1}>
             <Typography variant="subtitle2">{product.count}</Typography>
             <Typography variant="subtitle2">x</Typography>
             <Typography fontSize="1.25rem" fontWeight={600}>
-              {product.price?.amountInSum} {currency}
+              {formatter(product.price?.amountInSum || 0)} {currency}
             </Typography>
           </Stack>
         </CheckoutCartItem>
@@ -37,7 +38,7 @@ const CheckoutInfo = () => {
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         <Typography variant="subtitle2">Сумма по товарам</Typography>
         <Typography fontSize="1.25rem" fontWeight={600}>
-          {totalPrice} {currency}
+          {formatter(totalPrice)} {currency}
         </Typography>
       </Stack>
       <Stack direction="row" justifyContent="space-between">
@@ -50,7 +51,7 @@ const CheckoutInfo = () => {
       <Stack direction="row" justifyContent="space-between">
         <Typography fontSize="1.25rem">Итого: </Typography>
         <Typography fontSize="1.25rem" fontWeight={600}>
-          {totalPrice} {currency}
+          {formatter(totalPrice)} {currency}
         </Typography>
       </Stack>
     </Stack>
