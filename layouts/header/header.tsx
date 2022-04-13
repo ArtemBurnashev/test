@@ -14,7 +14,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { Logo } from './header.styles';
-import LogoImage from 'assets/logo.png';
+import LogoImage from 'assets/logo.svg';
 import { Button } from 'components/button';
 import { headerTopLinks } from './header.data';
 import HeaderButtons from './components/header-buttons';
@@ -51,6 +51,8 @@ const Header = () => {
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     transition: all 0.3s ease-in-out;
+    height: 50px;
+    max-width: 178px;
     border: 1px solid #FEEE00;
 
     @keyframes butonOpacity {
@@ -98,22 +100,14 @@ const Header = () => {
   }, [router.query]);
 
   return (
-    <Box sx={{ backgroundColor: '#FCFCFC' }}>
-      <Container maxWidth="xl">
-        <Dialog
-          scroll="paper"
-          maxWidth="lg"
-          open={catalogModal.isOpen}
-          onClose={catalogModal.close}
-        >
-          <Catalog />
-        </Dialog>
-        <Stack>
+    <Box sx={{ backgroundColor: '#fff' }}>
+      <Box sx={{ backgroundColor: '#FCFCFC' }}>
+        <Container maxWidth="xl">
           {!isMobile && (
             <Stack
               direction="row"
               spacing={4}
-              padding="1rem 0"
+              padding="8px 0"
               justifyContent="flex-end"
               sx={{ backgroundColor: '#FCFCFC' }}
             >
@@ -138,46 +132,58 @@ const Header = () => {
               ))}
             </Stack>
           )}
+        </Container>
+      </Box>
+      <Container maxWidth="xl">
+        <Dialog
+          scroll="paper"
+          maxWidth="lg"
+          open={catalogModal.isOpen}
+          onClose={catalogModal.close}
+        >
+          <Catalog />
+        </Dialog>
+        <Stack>
+
           <Stack
             direction="row"
             alignItems="center"
-            justifyContent="space-between"
-            padding="1rem 0"
+            gap={'53px'}
+            padding="18px 0"
           >
-            {isSmallDevice || (
-              <Link href="/">
-                <a>
+            <Stack direction='row'>
+              {isSmallDevice || (
+                <Link href="/">
                   <Logo>
                     <Image layout="fixed" src={LogoImage} alt="logo" />
                   </Logo>
-                </a>
-              </Link>
-            )}
-
-            <Stack
-              direction="row"
-              spacing={2}
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <CatologButton
-                className={''}
-                sx={{
-                  '&&&&&.MuiButtonBase-root': {
-                    pl: '3rem',
-                    pr: '3rem',
-                  },
-                }}
-                variant="contained"
-                startIcon={catalogModal.isOpen ? <Close /> : <Hamburger />}
-                onClick={() => catalogModal.toggle()}
+                </Link>
+              )}
+              <Stack
+                direction="row"
+                spacing={2}
+                alignItems="center"
               >
-                Каталог
-              </CatologButton>
+                <CatologButton
+                  className={''}
+                  sx={{
+                    '&&&&&.MuiButtonBase-root': {
+                      pl: '3rem',
+                      pr: '3rem',
+                    },
+                  }}
+                  variant="contained"
+                  startIcon={catalogModal.isOpen ? <Close /> : <Hamburger />}
+                  onClick={() => catalogModal.toggle()}
+                >
+                  Каталог
+                </CatologButton>
 
-              <SearchField />
-              {isMobile && <Burger open={isOpen} setOpen={setIsOpen} />}
+                <SearchField />
+                {isMobile && <Burger open={isOpen} setOpen={setIsOpen} />}
+              </Stack>
             </Stack>
+
             {!isMobile && (
               <HeaderButtons
                 isAuthenticated={isAuthenticated}

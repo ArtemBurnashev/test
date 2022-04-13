@@ -15,6 +15,7 @@ import colors from 'config/theme';
 import { useOutsideAlerter } from 'hooks/use-outside-click';
 import { useRouter } from 'next/router';
 import { Paths } from 'config/site-paths';
+import styled from 'styled-components';
 
 const SearchField = () => {
   const [inputValue, setInputValue] = useState('');
@@ -36,18 +37,26 @@ const SearchField = () => {
   };
 
   useOutsideAlerter(listRef, () => setIsOpen(false));
+  const StyleInput = styled(Input)`
+    width: 767px;
+    @media (max-width:1551px){
+      width: 600px;
+    }
+    @media (max-width:1387px){
+      width: 500px;
+    }
+    @media (max-width:1277px){
+      width: 350px;
+    }
+    @media (max-width:1135px){
+      width: 100%;
+    }
+  `
 
   return (
     <Box ref={listRef} position="relative">
       <form onSubmit={handleSubmit}>
-        <Input
-          sx={(theme) => ({
-            width: '672px',
-            [theme.breakpoints.down('lg')]: {
-              width: '100%',
-              maxWidth: '672px',
-            },
-          })}
+        <StyleInput
           placeholder="Поиск"
           defaultValue={
             Array.isArray(searchQuery)

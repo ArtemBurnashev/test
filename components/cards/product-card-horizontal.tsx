@@ -11,6 +11,7 @@ import { Paths } from 'config/site-paths';
 import { LazyImage } from 'components/image';
 import colors from 'config/theme';
 import { useAppSelector } from 'redux-state/hook';
+import formatter from 'utils/currencyFormatter';
 
 interface ProductCardProps {
   name: string;
@@ -48,7 +49,7 @@ const ProductCardHorizontal: React.FC<ProductCardProps> = ({
             sx={{
               cursor: 'pointer',
               '&:hover': {
-                color: colors.primary.hover,
+                color: colors.primary.default,
               },
             }}
             component="a"
@@ -59,12 +60,12 @@ const ProductCardHorizontal: React.FC<ProductCardProps> = ({
         </Link>
         <Stack spacing={2} direction="row">
           <Typography fontWeight={500} variant="h3">
-            {discount ? discount?.amountInSum : price?.amountInSum}{' '}
+            {discount ? formatter(discount?.amountInSum) : formatter(price?.amountInSum)}{' '}
             {currency}
           </Typography>
           {discount && (
             <Typography sx={{ textDecoration: 'line-through' }} variant="body2">
-              {price?.amountInSum} {currency}
+              {formatter(price?.amountInSum)} {currency}
             </Typography>
           )}
         </Stack>

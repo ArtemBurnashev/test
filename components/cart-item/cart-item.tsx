@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { Paths } from 'config/site-paths';
 import { LazyImage } from 'components/image';
 import { dislike, like } from 'redux-state/features/likes/likes';
+import formatter from 'utils/currencyFormatter';
 
 const CartItem: React.FC<CartProduct> = ({
   count,
@@ -86,7 +87,7 @@ const CartItem: React.FC<CartProduct> = ({
             fontWeight={600}
             variant="h2"
           >
-            {price?.amountInSum} {currency}
+            {formatter(price?.amountInSum)} {currency}
           </Typography>
         </Stack>
         <Typography variant="subtitle2">{variant}</Typography>
