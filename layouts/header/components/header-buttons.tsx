@@ -20,7 +20,7 @@ const HeaderButtons: React.FC<HeadeButtonsProps> = ({
   const {productsCount: likedProductsCount} = useAppSelector(state=> state.like)
 
   return (
-    <Stack direction="row" spacing={4}>
+    <Stack  direction="row" spacing={4}>
       <Stack
         onClick={onProfileIconClick}
         sx={{ cursor: 'pointer' }}
