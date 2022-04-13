@@ -35,7 +35,15 @@ export const ProductCardWrapper = styled.div<{loading?: string}>`
   height: 323px;
   height: 100%;
   cursor: pointer;
-  width: ${({loading}) => !!loading ? "224px": "unset"}
+  width: ${({loading}) => !!loading ? "224px": "unset"};
+  &:hover{
+    color: ${colors.primary.hover};
+    .hHuXPW{
+      color: #000;
+      cursor: auto;
+    }
+  }
+  
 `;
 
 export const ProductCardLabel = styled.div<{ isNew: boolean }>`

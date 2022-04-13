@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Typography from '@mui/material/Typography';
 import React, { memo } from 'react';
 import { Paths } from 'config/site-paths';
+import colors from 'config/theme';
 import { useRouter } from 'next/router';
 import { CategoryCardImageWrapper, CategoryCardWrapper } from './card.styles';
 import { Box } from '@mui/material';
@@ -38,7 +39,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
         <Typography
           sx={{
             ':hover': {
-              color: '#FEEE00',
+              color: colors.primary.hover,
             },
           }}
           onClick={() => router.push(`${Paths.CATEGORY_PRODUCTS}${slug}`)}
