@@ -14,7 +14,7 @@ import { ChengePassword, ChengeData } from 'components/chenge-user-content';
 import { useModal } from 'hooks/use-modal';
 import { useTranslation } from 'react-i18next';
 import Close from 'components/icons/close';
-import { logout } from 'redux-state/features/user/user-slice';
+import { logout } from 'redux-state/features/user-slice';
 import { useDispatch } from 'react-redux';
 
 const ProfilePage: NextPage = () => {

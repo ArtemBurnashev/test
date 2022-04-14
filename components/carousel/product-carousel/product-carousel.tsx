@@ -16,10 +16,11 @@ const Card = styled.div<{ height?: number; fullBorderRadius?: boolean }>`
 
 interface ProductCarouselProps {
   label?: string;
-  slug: string
+  slug: string;
+  modalOpen?:()=> void;
 }
 
-const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug }) => {
+const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug ,modalOpen}) => {
 
   const theme = useTheme();
   const { data, loading } = useCategoryQuery({
@@ -105,13 +106,14 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug }) => {
       >
         {products?.map((product) => (
           <ProductCard
+            modalOpen={modalOpen}
             key={product.id}
             name={product.name}
             media={product?.media}
             thumbnail={product.thumbnail?.url}
             discount={product.defaultVariant?.pricing?.discount?.gross}
             slug={product.slug}
-            id={product.id}
+            id={product.defaultVariant?.id}
             startPrice={product.defaultVariant?.pricing?.price?.gross}
             variant={`${product?.defaultVariant?.attributes
               .map((val) => val?.attribute.name)

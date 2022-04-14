@@ -14,7 +14,7 @@ export const StyledInput = styled(OutlinedInput)`
   border-radius: 0;
   
   label + & {
-    margin-top: ${(props) => props.theme.spacing(2)};
+    margin-top: ${(props) => props.theme.spacing(3)};
   }
   label & {
     font-size: 17px;
@@ -64,7 +64,7 @@ export const StyledInput = styled(OutlinedInput)`
 export const StyledLabel = styled(InputLabel)`
   font-weight: 500;
   color: ${colors.black};
-  font-size: 16px;
+  font-size: 20px;
 
   &.Mui-focused {
     color: ${colors.black};

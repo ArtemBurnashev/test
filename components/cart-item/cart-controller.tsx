@@ -3,7 +3,7 @@ import Minus from 'components/icons/minus';
 import Plus from 'components/icons/plus';
 import colors from 'config/theme';
 import React from 'react';
-import { removeItem, toggleAmout } from 'redux-state/features/cart/cart-slice';
+import { removeItem, toggleAmout } from 'redux-state/features/cart-slice';
 import { useAppDispatch } from 'redux-state/hook';
 import { ControllerButton, ControllerWrapper } from './cart-item.styles';
 

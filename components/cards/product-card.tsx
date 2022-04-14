@@ -10,13 +10,13 @@ import {
 } from './card.styles';
 import Cart from 'components/icons/cart';
 import { useRouter } from 'next/router';
-import { addToCart } from 'redux-state/features/cart/cart-slice';
+import { addToCart } from 'redux-state/features/cart-slice';
 import { useAppDispatch, useAppSelector } from 'redux-state/hook';
 import { Button } from 'components/button';
 import Eye from 'components/icons/eye';
 import { LazyImage } from 'components/image';
 import { Paths } from 'config/site-paths';
-import { dislike, like } from 'redux-state/features/likes/likes';
+import { dislike, like } from 'redux-state/features/likes';
 import formatter from 'utils/currencyFormatter';
 
 interface ProductCardProps {
@@ -41,6 +41,7 @@ interface ProductCardProps {
     amountInSum?: number | null;
   };
   variant: string;
+  modalOpen?:()=> void
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -51,6 +52,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   id,
   startPrice,
   variant,
+  modalOpen,
 }) => {
   const navigator = useRouter();
   const dispatch = useAppDispatch();
@@ -102,7 +104,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   return (
-    <ProductCardWrapper onClick={() => navigator.push(`${Paths.PRODUCT_DETAILS}${slug}`)}>
+    <ProductCardWrapper onClick={() => {navigator.push(`${Paths.PRODUCT_DETAILS}${slug}`); modalOpen ? modalOpen() : ''}}>
       {discount && startPrice && (
         <ProductCardLabel isNew={!!!discount}>
           {discount.amountInSum && startPrice.amountInSum && (

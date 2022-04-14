@@ -30,8 +30,9 @@ import { SEO } from 'components/seo';
 import { initializeApollo } from 'lib/apollo';
 import { Button } from 'components/button';
 import { useAppDispatch, useAppSelector } from 'redux-state/hook';
-import { dislike, like } from 'redux-state/features/likes/likes';
+import { dislike, like } from 'redux-state/features/likes';
 import dynamic from 'next/dynamic';
+import styled from 'styled-components';
 
 type Props = {
   data: SingleProductQuery;
@@ -48,7 +49,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
   const isInLikeList = likeList.some(
     (product) => data.product && product.id === data?.product.id
   );
-
+ 
   const links = [
     {
       name: data?.product?.category?.name,
@@ -103,7 +104,24 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
 
   const executeScroll = () =>
     characteristicsRef.current?.scrollIntoView({ behavior: 'smooth' });
-
+  const idenfy = (data.product?.media?.length ? data.product?.media?.length : false) > 1 ? true : false
+  const StyleTypograph = styled(Typography)`
+    @media (max-width: 899px){
+      ${idenfy ? ' margin-top: 130px;' : ''};
+     
+    }
+  `
+  const SyledGrid = styled(Grid)`
+    @media (max-width: 1399px){
+      ${idenfy ? ' margin-top: 110px;' : ''};
+    }
+    /* 899 */
+    @media (max-width: 899px){
+      ${idenfy ? ' margin-top: 20px;' : ''};
+    }
+  `
+ 
+  
   return (
     <Main>
       {data.product && (
@@ -168,7 +186,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
         <Spacer />
         <Grid mt='24px' container>
           <Grid sm={12} xs={12} item md={7} lg={4}>
-            <ImageCarousel>
+            <ImageCarousel imgs={data?.product?.media}>
               {data?.product?.media?.map((media) => (
                 <ProductImage key={media.alt}>
                   <LazyImage
@@ -223,9 +241,9 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
             )}
 
             <Stack spacing={2}>
-              <Typography fontWeight={500} variant="h3">
+              <StyleTypograph fontWeight={500} variant="h3">
                 Oписание
-              </Typography>
+              </StyleTypograph>
               {data?.product?.description && (
                 <EditorJs data={JSON.parse(data.product.description)} />
               )}
@@ -258,7 +276,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
               )}
             </Stack>
           </Grid>
-          <Grid xs={12} sm={12} md={6} item lg={3}>
+          <SyledGrid  xs={12} sm={12} md={6} item lg={3}>
             <AddtoCardSingle
               price={
                 variant?.pricing?.price?.gross ||
@@ -268,7 +286,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
                 variant?.pricing?.discount?.gross ||
                 data?.product?.defaultVariant?.pricing?.discount?.gross
               }
-              id={data?.product?.defaultVariant?.id || ''}
+              id={data?.product?.defaultVariant?.id}
               image={
                 (data?.product?.media && data?.product?.media[0].url) || ''
               }
@@ -276,9 +294,9 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
               variant={getVariantName()}
               slug={data?.product?.slug}
             />
-          </Grid>
+          </SyledGrid>
         </Grid>
-        <Typography fontWeight={500} variant="h2">
+        <Typography sx={idenfy ? {marginTop:'120px'} : {marginTop:0}} fontWeight={500} variant="h2">
           Характеристики
         </Typography>
         <Grid

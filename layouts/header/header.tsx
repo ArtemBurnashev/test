@@ -23,7 +23,7 @@ import MobileHeaderButtons from './components/mobile-header-buttons';
 import { Burger } from 'components/burger';
 import SearchField from './components/search-field';
 import Login from './components/auth/login';
-import { useAppSelector } from 'redux-state/hook';
+import { useAppDispatch, useAppSelector } from 'redux-state/hook';
 import { useRouter } from 'next/router';
 import { Paths } from 'config/site-paths';
 import { useModal } from 'hooks/use-modal';
@@ -33,6 +33,7 @@ import Hamburger from 'components/icons/hamburger';
 import Auth from './components/auth';
 import { CategoryNavbar } from 'components/category-navbar';
 import styled from 'styled-components';
+import { toggle } from 'redux-state/features/sidebar';
 
 
 const Header = () => {
@@ -42,7 +43,8 @@ const Header = () => {
   const router = useRouter();
   const catalogModal = useModal();
   const [isOpen, setIsOpen] = useState(false);
-  const [showLoginMenu, setShowLoginMenu] = useState(false);
+  const {isOpen: showLoginMenu} = useAppSelector(state => state.sidebar);
+  const dispatch = useAppDispatch()
   const { isAuthenticated } = useAppSelector((state) => state.user);
 
   const CatologButton = styled(Button)`
@@ -92,7 +94,7 @@ const Header = () => {
       ) {
         return;
       }
-      setShowLoginMenu(open);
+      dispatch(toggle(open));
     };
 
   useEffect(() => {
@@ -190,7 +192,7 @@ const Header = () => {
                 onProfileIconClick={() =>
                   isAuthenticated
                     ? router.push(Paths.PROFILE)
-                    : setShowLoginMenu(!showLoginMenu)
+                    : dispatch(toggle(!showLoginMenu))
                 }
               />
             )}
@@ -201,7 +203,7 @@ const Header = () => {
               onProfileIconClick={() =>
                 isAuthenticated
                   ? router.push(Paths.PROFILE)
-                  : setShowLoginMenu(!showLoginMenu)
+                  : dispatch(toggle(!showLoginMenu))
               }
             />
           </Sidebar>
@@ -213,7 +215,7 @@ const Header = () => {
             >
               <Box sx={{ position: 'relative' }}>
                 <IconButton
-                  onClick={() => setShowLoginMenu(false)}
+                  onClick={() => dispatch(toggle(false))}
                   sx={{ position: 'absolute', top: '-2rem', right: '1rem' }}
                 >
                   <Close />

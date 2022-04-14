@@ -9,10 +9,11 @@ import cartReducer, {
   clearCart,
   removeItem,
   toggleAmout,
-} from './features/cart/cart-slice';
+} from './features/cart-slice';
 
-import userReducer from './features/user/user-slice';
-import likeReducer from "./features/likes/likes"
+import userReducer from './features/user-slice';
+import likeReducer from "./features/likes";
+import sidebarReducer from "./features/sidebar"
 
 const storageMiddleware = createListenerMiddleware();
 
@@ -27,7 +28,8 @@ export const store = configureStore({
   reducer: {
     cart: cartReducer,
     user: userReducer,
-    like: likeReducer
+    like: likeReducer,
+    sidebar: sidebarReducer
   },
 
   middleware: (getDefaultMiddleware) =>
