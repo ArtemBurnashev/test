@@ -21,7 +21,7 @@ export default [
     icon: Location,
   },
   {
-    href: '/profile/saved',
+    href: '/like-list',
     label: 'Избранные товары',
     icon: Heart,
   },

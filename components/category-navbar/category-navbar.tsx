@@ -83,6 +83,10 @@ export const CategoryNavbar: React.FC = () => {
       }
     ]
   };
+  const names = data?.categories?.edges.map((e)=> e.node.name).join(',')
+
+  console.log(names);
+  
   if (router.pathname !== Paths.HOME) {
     return (
       <CategoryStyle>
@@ -103,7 +107,7 @@ export const CategoryNavbar: React.FC = () => {
                 >
                   <LinkText 
                     key={links.id} href={`${Paths.CATEGORY_PRODUCTS}${links.slug}`}>
-                    {links.name.slice(0,20)}
+                    {links.name.slice(0,20)+'...'}
                   </LinkText>
                 </LinkSet>
               )}
