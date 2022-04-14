@@ -7,7 +7,7 @@ import { LazyImage } from 'components/image';
 import Slider from 'react-slick';
 
 const ActionWrapper = styled.div`
-  background-color: ${colors.primary.default};
+
   margin: 32px  0;
   padding-top: 30px;
   padding-bottom: 30px;

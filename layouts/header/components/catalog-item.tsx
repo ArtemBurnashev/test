@@ -21,12 +21,15 @@ const ItemWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  a:hover{
+    color: ${colors.primary.hover};
+  }
 `;
 
-const StyledLink = styled.a`
+const StyledLink = styled(Link)`
   text-decoration: none;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 400;
   color: ${colors.black};
   cursor: pointer;
 `;
@@ -44,9 +47,9 @@ const CatalogItem: React.FC<CatalogItemProps> = ({
         <CategoryCard label={title} image={image} />
       </Link>
       {children?.slice(0, expanded ? children.length : 3).map((child) => (
-        <Link href={`${Paths.CATEGORY_PRODUCTS}${child.slug}`}>
-          <StyledLink>{child.title}</StyledLink>
-        </Link>
+        <StyledLink href={`${Paths.CATEGORY_PRODUCTS}${child.slug}`}>
+          {child.title}
+        </StyledLink>
       ))}
       {children && children?.length > 3 && (
         <Button
