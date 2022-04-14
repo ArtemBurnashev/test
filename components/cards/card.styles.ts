@@ -29,19 +29,20 @@ export const CategoryCardImageWrapper = styled.div`
   }
 `;
 
-export const ProductCardWrapper = styled.div<{loading?: string}>`
+export const ProductCardWrapper = styled.div<{ loading?: string }>`
   position: relative;
   padding: 8px;
   height: 323px;
   height: 100%;
   cursor: pointer;
-  width: ${({loading}) => !!loading ? "224px": "unset"};
+  width: ${({ loading }) => !!loading ? "224px" : "unset"};
   &:hover{
     color: ${colors.primary.hover};
-    .hHuXPW{
-      color: #000;
-      cursor: auto;
-    }
+    
+  }
+  .hHuXPW{
+    color: #000;
+    cursor: auto;
   }
   
 `;

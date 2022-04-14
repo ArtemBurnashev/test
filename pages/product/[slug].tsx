@@ -176,12 +176,6 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
               </Typography>
             </Button>
           </Stack>
-          <Typography color={colors.grey.default}>
-            арт.{' '}
-            <Typography color={colors.black} component="span">
-              14979
-            </Typography>
-          </Typography>
         </Stack>
         <Spacer />
         <Grid mt='24px' container>
