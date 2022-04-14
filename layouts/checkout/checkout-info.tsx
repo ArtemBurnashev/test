@@ -23,13 +23,41 @@ const CheckoutInfo = () => {
                 alt={product.name}
               />
             </CheckoutCartItemImage>
-            <Typography variant="subtitle2">{product.name}</Typography>
+            <Typography
+              variant="subtitle2"
+              sx={(theme) => ({
+                [theme.breakpoints.down('sm')]: {
+                  fontSize: 12,
+                },
+              })}
+            >
+              {product.name}
+            </Typography>
           </Stack>
-          <Stack direction="row" spacing={1}>
+          <Stack alignItems="center" direction="row" spacing={1}>
             <Typography variant="subtitle2">{product.count}</Typography>
             <Typography variant="subtitle2">x</Typography>
-            <Typography fontSize="1.25rem" fontWeight={600}>
-              {formatter(product.price?.amountInSum || 0)} {currency}
+            <Typography
+              sx={(theme) => ({
+                [theme.breakpoints.down('sm')]: {
+                  fontSize: 14,
+                },
+              })}
+              fontSize="1.25rem"
+              fontWeight={600}
+            >
+              {formatter(product.price?.amountInSum || 0)}
+            </Typography>
+            <Typography
+              sx={(theme) => ({
+                [theme.breakpoints.down('sm')]: {
+                  fontSize: 14,
+                },
+              })}
+              fontSize="1.25rem"
+              fontWeight={600}
+            >
+              {currency}
             </Typography>
           </Stack>
         </CheckoutCartItem>
