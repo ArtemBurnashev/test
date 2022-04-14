@@ -58,11 +58,6 @@ const SearchField = () => {
       <form onSubmit={handleSubmit}>
         <StyleInput
           placeholder="Поиск"
-          defaultValue={
-            Array.isArray(searchQuery)
-              ? searchQuery.join('&')
-              : searchQuery || ''
-          }
           value={inputValue}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setInputValue(e.target.value)

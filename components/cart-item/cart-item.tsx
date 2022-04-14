@@ -7,12 +7,12 @@ import Heart from 'components/icons/heart';
 import Trash from 'components/icons/trash';
 import colors from 'config/theme';
 import CartController from './cart-controller';
-import { CartProduct, removeItem } from 'redux-state/features/cart/cart-slice';
+import { CartProduct, removeItem } from 'redux-state/features/cart-slice';
 import { useAppDispatch, useAppSelector } from 'redux-state/hook';
 import Link from 'next/link';
 import { Paths } from 'config/site-paths';
 import { LazyImage } from 'components/image';
-import { dislike, like } from 'redux-state/features/likes/likes';
+import { dislike, like } from 'redux-state/features/likes';
 import formatter from 'utils/currencyFormatter';
 
 const CartItem: React.FC<CartProduct> = ({
@@ -90,7 +90,7 @@ const CartItem: React.FC<CartProduct> = ({
             {formatter(price?.amountInSum)} {currency}
           </Typography>
         </Stack>
-        <Typography variant="subtitle2">{variant}</Typography>
+        {/* <Typography variant="subtitle2">{variant}</Typography> */}
         <Stack flexWrap="wrap" direction="row">
           <Stack flexWrap="wrap" marginRight="auto" direction="row">
             <Button

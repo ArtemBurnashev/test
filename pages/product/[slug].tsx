@@ -30,7 +30,7 @@ import { SEO } from 'components/seo';
 import { initializeApollo } from 'lib/apollo';
 import { Button } from 'components/button';
 import { useAppDispatch, useAppSelector } from 'redux-state/hook';
-import { dislike, like } from 'redux-state/features/likes/likes';
+import { dislike, like } from 'redux-state/features/likes';
 import dynamic from 'next/dynamic';
 
 type Props = {
@@ -268,7 +268,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
                 variant?.pricing?.discount?.gross ||
                 data?.product?.defaultVariant?.pricing?.discount?.gross
               }
-              id={data?.product?.defaultVariant?.id || ''}
+              id={data?.product?.defaultVariant?.id}
               image={
                 (data?.product?.media && data?.product?.media[0].url) || ''
               }

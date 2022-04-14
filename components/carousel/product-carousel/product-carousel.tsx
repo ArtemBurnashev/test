@@ -111,7 +111,7 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug }) => {
             thumbnail={product.thumbnail?.url}
             discount={product.defaultVariant?.pricing?.discount?.gross}
             slug={product.slug}
-            id={product.id}
+            id={product.defaultVariant?.id}
             startPrice={product.defaultVariant?.pricing?.price?.gross}
             variant={`${product?.defaultVariant?.attributes
               .map((val) => val?.attribute.name)

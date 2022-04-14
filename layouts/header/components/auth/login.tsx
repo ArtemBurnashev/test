@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
 import { useLoginMutation } from 'graphql/generated.graphql';
 import { useAppDispatch } from 'redux-state/hook';
-import { login } from 'redux-state/features/user/user-slice';
+import { login } from 'redux-state/features/user-slice';
 import colors from 'config/theme';
 import { AuthRoutes, PageProps } from './auth-sidebar';
 

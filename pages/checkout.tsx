@@ -23,9 +23,11 @@ import { CheckoutInfo } from 'layouts/checkout';
 import Link from 'next/link';
 import { LinkButton } from 'components/common/link';
 import { Paths } from 'config/site-paths';
-import { useAppSelector } from 'redux-state/hook';
+import { useAppSelector, useAppDispatch } from 'redux-state/hook';
+import { toggle } from 'redux-state/features/sidebar';
 import {
   CountryCode,
+  useAddressListQuery,
   useCheckoutCompleteMutation,
   useCheckoutCreateMutation,
 } from 'graphql/generated.graphql';
@@ -33,6 +35,9 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { CheckoutCreateInput } from 'types/checkout.types';
 import _ from 'lodash';
+import { AddresCard } from 'components/cards';
+import { useModal } from 'hooks/use-modal';
+import { Address } from 'components/cards/address-card';
 
 const checkoutCreateSchema = yup.object({
   name: yup.string().required('Name is required'),
@@ -49,15 +54,32 @@ const checkoutCreateSchema = yup.object({
 
 const Checkout = () => {
   const { productsCount, cartProducts } = useAppSelector((state) => state.cart);
+  const { isAuthenticated } = useAppSelector((state) => state.user);
+  const [selectedAddres, setSelectedAddress] = useState('');
   const [checkoutCreate, { data: checkoutCreateData, loading }] =
     useCheckoutCreateMutation();
   const [checkoutComplete, { loading: checkoutCompleteLoading }] =
     useCheckoutCompleteMutation();
   const [isCreated, setIsCreated] = useState(false);
+  const { data: addresses } = useAddressListQuery({ skip: !isAuthenticated });
 
-  const { control, handleSubmit } = useForm<CheckoutCreateInput>({
+  const { control, handleSubmit, setValue } = useForm<CheckoutCreateInput>({
     resolver: yupResolver(checkoutCreateSchema),
   });
+  const dispatch = useAppDispatch();
+  const modalControl = useModal();
+
+  const handleAddressSelect = (address: Address | null) => {
+    if (!address) return;
+    setSelectedAddress((oldValue) =>
+      oldValue === address.id ? '' : address.id
+    );
+    if (selectedAddres !== address.id) {
+      setValue('name', `${address.firstName} ${address.lastName}`);
+      setValue('phone', address.phone || '');
+      setValue('streetAddress1', address.streetAddress1);
+    }
+  };
 
   const handleCheckout = (data: CheckoutCreateInput) => {
     const [firstName, lastName] = data.name.split(' ');
@@ -93,7 +115,7 @@ const Checkout = () => {
           },
           phone,
           lines: cartProducts.map((product) => ({
-            variantId: product.id || "",
+            variantId: product.id || '',
             quantity: product.count,
           })),
           channel: 'default-channel',
@@ -137,14 +159,28 @@ const Checkout = () => {
               </Typography>
               <form onSubmit={handleSubmit(handleCheckout)}>
                 <Stack spacing={2} margin="1rem 0">
-                  <Button
-                    sx={{ maxWidth: 'max-content' }}
-                    color="secondary"
-                    size="small"
-                    type="button"
-                  >
-                    Уже покупали у нас?
-                  </Button>
+                  {!isAuthenticated && (
+                    <Button
+                      sx={{ maxWidth: 'max-content' }}
+                      color="secondary"
+                      size="small"
+                      type="button"
+                      onClick={() => dispatch(toggle(true))}
+                    >
+                      Уже покупали у нас?
+                    </Button>
+                  )}
+
+                  {addresses?.me?.addresses?.map((address) => (
+                    <AddresCard
+                      onClick={() => handleAddressSelect(address)}
+                      isActive={selectedAddres === address?.id}
+                      isCheckoutPage
+                      data={address}
+                      backdrop={modalControl}
+                    />
+                  ))}
+
                   <Typography variant="h2" fontSize={27}>
                     Контактные данные
                   </Typography>
@@ -181,7 +217,7 @@ const Checkout = () => {
                     name="streetAddress1"
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        label="Населенный пункт"
+                        label="Адрес"
                         error={!!errors.streetAddress1?.type}
                         helperText={errors.streetAddress1?.message}
                         {...field}
@@ -270,38 +306,36 @@ const Checkout = () => {
                   </Stack> */}
                   <FormControl>
                     <RadioGroup defaultValue="1">
-                      <Stack direction="row">
+                      <Stack direction="row" gap="1rem">
                         <CheckoutMethods>
                           <FormControlLabel
-                            label=""
+                            label={
+                              <Stack padding="1rem 1.5rem">
+                                <Stack>
+                                  <Typography variant="h3" fontSize="1.25rem">
+                                    Наличными курьеру
+                                  </Typography>
+                                  <Typography variant="body2">
+                                    Наличными курьеру
+                                  </Typography>
+                                </Stack>
+                              </Stack >
+                            }
                             value="1"
-                            control={<Radio />}
+                            control={<Radio sx={{marginLeft: "1rem"}} />}
                           />
-                          <Stack>
-                            <Typography variant="h3" fontSize="1.25rem">
-                              Наличными курьеру
-                            </Typography>
-                            <Typography variant="body2">
-                              Наличными курьеру
-                            </Typography>
-                          </Stack>
                         </CheckoutMethods>
                         <CheckoutMethods>
                           <FormControlLabel
-                            label=""
+                            label={
+                               <Stack padding="1rem 1.5rem">
+                                <Image layout="fixed" src={Payme} alt="payme" />
+                              </Stack>
+                            }
                             value="2"
                             control={<Radio />}
                           />
-                          <Image layout="fixed" src={Payme} alt="payme" />
                         </CheckoutMethods>
-                        {/* <CheckoutMethods>
-                          <FormControlLabel
-                            label=""
-                            value="3"
-                            control={<Radio />}
-                          />
-                          <Image layout="fixed" src={Click} alt="click" />
-                        </CheckoutMethods> */}
                       </Stack>
                     </RadioGroup>
                   </FormControl>
