@@ -1,7 +1,7 @@
 import Search from 'components/icons/search';
 import Input from 'components/input';
 import useDebounce from 'hooks/use-debounce';
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useSearchProductsQuery } from 'graphql/generated.graphql';
 import {
   Box,
@@ -16,6 +16,22 @@ import { useOutsideAlerter } from 'hooks/use-outside-click';
 import { useRouter } from 'next/router';
 import { Paths } from 'config/site-paths';
 import styled from 'styled-components';
+
+const StyleInput = styled(Input)`
+  width: 767px;
+  @media (max-width: 1551px) {
+    width: 600px;
+  }
+  @media (max-width: 1387px) {
+    width: 500px;
+  }
+  @media (max-width: 1277px) {
+    width: 350px;
+  }
+  @media (max-width: 1135px) {
+    width: 100%;
+  }
+`;
 
 const SearchField = () => {
   const [inputValue, setInputValue] = useState('');
@@ -36,22 +52,11 @@ const SearchField = () => {
     navigator.push(`${Paths.SEARCH}?${query.toString()}`);
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
   useOutsideAlerter(listRef, () => setIsOpen(false));
-  const StyleInput = styled(Input)`
-    width: 767px;
-    @media (max-width:1551px){
-      width: 600px;
-    }
-    @media (max-width:1387px){
-      width: 500px;
-    }
-    @media (max-width:1277px){
-      width: 350px;
-    }
-    @media (max-width:1135px){
-      width: 100%;
-    }
-  `
 
   return (
     <Box ref={listRef} position="relative">
@@ -59,9 +64,7 @@ const SearchField = () => {
         <StyleInput
           placeholder="Поиск"
           value={inputValue}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setInputValue(e.target.value)
-          }
+          onChange={handleChange}
           endAdornment={loading ? <CircularProgress size={18} /> : <Search />}
           fullWidth
           onClick={() => setIsOpen(true)}
