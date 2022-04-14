@@ -319,21 +319,21 @@ const Checkout = () => {
                                     Наличными курьеру
                                   </Typography>
                                 </Stack>
-                              </Stack >
+                              </Stack>
                             }
                             value="1"
-                            control={<Radio sx={{marginLeft: "1rem"}} />}
+                            control={<Radio sx={{ marginLeft: '1rem' }} />}
                           />
                         </CheckoutMethods>
                         <CheckoutMethods>
                           <FormControlLabel
                             label={
-                               <Stack padding="1rem 1.5rem">
+                              <Stack padding="1rem 1.5rem">
                                 <Image layout="fixed" src={Payme} alt="payme" />
                               </Stack>
                             }
                             value="2"
-                            control={<Radio />}
+                            control={<Radio sx={{ marginLeft: '1rem' }} />}
                           />
                         </CheckoutMethods>
                       </Stack>
