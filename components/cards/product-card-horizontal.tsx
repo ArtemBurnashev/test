@@ -6,7 +6,7 @@ import {
 } from './card.styles';
 import Phone from 'assets/png/phone.png';
 import { Stack, Typography } from '@mui/material';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { Paths } from 'config/site-paths';
 import { LazyImage } from 'components/image';
 import colors from 'config/theme';
@@ -26,8 +26,9 @@ interface ProductCardProps {
   price?: {
     currency: string;
     amount: number;
-    amountInSum?:number | null
+    amountInSum?: number | null
   };
+  modalOpen?: () => void;
 }
 
 const ProductCardHorizontal: React.FC<ProductCardProps> = ({
@@ -36,28 +37,30 @@ const ProductCardHorizontal: React.FC<ProductCardProps> = ({
   discount,
   image,
   name,
+  modalOpen,
 }) => {
-  const {currency} = useAppSelector(state => state.cart)
+  const { currency } = useAppSelector(state => state.cart);
+  const navigator = useRouter();
   return (
     <HorizontalCardWrapper>
       <HorizontalCardImageWrapper>
         <LazyImage src={image || ''} alt="product" />
       </HorizontalCardImageWrapper>
       <Stack spacing={4} justifyContent="space-between">
-        <Link href={`${Paths.PRODUCT_DETAILS}${slug}`}>
-          <Typography
-            sx={{
-              cursor: 'pointer',
-              '&:hover': {
-                color: colors.primary.default,
-              },
-            }}
-            component="a"
-            variant="h3"
-          >
-            {name}
-          </Typography>
-        </Link>
+        <Typography
+          onClick={() => { navigator.push(`${Paths.PRODUCT_DETAILS}${slug}`); modalOpen ? modalOpen() : '' }}
+          sx={{
+            cursor: 'pointer',
+            '&:hover': {
+              color: colors.primary.default,
+            },
+            maxWidth:'249px'
+          }}
+          component="a"
+          variant="h3"
+        >
+          {name}
+        </Typography>
         <Stack spacing={2} direction="row">
           <Typography fontWeight={500} variant="h3">
             {discount ? formatter(discount?.amountInSum) : formatter(price?.amountInSum)}{' '}

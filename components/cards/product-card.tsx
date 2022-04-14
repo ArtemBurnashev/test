@@ -41,6 +41,7 @@ interface ProductCardProps {
     amountInSum?: number | null;
   };
   variant: string;
+  modalOpen?:()=> void
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -51,6 +52,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   id,
   startPrice,
   variant,
+  modalOpen,
 }) => {
   const navigator = useRouter();
   const dispatch = useAppDispatch();
@@ -102,7 +104,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   return (
-    <ProductCardWrapper onClick={() => navigator.push(`${Paths.PRODUCT_DETAILS}${slug}`)}>
+    <ProductCardWrapper onClick={() => {navigator.push(`${Paths.PRODUCT_DETAILS}${slug}`); modalOpen ? modalOpen() : ''}}>
       {discount && startPrice && (
         <ProductCardLabel isNew={!!!discount}>
           {discount.amountInSum && startPrice.amountInSum && (
