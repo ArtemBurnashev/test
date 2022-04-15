@@ -8,13 +8,28 @@ import { ProductColumn } from 'components/product-column';
 import { useAllCategoriesQuery } from 'graphql/generated.graphql';
 import { useModal } from 'hooks/use-modal';
 import { Main } from 'layouts/main';
+import styled from 'styled-components';
 import type { NextPage } from 'next';
 
 const Home: NextPage = () => {
   const { data: categoryData } = useAllCategoriesQuery({ variables: { first: 10, cursor: "" } });
   const nodes = categoryData?.categories?.edges.map((edge) => edge.node);
   const { isOpen: productIsopen, open: productOpen } = useModal()
-
+  const GridItem = styled.div`
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 30px;
+    @media (max-width:1200px){
+      gap: 0;
+    }
+    @media (max-width: 1126px){
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+    @media (max-width: 768px){
+      grid-template-columns: 1fr;
+    }
+  `
 
   return (
     <Main>
@@ -31,29 +46,29 @@ const Home: NextPage = () => {
       </Container>
       <Action />
       <Container maxWidth="xl">
-        <Grid columnSpacing={4} container>
-          <Grid item md={6} lg={4}>
+        <GridItem>
+          <Box>
             <ProductColumn
               modalOpen={productOpen}
               slug={nodes ? nodes[1].slug : ''}
               label={nodes ? nodes[1].name : ''}
             />
-          </Grid>
-          <Grid item md={6} lg={4}>
+          </Box>
+          <Box >
             <ProductColumn
               modalOpen={productOpen}
               slug={nodes ? nodes[1].slug : ''}
               label={nodes ? nodes[1].name : ''}
             />
-          </Grid>
-          <Grid item md={6} lg={4}>
+          </Box>
+          <Box >
             <ProductColumn
               modalOpen={productOpen}
               slug={nodes ? nodes[3].slug : ''}
               label={nodes ? nodes[3].name : ''}
             />
-          </Grid>
-        </Grid>
+          </Box>
+        </GridItem>
         <ProductCarousel
           modalOpen={productOpen}
           slug={nodes ? nodes[4].slug : ''}

@@ -47,6 +47,8 @@ const Header = () => {
   const dispatch = useAppDispatch()
   const { isAuthenticated } = useAppSelector((state) => state.user);
 
+  
+  
   const CatologButton = styled(Button)`
     animation-name: butonOpacity;
     animation-duration: 1s;
@@ -102,7 +104,7 @@ const Header = () => {
   }, [router.query]);
 
   return (
-    <Box sx={{ backgroundColor: '#fff' }}>
+    <Box sx={router.asPath === '/' ? { backgroundColor: '#fff' } : { backgroundColor: '#FCFCFC' }}>
       <Box sx={{ backgroundColor: '#FCFCFC' }}>
         <Container maxWidth="xl">
           {!isMobile && (
