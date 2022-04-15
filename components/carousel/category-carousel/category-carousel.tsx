@@ -32,6 +32,13 @@ const CategoryCarousel: FC = () => {
         lazyLoad="progressive"
         responsive={[
           {
+            breakpoint: 1517,
+            settings: {
+              slidesToShow: 5,
+              slidesToScroll: 1,
+            },
+          },
+          {
             breakpoint: theme.breakpoints.values.md,
             settings: {
               slidesToShow: 3,

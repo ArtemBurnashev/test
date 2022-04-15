@@ -85,7 +85,6 @@ export const CategoryNavbar: React.FC = () => {
   };
   const names = data?.categories?.edges.map((e)=> e.node.name).join(',')
 
-  console.log(names);
   
   if (router.pathname !== Paths.HOME) {
     return (

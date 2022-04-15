@@ -60,7 +60,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const { likeList } = useAppSelector((state) => state.like);
   const isInCard = cartProducts.some((product) => product.id === id);
   const isInLikeList = likeList.some((product) => product.id === id);
-
+ 
+  
   const handleAddToCart = (
     e: React.MouseEvent<HTMLButtonElement | MouseEvent>
   ) => {
@@ -102,7 +103,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       );
     }
   };
-
+  
   return (
     <ProductCardWrapper onClick={() => {navigator.push(`${Paths.PRODUCT_DETAILS}${slug}`); modalOpen ? modalOpen() : ''}}>
       {discount && startPrice && (
@@ -123,7 +124,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </ProductHeartWrapper>
       <Stack justifyContent="space-between" height={323} spacing={2}>
         <ProductCardImageWrapper>
-          <LazyImage
+          <LazyImage 
+            
             src={(media && media[0]?.url) || ''}
             alt={(media && media[0]?.alt) || 'product_image'}
           />

@@ -46,16 +46,16 @@ const CategoryProducts: NextPage = () => {
                 />
               </Grid>
             ))}
-            {!likeList.length ?
-              <Grid item xs={12}>
+          </Grid>
+          {!likeList.length ?
+              <Stack>
                 <Typography textAlign="center" variant="h2">
                   Нет избранных товаров
                 </Typography>
-              </Grid>
+              </Stack>
               :
               ""
             }
-          </Grid>
         </Stack>
       </Container>
     </Main>

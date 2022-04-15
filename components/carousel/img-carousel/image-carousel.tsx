@@ -29,9 +29,9 @@ const ImageCarousel: FC<{
     dotsClass: "slick-dots slick-thumb",
     afterChange: (currenSlide: any) => onSlide && onSlide(currenSlide),
     customPaging: function (i: any) {
-
+      
       return (
-        <a >
+        <a>
           <img src={imgs ? imgs[i].url : ' '} />
         </a>
       );
@@ -52,13 +52,21 @@ const ImageCarousel: FC<{
       object-fit: contain;
     }
     .slick-dots{
-      bottom: -100px;
+      bottom: -110px;
       li{
         width: 80px;
         height: 80px;
         border: 3px solid ${colors.grey.lighter};
         border-radius: 8px;
         padding: 5px;
+        margin-bottom: 10px;
+        
+      }
+      @media (max-width: 456px){
+        li{
+          width: 52px;
+          height: 52px;
+        }
       }
       .slick-active{
         border: 3px solid ${colors.primary.default};
@@ -68,6 +76,7 @@ const ImageCarousel: FC<{
       text-align: center;
     }
   `
+  
   return (
     <Card>
       <Slider {...settings}>
