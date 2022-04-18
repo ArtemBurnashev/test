@@ -1,10 +1,13 @@
 import {
   Checkbox,
   Container,
+  Dialog,
   Divider,
   FormControl,
   FormControlLabel,
   Grid,
+  Modal,
+  Paper,
   RadioGroup,
   Stack,
   Typography,
@@ -30,6 +33,7 @@ import {
   useAddressListQuery,
   useCheckoutCompleteMutation,
   useCheckoutCreateMutation,
+  usePaymeTransactionMutation,
 } from 'graphql/generated.graphql';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -38,6 +42,9 @@ import _ from 'lodash';
 import { AddresCard } from 'components/cards';
 import { useModal } from 'hooks/use-modal';
 import { Address } from 'components/cards/address-card';
+import colors from 'config/theme';
+import { clearCart } from 'redux-state/features/cart-slice';
+import { useRouter } from 'next/router';
 
 const checkoutCreateSchema = yup.object({
   name: yup.string().required('Name is required'),
@@ -53,13 +60,22 @@ const checkoutCreateSchema = yup.object({
 });
 
 const Checkout = () => {
-  const { productsCount, cartProducts } = useAppSelector((state) => state.cart);
+  const { productsCount, cartProducts, totalPrice } = useAppSelector(
+    (state) => state.cart
+  );
+  const [paymentGateway, setPaymentGateway] = useState('1');
   const { isAuthenticated } = useAppSelector((state) => state.user);
   const [selectedAddres, setSelectedAddress] = useState('');
   const [checkoutCreate, { data: checkoutCreateData, loading }] =
     useCheckoutCreateMutation();
-  const [checkoutComplete, { loading: checkoutCompleteLoading }] =
-    useCheckoutCompleteMutation();
+  const [
+    checkoutComplete,
+    { data: checkoutCompleteData, loading: checkoutCompleteLoading },
+  ] = useCheckoutCompleteMutation();
+  const [paymeTransaction, { data: paymeData, loading: paymeLoading }] =
+    usePaymeTransactionMutation();
+  const router = useRouter();
+  const completeModal = useModal();
   const [isCreated, setIsCreated] = useState(false);
   const { data: addresses } = useAddressListQuery({ skip: !isAuthenticated });
 
@@ -88,6 +104,16 @@ const Checkout = () => {
       checkoutComplete({
         variables: {
           checkoutId: checkoutCreateData?.checkoutCreate?.checkout?.id,
+          paymentGateway:
+            paymentGateway === '2' ? 'mirumee.payments.payme' : undefined,
+        },
+        onCompleted: (data) => {
+          if (data.checkoutComplete?.errors.length === 0) {
+            if (paymentGateway === '1') {
+              dispatch(clearCart());
+            }
+            completeModal.open();
+          }
         },
       });
       return;
@@ -128,9 +154,64 @@ const Checkout = () => {
       },
     });
   };
+
+  const handlePayment = () => {
+    if (!checkoutCompleteData?.checkoutComplete?.payment) return;
+    paymeTransaction({
+      variables: {
+        input: {
+          paymentId: checkoutCompleteData?.checkoutComplete?.payment.id,
+          returnUrl: router.basePath,
+        },
+      },
+      onCompleted: (res) => {
+        if (
+          res.paymeTransactionCreate?.errors.length === 0 &&
+          res.paymeTransactionCreate.url
+        ) {
+          dispatch(clearCart());
+          window.open(res.paymeTransactionCreate?.url);
+        }
+      },
+    });
+  };
   return (
     <Main pb={0}>
       <Container maxWidth="xl">
+        <Dialog open={completeModal.isOpen}>
+          <Paper sx={{ borderRadius: 0, padding: '40px' }}>
+            <Stack sx={{ gap: '1rem' }}>
+              <Typography variant="h2">
+                Заказ №:{' '}
+                <Typography component="span" variant="h2" fontWeight={300}>
+                  {checkoutCompleteData?.checkoutComplete?.order?.number}
+                </Typography>{' '}
+                оформлен
+              </Typography>
+              <Typography variant="subtitle2">
+                Отслеживать статус заказа можно в личном кабинете
+              </Typography>
+              <Stack justifyContent="space-between" direction="row">
+                {paymentGateway !== '1' && (
+                  <Button
+                    loading={paymeLoading}
+                    onClick={handlePayment}
+                    variant="contained"
+                  >
+                    ОПЛАТИТЬ
+                  </Button>
+                )}
+                <Button
+                  onClick={() => router.push(Paths.HOME)}
+                  variant="text"
+                  sx={{ color: colors.black }}
+                >
+                  ПРОДОЛЖИТЬ ПОКУПКИ
+                </Button>
+              </Stack>
+            </Stack>
+          </Paper>
+        </Dialog>
         {productsCount < 1 && productsCount ? (
           <Stack
             mt={2}
@@ -224,57 +305,6 @@ const Checkout = () => {
                       />
                     )}
                   />
-                  {/* <FormControl fullWidth>
-                    <RadioGroup defaultValue="1">
-                      <Stack
-                        direction="row"
-                        alignItems="center"
-                        width="100%"
-                        justifyContent="space-between"
-                        marginBottom="2rem"
-                      >
-                        <Stack direction="row" alignItems="center">
-                          <FormControlLabel
-                            value="1"
-                            control={<Radio />}
-                            label=""
-                          />
-                          <Stack>
-                            <Typography variant="h3" fontSize="1.25rem">
-                              Самовывоз
-                            </Typography>
-                            <Typography variant="body2">
-                              На пункте выдачи
-                            </Typography>
-                          </Stack>
-                        </Stack>
-                        <Typography fontSize={21}>+ 0 Сум</Typography>
-                      </Stack>
-                      <Stack
-                        width="100%"
-                        justifyContent="space-between"
-                        direction="row"
-                        alignItems="center"
-                      >
-                        <Stack direction="row" alignItems="center">
-                          <FormControlLabel
-                            value="2"
-                            control={<Radio />}
-                            label=""
-                          />
-                          <Stack>
-                            <Typography variant="h3" fontSize="1.25rem">
-                              Курьером
-                            </Typography>
-                            <Typography variant="body2">
-                              Доставка курьером
-                            </Typography>
-                          </Stack>
-                        </Stack>
-                        <Typography fontSize={21}>+ 300 Сум</Typography>
-                      </Stack>
-                    </RadioGroup>
-                  </FormControl> */}
                   <Controller
                     control={control}
                     name="streetAddress2"
@@ -288,24 +318,11 @@ const Checkout = () => {
                       />
                     )}
                   />
-                  {/* <Typography variant="h2" fontSize={27}>
-                    Покупатель
-                  </Typography>
-                  <Input label="Email" />
-                  <Stack direction="row">
-                    <Checkbox color="secondary" />
-                    <Stack>
-                      <Typography variant="h3" fontSize="1.25rem">
-                        Стать постоянным покупателем
-                      </Typography>
-                      <Typography variant="body2">
-                        Вы сможете видеть историю заказов, проще делать новые и
-                        получать скидки
-                      </Typography>
-                    </Stack>
-                  </Stack> */}
                   <FormControl>
-                    <RadioGroup defaultValue="1">
+                    <RadioGroup
+                      onChange={(_, value) => setPaymentGateway(value)}
+                      defaultValue="1"
+                    >
                       <Stack direction="row" gap="1rem">
                         <CheckoutMethods>
                           <FormControlLabel

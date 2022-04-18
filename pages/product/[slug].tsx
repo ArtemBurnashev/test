@@ -7,8 +7,6 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-// @ts-expect-error
-import { DraftailEditor } from 'draftail';
 import Spacer from 'components/common/spacer';
 import Heart from 'components/icons/heart';
 import colors from 'config/theme';

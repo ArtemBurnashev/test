@@ -35,6 +35,31 @@ import { CategoryNavbar } from 'components/category-navbar';
 import styled from 'styled-components';
 import { toggle } from 'redux-state/features/sidebar';
 
+const CatologButton = styled(Button)`
+  animation-name: butonOpacity;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  transition: all 0.3s ease-in-out;
+  height: 50px;
+  max-width: 178px;
+  border: 1px solid #feee00;
+
+  @keyframes butonOpacity {
+    0% {
+      background-color: #feee00;
+    }
+    50% {
+      background-color: #feed004e;
+    }
+    100% {
+      background-color: #feee00;
+    }
+  }
+  &:hover {
+    animation: none;
+  }
+`;
 
 const Header = () => {
   const theme = useTheme();
@@ -43,37 +68,9 @@ const Header = () => {
   const router = useRouter();
   const catalogModal = useModal();
   const [isOpen, setIsOpen] = useState(false);
-  const {isOpen: showLoginMenu} = useAppSelector(state => state.sidebar);
-  const dispatch = useAppDispatch()
+  const { isOpen: showLoginMenu } = useAppSelector((state) => state.sidebar);
+  const dispatch = useAppDispatch();
   const { isAuthenticated } = useAppSelector((state) => state.user);
-
-  
-  
-  const CatologButton = styled(Button)`
-    animation-name: butonOpacity;
-    animation-duration: 1s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    transition: all 0.3s ease-in-out;
-    height: 50px;
-    max-width: 178px;
-    border: 1px solid #FEEE00;
-
-    @keyframes butonOpacity {
-      0%{
-        background-color: #FEEE00;
-      }
-      50%{
-        background-color: #feed004e;
-      }
-      100%{
-        background-color: #FEEE00;
-      }
-    }
-    &:hover{
-      animation: none;
-    }
-  `
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -104,7 +101,13 @@ const Header = () => {
   }, [router.query]);
 
   return (
-    <Box sx={router.asPath === '/' ? { backgroundColor: '#fff' } : { backgroundColor: '#FCFCFC' }}>
+    <Box
+      sx={
+        router.asPath === '/'
+          ? { backgroundColor: '#fff' }
+          : { backgroundColor: '#FCFCFC' }
+      }
+    >
       <Box sx={{ backgroundColor: '#FCFCFC' }}>
         <Container maxWidth="xl">
           {!isMobile && (
@@ -148,14 +151,13 @@ const Header = () => {
           <Catalog />
         </Dialog>
         <Stack>
-
           <Stack
             direction="row"
             alignItems="center"
             gap={'53px'}
             padding="18px 0"
           >
-            <Stack direction='row'>
+            <Stack direction="row">
               {isSmallDevice || (
                 <Link href="/">
                   <Logo>
@@ -163,11 +165,7 @@ const Header = () => {
                   </Logo>
                 </Link>
               )}
-              <Stack
-                direction="row"
-                spacing={2}
-                alignItems="center"
-              >
+              <Stack direction="row" spacing={2} alignItems="center">
                 <CatologButton
                   className={''}
                   sx={{
