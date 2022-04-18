@@ -1,5 +1,5 @@
-mutation checkoutComplete($checkoutId: ID) {
-  checkoutComplete(checkoutId: $checkoutId) {
+mutation checkoutComplete($checkoutId: ID, $paymentGateway: String) {
+  checkoutComplete(checkoutId: $checkoutId, paymentGateway: $paymentGateway) {
     errors {
       field
       message
@@ -7,6 +7,10 @@ mutation checkoutComplete($checkoutId: ID) {
     order {
       id
       created
+      number
+    }
+    payment {
+      id
     }
   }
 }
