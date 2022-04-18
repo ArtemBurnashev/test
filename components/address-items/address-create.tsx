@@ -9,13 +9,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
 import { CountryCode, useAddressCreateMutation } from 'graphql/generated.graphql';
 import { useAddressUpdateMutation } from 'graphql/generated.graphql';
+import { AddressFormStyle } from './address-create-style';
 import { useAppSelector } from 'redux-state/hook';
 
 
-const FormStyle = styled.form`
-  padding: 40px;
-  width: 400px;
-`
 interface AddressProp {
   modalClose: () => void
   backdrop?: {
@@ -116,7 +113,7 @@ export const AddressCreate: React.FC<AddressProp> = ({ modalClose, backdrop, dat
     return false;
   }
   return (
-    <FormStyle onSubmit={data ? handleSubmit(onEdit) : handleSubmit(onSubmit)}>
+    <AddressFormStyle onSubmit={data ? handleSubmit(onEdit) : handleSubmit(onSubmit)}>
 
       <Typography mb={2} variant='h2'>{data ? t('editAddress') : t('createAddress')}</Typography>
       <Stack spacing={1.7}>
@@ -154,7 +151,7 @@ export const AddressCreate: React.FC<AddressProp> = ({ modalClose, backdrop, dat
         />
         <Button variant='contained'>{data ? t('update') : t('add')}</Button>
       </Stack>
-    </FormStyle>
+    </AddressFormStyle>
 
   )
 }

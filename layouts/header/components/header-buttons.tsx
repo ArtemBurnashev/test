@@ -6,21 +6,29 @@ import { Paths } from 'config/site-paths';
 import Link from 'next/link';
 import React from 'react';
 import { useAppSelector } from 'redux-state/hook';
+import styled from 'styled-components';
 
 interface HeadeButtonsProps {
   onProfileIconClick: () => void;
   isAuthenticated?: boolean;
 }
 
+interface BageProps {
+  count:number,
+}
+
+
 const HeaderButtons: React.FC<HeadeButtonsProps> = ({
   onProfileIconClick,
   isAuthenticated,
 }) => {
   const { productsCount } = useAppSelector((state) => state.cart);
-  const {productsCount: likedProductsCount} = useAppSelector(state=> state.like)
+  const { productsCount: likedProductsCount } = useAppSelector(state => state.like)
 
+  
+ 
   return (
-    <Stack  direction="row" spacing={4}>
+    <Stack sx={{ flexGrow: 1, width: '100%', justifyContent: 'end' }} direction="row" spacing={4}>
       <Stack
         onClick={onProfileIconClick}
         sx={{ cursor: 'pointer' }}
@@ -33,19 +41,21 @@ const HeaderButtons: React.FC<HeadeButtonsProps> = ({
       </Stack>
       <Link href={Paths.LIKES}>
         <Stack sx={{ cursor: 'pointer' }} alignItems="center">
-          <Badge
+          <Badge 
+            
             color="secondary"
             overlap="circular"
             badgeContent={likedProductsCount}
             // @ts-expect-error
             invisible={likedProductsCount && likedProductsCount < 1}
+
             max={99}
           >
             <Heart />
           </Badge>
           <Typography variant="subtitle2">Избранное</Typography>
         </Stack>
-      </Link>
+      </Link >
       <Link href={Paths.CART}>
         <Stack sx={{ cursor: 'pointer' }} alignItems="center">
           <Badge
@@ -61,7 +71,7 @@ const HeaderButtons: React.FC<HeadeButtonsProps> = ({
           <Typography variant="subtitle2">Корзина</Typography>
         </Stack>
       </Link>
-    </Stack>
+    </Stack >
   );
 };
 

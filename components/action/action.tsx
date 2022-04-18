@@ -1,30 +1,10 @@
 import { Container, Grid, Skeleton, Typography } from '@mui/material';
-import colors from 'config/theme';
 import React from 'react';
 import { useBannersQuery } from 'graphql/generated.graphql';
-import styled from 'styled-components';
+import { ActionWrapper, StyleImgBlock } from './action-style';
 import { LazyImage } from 'components/image';
 import Slider from 'react-slick';
 
-const ActionWrapper = styled.div`
-
-  margin: 32px  0;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  img {
-    width: 100%;
-    min-height: 100%;
-    object-fit: contain;
-  }
-  .slick-list{
-      margin-left: -20px;
-      margin-right: -20px;
-    }
-    .slick-track{
-      display: flex;
-      gap: 20px;
-    }
-`;
 
 const action = () => {
 
@@ -67,15 +47,8 @@ const action = () => {
       }
     ]
   };
-  const StyleImgBlock  = styled.div`
-    min-height: 240px;
-    img{
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  `
- 
+
+
 
   return (
     <ActionWrapper>
@@ -83,7 +56,7 @@ const action = () => {
         <Typography variant="h2" mb={1} fontWeight={600}>
           Акции
         </Typography>
-        <Slider  lazyLoad="progressive" {...settings}>
+        <Slider lazyLoad="progressive" {...settings}>
           {discounts?.map((e) => (
             <StyleImgBlock key={e.id}>
               {e.backgroundImage ?

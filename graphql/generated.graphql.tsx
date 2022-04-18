@@ -1928,6 +1928,8 @@ export type CheckoutComplete = {
   errors: Array<CheckoutError>;
   /** Placed order. */
   order?: Maybe<Order>;
+  /** Payment of the order */
+  payment?: Maybe<Payment>;
 };
 
 export type CheckoutCountableConnection = {
@@ -4963,7 +4965,7 @@ export type Money = {
   __typename?: 'Money';
   /** Amount of money. */
   amount: Scalars['Float'];
-  /** Amount of money in UZS */
+  /** Amount of money in USD */
   amountInSum?: Maybe<Scalars['Float']>;
   /** Currency code. */
   currency: Scalars['String'];
@@ -5357,6 +5359,8 @@ export type Mutation = {
   pageUpdate?: Maybe<PageUpdate>;
   /** Change the password of the logged in user. */
   passwordChange?: Maybe<PasswordChange>;
+  /** Create a new payme transaction. */
+  paymeTransactionCreate?: Maybe<PaymeTransactionCreate>;
   /** Authorize the payment. */
   paymentAuthorize?: Maybe<PaymentAuthorize>;
   /** Captures the authorized payment amount. */
@@ -5872,6 +5876,7 @@ export type MutationCheckoutBillingAddressUpdateArgs = {
 export type MutationCheckoutCompleteArgs = {
   checkoutId?: InputMaybe<Scalars['ID']>;
   paymentData?: InputMaybe<Scalars['JSONString']>;
+  paymentGateway?: InputMaybe<Scalars['String']>;
   redirectUrl?: InputMaybe<Scalars['String']>;
   storeSource?: InputMaybe<Scalars['Boolean']>;
   token?: InputMaybe<Scalars['UUID']>;
@@ -6570,6 +6575,11 @@ export type MutationPageUpdateArgs = {
 export type MutationPasswordChangeArgs = {
   newPassword: Scalars['String'];
   oldPassword: Scalars['String'];
+};
+
+
+export type MutationPaymeTransactionCreateArgs = {
+  input: PaymeInput;
 };
 
 
@@ -8453,6 +8463,23 @@ export type PasswordChange = {
   errors: Array<AccountError>;
   /** A user instance with a new password. */
   user?: Maybe<User>;
+};
+
+export type PaymeInput = {
+  /** Payment ID */
+  paymentId?: InputMaybe<Scalars['ID']>;
+  /** URL of a storefront view where user should be redirected after requiring additional actions. Payment with additional actions will not be finished if this field is not provided. */
+  returnUrl?: InputMaybe<Scalars['String']>;
+};
+
+/** Create a new payme transaction. */
+export type PaymeTransactionCreate = {
+  __typename?: 'PaymeTransactionCreate';
+  errors: Array<PaymentError>;
+  /** @deprecated This field will be removed in Saleor 4.0. Use `errors` field instead. */
+  paymentErrors: Array<PaymentError>;
+  /** Url to checkout. */
+  url?: Maybe<Scalars['String']>;
 };
 
 /** Represents a payment of a given type. */
@@ -13467,10 +13494,11 @@ export type AddressCreateMutation = { __typename?: 'Mutation', addressCreate?: {
 
 export type CheckoutCompleteMutationVariables = Exact<{
   checkoutId?: InputMaybe<Scalars['ID']>;
+  paymentGateway?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type CheckoutCompleteMutation = { __typename?: 'Mutation', checkoutComplete?: { __typename?: 'CheckoutComplete', errors: Array<{ __typename?: 'CheckoutError', field?: string | null, message?: string | null }>, order?: { __typename?: 'Order', id: string, created: any } | null } | null };
+export type CheckoutCompleteMutation = { __typename?: 'Mutation', checkoutComplete?: { __typename?: 'CheckoutComplete', errors: Array<{ __typename?: 'CheckoutError', field?: string | null, message?: string | null }>, order?: { __typename?: 'Order', id: string, created: any, number?: string | null } | null, payment?: { __typename?: 'Payment', id: string } | null } | null };
 
 export type CheckoutErrorFragment = { __typename: 'CheckoutError', field?: string | null, code: CheckoutErrorCode, message?: string | null };
 
@@ -13503,6 +13531,13 @@ export type ChangePasswordMutationVariables = Exact<{
 
 
 export type ChangePasswordMutation = { __typename?: 'Mutation', passwordChange?: { __typename?: 'PasswordChange', errors: Array<{ __typename?: 'AccountError', field?: string | null, message?: string | null }>, user?: { __typename?: 'User', id: string } | null } | null };
+
+export type PaymeTransactionMutationVariables = Exact<{
+  input: PaymeInput;
+}>;
+
+
+export type PaymeTransactionMutation = { __typename?: 'Mutation', paymeTransactionCreate?: { __typename?: 'PaymeTransactionCreate', url?: string | null, errors: Array<{ __typename?: 'PaymentError', field?: string | null, message?: string | null }> } | null };
 
 export type LoginMutationVariables = Exact<{
   phone: Scalars['String'];
@@ -13867,8 +13902,8 @@ export type AddressCreateMutationHookResult = ReturnType<typeof useAddressCreate
 export type AddressCreateMutationResult = Apollo.MutationResult<AddressCreateMutation>;
 export type AddressCreateMutationOptions = Apollo.BaseMutationOptions<AddressCreateMutation, AddressCreateMutationVariables>;
 export const CheckoutCompleteDocument = gql`
-    mutation checkoutComplete($checkoutId: ID) {
-  checkoutComplete(checkoutId: $checkoutId) {
+    mutation checkoutComplete($checkoutId: ID, $paymentGateway: String) {
+  checkoutComplete(checkoutId: $checkoutId, paymentGateway: $paymentGateway) {
     errors {
       field
       message
@@ -13876,6 +13911,10 @@ export const CheckoutCompleteDocument = gql`
     order {
       id
       created
+      number
+    }
+    payment {
+      id
     }
   }
 }
@@ -13896,6 +13935,7 @@ export type CheckoutCompleteMutationFn = Apollo.MutationFunction<CheckoutComplet
  * const [checkoutCompleteMutation, { data, loading, error }] = useCheckoutCompleteMutation({
  *   variables: {
  *      checkoutId: // value for 'checkoutId'
+ *      paymentGateway: // value for 'paymentGateway'
  *   },
  * });
  */
@@ -14083,6 +14123,43 @@ export function useChangePasswordMutation(baseOptions?: Apollo.MutationHookOptio
 export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
 export type ChangePasswordMutationResult = Apollo.MutationResult<ChangePasswordMutation>;
 export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
+export const PaymeTransactionDocument = gql`
+    mutation PaymeTransaction($input: PaymeInput!) {
+  paymeTransactionCreate(input: $input) {
+    url
+    errors {
+      field
+      message
+    }
+  }
+}
+    `;
+export type PaymeTransactionMutationFn = Apollo.MutationFunction<PaymeTransactionMutation, PaymeTransactionMutationVariables>;
+
+/**
+ * __usePaymeTransactionMutation__
+ *
+ * To run a mutation, you first call `usePaymeTransactionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePaymeTransactionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [paymeTransactionMutation, { data, loading, error }] = usePaymeTransactionMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function usePaymeTransactionMutation(baseOptions?: Apollo.MutationHookOptions<PaymeTransactionMutation, PaymeTransactionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PaymeTransactionMutation, PaymeTransactionMutationVariables>(PaymeTransactionDocument, options);
+      }
+export type PaymeTransactionMutationHookResult = ReturnType<typeof usePaymeTransactionMutation>;
+export type PaymeTransactionMutationResult = Apollo.MutationResult<PaymeTransactionMutation>;
+export type PaymeTransactionMutationOptions = Apollo.BaseMutationOptions<PaymeTransactionMutation, PaymeTransactionMutationVariables>;
 export const LoginDocument = gql`
     mutation login($phone: String!, $password: String!) {
   tokenCreate(password: $password, phone: $phone) {

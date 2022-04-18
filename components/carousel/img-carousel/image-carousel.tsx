@@ -3,7 +3,44 @@ import styled from 'styled-components';
 import Slider from 'react-slick';
 import colors from 'config/theme';
 
-
+ const Card = styled.div`
+   .slick-slider {
+     height: 435px;
+     @media (max-width: 383px) {
+       height: 435px;
+       height: 358px;
+     }
+   }
+   position: relative;
+   img {
+     width: 100%;
+     height: 100%;
+     object-fit: contain;
+   }
+   .slick-dots {
+     bottom: -110px;
+     li {
+       width: 80px;
+       height: 80px;
+       border: 3px solid ${colors.grey.lighter};
+       border-radius: 8px;
+       padding: 5px;
+       margin-bottom: 10px;
+     }
+     @media (max-width: 456px) {
+       li {
+         width: 52px;
+         height: 52px;
+       }
+     }
+     .slick-active {
+       border: 3px solid ${colors.primary.default};
+     }
+   }
+   .slick-slide {
+     text-align: center;
+   }
+ `;
 
 const ImageCarousel: FC<{
   images?: string[];
@@ -29,45 +66,16 @@ const ImageCarousel: FC<{
     dotsClass: "slick-dots slick-thumb",
     afterChange: (currenSlide: any) => onSlide && onSlide(currenSlide),
     customPaging: function (i: any) {
-
+      
       return (
-        <a >
+        <a>
           <img src={imgs ? imgs[i].url : ' '} />
         </a>
       );
     },
   }
-  const Card = styled.div`
-    .slick-slider{
-      height: 435px;
-      @media (max-width: 383px){
-        height: 435px;
-        height: 358px;
-      }
-    }
-    position: relative;
-    img{
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-    .slick-dots{
-      bottom: -100px;
-      li{
-        width: 80px;
-        height: 80px;
-        border: 3px solid ${colors.grey.lighter};
-        border-radius: 8px;
-        padding: 5px;
-      }
-      .slick-active{
-        border: 3px solid ${colors.primary.default};
-      }
-    }
-    .slick-slide{
-      text-align: center;
-    }
-  `
+ 
+  
   return (
     <Card>
       <Slider {...settings}>

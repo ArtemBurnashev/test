@@ -7,8 +7,6 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-// @ts-expect-error
-import { DraftailEditor } from 'draftail';
 import Spacer from 'components/common/spacer';
 import Heart from 'components/icons/heart';
 import colors from 'config/theme';
@@ -107,7 +105,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
   const idenfy = (data.product?.media?.length ? data.product?.media?.length : false) > 1 ? true : false
   const StyleTypograph = styled(Typography)`
     @media (max-width: 899px){
-      ${idenfy ? ' margin-top: 130px;' : ''};
+      ${idenfy ? ' margin-top: 120px;' : ''};
      
     }
   `
@@ -120,7 +118,12 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
       ${idenfy ? ' margin-top: 20px;' : ''};
     }
   `
- 
+  const ShowSize = styled(Typography)`
+    @media (max-width: 693px){
+      margin-top: 131px;
+    }
+  `
+  const sliderItems = data.product?.media?.slice(0,4);
   
   return (
     <Main>
@@ -181,7 +184,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
         <Grid mt='24px' container>
           <Grid sm={12} xs={12} item md={7} lg={4}>
             <ImageCarousel imgs={data?.product?.media}>
-              {data?.product?.media?.map((media) => (
+              {sliderItems?.map((media) => (
                 <ProductImage key={media.alt}>
                   <LazyImage
                     src={media.url || ''}
@@ -200,9 +203,9 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
             {data?.product?.variants && data?.product?.variants?.length > 1 && (
               <>
                 {
-                  <Typography variant="body1" fontWeight={500}>
+                  <ShowSize variant="body1" fontWeight={500}>
                     {data.product.defaultVariant?.attributes[0].attribute.name}
-                  </Typography>
+                  </ShowSize>
                 }
 
                 <Select
