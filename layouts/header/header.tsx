@@ -28,6 +28,7 @@ import { useRouter } from 'next/router';
 import { Paths } from 'config/site-paths';
 import { useModal } from 'hooks/use-modal';
 import Catalog from './components/catalog';
+import { CatologButton } from './header.styles';
 import Close from 'components/icons/close';
 import Hamburger from 'components/icons/hamburger';
 import Auth from './components/auth';
@@ -43,37 +44,9 @@ const Header = () => {
   const router = useRouter();
   const catalogModal = useModal();
   const [isOpen, setIsOpen] = useState(false);
-  const {isOpen: showLoginMenu} = useAppSelector(state => state.sidebar);
+  const { isOpen: showLoginMenu } = useAppSelector(state => state.sidebar);
   const dispatch = useAppDispatch()
   const { isAuthenticated } = useAppSelector((state) => state.user);
-
-  
-  
-  const CatologButton = styled(Button)`
-    animation-name: butonOpacity;
-    animation-duration: 1s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    transition: all 0.3s ease-in-out;
-    height: 50px;
-    max-width: 178px;
-    border: 1px solid #FEEE00;
-
-    @keyframes butonOpacity {
-      0%{
-        background-color: #FEEE00;
-      }
-      50%{
-        background-color: #feed004e;
-      }
-      100%{
-        background-color: #FEEE00;
-      }
-    }
-    &:hover{
-      animation: none;
-    }
-  `
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
