@@ -28,6 +28,7 @@ import { useRouter } from 'next/router';
 import { Paths } from 'config/site-paths';
 import { useModal } from 'hooks/use-modal';
 import Catalog from './components/catalog';
+import { CatologButton } from './header.styles';
 import Close from 'components/icons/close';
 import Hamburger from 'components/icons/hamburger';
 import Auth from './components/auth';
@@ -68,8 +69,8 @@ const Header = () => {
   const router = useRouter();
   const catalogModal = useModal();
   const [isOpen, setIsOpen] = useState(false);
-  const { isOpen: showLoginMenu } = useAppSelector((state) => state.sidebar);
-  const dispatch = useAppDispatch();
+  const { isOpen: showLoginMenu } = useAppSelector(state => state.sidebar);
+  const dispatch = useAppDispatch()
   const { isAuthenticated } = useAppSelector((state) => state.user);
 
   const toggleDrawer =

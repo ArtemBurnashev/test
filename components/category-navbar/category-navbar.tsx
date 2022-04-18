@@ -12,26 +12,7 @@ import styled from 'styled-components';
 import { Button } from '@mui/material';
 import truncate from 'utils/truncate';
 
-export const CategoryNavbar: React.FC = () => {
-  const router = useRouter()
-  const { data, fetchMore, loading } = useAllCategoriesQuery({
-    variables: { first: 8, cursor: '' },
-  });
-  const elements = data?.categories?.edges.map((item) => item.node)
-    .map((links) => links);
-   
-  const linksItem = elements?.filter((item)=> {
-    if(item.children?.edges.length){
-      return item;
-    }
-  })
-  
-  const addElemets = (): void => {
-    if (data?.categories?.pageInfo.hasNextPage) {
-      fetchMore({ variables: { cursor: data?.categories?.pageInfo.endCursor } })
-    }
-  }
-  const LinkSet = styled(Typography)`
+const LinkSet = styled(Typography)`
     transition: all .4s ease;
     &:hover{
       a{
@@ -39,11 +20,32 @@ export const CategoryNavbar: React.FC = () => {
       }
     }
   `
-  
-  
-  const LinkText = styled(Link)`
+
+
+const LinkText = styled(Link)`
     cursor: pointer;
   `
+
+export const CategoryNavbar: React.FC = () => {
+  const router = useRouter()
+  const { data, fetchMore, loading } = useAllCategoriesQuery({
+    variables: { first: 8, cursor: '' },
+  });
+  const elements = data?.categories?.edges.map((item) => item.node)
+    .map((links) => links);
+
+  const linksItem = elements?.filter((item) => {
+    if (item.children?.edges.length) {
+      return item;
+    }
+  })
+
+  const addElemets = (): void => {
+    if (data?.categories?.pageInfo.hasNextPage) {
+      fetchMore({ variables: { cursor: data?.categories?.pageInfo.endCursor } })
+    }
+  }
+
 
   const settings = {
     dots: false,
@@ -83,9 +85,9 @@ export const CategoryNavbar: React.FC = () => {
       }
     ]
   };
-  const names = data?.categories?.edges.map((e)=> e.node.name).join(',')
+  const names = data?.categories?.edges.map((e) => e.node.name).join(',')
 
-  
+
   if (router.pathname !== Paths.HOME) {
     return (
       <CategoryStyle>
@@ -104,9 +106,9 @@ export const CategoryNavbar: React.FC = () => {
                   sx={{ textAlign: 'center' }}
                   variant='subtitle2'
                 >
-                  <LinkText 
+                  <LinkText
                     key={links.id} href={`${Paths.CATEGORY_PRODUCTS}${links.slug}`}>
-                    {links.name.slice(0,20)+'...'}
+                    {links.name.slice(0, 20) + '...'}
                   </LinkText>
                 </LinkSet>
               )}

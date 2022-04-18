@@ -13,6 +13,11 @@ interface HeadeButtonsProps {
   isAuthenticated?: boolean;
 }
 
+interface BageProps {
+  count:number,
+}
+
+
 const HeaderButtons: React.FC<HeadeButtonsProps> = ({
   onProfileIconClick,
   isAuthenticated,
@@ -20,24 +25,8 @@ const HeaderButtons: React.FC<HeadeButtonsProps> = ({
   const { productsCount } = useAppSelector((state) => state.cart);
   const { productsCount: likedProductsCount } = useAppSelector(state => state.like)
 
-  const LikeBage = styled(Badge)`
-   .eQTfNB{
-     ${likedProductsCount ? 
-      'background-color: #E44542;' 
-      : 
-      'background-color: transparent; color: transparent;'
-     };
-   }
- `
-  const CountBage = styled(Badge)`
-    .eQTfNB{
-      ${productsCount ? 
-        'background-color: #E44542;' 
-        : 
-        'background-color: transparent; color: transparent;'
-      };
-    }
- `
+  
+ 
   return (
     <Stack sx={{ flexGrow: 1, width: '100%', justifyContent: 'end' }} direction="row" spacing={4}>
       <Stack
@@ -52,27 +41,33 @@ const HeaderButtons: React.FC<HeadeButtonsProps> = ({
       </Stack>
       <Link href={Paths.LIKES}>
         <Stack sx={{ cursor: 'pointer' }} alignItems="center">
-          <LikeBage
+          <Badge 
+            
             color="secondary"
             overlap="circular"
-            badgeContent={likedProductsCount ? likedProductsCount : false}
+            badgeContent={likedProductsCount}
+            // @ts-expect-error
+            invisible={likedProductsCount && likedProductsCount < 1}
+
             max={99}
           >
             <Heart />
-          </LikeBage>
+          </Badge>
           <Typography variant="subtitle2">Избранное</Typography>
         </Stack>
       </Link >
       <Link href={Paths.CART}>
         <Stack sx={{ cursor: 'pointer' }} alignItems="center">
-          <CountBage
+          <Badge
             color="secondary"
             overlap="circular"
             badgeContent={productsCount}
+            // @ts-expect-error
+            invisible={productsCount && productsCount < 1}
             max={99}
           >
             <Cart />
-          </CountBage>
+          </Badge>
           <Typography variant="subtitle2">Корзина</Typography>
         </Stack>
       </Link>

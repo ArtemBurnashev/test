@@ -5,13 +5,9 @@ import { CategoryCard } from 'components/cards';
 import { useTheme } from '@mui/material';
 import { useAllCategoriesQuery } from 'graphql/generated.graphql';
 import { Paths } from 'config/site-paths';
+import { CategoryCaruselCard } from '../carusel-style';
 import { useRouter } from 'next/router';
 
-const Card = styled.div`
-  max-width: 100%;
-  overflow: hidden;
-  margin: 2rem 0;
-`;
 
 const CategoryCarousel: FC = () => {
   const theme = useTheme();
@@ -20,7 +16,7 @@ const CategoryCarousel: FC = () => {
   });
   const router = useRouter();
   return (
-    <Card>
+    <CategoryCaruselCard>
       <Slider
         infinite
         dots={false}
@@ -89,7 +85,7 @@ const CategoryCarousel: FC = () => {
           </div>
         ))}
       </Slider>
-    </Card>
+    </CategoryCaruselCard>
   );
 };
 
