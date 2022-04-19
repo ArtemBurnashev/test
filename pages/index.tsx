@@ -11,11 +11,7 @@ import { Main } from 'layouts/main';
 import styled from 'styled-components';
 import type { NextPage } from 'next';
 
-const Home: NextPage = () => {
-  const { data: categoryData } = useAllCategoriesQuery({ variables: { first: 10, cursor: "" } });
-  const nodes = categoryData?.categories?.edges.map((edge) => edge.node);
-  const { isOpen: productIsopen, open: productOpen } = useModal()
-  const GridItem = styled.div`
+const GridItem = styled.div`
     display: grid;
     grid-template-columns: repeat(3,1fr);
     gap: 30px;
@@ -30,6 +26,12 @@ const Home: NextPage = () => {
       grid-template-columns: 1fr;
     }
   `
+
+const Home: NextPage = () => {
+  const { data: categoryData } = useAllCategoriesQuery({ variables: { first: 10, cursor: "" } });
+  const nodes = categoryData?.categories?.edges.map((edge) => edge.node);
+  const { isOpen: productIsopen, open: productOpen } = useModal()
+  
 
   return (
     <Main>

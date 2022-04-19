@@ -38,6 +38,26 @@ type Props = {
 };
 
 const EditorJs = dynamic(() => import('components/editor'), { ssr: false });
+const StyleTypograph = styled(Typography)<{idenfy?:boolean}>`
+  @media (max-width: 899px){
+    ${({idenfy}) => idenfy ? ' margin-top: 120px;' : ''};
+    
+  }
+`
+const SyledGrid = styled(Grid)<{idenfy?:boolean}>`
+  @media (max-width: 1399px){
+    ${({idenfy}) => idenfy ? ' margin-top: 110px;' : ''};
+  }
+  /* 899 */
+  @media (max-width: 899px){
+    ${({idenfy}) => idenfy ? ' margin-top: 20px;' : ''};
+  }
+`
+const ShowSize = styled(Typography)`
+  @media (max-width: 693px){
+    margin-top: 131px;
+  }
+`
 
 const SingleProduct: NextPage<Props> = ({ data }) => {
   const [variant, setVariant] = useState<any>();
@@ -103,26 +123,8 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
   const executeScroll = () =>
     characteristicsRef.current?.scrollIntoView({ behavior: 'smooth' });
   const idenfy = (data.product?.media?.length ? data.product?.media?.length : false) > 1 ? true : false
-  const StyleTypograph = styled(Typography)`
-    @media (max-width: 899px){
-      ${idenfy ? ' margin-top: 120px;' : ''};
-     
-    }
-  `
-  const SyledGrid = styled(Grid)`
-    @media (max-width: 1399px){
-      ${idenfy ? ' margin-top: 110px;' : ''};
-    }
-    /* 899 */
-    @media (max-width: 899px){
-      ${idenfy ? ' margin-top: 20px;' : ''};
-    }
-  `
-  const ShowSize = styled(Typography)`
-    @media (max-width: 693px){
-      margin-top: 131px;
-    }
-  `
+  
+  
   const sliderItems = data.product?.media?.slice(0,4);
   
   return (
@@ -238,7 +240,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
             )}
 
             <Stack spacing={2}>
-              <StyleTypograph fontWeight={500} variant="h3">
+              <StyleTypograph idenfy={idenfy} fontWeight={500} variant="h3">
                 Oписание
               </StyleTypograph>
               {data?.product?.description && (
@@ -273,7 +275,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
               )}
             </Stack>
           </Grid>
-          <SyledGrid  xs={12} sm={12} md={6} item lg={3}>
+          <SyledGrid idenfy={idenfy} xs={12} sm={12} md={6} item lg={3}>
             <AddtoCardSingle
               price={
                 variant?.pricing?.price?.gross ||
