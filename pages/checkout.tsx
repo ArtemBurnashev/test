@@ -109,9 +109,7 @@ const Checkout = () => {
         },
         onCompleted: (data) => {
           if (data.checkoutComplete?.errors.length === 0) {
-            if (paymentGateway === '1') {
-              dispatch(clearCart());
-            }
+            dispatch(clearCart());
             completeModal.open();
           }
         },
@@ -169,7 +167,6 @@ const Checkout = () => {
           res.paymeTransactionCreate?.errors.length === 0 &&
           res.paymeTransactionCreate.url
         ) {
-          dispatch(clearCart());
           window.open(res.paymeTransactionCreate?.url);
         }
       },
