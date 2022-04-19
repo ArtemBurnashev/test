@@ -3,10 +3,15 @@ import { Button } from 'components/button';
 import { CartController } from 'components/cart-item';
 import colors from 'config/theme';
 import React from 'react';
+import styled from 'styled-components';
 import { addToCart } from 'redux-state/features/cart-slice';
 import { useAppDispatch, useAppSelector } from 'redux-state/hook';
 import formatter from 'utils/currencyFormatter';
 import { AddToCardWrapper } from './add-to-card.styles';
+
+const StyledButton = styled(Button)`
+  background-color: #FEEE00;
+`
 
 interface AddtoCardSingleProps {
   price?: {
@@ -93,9 +98,9 @@ const AddtoCardSingle: React.FC<AddtoCardSingleProps> = ({
       {isInCard ? (
         <CartController id={id || ''} count={isInCard.count} />
       ) : (
-        <Button sx={{backgroundColor:'#FEEE00'}} onClick={handleAddToCart} fullWidth variant="contained">
+        <StyledButton onClick={handleAddToCart} fullWidth variant="contained">
           В корзину
-        </Button>
+        </StyledButton>
       )}
     </AddToCardWrapper>
   );

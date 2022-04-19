@@ -1,4 +1,4 @@
-import { Container, Grid, Stack, Typography } from '@mui/material';
+import { Container, Grid, Stack, Typography, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
 import {
@@ -17,10 +17,15 @@ import {
   useFullLinks,
 } from './footer-data';
 import Link from 'next/link';
+import { FooterIcon } from 'components/icons/footer-icon';
 import UzCard from 'assets/png/uzcard.png';
+import { useMediaQuery } from '@mui/material';
 import Humo from 'assets/png/humo.png';
 
 const Footer = () => {
+  const querys = useMediaQuery('(max-width:768px)');
+  console.log(querys);
+
   return (
     <>
       <FooterTopWrapper>
@@ -61,39 +66,112 @@ const Footer = () => {
                 </Stack>
               </Stack>
             </Grid>
-            <Grid item xs={12} sm={6} lg={3}>
-              <Stack spacing={2}>
-                {useFullLinks.map((info) => (
-                  <Link passHref key={info.label} href={info.link}>
-                    <Typography component="a" variant="body1" key={info.label}>
-                      {info.label}
-                    </Typography>
-                  </Link>
-                ))}
-              </Stack>
-            </Grid>
-            <Grid item xs={12} sm={6} lg={3}>
-              <Stack spacing={2}>
-                {aboutSite.map((info) => (
-                  <Link passHref key={info.label} href={info.link}>
-                    <Typography variant="body1" component="a" key={info.label}>
-                      {info.label}
-                    </Typography>
-                  </Link>
-                ))}
-              </Stack>
-            </Grid>
-            <Grid item xs={12} sm={6} lg={3}>
-              <Stack spacing={2}>
-                {siteInfo.map((info) => (
-                  <Link passHref key={info.label} href={info.link}>
-                    <Typography variant="body1" component="a" key={info.label}>
-                      {info.label}
-                    </Typography>
-                  </Link>
-                ))}
-              </Stack>
-            </Grid>
+            {!querys ?
+              <>
+                <Grid item xs={12} sm={6} lg={3}>
+                  <Stack spacing={2}>
+                    {useFullLinks.map((info) => (
+                      <Link passHref key={info.label} href={info.link}>
+                        <Typography component="a" variant="body1" key={info.label}>
+                          {info.label}
+                        </Typography>
+                      </Link>
+                    ))}
+                  </Stack>
+                </Grid>
+                <Grid item xs={12} sm={6} lg={3}>
+                  <Stack spacing={2}>
+                    {aboutSite.map((info) => (
+                      <Link passHref key={info.label} href={info.link}>
+                        <Typography variant="body1" component="a" key={info.label}>
+                          {info.label}
+                        </Typography>
+                      </Link>
+                    ))}
+                  </Stack>
+                </Grid>
+                <Grid item xs={12} sm={6} lg={3}>
+                  <Stack spacing={2}>
+                    {siteInfo.map((info) => (
+                      <Link passHref key={info.label} href={info.link}>
+                        <Typography variant="body1" component="a" key={info.label}>
+                          {info.label}
+                        </Typography>
+                      </Link>
+                    ))}
+                  </Stack>
+                </Grid>
+              </> :
+              <>
+                <Grid item mt={'30px'} xs={12}>
+                  <Accordion sx={{backgroundColor:'transparent',boxShadow:'none'}}>
+                    <AccordionSummary
+                      expandIcon={<FooterIcon />}
+                     aria-controls="panel1a-footer"
+                     id="panel1a-footer"
+                    >
+                      <Typography>О магазине</Typography>
+                    </AccordionSummary>
+
+                    {useFullLinks.map((info) => (
+                      <AccordionDetails key={info.label}>
+                        <Link passHref href={info.link}>
+                          <Typography component="a" variant="body1" key={info.label}>
+                            {info.label}
+                          </Typography>
+                        </Link>
+                      </AccordionDetails>
+                    ))}
+
+                  </Accordion>
+                </Grid>
+                <Grid item xs={12}>
+                  <Accordion sx={{backgroundColor:'transparent',boxShadow:'none'}}>
+                    <AccordionSummary
+                      expandIcon={<FooterIcon />}
+                     aria-controls="panel1a-footer"
+                     id="panel1a-footer"
+                    >
+                      <Typography>Клиентам</Typography>
+                    </AccordionSummary>
+
+                    {aboutSite.map((info) => (
+                      <AccordionDetails key={info.label}>
+                        <Link passHref href={info.link}>
+                          <Typography component="a" variant="body1" key={info.label}>
+                            {info.label}
+                          </Typography>
+                        </Link>
+                      </AccordionDetails>
+                    ))}
+
+                  </Accordion>
+                </Grid>
+                <Grid item xs={12}>
+                  <Accordion sx={{backgroundColor:'transparent',boxShadow:'none'}}>
+                    <AccordionSummary
+                      expandIcon={<FooterIcon />}
+                     aria-controls="panel1a-footer"
+                     id="panel1a-footer"
+                    >
+                      <Typography>Информация</Typography>
+                    </AccordionSummary>
+
+                    {siteInfo.map((info) => (
+                      <AccordionDetails key={info.label}>
+                        <Link passHref href={info.link}>
+                          <Typography component="a" variant="body1" key={info.label}>
+                            {info.label}
+                          </Typography>
+                        </Link>
+                      </AccordionDetails>
+                    ))}
+
+                  </Accordion>
+                </Grid>
+              </>
+            }
+
           </Grid>
         </Container>
       </FooterTopWrapper>

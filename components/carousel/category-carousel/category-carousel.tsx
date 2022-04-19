@@ -14,67 +14,70 @@ const CategoryCarousel: FC = () => {
   const { data } = useAllCategoriesQuery({
     variables: { first: 20, cursor: '' },
   });
+  const settings = {
+    infinite: false,
+    dots: false,
+    initialSlide: 0,
+    slidesToShow: 5.5,
+    arrows: false,
+    slidesToScroll: 3,
+    autoplay: false,
+    responsive:[
+      {
+        breakpoint: 1517,
+        settings: {
+          slidesToShow: 5.5,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: theme.breakpoints.values.md,
+        settings: {
+          slidesToShow: 2.5,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: theme.breakpoints.values.xs,
+        settings: {
+          slidesToShow: 1.1,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: theme.breakpoints.values.sm,
+        settings: {
+          slidesToShow: 2.5,
+          slidesToScroll: 2,
+          infinite: false
+        },
+      },
+      {
+        breakpoint: theme.breakpoints.values.lg,
+        settings: {
+          slidesToShow: 4.5,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: theme.breakpoints.values.xl,
+        settings: {
+          slidesToShow: 5.5,
+          slidesToScroll: 3,
+        },
+      },
+    ]
+  }
   const router = useRouter();
   return (
     <CategoryCaruselCard>
       <Slider
-        infinite={false}
-        dots={false}
-        initialSlide={0}
-        slidesToShow={5.5}
-        arrows={false}
-        slidesToScroll={3}
-        autoplay={false}
-        lazyLoad="progressive"
-        responsive={[
-          {
-            breakpoint: 1517,
-            settings: {
-              slidesToShow: 5.5,
-              slidesToScroll: 1,
-            },
-          },
-          {
-            breakpoint: theme.breakpoints.values.md,
-            settings: {
-              slidesToShow: 2.5,
-              slidesToScroll: 1,
-            },
-          },
-          {
-            breakpoint: theme.breakpoints.values.xs,
-            settings: {
-              slidesToShow: 1.1,
-              slidesToScroll: 1,
-            },
-          },
-          {
-            breakpoint: theme.breakpoints.values.sm,
-            settings: {
-              slidesToShow: 2.5,
-              slidesToScroll: 2,
-              infinite:false
-            },
-          },
-          {
-            breakpoint: theme.breakpoints.values.lg,
-            settings: {
-              slidesToShow: 4.5,
-              slidesToScroll: 2,
-            },
-          },
-          {
-            breakpoint: theme.breakpoints.values.xl,
-            settings: {
-              slidesToShow: 5.5,
-              slidesToScroll: 3,
-            },
-          },
-        ]}
+        {...settings}
+        lazyLoad="progressive" 
       >
         {data?.categories?.edges.map((item) => (
           <div
-            
+
             key={item.node.id}
           >
             <CategoryCard

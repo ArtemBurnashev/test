@@ -1,5 +1,6 @@
 import { Box, Drawer } from '@mui/material';
 import React from 'react';
+import styled from 'styled-components';
 
 interface SidebarProps {
   toggleDrawer: (
@@ -8,6 +9,11 @@ interface SidebarProps {
   isOpen: boolean;
   width?: number
 }
+const StyleBox = styled(Box)`
+  @media (max-width: 768px){
+    width: 101vw;
+  }
+`
 
 const Sidebar: React.FC<SidebarProps> = ({
   toggleDrawer,
@@ -15,12 +21,10 @@ const Sidebar: React.FC<SidebarProps> = ({
   children,
   width
 }) => (
-  <Drawer anchor="right" open={isOpen} onClose={toggleDrawer(false)}>
-    <Box
-      sx={{ width: width || 250}}
-    >
+  <Drawer  anchor="right" open={isOpen} onClose={toggleDrawer(false)}>
+    <StyleBox >
       {children}
-    </Box>
+    </StyleBox>
   </Drawer>
 );
 

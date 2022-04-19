@@ -18,7 +18,7 @@ import colors from 'config/theme';
      object-fit: contain;
    }
    .slick-dots {
-     bottom: -110px;
+     bottom: -150px;
      li {
        width: 80px;
        height: 80px;
