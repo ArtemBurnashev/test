@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { CategoryCardImageWrapper, CategoryCardWrapper } from './card.styles';
 import { Box } from '@mui/material';
 import truncate from 'utils/truncate';
+import { LazyImage } from 'components/image';
 
 interface CategoryCardProps {
   label?: string;
@@ -27,10 +28,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
       <CategoryCardWrapper>
         <CategoryCardImageWrapper>
           {image && (
-            <Image
-              layout="fixed"
-              width={96}
-              height={96}
+            <LazyImage
               src={image?.url || ''}
               alt={image?.alt || ''}
             />
@@ -38,6 +36,8 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
         </CategoryCardImageWrapper>
         <Typography
           sx={{
+            flexGrow:1,
+            textAlign:"center",
             ':hover': {
               color: colors.primary.hover,
             },

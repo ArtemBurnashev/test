@@ -53,9 +53,9 @@ const SyledGrid = styled(Grid)<{idenfy?:boolean}>`
     ${({idenfy}) => idenfy ? ' margin-top: 20px;' : ''};
   }
 `
-const ShowSize = styled(Typography)`
+const ShowSize = styled(Typography)<{idenfy?:boolean}>`
   @media (max-width: 693px){
-    margin-top: 131px;
+    ${({idenfy}) => idenfy ? 'margin-top: 131px;' : ''};
   }
 `
 
@@ -205,7 +205,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
             {data?.product?.variants && data?.product?.variants?.length > 1 && (
               <>
                 {
-                  <ShowSize variant="body1" fontWeight={500}>
+                  <ShowSize idenfy={idenfy} variant="body1" fontWeight={500}>
                     {data.product.defaultVariant?.attributes[0].attribute.name}
                   </ShowSize>
                 }
