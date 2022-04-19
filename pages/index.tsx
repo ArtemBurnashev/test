@@ -36,7 +36,7 @@ const Home: NextPage = () => {
   return (
     <Main>
       <Box maxWidth="2000px" margin="0 auto">
-        <BannerCarousel height={301} />
+        <BannerCarousel  />
       </Box>
       <Container maxWidth="xl">
         <CategoyrCarousel />

@@ -19,21 +19,35 @@ import Link from 'next/link';
 import React from 'react';
 import { useAppSelector } from 'redux-state/hook';
 import { headerTopLinks } from '../header.data';
-import LogoImage from 'assets/logosvg.svg';
+import LogoImage from 'assets/logo.svg';
 import styled from 'styled-components';
 
 const LogoLink = styled.a`
   display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
   span {
     display: block;
-    max-width: 50px;
-    max-height: 50px;
+    max-width: 140px;
+    max-height: 51px;
   }
 `;
 interface HeadeButtonsProps {
   onProfileIconClick: () => void;
   isAuthenticated?: boolean;
 }
+const RowStack = styled(Stack)`
+  display: flex;
+  align-items: center;
+  height: 70px;
+  position: relative;
+  justify-content: space-between;
+  .rowsatck__item{
+    width: 55px;
+  }
+`
 
 const MobileHeaderButtons: React.FC<HeadeButtonsProps> = ({
   onProfileIconClick,
@@ -46,8 +60,26 @@ const MobileHeaderButtons: React.FC<HeadeButtonsProps> = ({
     (state) => state.like
   );
 
+  const [likeBadge, setLikeBadge] = React.useState({});
+  const [countBadge, setCountBadge] = React.useState({});
+  React.useEffect(() => {
+    likedProductsCount ?
+      setLikeBadge({ ['.MuiBadge-badge']: { backgroundColor: '#E44542' } }) :
+      setLikeBadge({ ['.MuiBadge-badge']: { backgroundColor: 'transparent', color: 'transparent' } });
+    productsCount ?
+      setCountBadge({ ['.MuiBadge-badge']: { backgroundColor: '#E44542' } }) :
+      setCountBadge({ ['.MuiBadge-badge']: { backgroundColor: 'transparent', color: 'transparent' } });
+  }, [likedProductsCount, productsCount])
+
   return (
-    <List>
+    <RowStack direction='row'>
+
+      <ListItem className='rowsatck__item' onClick={onProfileIconClick} button>
+        <ListItemIcon>
+          <Profile />
+        </ListItemIcon>
+        {/* <ListItemText>{isAuthenticated ? 'Профиль' : 'Войти'} </ListItemText> */}
+      </ListItem>
       <Stack direction="row" justifyContent="center">
         <Link href="/">
           <LogoLink>
@@ -55,48 +87,43 @@ const MobileHeaderButtons: React.FC<HeadeButtonsProps> = ({
           </LogoLink>
         </Link>
       </Stack>
-      <ListItem onClick={onProfileIconClick} button>
-        <ListItemIcon>
-          <Profile />
-        </ListItemIcon>
-        <ListItemText>{isAuthenticated ? 'Профиль' : 'Войти'} </ListItemText>
-      </ListItem>
-      <Link href={Paths.LIKES}>
-        <ListItem button>
-          <ListItemIcon>
-            <Badge
-              color="secondary"
-              overlap="circular"
-              badgeContent={likedProductsCount}
-              // @ts-expect-error
-              invisible={likedProductsCount && likedProductsCount < 1}
-              max={99}
-            >
-              <Heart />
-            </Badge>
-          </ListItemIcon>
-          <ListItemText>Избранное</ListItemText>
-        </ListItem>
-      </Link>
-      <Link href={Paths.CART}>
-        <ListItem button>
-          <ListItemIcon>
-            <Badge
-              color="secondary"
-              overlap="circular"
-              badgeContent={productsCount}
-              // @ts-expect-error
-              invisible={productsCount && productsCount < 1}
-              max={99}
-            >
-              <Cart />
-            </Badge>
-          </ListItemIcon>
-          <ListItemText>Корзина</ListItemText>
-        </ListItem>
-      </Link>
-      <Divider />
-      {isMobile && (
+      <Stack direction='row' gap='20px' pr={'10px'} alignItems='center'>
+        <Link href={Paths.LIKES}>
+          <Badge
+            sx={likeBadge}
+            color="secondary"
+            overlap="circular"
+            badgeContent={likedProductsCount}
+            // @ts-expect-error
+            invisible={likedProductsCount && likedProductsCount < 1}
+            max={99}
+          >
+            <Heart />
+          </Badge>
+
+          {/* <ListItemText>Избранное</ListItemText> */}
+        </Link>
+        <Link href={Paths.CART}>
+
+          <Badge
+            sx={countBadge}
+            color="secondary"
+            overlap="circular"
+            badgeContent={productsCount}
+            // @ts-expect-error
+            invisible={productsCount && productsCount < 1}
+            max={99}
+          >
+            <Cart />
+          </Badge>
+
+          {/* <ListItemText>Корзина</ListItemText> */}
+
+        </Link>
+      </Stack>
+
+      {/* <Divider /> */}
+      {/* {isMobile && (
         <List>
           {headerTopLinks.map((top, i) => (
             <ListItem button key={top.label}>
@@ -111,8 +138,8 @@ const MobileHeaderButtons: React.FC<HeadeButtonsProps> = ({
             </ListItem>
           ))}
         </List>
-      )}
-    </List>
+      )} */}
+    </RowStack>
   );
 };
 

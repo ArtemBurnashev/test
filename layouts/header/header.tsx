@@ -22,6 +22,7 @@ import { Sidebar } from 'layouts/sidebar';
 import MobileHeaderButtons from './components/mobile-header-buttons';
 import { Burger } from 'components/burger';
 import SearchField from './components/search-field';
+import { MobileStack } from './header.styles';
 import Login from './components/auth/login';
 import { useAppDispatch, useAppSelector } from 'redux-state/hook';
 import { useRouter } from 'next/router';
@@ -84,6 +85,16 @@ const Header = () => {
           : { backgroundColor: '#FCFCFC' }
       }
     >
+      {isMobile && 
+      <MobileHeaderButtons
+              isAuthenticated={isAuthenticated}
+              onProfileIconClick={() =>
+                isAuthenticated
+                  ? router.push(Paths.PROFILE)
+                  : dispatch(toggle(!showLoginMenu))
+              }
+            />
+      }
       <Box sx={{ backgroundColor: '#FCFCFC' }}>
         <Container maxWidth="xl">
           {!isMobile && (
@@ -126,14 +137,15 @@ const Header = () => {
         >
           <Catalog />
         </Dialog>
-        <Stack>
+        <Stack  width='100%'>
           <Stack
             direction="row"
             alignItems="center"
             gap={'53px'}
-            padding="18px 0"
+            padding={{md:"18px 0",xs:"0 0 18px"}}
+
           >
-            <Stack direction="row">
+            <MobileStack direction="row" >
               {isSmallDevice || (
                 <Link href="/">
                   <Logo>
@@ -141,7 +153,7 @@ const Header = () => {
                   </Logo>
                 </Link>
               )}
-              <Stack direction="row" spacing={2} alignItems="center">
+              <Stack direction="row"  spacing={2} alignItems="center">
                 <CatologButton
                   className={''}
                   sx={{
@@ -158,9 +170,9 @@ const Header = () => {
                 </CatologButton>
 
                 <SearchField />
-                {isMobile && <Burger open={isOpen} setOpen={setIsOpen} />}
+                {/* {isMobile && <Burger open={isOpen} setOpen={setIsOpen} />} */}
               </Stack>
-            </Stack>
+            </MobileStack>
 
             {!isMobile && (
               <HeaderButtons
@@ -173,15 +185,9 @@ const Header = () => {
               />
             )}
           </Stack>
+          
           <Sidebar isOpen={isOpen} toggleDrawer={toggleDrawer}>
-            <MobileHeaderButtons
-              isAuthenticated={isAuthenticated}
-              onProfileIconClick={() =>
-                isAuthenticated
-                  ? router.push(Paths.PROFILE)
-                  : dispatch(toggle(!showLoginMenu))
-              }
-            />
+            
           </Sidebar>
           {!isAuthenticated && (
             <Sidebar

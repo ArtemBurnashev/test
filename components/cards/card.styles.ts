@@ -12,20 +12,30 @@ export const CategoryCardWrapper = styled.div`
   background-color: ${colors.grey.light};
   display: flex;
   align-items: center;
-  justify-content: space-around;
   padding: 14px 16px;
   gap: 1rem;
   cursor: pointer;
   @media(max-width: 768px){
-    flex-direction: column;  
+    width: 241px;
+    padding: 4px;
+  }
+  @media(max-width: 682px){
+    width: 100%;
+    padding: 4px;
   }
 `;
 
 export const CategoryCardImageWrapper = styled.div`
   width: 96px;
   height: 96px;
+  @media(max-width: 768px){
+    width: 56px;
+    height: 56px;
+  }
   img {
-    ${imageCss}
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `;
 

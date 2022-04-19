@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Button } from 'components/button';
-
+import { Stack } from '@mui/material';
 export const Logo = styled.div`
   max-width: 192px;
   max-height: 88px;
@@ -29,10 +29,22 @@ export const Logo = styled.div`
       object-fit: cover;
     }
   }
-  @media (max-width:577px){
+  @media (max-width:899px){
     display: none;
   }
 `;
+export const MobileStack = styled(Stack)`
+  @media (max-width:899px){
+    flex-grow: 1;
+    .MuiStack-root-fLuFxz{
+      width: 100%;
+    }
+    .MuiBox-root{
+      width: 100%;
+    }
+  }
+
+`
 export const CatologButton = styled(Button)`
   animation-name: butonOpacity;
   animation-duration: 1s;

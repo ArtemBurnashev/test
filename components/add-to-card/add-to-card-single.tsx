@@ -93,7 +93,7 @@ const AddtoCardSingle: React.FC<AddtoCardSingleProps> = ({
       {isInCard ? (
         <CartController id={id || ''} count={isInCard.count} />
       ) : (
-        <Button onClick={handleAddToCart} fullWidth variant="contained">
+        <Button sx={{backgroundColor:'#FEEE00'}} onClick={handleAddToCart} fullWidth variant="contained">
           В корзину
         </Button>
       )}
