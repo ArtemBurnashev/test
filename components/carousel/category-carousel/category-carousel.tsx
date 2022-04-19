@@ -18,10 +18,10 @@ const CategoryCarousel: FC = () => {
   return (
     <CategoryCaruselCard>
       <Slider
-        infinite
+        infinite={false}
         dots={false}
         initialSlide={0}
-        slidesToShow={5}
+        slidesToShow={5.5}
         arrows={false}
         slidesToScroll={3}
         autoplay={false}
@@ -30,14 +30,14 @@ const CategoryCarousel: FC = () => {
           {
             breakpoint: 1517,
             settings: {
-              slidesToShow: 5,
+              slidesToShow: 5.5,
               slidesToScroll: 1,
             },
           },
           {
             breakpoint: theme.breakpoints.values.md,
             settings: {
-              slidesToShow: 3,
+              slidesToShow: 2.5,
               slidesToScroll: 1,
             },
           },
@@ -51,14 +51,15 @@ const CategoryCarousel: FC = () => {
           {
             breakpoint: theme.breakpoints.values.sm,
             settings: {
-              slidesToShow: 2,
-              slidesToScroll: 1,
+              slidesToShow: 2.5,
+              slidesToScroll: 2,
+              infinite:false
             },
           },
           {
             breakpoint: theme.breakpoints.values.lg,
             settings: {
-              slidesToShow: 4,
+              slidesToShow: 4.5,
               slidesToScroll: 2,
             },
           },

@@ -6,7 +6,7 @@ import colors from 'config/theme';
  const Card = styled.div`
    .slick-slider {
      height: 435px;
-     @media (max-width: 383px) {
+     @media (max-width: 768px) {
        height: 435px;
        height: 358px;
      }

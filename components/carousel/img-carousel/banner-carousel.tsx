@@ -10,7 +10,6 @@ import { useBannersQuery } from 'graphql/generated.graphql';
 
 const Card = styled.div<{ height?: number; fullBorderRadius?: boolean }>`
   max-width: 100%;
-  height: 301px;
   overflow: hidden;
   .slick-list {
     height: ${({ height }) => (height ? `${height}px` : '100%')};
@@ -102,6 +101,7 @@ const ImageCarousel: FC<{
         autoplaySpeed={4000}
         prevArrow={<Arrow />}
         nextArrow={<NextArrow />}
+        adaptiveHeight={true}
         lazyLoad="progressive"
         afterChange={(currenSlide) => onSlide && onSlide(currenSlide)}
       >
