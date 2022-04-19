@@ -43,9 +43,11 @@ const RowStack = styled(Stack)`
   align-items: center;
   height: 70px;
   position: relative;
+  padding: 0 10px;
   justify-content: space-between;
   .rowsatck__item{
-    width: 55px;
+    width: 51px;
+    display: block;
   }
 `
 
@@ -75,10 +77,7 @@ const MobileHeaderButtons: React.FC<HeadeButtonsProps> = ({
     <RowStack direction='row'>
 
       <ListItem className='rowsatck__item' onClick={onProfileIconClick} button>
-        <ListItemIcon>
-          <Profile />
-        </ListItemIcon>
-        {/* <ListItemText>{isAuthenticated ? 'Профиль' : 'Войти'} </ListItemText> */}
+        <Profile />
       </ListItem>
       <Stack direction="row" justifyContent="center">
         <Link href="/">
@@ -87,38 +86,37 @@ const MobileHeaderButtons: React.FC<HeadeButtonsProps> = ({
           </LogoLink>
         </Link>
       </Stack>
-      <Stack direction='row' gap='20px' pr={'10px'} alignItems='center'>
+      <Stack direction='row' alignItems='center'>
         <Link href={Paths.LIKES}>
-          <Badge
-            sx={likeBadge}
-            color="secondary"
-            overlap="circular"
-            badgeContent={likedProductsCount}
-            // @ts-expect-error
-            invisible={likedProductsCount && likedProductsCount < 1}
-            max={99}
-          >
-            <Heart />
-          </Badge>
-
+          <ListItem className='rowsatck__item' button>
+            <Badge
+              sx={likeBadge}
+              color="secondary"
+              overlap="circular"
+              badgeContent={likedProductsCount}
+              // @ts-expect-error
+              invisible={likedProductsCount && likedProductsCount < 1}
+              max={99}
+            >
+              <Heart />
+            </Badge>
+          </ListItem>
           {/* <ListItemText>Избранное</ListItemText> */}
         </Link>
         <Link href={Paths.CART}>
-
-          <Badge
-            sx={countBadge}
-            color="secondary"
-            overlap="circular"
-            badgeContent={productsCount}
-            // @ts-expect-error
-            invisible={productsCount && productsCount < 1}
-            max={99}
-          >
-            <Cart />
-          </Badge>
-
-          {/* <ListItemText>Корзина</ListItemText> */}
-
+          <ListItem className='rowsatck__item' button>
+            <Badge
+              sx={countBadge}
+              color="secondary"
+              overlap="circular"
+              badgeContent={productsCount}
+              // @ts-expect-error
+              invisible={productsCount && productsCount < 1}
+              max={99}
+            >
+              <Cart />
+            </Badge>
+          </ListItem>
         </Link>
       </Stack>
 

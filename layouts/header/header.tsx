@@ -186,12 +186,9 @@ const Header = () => {
             )}
           </Stack>
           
-          <Sidebar isOpen={isOpen} toggleDrawer={toggleDrawer}>
-            
-          </Sidebar>
+          
           {!isAuthenticated && (
             <Sidebar
-              width={450}
               isOpen={showLoginMenu}
               toggleDrawer={toggleLoginMenu}
             >

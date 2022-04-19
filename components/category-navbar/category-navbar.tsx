@@ -108,7 +108,7 @@ export const CategoryNavbar: React.FC = () => {
                 >
                   <LinkText
                     key={links.id} href={`${Paths.CATEGORY_PRODUCTS}${links.slug}`}>
-                    {links.name.slice(0, 20) + '...'}
+                    {links.name.slice(0, 30)}
                   </LinkText>
                 </LinkSet>
               )}

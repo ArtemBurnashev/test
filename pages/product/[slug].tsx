@@ -216,7 +216,6 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
                   endAdornment={<div />}
                   defaultValue={data.product.defaultVariant?.id}
                   sx={{
-                    width: '6rem',
                     border: `1px solid ${colors.red.default}`,
                     ['div']: {
                       paddingRight: 0,
