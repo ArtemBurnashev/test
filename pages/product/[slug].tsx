@@ -38,24 +38,24 @@ type Props = {
 };
 
 const EditorJs = dynamic(() => import('components/editor'), { ssr: false });
-const StyleTypograph = styled(Typography)<{idenfy?:boolean}>`
+const StyleTypograph = styled(Typography) <{ idenfy?: boolean }>`
   @media (max-width: 899px){
-    ${({idenfy}) => idenfy ? ' margin-top: 120px;' : ''};
+    ${({ idenfy }) => idenfy ? ' margin-top: 120px;' : ''};
     
   }
 `
-const SyledGrid = styled(Grid)<{idenfy?:boolean}>`
+const SyledGrid = styled(Grid) <{ idenfy?: boolean }>`
   @media (max-width: 1399px){
-    ${({idenfy}) => idenfy ? ' margin-top: 110px;' : ''};
+    ${({ idenfy }) => idenfy ? ' margin-top: 110px;' : ''};
   }
   /* 899 */
   @media (max-width: 899px){
-    ${({idenfy}) => idenfy ? ' margin-top: 20px;' : ''};
+    ${({ idenfy }) => idenfy ? ' margin-top: 20px;' : ''};
   }
 `
-const ShowSize = styled(Typography)<{idenfy?:boolean}>`
+const ShowSize = styled(Typography) <{ idenfy?: boolean }>`
   @media (max-width: 693px){
-    ${({idenfy}) => idenfy ? 'margin-top: 131px;' : ''};
+    ${({ idenfy }) => idenfy ? 'margin-top: 131px;' : ''};
   }
 `
 
@@ -67,7 +67,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
   const isInLikeList = likeList.some(
     (product) => data.product && product.id === data?.product.id
   );
- 
+
   const links = [
     {
       name: data?.product?.category?.name,
@@ -122,11 +122,13 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
 
   const executeScroll = () =>
     characteristicsRef.current?.scrollIntoView({ behavior: 'smooth' });
-  const idenfy = (data.product?.media?.length ? data.product?.media?.length : false) > 1 ? true : false
-  
-  
-  const sliderItems = data.product?.media?.slice(0,4);
-  
+
+  const idenfy = (data.product?.media?.length ? data.product?.media?.length : []) > 1 ? true : false
+
+
+  const sliderItems = data.product?.media?.slice(0, 4);
+
+
   return (
     <Main>
       {data.product && (
@@ -216,6 +218,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
                   endAdornment={<div />}
                   defaultValue={data.product.defaultVariant?.id}
                   sx={{
+                    margin: '10px 0',
                     border: `1px solid ${colors.red.default}`,
                     ['div']: {
                       paddingRight: 0,
@@ -262,14 +265,17 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
                       }
                     </React.Fragment>
                   ))}
-                  <Typography
-                    onClick={executeScroll}
-                    color={colors.red.default}
-                    variant="subtitle2"
-                    sx={{ cursor: 'pointer' }}
-                  >
-                    Все характеристики
-                  </Typography>
+                  {data?.product?.characteristics &&
+                    <Typography
+                      onClick={executeScroll}
+                      color={colors.red.default}
+                      variant="subtitle2"
+                      sx={{ cursor: 'pointer' }}
+                    >
+                      Все характеристики
+                    </Typography>
+                  }
+
                 </>
               )}
             </Stack>
@@ -294,9 +300,11 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
             />
           </SyledGrid>
         </Grid>
-        <Typography sx={idenfy ? {marginTop:'120px'} : {marginTop:0}} fontWeight={500} variant="h2">
-          Характеристики
-        </Typography>
+        {data?.product?.characteristics &&
+          <Typography sx={idenfy ? { marginTop: '120px' } : { marginTop: 0 }} fontWeight={500} variant="h2">
+            Характеристики
+          </Typography>
+        }
         <Grid
           ref={characteristicsRef}
           marginTop="2rem"

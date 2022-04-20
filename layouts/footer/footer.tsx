@@ -24,7 +24,6 @@ import Humo from 'assets/png/humo.png';
 
 const Footer = () => {
   const querys = useMediaQuery('(max-width:768px)');
-  console.log(querys);
 
   return (
     <>
