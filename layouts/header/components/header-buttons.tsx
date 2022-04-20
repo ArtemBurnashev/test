@@ -20,17 +20,7 @@ const HeaderButtons: React.FC<HeadeButtonsProps> = ({
 }) => {
   const { productsCount } = useAppSelector((state) => state.cart);
   const { productsCount: likedProductsCount } = useAppSelector(state => state.like)
-  const [likeBadge, setLikeBadge] = React.useState({});
-  const [countBadge, setCountBadge] = React.useState({});
-  React.useEffect(() => {
-    likedProductsCount ?
-      setLikeBadge({ ['.MuiBadge-badge']: { backgroundColor: '#E44542' } }) :
-      setLikeBadge({ ['.MuiBadge-badge']: { backgroundColor: 'transparent', color: 'transparent' } });
-    productsCount ?
-      setCountBadge({ ['.MuiBadge-badge']: { backgroundColor: '#E44542' } }) :
-      setCountBadge({ ['.MuiBadge-badge']: { backgroundColor: 'transparent', color: 'transparent' } });
-  }, [likedProductsCount, productsCount])
-
+ 
 
   return (
     <Stack sx={{ flexGrow: 1, width: '100%', justifyContent: 'end' }} direction="row" spacing={4}>
@@ -47,7 +37,6 @@ const HeaderButtons: React.FC<HeadeButtonsProps> = ({
       <Link href={Paths.LIKES}>
         <Stack sx={{ cursor: 'pointer' }} alignItems="center">
           <Badge
-            sx={likeBadge}
             color="secondary"
             overlap="circular"
             badgeContent={likedProductsCount}
@@ -64,7 +53,6 @@ const HeaderButtons: React.FC<HeadeButtonsProps> = ({
       <Link href={Paths.CART}>
         <Stack sx={{ cursor: 'pointer' }} alignItems="center">
           <Badge
-            sx={countBadge}
             color="secondary"
             overlap="circular"
             badgeContent={productsCount}

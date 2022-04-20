@@ -62,17 +62,6 @@ const MobileHeaderButtons: React.FC<HeadeButtonsProps> = ({
     (state) => state.like
   );
 
-  const [likeBadge, setLikeBadge] = React.useState({});
-  const [countBadge, setCountBadge] = React.useState({});
-  React.useEffect(() => {
-    likedProductsCount ?
-      setLikeBadge({ ['.MuiBadge-badge']: { backgroundColor: '#E44542' } }) :
-      setLikeBadge({ ['.MuiBadge-badge']: { backgroundColor: 'transparent', color: 'transparent' } });
-    productsCount ?
-      setCountBadge({ ['.MuiBadge-badge']: { backgroundColor: '#E44542' } }) :
-      setCountBadge({ ['.MuiBadge-badge']: { backgroundColor: 'transparent', color: 'transparent' } });
-  }, [likedProductsCount, productsCount])
-
   return (
     <RowStack direction='row'>
 
@@ -90,7 +79,7 @@ const MobileHeaderButtons: React.FC<HeadeButtonsProps> = ({
         <Link href={Paths.LIKES}>
           <ListItem className='rowsatck__item' button>
             <Badge
-              sx={likeBadge}
+              
               color="secondary"
               overlap="circular"
               badgeContent={likedProductsCount}
@@ -106,7 +95,7 @@ const MobileHeaderButtons: React.FC<HeadeButtonsProps> = ({
         <Link href={Paths.CART}>
           <ListItem className='rowsatck__item' button>
             <Badge
-              sx={countBadge}
+              
               color="secondary"
               overlap="circular"
               badgeContent={productsCount}
