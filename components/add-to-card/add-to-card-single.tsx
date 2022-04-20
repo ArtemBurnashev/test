@@ -9,9 +9,7 @@ import { useAppDispatch, useAppSelector } from 'redux-state/hook';
 import formatter from 'utils/currencyFormatter';
 import { AddToCardWrapper } from './add-to-card.styles';
 
-const StyledButton = styled(Button)`
-  background-color: #FEEE00;
-`
+
 
 interface AddtoCardSingleProps {
   price?: {
@@ -98,9 +96,9 @@ const AddtoCardSingle: React.FC<AddtoCardSingleProps> = ({
       {isInCard ? (
         <CartController id={id || ''} count={isInCard.count} />
       ) : (
-        <StyledButton onClick={handleAddToCart} fullWidth variant="contained">
+        <Button onClick={handleAddToCart} fullWidth variant="contained">
           В корзину
-        </StyledButton>
+        </Button>
       )}
     </AddToCardWrapper>
   );
