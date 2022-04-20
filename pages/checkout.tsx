@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Button } from 'components/button';
-import { CheckoutMethods } from 'components/checkout';
+import { CheckoutMethods,CheckoutStackBlock } from 'components/checkout';
 import Input from 'components/input';
 import Radio from 'components/radio';
 import { Main } from 'layouts/main';
@@ -45,6 +45,7 @@ import { Address } from 'components/cards/address-card';
 import colors from 'config/theme';
 import { clearCart } from 'redux-state/features/cart-slice';
 import { useRouter } from 'next/router';
+import { NextPage } from 'next';
 
 const checkoutCreateSchema = yup.object({
   name: yup.string().required('Name is required'),
@@ -59,7 +60,7 @@ const checkoutCreateSchema = yup.object({
   streetAddress2: yup.string(),
 });
 
-const Checkout = () => {
+const Checkout:NextPage = () => {
   const { productsCount, cartProducts, totalPrice } = useAppSelector(
     (state) => state.cart
   );
@@ -175,6 +176,10 @@ const Checkout = () => {
       },
     });
   };
+  const [envButton,setEnvButton] = React.useState(false);
+  const changeButton = (e:any) => {
+    setEnvButton(e.target.checked);
+  }
   return (
     <Main pb={0}>
       <Container maxWidth="xl">
@@ -226,15 +231,8 @@ const Checkout = () => {
             </Link>
           </Stack>
         ) : (
-          <Grid alignItems="column-reverse" container columnSpacing={2}>
-            <Grid
-              mb={4}
-              sx={{ paddingRight: '16px' }}
-              item
-              md={6}
-              sm={12}
-              lg={6}
-            >
+          <CheckoutStackBlock direction={'row'}>
+            <Stack paddingRight={{md:'16px'}} width={{md:'50%'}}>
               <Typography margin="1.5rem 0" fontWeight={600} variant="h1">
                 Оформление заказа
               </Typography>
@@ -337,6 +335,7 @@ const Checkout = () => {
                                   </Typography>
                                 </Stack>
                               </Stack>
+                              
                             }
                             value="1"
                             control={<Radio sx={{ marginLeft: '1rem' }} />}
@@ -354,9 +353,12 @@ const Checkout = () => {
                           />
                         </CheckoutMethods>
                       </Stack>
+                      <FormControlLabel sx={{mt:'10px'}} control={<Checkbox onChange={changeButton}/>} label='Подтвердить'/>
                     </RadioGroup>
+                     
                   </FormControl>
                   <Button
+                    disabled={!envButton}
                     loading={loading || checkoutCompleteLoading}
                     type="submit"
                     variant="contained"
@@ -366,18 +368,15 @@ const Checkout = () => {
                   </Button>
                 </Stack>
               </form>
-            </Grid>
-            <Grid
-              sx={{ borderLeft: '1px solid #808080', paddingLeft: '16px' }}
-              item
-              lg={6}
-              width="100%"
-              sm={12}
-              md={6}
+            </Stack>
+            <Stack
+              borderLeft={{md:'1px solid #808080'}}
+              paddingLeft={{md:'16px'}}
+              width={{md:'50%'}}
             >
               <CheckoutInfo />
-            </Grid>
-          </Grid>
+            </Stack>
+          </CheckoutStackBlock>
         )}
       </Container>
     </Main>
