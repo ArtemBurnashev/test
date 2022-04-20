@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Button } from 'components/button';
-import { CheckoutMethods,CheckoutStackBlock } from 'components/checkout';
+import { CheckoutMethods } from 'components/checkout';
 import Input from 'components/input';
 import Radio from 'components/radio';
 import { Main } from 'layouts/main';
@@ -46,6 +46,7 @@ import colors from 'config/theme';
 import { clearCart } from 'redux-state/features/cart-slice';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
+import { PaymeIcon } from 'components/icons/payme-icon';
 
 const checkoutCreateSchema = yup.object({
   name: yup.string().required('Name is required'),
@@ -231,7 +232,7 @@ const Checkout:NextPage = () => {
             </Link>
           </Stack>
         ) : (
-          <CheckoutStackBlock direction={'row'}>
+          <Stack direction={{md:'row',xs:'column'}}>
             <Stack paddingRight={{md:'16px'}} width={{md:'50%'}}>
               <Typography margin="1.5rem 0" fontWeight={600} variant="h1">
                 Оформление заказа
@@ -345,7 +346,7 @@ const Checkout:NextPage = () => {
                           <FormControlLabel
                             label={
                               <Stack padding="1rem 1.5rem">
-                                <Image layout="fixed" src={Payme} alt="payme" />
+                                <PaymeIcon/>
                               </Stack>
                             }
                             value="2"
@@ -376,7 +377,7 @@ const Checkout:NextPage = () => {
             >
               <CheckoutInfo />
             </Stack>
-          </CheckoutStackBlock>
+          </Stack>
         )}
       </Container>
     </Main>

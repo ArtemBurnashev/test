@@ -21,6 +21,8 @@ import { FooterIcon } from 'components/icons/footer-icon';
 import UzCard from 'assets/png/uzcard.png';
 import { useMediaQuery } from '@mui/material';
 import Humo from 'assets/png/humo.png';
+import { UzCardIcon } from 'components/icons/uzCard-icon';
+import { HumoIcon } from 'components/icons/humo-icon';
 
 const Footer = () => {
   const querys = useMediaQuery('(max-width:768px)');
@@ -187,10 +189,10 @@ const Footer = () => {
             </FooterLink>
             <Stack spacing={2} direction="row">
               <CartWrapper>
-                <Image src={UzCard} layout="fixed" alt="uzcard" />
+                <UzCardIcon/>
               </CartWrapper>
               <CartWrapper>
-                <Image src={Humo} layout="fixed" alt="humo" />
+                <HumoIcon />
               </CartWrapper>
             </Stack>
           </Stack>
