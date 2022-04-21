@@ -52,7 +52,7 @@ const ProductCardHorizontal: React.FC<ProductCardProps> = ({
           sx={{
             cursor: 'pointer',
             '&:hover': {
-              color: colors.primary.default,
+              color: colors.primary.hover,
             },
             maxWidth:'249px'
           }}

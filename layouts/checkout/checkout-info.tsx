@@ -10,7 +10,7 @@ const CheckoutInfo = () => {
     (state) => state.cart
   );
   return (
-    <Stack spacing={2}>
+    <Stack spacing={2} mb={2}>
       {cartProducts.map((product) => (
         <CheckoutCartItem key={product.id}>
           <Stack mt={2} direction="row" spacing={2} alignItems="center">

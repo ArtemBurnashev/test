@@ -41,14 +41,16 @@ export const CategoryCardImageWrapper = styled.div`
 
 export const ProductCardWrapper = styled.div<{ loading?: string }>`
   position: relative;
+  transition: box-shadow .3s ease;
   padding: 8px;
   height: 323px;
+  margin: 10px 0;
   height: 100%;
   cursor: pointer;
   width: ${({ loading }) => !!loading ? "224px" : "unset"};
   &:hover{
     color: ${colors.primary.hover};
-    
+    box-shadow: 0px -3px 8px rgba(0, 0, 0, 0.18);
   }
   .hHuXPW{
     color: #000;
