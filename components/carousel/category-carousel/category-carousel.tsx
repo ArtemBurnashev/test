@@ -15,7 +15,7 @@ const CategoryCarousel: FC = () => {
     variables: { first: 20, cursor: '' },
   });
   const settings = {
-    infinite: false,
+    infinite: true,
     dots: false,
     initialSlide: 0,
     slidesToShow: 5.5,

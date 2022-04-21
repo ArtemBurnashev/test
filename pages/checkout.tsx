@@ -11,6 +11,9 @@ import {
   RadioGroup,
   Stack,
   Typography,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
 } from '@mui/material';
 import { Button } from 'components/button';
 import { CheckoutMethods } from 'components/checkout';
@@ -46,7 +49,10 @@ import colors from 'config/theme';
 import { clearCart } from 'redux-state/features/cart-slice';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
+import { useMediaQuery } from '@mui/material';
+import ArrowDow from 'components/icons/arrow-down';
 import { PaymeIcon } from 'components/icons/payme-icon';
+import formatter from 'utils/currencyFormatter';
 
 const checkoutCreateSchema = yup.object({
   name: yup.string().required('Name is required'),
@@ -61,7 +67,7 @@ const checkoutCreateSchema = yup.object({
   streetAddress2: yup.string(),
 });
 
-const Checkout:NextPage = () => {
+const Checkout: NextPage = () => {
   const { productsCount, cartProducts, totalPrice } = useAppSelector(
     (state) => state.cart
   );
@@ -177,10 +183,12 @@ const Checkout:NextPage = () => {
       },
     });
   };
-  const [envButton,setEnvButton] = React.useState(false);
-  const changeButton = (e:any) => {
+  const [envButton, setEnvButton] = React.useState(false);
+  const changeButton = (e: any) => {
     setEnvButton(e.target.checked);
-  }
+  };
+  const mediaquery = useMediaQuery('(max-width:899px)');
+
   return (
     <Main pb={0}>
       <Container maxWidth="xl">
@@ -232,11 +240,28 @@ const Checkout:NextPage = () => {
             </Link>
           </Stack>
         ) : (
-          <Stack direction={{md:'row',xs:'column'}}>
-            <Stack paddingRight={{md:'16px'}} width={{md:'50%'}}>
+          <Stack direction={{ md: 'row', xs: 'column' }}>
+            <Stack paddingRight={{ md: '16px' }} width={{ md: '50%' }}>
               <Typography margin="1.5rem 0" fontWeight={600} variant="h1">
                 Оформление заказа
               </Typography>
+              {mediaquery && (
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<ArrowDow />}
+                    aria-controls="panel1bh-content"
+                    id="panel1bh-header"
+                  >
+                    <Stack direction='row' alignItems='center' pr='20px' width='100%' justifyContent='space-between'>
+                      <Typography variant="h6">Ваш заказ</Typography>
+                      <Typography variant="h2">{formatter(totalPrice) } Сум </Typography>
+                    </Stack>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <CheckoutInfo />
+                  </AccordionDetails>
+                </Accordion>
+              )}
               <form onSubmit={handleSubmit(handleCheckout)}>
                 <Stack spacing={2} margin="1rem 0">
                   {!isAuthenticated && (
@@ -336,7 +361,6 @@ const Checkout:NextPage = () => {
                                   </Typography>
                                 </Stack>
                               </Stack>
-                              
                             }
                             value="1"
                             control={<Radio sx={{ marginLeft: '1rem' }} />}
@@ -346,7 +370,7 @@ const Checkout:NextPage = () => {
                           <FormControlLabel
                             label={
                               <Stack padding="1rem 1.5rem">
-                                <PaymeIcon/>
+                                <PaymeIcon />
                               </Stack>
                             }
                             value="2"
@@ -354,9 +378,12 @@ const Checkout:NextPage = () => {
                           />
                         </CheckoutMethods>
                       </Stack>
-                      <FormControlLabel sx={{mt:'10px'}} control={<Checkbox onChange={changeButton}/>} label='Подтвердить'/>
+                      <FormControlLabel
+                        sx={{ mt: '10px' }}
+                        control={<Checkbox onChange={changeButton} />}
+                        label="Подтвердить"
+                      />
                     </RadioGroup>
-                     
                   </FormControl>
                   <Button
                     disabled={!envButton}
@@ -370,13 +397,15 @@ const Checkout:NextPage = () => {
                 </Stack>
               </form>
             </Stack>
-            <Stack
-              borderLeft={{md:'1px solid #808080'}}
-              paddingLeft={{md:'16px'}}
-              width={{md:'50%'}}
-            >
-              <CheckoutInfo />
-            </Stack>
+            {!mediaquery && (
+              <Stack
+                borderLeft={{ md: '1px solid #808080' }}
+                paddingLeft={{ md: '16px' }}
+                width={{ md: '50%' }}
+              >
+                <CheckoutInfo />
+              </Stack>
+            )}
           </Stack>
         )}
       </Container>
