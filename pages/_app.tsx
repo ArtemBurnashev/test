@@ -23,6 +23,13 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     overflow-x: hidden;
+
+    .MuiButton-containedPrimary{
+      background-color: ${colors.primary.default};
+    }
+    label + .sc-kLwhqv {
+      margin-top: 0px !important;
+    }
   }
 
   a {
