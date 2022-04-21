@@ -110,8 +110,8 @@ export const StyledButton = styled(MuiButton).withConfig({
   }
 
   &.MuiButton-outlined {
-    color: ${(props) => props.theme.palette.primary.dark};
-    border-color: ${(props) => props.theme.palette.primary.dark};
+    color: ${(props) => props.theme.palette.primary.dark} !important;
+    border: 1px solid ${(props) => props.theme.palette.primary.dark} !important;
   }
 
   ${(props) => (props.loading ? loadingStyles : null)};

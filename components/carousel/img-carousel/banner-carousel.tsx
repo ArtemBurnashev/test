@@ -10,6 +10,7 @@ import { useBannersQuery } from 'graphql/generated.graphql';
 
 const Card = styled.div<{ height?: number; fullBorderRadius?: boolean }>`
   max-width: 100%;
+  max-height: 310px;
   overflow: hidden;
   .slick-list {
     height: ${({ height }) => (height ? `${height}px` : '100%')};

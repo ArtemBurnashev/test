@@ -2,7 +2,7 @@ const colors = {
   primary: {
     default: '#FEEE00',
     dark: '#FFCE39',
-    hover:'#FFCE39',
+    hover:'#E44542',
   },
   white: '#FFFFFF',
   red: {

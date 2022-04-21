@@ -85,15 +85,15 @@ const Header = () => {
           : { backgroundColor: '#FCFCFC' }
       }
     >
-      {isMobile && 
-      <MobileHeaderButtons
-              isAuthenticated={isAuthenticated}
-              onProfileIconClick={() =>
-                isAuthenticated
-                  ? router.push(Paths.PROFILE)
-                  : dispatch(toggle(!showLoginMenu))
-              }
-            />
+      {isMobile &&
+        <MobileHeaderButtons
+          isAuthenticated={isAuthenticated}
+          onProfileIconClick={() =>
+            isAuthenticated
+              ? router.push(Paths.PROFILE)
+              : dispatch(toggle(!showLoginMenu))
+          }
+        />
       }
       <Box sx={{ backgroundColor: '#FCFCFC' }}>
         <Container maxWidth="xl">
@@ -137,12 +137,12 @@ const Header = () => {
         >
           <Catalog />
         </Dialog>
-        <Stack  width='100%'>
+        <Stack width='100%'>
           <Stack
             direction="row"
             alignItems="center"
             gap={'53px'}
-            padding={{md:"18px 0",xs:"0 0 18px"}}
+            padding={{ md: "18px 0", xs: "0 0 18px" }}
 
           >
             <MobileStack direction="row" >
@@ -153,21 +153,24 @@ const Header = () => {
                   </Logo>
                 </Link>
               )}
-              <Stack direction="row"  spacing={2} alignItems="center">
-                <CatologButton
-                  className={''}
-                  sx={{
-                    '&&&&&.MuiButtonBase-root': {
-                      pl: '3rem',
-                      pr: '3rem',
-                    },
-                  }}
-                  variant="contained"
-                  startIcon={catalogModal.isOpen ? <Close /> : <Hamburger />}
-                  onClick={() => catalogModal.toggle()}
-                >
-                  Каталог
+              <Stack direction="row" spacing={2} alignItems="center">
+                <CatologButton>
+                  <Button
+                    className={''}
+                    sx={{
+                      '&&&&&.MuiButtonBase-root': {
+                        pl: '3rem',
+                        pr: '3rem',
+                      },
+                    }}
+                    variant="contained"
+                    startIcon={catalogModal.isOpen ? <Close /> : <Hamburger />}
+                    onClick={() => catalogModal.toggle()}
+                  >
+                    Каталог
+                  </Button>
                 </CatologButton>
+
 
                 <SearchField />
                 {/* {isMobile && <Burger open={isOpen} setOpen={setIsOpen} />} */}
@@ -185,8 +188,8 @@ const Header = () => {
               />
             )}
           </Stack>
-          
-          
+
+
           {!isAuthenticated && (
             <Sidebar
               isOpen={showLoginMenu}

@@ -22,9 +22,6 @@ export const CheckoutMethods = styled.div`
   @media (max-width: 387px){
     width: 143px;
   }
+  
 `;
-export const CheckoutStackBlock = styled(Stack)`
-  @media (max-width: 899px){
-    flex-direction: column;
-  }
-`
+
