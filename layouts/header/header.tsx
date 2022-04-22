@@ -30,11 +30,11 @@ import { Paths } from 'config/site-paths';
 import { useModal } from 'hooks/use-modal';
 import Catalog from './components/catalog';
 import { CatologButton } from './header.styles';
+import { BurgerMenu } from 'components/icons/Burger-menu';
 import Close from 'components/icons/close';
 import Hamburger from 'components/icons/hamburger';
 import Auth from './components/auth';
 import { CategoryNavbar } from 'components/category-navbar';
-import styled from 'styled-components';
 import { toggle } from 'redux-state/features/sidebar';
 
 
@@ -48,6 +48,7 @@ const Header = () => {
   const { isOpen: showLoginMenu } = useAppSelector(state => state.sidebar);
   const dispatch = useAppDispatch()
   const { isAuthenticated } = useAppSelector((state) => state.user);
+  const mediaQuery = useMediaQuery('(max-width:768px)');
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -159,15 +160,15 @@ const Header = () => {
                     className={''}
                     sx={{
                       '&&&&&.MuiButtonBase-root': {
-                        pl: '3rem',
-                        pr: '3rem',
+                        pl: (!mediaQuery ? '3rem' : 0),
+                        pr: (!mediaQuery ? '3rem' : 0),
                       },
                     }}
                     variant="contained"
-                    startIcon={catalogModal.isOpen ? <Close /> : <Hamburger />}
+                    startIcon={!mediaQuery && (catalogModal.isOpen ? <Close /> : <Hamburger />)}
                     onClick={() => catalogModal.toggle()}
                   >
-                    Каталог
+                   {!mediaQuery ? 'Каталог' : <BurgerMenu/>}
                   </Button>
                 </CatologButton>
 

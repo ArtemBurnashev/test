@@ -1291,6 +1291,7 @@ export type Banner = Node & ObjectWithMetadata & {
   /** Returns translated product variant fields for the given language code. */
   translation?: Maybe<BannerTranslation>;
   type: BannerType;
+  viewType: BannerViewType;
 };
 
 
@@ -1385,6 +1386,8 @@ export type BannerInput = {
   title?: InputMaybe<Scalars['String']>;
   /** Determines intention of banner */
   type?: InputMaybe<Scalars['String']>;
+  /** Determines view type of banner */
+  viewType?: InputMaybe<Scalars['String']>;
 };
 
 /** Creates/Updates translations for Banner. */
@@ -1429,6 +1432,14 @@ export type BannerUpdate = {
   bannerErrors: Array<BannerError>;
   errors: Array<BannerError>;
 };
+
+/** An enumeration. */
+export enum BannerViewType {
+  /** Mobile */
+  Mobile = 'MOBILE',
+  /** Web */
+  Web = 'WEB'
+}
 
 export type BulkAttributeValueInput = {
   /** The boolean value of an attribute to resolve. If the passed value is non-existent, it will be created. */
@@ -1517,7 +1528,7 @@ export type Category = Node & ObjectWithMetadata & {
   parent?: Maybe<Category>;
   /** List of private metadata items.Requires proper staff permissions to access. */
   privateMetadata: Array<Maybe<MetadataItem>>;
-  /** List of products in the category. */
+  /** List of the shop's products. */
   products?: Maybe<ProductCountableConnection>;
   seoDescription?: Maybe<Scalars['String']>;
   seoTitle?: Maybe<Scalars['String']>;
@@ -1556,8 +1567,10 @@ export type CategoryProductsArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
   channel?: InputMaybe<Scalars['String']>;
+  filter?: InputMaybe<ProductFilterInput>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
+  sortBy?: InputMaybe<ProductOrder>;
 };
 
 
@@ -3909,7 +3922,7 @@ export type GiftCard = Node & ObjectWithMetadata & {
   /** New in Saleor 3.1. The user who bought or issued a gift card. Note: this feature is in a preview state and can be subject to changes at later point. */
   createdBy?: Maybe<User>;
   /** New in Saleor 3.1. Email address of the user who bought or issued gift card. Note: this feature is in a preview state and can be subject to changes at later point. */
-  createdByEmail?: Maybe<Scalars['String']>;
+  createdByPhone?: Maybe<Scalars['String']>;
   currentBalance?: Maybe<Money>;
   /** Code in format which allows displaying in a user interface. */
   displayCode: Scalars['String'];
@@ -13567,7 +13580,7 @@ export type BannersQueryVariables = Exact<{
 }>;
 
 
-export type BannersQuery = { __typename?: 'Query', banners?: { __typename?: 'BannerConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, edges: Array<{ __typename?: 'BannerEdge', node: { __typename?: 'Banner', id: string, title: string, description: string, redirectUrl: string, backgroundImage?: { __typename?: 'Image', url: string, alt?: string | null } | null } }> } | null };
+export type BannersQuery = { __typename?: 'Query', banners?: { __typename?: 'BannerConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, edges: Array<{ __typename?: 'BannerEdge', node: { __typename?: 'Banner', id: string, title: string, description: string, viewType: BannerViewType, redirectUrl: string, backgroundImage?: { __typename?: 'Image', url: string, alt?: string | null } | null } }> } | null };
 
 export type AllCategoriesQueryVariables = Exact<{
   first: Scalars['Int'];
@@ -14295,6 +14308,7 @@ export const BannersDocument = gql`
           url
           alt
         }
+        viewType
         redirectUrl
       }
     }
