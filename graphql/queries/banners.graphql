@@ -13,6 +13,7 @@ query Banners($first:Int!,$after:String,$filter:BannerFilterInput!){
           url
           alt
         }
+        viewType
         redirectUrl
       }
     }
