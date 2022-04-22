@@ -4,20 +4,23 @@ import { OrderTitle } from 'components/orders';
 import { OrdersCard } from 'components/cards';
 import { ProfileLayout } from 'layouts/profile';
 import { Main } from 'layouts/main';
+import { BackArrow } from 'components/icons/back-arrow';
 import { useTranslation } from 'react-i18next';
+import { useRouter } from 'next/router';
 import { Paths } from 'config/site-paths';
+import { useMediaQuery } from '@mui/material';
 import { InfiniteLoader } from 'components/loaders/infinite-loader';
 import { Container, Stack, Typography, Skeleton } from '@mui/material';
 import { useOrdersQuery } from 'graphql/generated.graphql';
 import { Breadcrumb } from 'components/breadcrumbs';
 
-
 const orders: NextPage = () => {
   const { data, loading, fetchMore } = useOrdersQuery({
     variables: {
       first: 10,
-    }
-  })
+    },
+  });
+  const router = useRouter();
   const { t } = useTranslation();
   const links = [
     {
@@ -27,16 +30,16 @@ const orders: NextPage = () => {
     {
       name: 'Orders',
       link: Paths.ORDERS,
-    }
-  ]
-
-  const orders = data?.me?.orders?.edges.map(edge => edge.node);
-  const pageInfor = data?.me?.orders?.pageInfo
+    },
+  ];
+  const md = useMediaQuery('(max-width:899px)');
+  const orders = data?.me?.orders?.edges.map((edge) => edge.node);
+  const pageInfor = data?.me?.orders?.pageInfo;
 
   return (
     <Main>
       <Container maxWidth="xl">
-        <Breadcrumb data={links} />
+        {!md && <Breadcrumb data={links} />}
         <ProfileLayout
           loading={loading}
           loadingFallBack={
@@ -50,31 +53,46 @@ const orders: NextPage = () => {
             </Stack>
           }
         >
-          <OrderTitle>Мои заказы</OrderTitle>
-          {orders?.length ?
-            <InfiniteLoader loadMore={() => fetchMore({
-              variables: {
-                cursor: pageInfor?.endCursor,
+          {!md ? (
+            <OrderTitle>Мои заказы</OrderTitle>
+          ) : (
+            <Stack
+              onClick={() => router.back()}
+              margin="16px 0"
+              direction={'row'}
+              gap="18px"
+              alignItems="center"
+            >
+              <BackArrow />
+              <Typography variant="h2">Мои заказы</Typography>
+            </Stack>
+          )}
+          {orders?.length ? (
+            <InfiniteLoader
+              loadMore={() =>
+                fetchMore({
+                  variables: {
+                    cursor: pageInfor?.endCursor,
+                  },
+                })
               }
-            })}
               hasMore={pageInfor?.hasNextPage}
               loading={loading}
             >
               {orders.map((order) => (
-                <OrdersCard
-                  key={order.id}
-                  order={order}
-                />
+                <OrdersCard key={order.id} order={order} />
               ))}
             </InfiniteLoader>
-
-            : <Typography sx={{ textAlign: 'center' }} variant='h2'>{t('emty')}</Typography>}
-
+          ) : (
+            <Typography sx={{ textAlign: 'center' }} variant="h2">
+              {t('emty')}
+            </Typography>
+            
+          )}
         </ProfileLayout>
       </Container>
     </Main>
-  )
-}
+  );
+};
 
-
-export default orders
+export default orders;

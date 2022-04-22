@@ -24,7 +24,7 @@ const ProductColumn: React.FC<{ label: string, slug: string, modalOpen?: () => v
         <ProductCardHorizontal
           name={product.name}
           slug={product.slug}
-          image={product?.media && product.media[0].url}
+          image={product?.media && product.media.url}
           price={product.defaultVariant?.pricing?.price?.gross}
           discount={product.defaultVariant?.pricing?.discount?.gross}
           modalOpen={modalOpen}

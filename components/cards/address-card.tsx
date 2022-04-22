@@ -4,6 +4,7 @@ import EditIcon from 'components/icons/edit';
 import { IconButton } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useModal } from 'hooks/use-modal';
+import { useMediaQuery } from '@mui/material';
 import { useDeleteAddressMutation } from 'graphql/generated.graphql';
 import { Typography, Grid, Stack, Dialog } from '@mui/material';
 import { AddressCreate } from 'components/address-items';
@@ -42,6 +43,7 @@ export const AddresCard: React.FC<AddressProps> = ({ data, backdrop, isCheckoutP
   const [mutation, mutationData] = useDeleteAddressMutation();
   const editModal = useModal();
   const { t } = useTranslation();
+  const md = useMediaQuery('(max-width:899px)');
 
   const deleteCard = () => {
     if (data?.id) {
@@ -60,7 +62,7 @@ export const AddresCard: React.FC<AddressProps> = ({ data, backdrop, isCheckoutP
   }
 
   return (
-    <Grid item xs={isCheckoutPage ? 12 : 6}>
+    <Grid item xs={(isCheckoutPage || md) ? 12 : 6}>
       <Dialog open={editModal.isOpen} onClose={editModal.close}>
         <AddressCreate
           data={data}
@@ -96,7 +98,6 @@ export const AddresCard: React.FC<AddressProps> = ({ data, backdrop, isCheckoutP
           </IconButton>
         </Stack>
         <Typography
-          sx={{ borderBottom: '1px solid #e5e5e5' }}
           gap={3}
           alignItems={'center'}
           display={'flex'}
@@ -106,7 +107,6 @@ export const AddresCard: React.FC<AddressProps> = ({ data, backdrop, isCheckoutP
           {data?.firstName}
         </Typography>
         <Typography
-          sx={{ borderBottom: '1px solid #e5e5e5' }}
           gap={3}
           alignItems={'center'}
           display={'flex'}
@@ -116,7 +116,6 @@ export const AddresCard: React.FC<AddressProps> = ({ data, backdrop, isCheckoutP
           {data?.phone}
         </Typography>
         <Typography
-          sx={{ borderBottom: '1px solid #e5e5e5' }}
           gap={3}
           alignItems={'center'}
           display={'flex'}
