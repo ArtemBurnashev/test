@@ -46,6 +46,7 @@ export const MobileStack = styled(Stack)`
 
 `
 export const CatologButton = styled.div`
+  
   button{
     animation-name: butonOpacity;
     animation-duration: 1s;
@@ -71,6 +72,7 @@ export const CatologButton = styled.div`
     &:hover{
       animation: none;
     }
+    
   }
   
 `

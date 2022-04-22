@@ -65,9 +65,9 @@ const MobileHeaderButtons: React.FC<HeadeButtonsProps> = ({
   return (
     <RowStack direction='row'>
 
-      <ListItem className='rowsatck__item' onClick={onProfileIconClick} button>
+      <Stack p='10px' onClick={onProfileIconClick}>
         <Profile />
-      </ListItem>
+      </Stack>
       <Stack direction="row" justifyContent="center">
         <Link href="/">
           <LogoLink>
@@ -77,7 +77,7 @@ const MobileHeaderButtons: React.FC<HeadeButtonsProps> = ({
       </Stack>
       <Stack direction='row' alignItems='center'>
         <Link href={Paths.LIKES}>
-          <ListItem className='rowsatck__item' button>
+          <Stack p='10px'>
             <Badge
               
               color="secondary"
@@ -89,11 +89,11 @@ const MobileHeaderButtons: React.FC<HeadeButtonsProps> = ({
             >
               <Heart />
             </Badge>
-          </ListItem>
+          </Stack>
           {/* <ListItemText>Избранное</ListItemText> */}
         </Link>
         <Link href={Paths.CART}>
-          <ListItem className='rowsatck__item' button>
+          <Stack p='10px'>
             <Badge
               
               color="secondary"
@@ -105,7 +105,7 @@ const MobileHeaderButtons: React.FC<HeadeButtonsProps> = ({
             >
               <Cart />
             </Badge>
-          </ListItem>
+          </Stack>
         </Link>
       </Stack>
 

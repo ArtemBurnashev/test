@@ -42,18 +42,14 @@ const ProductCardHorizontal: React.FC<ProductCardProps> = ({
   const { currency } = useAppSelector(state => state.cart);
   const navigator = useRouter();
   return (
-    <HorizontalCardWrapper>
+    <HorizontalCardWrapper onClick={() => { navigator.push(`${Paths.PRODUCT_DETAILS}${slug}`); modalOpen ? modalOpen() : '' }}>
       <HorizontalCardImageWrapper>
         <LazyImage src={image || ''} alt="product" />
       </HorizontalCardImageWrapper>
       <Stack spacing={4} justifyContent="space-between">
         <Typography
-          onClick={() => { navigator.push(`${Paths.PRODUCT_DETAILS}${slug}`); modalOpen ? modalOpen() : '' }}
           sx={{
             cursor: 'pointer',
-            '&:hover': {
-              color: colors.primary.hover,
-            },
             maxWidth:'249px'
           }}
           component="a"
