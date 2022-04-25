@@ -2,6 +2,8 @@ fragment product on Product {
   name
   id
   slug
+  isAvailable
+  isAvailableForPurchase
   media {
     url
     alt

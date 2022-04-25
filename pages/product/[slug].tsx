@@ -110,7 +110,12 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
 
 
   const sliderItems = data.product?.media?.slice(0, 4);
+  
+  const dataInfo = data?.product?.isAvailable && data?.product?.isAvailableForPurchase;
 
+ 
+  
+  
 
   return (
     <Main>
@@ -265,6 +270,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
           </Grid>
           <Grid sx={idenfy ? { marginTop:{ md:'150px', lg:0} } : { marginTop: 0 }}  xs={12} sm={12} md={6} item lg={3}>
             <AddtoCardSingle
+              available={dataInfo ? dataInfo : null}
               price={
                 variant?.pricing?.price?.gross ||
                 data?.product?.defaultVariant?.pricing?.price?.gross
