@@ -80,8 +80,58 @@ const createApolloClient = (ctx?: GetServerSidePropsContext) => {
         },
         Query: {
           fields: {
-            products: relayStylePagination(),
-            categories: relayStylePagination(),
+            products: {
+              keyArgs: ['filter', 'sortBy'],
+              merge(existing, incoming) {
+                let data;
+                existing &&
+                  incoming &&
+                  incoming.edges.forEach((node, i) => {
+                    if (node.node.__ref === existing.edges[i].node.__ref) {
+                      data = incoming;
+                    }
+                  });
+                const { edges: newEdges } = incoming;
+                if (data) {
+                  return data;
+                }
+                return existing
+                  ? {
+                      ...incoming,
+                      edges: [
+                        ...(existing.edges ? existing.edges : []),
+                        ...(newEdges ? newEdges : []),
+                      ],
+                    }
+                  : incoming;
+              },
+            },
+            categories: {
+              // keyArgs: ['filter', 'sortBy'],
+              merge(existing, incoming) {
+                let data;
+                existing &&
+                  incoming &&
+                  incoming.edges.forEach((node, i) => {
+                    if (node.node.__ref === existing.edges[i].node.__ref) {
+                      data = incoming;
+                    }
+                  });
+                const { edges: newEdges } = incoming;
+                if (data) {
+                  return data;
+                }
+                return existing
+                  ? {
+                      ...incoming,
+                      edges: [
+                        ...(existing.edges ? existing.edges : []),
+                        ...(newEdges ? newEdges : []),
+                      ],
+                    }
+                  : incoming;
+              },
+            },
           },
         },
         Me: {
