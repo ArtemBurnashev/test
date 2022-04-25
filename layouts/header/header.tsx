@@ -138,13 +138,14 @@ const Header = () => {
         >
           <Catalog />
         </Dialog>
-        <Stack sx={{['.gbjXkt']:{width:'100%'}}} width='100%'>
+        <Stack sx={{['.gbjXkt']:{width:'100%'},['.header__inner']:{width:'100%'}}} width='100%'>
           <Stack
             width={{md:'100%'}}
             direction="row"
             alignItems="center"
             gap={'53px'}
             padding={{ md: "18px 0", xs: "0 0 18px" }}
+            className='header__inner'
 
           >
             <MobileStack direction="row" >
