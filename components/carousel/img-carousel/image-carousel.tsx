@@ -5,16 +5,15 @@ import colors from 'config/theme';
 
  const Card = styled.div`
    .slick-slider {
-     height: 435px;
-     @media (max-width: 768px) {
-       height: 435px;
+     /* max-height: 300px; */
+     /* @media (max-width: 768px) {
        height: 358px;
-     }
+     } */
    }
    position: relative;
    img {
      width: 100%;
-     height: 100%;
+     max-height: auto;
      object-fit: contain;
    }
    .slick-dots {

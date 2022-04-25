@@ -30,7 +30,7 @@ import { Button } from 'components/button';
 import { useAppDispatch, useAppSelector } from 'redux-state/hook';
 import { dislike, like } from 'redux-state/features/likes';
 import dynamic from 'next/dynamic';
-import styled from 'styled-components';
+
 
 type Props = {
   data: SingleProductQuery;
@@ -38,26 +38,9 @@ type Props = {
 };
 
 const EditorJs = dynamic(() => import('components/editor'), { ssr: false });
-const StyleTypograph = styled(Typography) <{ idenfy?: boolean }>`
-  @media (max-width: 899px){
-    ${({ idenfy }) => idenfy ? ' margin-top: 120px;' : ''};
-    
-  }
-`
-const SyledGrid = styled(Grid) <{ idenfy?: boolean }>`
-  @media (max-width: 1399px){
-    ${({ idenfy }) => idenfy ? ' margin-top: 110px;' : ''};
-  }
-  /* 899 */
-  @media (max-width: 899px){
-    ${({ idenfy }) => idenfy ? ' margin-top: 20px;' : ''};
-  }
-`
-const ShowSize = styled(Typography) <{ idenfy?: boolean }>`
-  @media (max-width: 693px){
-    ${({ idenfy }) => idenfy ? 'margin-top: 131px;' : ''};
-  }
-`
+
+
+
 
 const SingleProduct: NextPage<Props> = ({ data }) => {
   const [variant, setVariant] = useState<any>();
@@ -127,7 +110,12 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
 
 
   const sliderItems = data.product?.media?.slice(0, 4);
+  
+  const dataInfo = data?.product?.isAvailable && data?.product?.isAvailableForPurchase;
 
+ 
+  
+  
 
   return (
     <Main>
@@ -207,9 +195,9 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
             {data?.product?.variants && data?.product?.variants?.length > 1 && (
               <>
                 {
-                  <ShowSize idenfy={idenfy} variant="body1" fontWeight={500}>
+                  <Typography sx={idenfy ? { marginTop:{ md:'130px', lg:0} } : { marginTop: 0 }} variant="body1" fontWeight={500}>
                     {data.product.defaultVariant?.attributes[0].attribute.name}
-                  </ShowSize>
+                  </Typography>
                 }
 
                 <Select
@@ -241,10 +229,10 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
               </>
             )}
 
-            <Stack spacing={2}>
-              <StyleTypograph idenfy={idenfy} fontWeight={500} variant="h3">
+            <Stack pl={2} spacing={2}>
+              <Typography sx={idenfy ? { marginTop:{ xs:'155px', lg:0 , md:0} } : { marginTop: 0 }} fontWeight={500} variant="h3">
                 Oписание
-              </StyleTypograph>
+              </Typography>
               {data?.product?.description && (
                 <EditorJs data={JSON.parse(data.product.description)} />
               )}
@@ -280,8 +268,9 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
               )}
             </Stack>
           </Grid>
-          <SyledGrid idenfy={idenfy} xs={12} sm={12} md={6} item lg={3}>
+          <Grid sx={idenfy ? { marginTop:{ md:'150px', lg:0} } : { marginTop: 0 }}  xs={12} sm={12} md={6} item lg={3}>
             <AddtoCardSingle
+              available={dataInfo ? dataInfo : null}
               price={
                 variant?.pricing?.price?.gross ||
                 data?.product?.defaultVariant?.pricing?.price?.gross
@@ -298,10 +287,10 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
               variant={getVariantName()}
               slug={data?.product?.slug}
             />
-          </SyledGrid>
+          </Grid>
         </Grid>
         {data?.product?.characteristics &&
-          <Typography sx={idenfy ? { marginTop: '120px' } : { marginTop: 0 }} fontWeight={500} variant="h2">
+          <Typography sx={idenfy ? { marginTop:{ lg:'150px'} } : { marginTop: 0 }} fontWeight={500} variant="h2">
             Характеристики
           </Typography>
         }

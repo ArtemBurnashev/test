@@ -78,7 +78,7 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug ,modalOpen}) =>
 
 
   const products = data?.category?.products?.edges.map(edge => edge.node);
-
+  
   if (loading) {
     return (
       <Stack margin="1rem 0" flexWrap="wrap" direction="row" gap="2rem">
@@ -97,8 +97,8 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug ,modalOpen}) =>
         direction="row"
         alignItems="center"
         justifyContent="space-between"
-      >
-        <Typography variant="h2">{label}</Typography>
+      >{products?.length ? <Typography variant="h2">{label}</Typography> : ''}
+       
       </Stack>
       <Slider
         lazyLoad="progressive"
