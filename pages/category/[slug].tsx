@@ -69,6 +69,7 @@ const CategoryProducts: NextPage = () => {
                   nodes?.map((product) => (
                     <Grid item xs={12} md={3} lg={2} sm={6} key={product.id}>
                       <ProductCard
+                        infoProduct={product.isAvailableForPurchase || null}
                         name={product.name}
                         media={product?.media}
                         thumbnail={product.thumbnail?.url}
