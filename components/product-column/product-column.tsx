@@ -13,8 +13,9 @@ const ProductColumn: React.FC<{ label: string, slug: string, modalOpen?: () => v
     },
     skip: !slug,
   });
-
-  const products = data?.category?.products?.edges.map(product => product.node)
+  
+  const products = data?.category?.products?.edges.map(product => product.node);
+  
 
   return (
     <Stack width="100%" spacing={2}>
@@ -24,7 +25,7 @@ const ProductColumn: React.FC<{ label: string, slug: string, modalOpen?: () => v
         <ProductCardHorizontal
           name={product.name}
           slug={product.slug}
-          image={product?.media && product.media.url}
+          image={product?.media && product.media[0].url}
           price={product.defaultVariant?.pricing?.price?.gross}
           discount={product.defaultVariant?.pricing?.discount?.gross}
           modalOpen={modalOpen}

@@ -49,13 +49,14 @@ const ProductCardHorizontal: React.FC<ProductCardProps> = ({
       <Stack spacing={4} justifyContent="space-between">
         <Typography
           sx={{
+            textTransform:'capitalize',
             cursor: 'pointer',
             maxWidth:'249px'
           }}
           component="a"
           variant="h3"
         >
-          {name}
+          {name.toLowerCase()}
         </Typography>
         <Stack spacing={2} direction="row">
           <Typography fontWeight={500} variant="h3">
