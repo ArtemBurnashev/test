@@ -19,8 +19,8 @@ export const APOLLO_STATE_PROPERTY_NAME = '__APOLLO_STATE__';
 export const COOKIES_TOKEN_NAME = 'jwt';
 
 const getToken = () => {
-  const {user} =store.getState().user;
-  return user.token
+  const { user } = store.getState().user;
+  return user.token;
 };
 
 let apolloClient: ApolloClient<NormalizedCacheObject> = null;
@@ -50,20 +50,95 @@ const createApolloClient = (ctx?: GetServerSidePropsContext) => {
       typePolicies: {
         Category: {
           fields: {
-            products: relayStylePagination({}),
+            products: {
+              keyArgs: ['filter', 'sortBy'],
+              merge(existing, incoming) {
+                let data;
+                existing &&
+                  incoming &&
+                  incoming.edges.forEach((node, i) => {
+                    if (node.node.__ref === existing.edges[i].node.__ref) {
+                      data = incoming;
+                    }
+                  });
+                const { edges: newEdges } = incoming;
+                if (data) {
+                  return data;
+                }
+                return existing
+                  ? {
+                      ...incoming,
+                      edges: [
+                        ...(existing.edges ? existing.edges : []),
+                        ...(newEdges ? newEdges : []),
+                      ],
+                    }
+                  : incoming;
+              },
+            },
           },
         },
         Query: {
           fields: {
-            products: relayStylePagination(),
-            categories: relayStylePagination(),
+            products: {
+              keyArgs: ['filter', 'sortBy'],
+              merge(existing, incoming) {
+                let data;
+                existing &&
+                  incoming &&
+                  incoming.edges.forEach((node, i) => {
+                    if (node.node.__ref === existing.edges[i].node.__ref) {
+                      data = incoming;
+                    }
+                  });
+                const { edges: newEdges } = incoming;
+                if (data) {
+                  return data;
+                }
+                return existing
+                  ? {
+                      ...incoming,
+                      edges: [
+                        ...(existing.edges ? existing.edges : []),
+                        ...(newEdges ? newEdges : []),
+                      ],
+                    }
+                  : incoming;
+              },
+            },
+            categories: {
+              // keyArgs: ['filter', 'sortBy'],
+              merge(existing, incoming) {
+                let data;
+                existing &&
+                  incoming &&
+                  incoming.edges.forEach((node, i) => {
+                    if (node.node.__ref === existing.edges[i].node.__ref) {
+                      data = incoming;
+                    }
+                  });
+                const { edges: newEdges } = incoming;
+                if (data) {
+                  return data;
+                }
+                return existing
+                  ? {
+                      ...incoming,
+                      edges: [
+                        ...(existing.edges ? existing.edges : []),
+                        ...(newEdges ? newEdges : []),
+                      ],
+                    }
+                  : incoming;
+              },
+            },
           },
         },
         Me: {
           fields: {
-            orders: relayStylePagination()
-          }
-        }
+            orders: relayStylePagination(),
+          },
+        },
       },
     }),
   });

@@ -23,22 +23,17 @@ const LinkSet = styled(Typography)`
 
 
 const LinkText = styled(Link)`
-    cursor: pointer;
-  `
+  cursor: pointer;
+  text-transform: capitalize;
+`
 
 export const CategoryNavbar: React.FC = () => {
   const router = useRouter()
   const { data, fetchMore, loading } = useAllCategoriesQuery({
-    variables: { first: 8, cursor: '' },
+    variables: { first: 6, cursor: '' },
   });
   const elements = data?.categories?.edges.map((item) => item.node)
     .map((links) => links);
-
-  const linksItem = elements?.filter((item) => {
-    if (item.children?.edges.length) {
-      return item;
-    }
-  })
 
   const addElemets = (): void => {
     if (data?.categories?.pageInfo.hasNextPage) {
@@ -85,8 +80,8 @@ export const CategoryNavbar: React.FC = () => {
       }
     ]
   };
-  const names = data?.categories?.edges.map((e) => e.node.name).join(',')
 
+  
 
   if (router.pathname !== Paths.HOME) {
     return (
@@ -100,15 +95,15 @@ export const CategoryNavbar: React.FC = () => {
             </Stack>
             :
             <Slider {...settings}>
-              {linksItem?.map((links) =>
+              {elements?.map((links) =>
                 <LinkSet
                   key={links.id}
-                  sx={{ textAlign: 'center' }}
+                  sx={{ textAlign: 'center' ,textTransform:'capitalize'}}
                   variant='subtitle2'
                 >
                   <LinkText
                     key={links.id} href={`${Paths.CATEGORY_PRODUCTS}${links.slug}`}>
-                    {links.name.slice(0, 30)}
+                    {links.name.toLowerCase().slice(0, 30)}
                   </LinkText>
                 </LinkSet>
               )}

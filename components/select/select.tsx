@@ -10,6 +10,7 @@ import {
   StyledLabel,
   StyledHelperText,
 } from './select.styles';
+import ArrowDow from 'components/icons/arrow-down';
 
 const Select = ({
   label,
@@ -28,6 +29,7 @@ const Select = ({
         },
       }}
       labelId="Some-id"
+      IconComponent={ArrowDow}
       {...props}
     >
       {props.children}

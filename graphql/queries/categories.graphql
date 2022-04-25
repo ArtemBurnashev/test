@@ -27,10 +27,22 @@ query allCategories($first: Int!, $cursor: String!) {
   }
 }
 
-query category($first: Int!, $slug: String!, $cursor: String!) {
+query category(
+  $first: Int!
+  $slug: String!
+  $cursor: String!
+  $filter: ProductFilterInput
+  $sort: ProductOrder
+) {
   category(slug: $slug) {
     name
-    products(channel: "default-channel", first: $first, after: $cursor) {
+    products(
+      channel: "default-channel"
+      first: $first
+      after: $cursor
+      filter: $filter
+      sortBy: $sort
+    ) {
       pageInfo {
         hasNextPage
         hasPreviousPage

@@ -14,6 +14,12 @@ const CategoryCarousel: FC = () => {
   const { data } = useAllCategoriesQuery({
     variables: { first: 20, cursor: '' },
   });
+  const products = data?.categories?.edges.filter((e)=>{
+    if(e.node.children?.edges.length){
+      return e;
+    }
+  })
+  
   const settings = {
     infinite: false,
     dots: false,
@@ -61,6 +67,7 @@ const CategoryCarousel: FC = () => {
       },
     ]
   }
+  
   const router = useRouter();
   return (
     <CategoryCaruselCard>
@@ -68,7 +75,7 @@ const CategoryCarousel: FC = () => {
         {...settings}
         lazyLoad="progressive" 
       >
-        {data?.categories?.edges.map((item) => (
+        {products?.map((item) => (
           <div
 
             key={item.node.id}

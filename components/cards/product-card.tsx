@@ -21,12 +21,13 @@ import formatter from 'utils/currencyFormatter';
 
 interface ProductCardProps {
   name: string;
+  infoProduct: boolean | null;
   media?:
-    | {
-        url: string;
-        alt: string;
-      }[]
-    | null;
+  | {
+    url: string;
+    alt: string;
+  }[]
+  | null;
   thumbnail?: string;
   discount?: {
     currency: string;
@@ -41,7 +42,7 @@ interface ProductCardProps {
     amountInSum?: number | null;
   };
   variant: string;
-  modalOpen?:()=> void
+  modalOpen?: () => void
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -53,6 +54,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   startPrice,
   variant,
   modalOpen,
+  infoProduct,
 }) => {
   const navigator = useRouter();
   const dispatch = useAppDispatch();
@@ -60,8 +62,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const { likeList } = useAppSelector((state) => state.like);
   const isInCard = cartProducts.some((product) => product.id === id);
   const isInLikeList = likeList.some((product) => product.id === id);
- 
-  
+
+
   const handleAddToCart = (
     e: React.MouseEvent<HTMLButtonElement | MouseEvent>
   ) => {
@@ -103,9 +105,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
       );
     }
   };
-  
+
   return (
-    <ProductCardWrapper onClick={() => {navigator.push(`${Paths.PRODUCT_DETAILS}${slug}`); modalOpen ? modalOpen() : ''}}>
+    <ProductCardWrapper onClick={() => { navigator.push(`${Paths.PRODUCT_DETAILS}${slug}`); modalOpen ? modalOpen() : '' }}>
       {discount && startPrice && (
         <ProductCardLabel isNew={!!!discount}>
           {discount.amountInSum && startPrice.amountInSum && (
@@ -124,8 +126,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </ProductHeartWrapper>
       <Stack justifyContent="space-between" height={323} spacing={2}>
         <ProductCardImageWrapper>
-          <LazyImage 
-            
+          <LazyImage
+
             src={(media && media[0]?.url) || ''}
             alt={(media && media[0]?.alt) || 'product_image'}
           />
@@ -151,23 +153,28 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 {formatter(startPrice?.amountInSum || 0)} {currency}
               </Typography>
             )}
-            <Typography variant="h3" fontWeight={600} onClick={(e)=> e.stopPropagation()}>
+            <Typography variant="h3" fontWeight={600} onClick={(e) => e.stopPropagation()}>
               {discount ? formatter(discount?.amountInSum || 0) : formatter(startPrice?.amountInSum || 0)}{' '}
               {currency}
             </Typography>
           </Stack>
-          <Button
-            onClick={handleAddToCart}
-            variant="contained"
-            sx={{
-              '.MuiButtonBase-root': {
-                pl: 0,
-                pr: 0,
-              },
-            }}
-          >
-            {isInCard ? <Eye /> : <Cart />}
-          </Button>
+          {infoProduct ?
+            <Button
+              onClick={handleAddToCart}
+              variant="contained"
+              sx={{
+                '.MuiButtonBase-root': {
+                  pl: 0,
+                  pr: 0,
+                },
+              }}
+            >
+              {isInCard ? <Eye /> : <Cart />}
+            </Button>
+            :
+            <Typography fontSize={{md:'12px'}} width='72px' variant='body2'>Временно Недоступно</Typography>
+          }
+
         </Stack>
       </Stack>
     </ProductCardWrapper>

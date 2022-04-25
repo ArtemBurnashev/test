@@ -39,9 +39,6 @@ type Props = {
 
 const EditorJs = dynamic(() => import('components/editor'), { ssr: false });
 
-
-
-
 const SingleProduct: NextPage<Props> = ({ data }) => {
   const [variant, setVariant] = useState<any>();
   const dispatch = useAppDispatch();
@@ -111,7 +108,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
 
   const sliderItems = data.product?.media?.slice(0, 4);
   
-  const dataInfo = data?.product?.isAvailable && data?.product?.isAvailableForPurchase;
+  const dataInfo = data?.product?.isAvailableForPurchase;
 
  
   
@@ -229,7 +226,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
               </>
             )}
 
-            <Stack pl={2} spacing={2}>
+            <Stack pl={{lg:2,xs:0,md:2}} spacing={2}>
               <Typography sx={idenfy ? { marginTop:{ xs:'155px', lg:0 , md:0} } : { marginTop: 0 }} fontWeight={500} variant="h3">
                 Oписание
               </Typography>

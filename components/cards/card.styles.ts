@@ -15,6 +15,11 @@ export const CategoryCardWrapper = styled.div`
   padding: 14px 16px;
   gap: 1rem;
   cursor: pointer;
+  &:hover{
+    h6{
+      color: ${colors.primary.hover};
+    }
+  }
   @media(max-width: 768px){
     width: 241px;
     padding: 4px;
@@ -36,7 +41,7 @@ export const CategoryCardImageWrapper = styled.div`
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
 `;
 

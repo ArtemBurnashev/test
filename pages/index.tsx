@@ -59,8 +59,8 @@ const Home: NextPage = () => {
           <Box >
             <ProductColumn
               modalOpen={productOpen}
-              slug={nodes ? nodes[1].slug : ''}
-              label={nodes ? nodes[1].name : ''}
+              slug={nodes ? nodes[2].slug : ''}
+              label={nodes ? nodes[2].name : ''}
             />
           </Box>
           <Box >
