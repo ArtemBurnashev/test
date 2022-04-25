@@ -74,7 +74,7 @@ export const AddresCard: React.FC<AddressProps> = ({ data, backdrop, isCheckoutP
         onClick={onClick}
         spacing={2}
         sx={{
-          border: `1px solid ${isActive ? colors.grey.darc : '#e5e5e5'}`,
+          border: `3px solid ${isActive ? colors.primary.hover: '#e5e5e5'}`,
           padding: '20px',
           position: 'relative',
         }}
