@@ -10,6 +10,9 @@ fragment product on Product {
     url
     alt
   }
+  productType {
+    id
+  }
   defaultVariant {
     ...productVariant
   }

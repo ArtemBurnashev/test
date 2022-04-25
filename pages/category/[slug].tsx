@@ -3,20 +3,36 @@ import { ProductCard } from 'components/cards';
 import { ProductCardLoading } from 'components/cards/loading-cards';
 import { InfiniteLoader } from 'components/loaders/infinite-loader';
 import { SEO } from 'components/seo';
-import { useCategoryQuery } from 'graphql/generated.graphql';
+import { OrderDirection, ProductOrderField, useCategoryQuery } from 'graphql/generated.graphql';
+import Filter from 'layouts/filter';
 import { Main } from 'layouts/main';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useAppSelector } from 'redux-state/hook';
 
 const CategoryProducts: NextPage = () => {
   const router = useRouter();
+  const {price, sort,attributes} = useAppSelector(state => state.filter);
+
+  console.log(attributes)
   const { slug } = router.query;
   const { data, loading, fetchMore } = useCategoryQuery({
     variables: {
       first: 10,
       slug: Array.isArray(slug) ? slug[0] : slug || '',
       cursor: '',
+      filter: {
+        price: {
+          lte: price.lte,
+          gte: price.gte
+        },
+        attributes
+      },
+      sort: {
+        direction: sort?.direction || OrderDirection.Asc,
+        field: ProductOrderField.Date
+      }
     },
     skip: !slug,
   });
@@ -38,7 +54,7 @@ const CategoryProducts: NextPage = () => {
 
   return (
     <Main>
-      {loading || (
+      {data?.category?.name && (
         <SEO
           title={`${data?.category?.name} | GiperMart`}
           description={data?.category?.name}
@@ -46,61 +62,63 @@ const CategoryProducts: NextPage = () => {
       )}
 
       <Container maxWidth="xl">
-        {loading ? (
-          loadingIndicator()
-        ) : (
-          <Stack spacing={2}>
-            <Typography margin="1.5rem 0" variant="h2">
-              {data?.category?.name}
-            </Typography>
-            <InfiniteLoader
-              hasMore={pageInfo?.hasNextPage || false}
-              loadMore={() =>
-                fetchMore({
-                  variables: {
-                    cursor: pageInfo?.endCursor,
-                  },
-                })
-              }
-              loading={loading}
-            >
-              <Grid rowGap="3rem" direction="row" container>
-                {nodes && nodes.length > 0 ? (
-                  nodes?.map((product) => (
-                    <Grid item xs={12} md={3} lg={2} sm={6} key={product.id}>
-                      <ProductCard
-                        name={product.name}
-                        media={product?.media}
-                        thumbnail={product.thumbnail?.url}
-                        discount={
-                          product.defaultVariant?.pricing?.discount?.gross
-                        }
-                        slug={product.slug}
-                        startPrice={
-                          product.defaultVariant?.pricing?.price?.gross
-                        }
-                        id={product.defaultVariant?.id}
-                        variant={`${product?.defaultVariant?.attributes
-                          .map((val) => val?.attribute.name)
-                          .join(' ')}:${product?.defaultVariant?.name}`}
-                      />
+        <Filter>
+          {loading ? (
+            loadingIndicator()
+          ) : (
+            <Stack spacing={2}>
+              <Typography margin="1.5rem 0" variant="h2">
+                {data?.category?.name}
+              </Typography>
+              <InfiniteLoader
+                hasMore={pageInfo?.hasNextPage || false}
+                loadMore={() =>
+                  fetchMore({
+                    variables: {
+                      cursor: pageInfo?.endCursor,
+                    },
+                  })
+                }
+                loading={loading}
+              >
+                <Grid rowGap="3rem" direction="row" container>
+                  {nodes && nodes.length > 0 ? (
+                    nodes?.map((product) => (
+                      <Grid item xs={12} md={4} lg={3} sm={6} key={product.id}>
+                        <ProductCard
+                          name={product.name}
+                          media={product?.media}
+                          thumbnail={product.thumbnail?.url}
+                          discount={
+                            product.defaultVariant?.pricing?.discount?.gross
+                          }
+                          slug={product.slug}
+                          startPrice={
+                            product.defaultVariant?.pricing?.price?.gross
+                          }
+                          id={product.defaultVariant?.id}
+                          variant={`${product?.defaultVariant?.attributes
+                            .map((val) => val?.attribute.name)
+                            .join(' ')}:${product?.defaultVariant?.name}`}
+                        />
+                      </Grid>
+                    ))
+                  ) : (
+                    <Grid item xs={12}>
+                      <Typography
+                        textAlign="center"
+                        margin="1.5rem 0"
+                        variant="h2"
+                      >
+                        Natija topilmadi
+                      </Typography>
                     </Grid>
-                  ))
-                ) : (
-                  <Grid item xs={12}>
-                    <Typography
-                      textAlign="center"
-                      margin="1.5rem 0"
-                      variant="h2"
-                    >
-                      Natija topilmadi
-                    </Typography>
-                  </Grid>
-                )}
-              </Grid>
-            </InfiniteLoader>
-          </Stack>
-        )}
+                  )}
+                </Grid>
+              </InfiniteLoader>
+            </Stack>
+          )}
+        </Filter>
       </Container>
     </Main>
   );
