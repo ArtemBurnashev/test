@@ -140,7 +140,7 @@ const Header = () => {
         </Dialog>
         <Stack width='100%'>
           <Stack
-            width='100%'
+            width={{md:'100%'}}
             direction="row"
             alignItems="center"
             gap={'53px'}
