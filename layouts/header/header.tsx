@@ -156,7 +156,7 @@ const Header = () => {
                   </Logo>
                 </Link>
               )}
-              <Stack direction="row" spacing={2} alignItems="center">
+              <Stack width='100%' direction="row" spacing={2} alignItems="center">
                 <CatologButton>
                   <Button
                     className={''}
