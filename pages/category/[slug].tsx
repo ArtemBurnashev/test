@@ -62,56 +62,45 @@ const CategoryProducts: NextPage = () => {
       )}
 
       <Container maxWidth="xl">
-        <Filter>
-          {loading ? (
-            loadingIndicator()
-          ) : (
-            <Stack spacing={2}>
-              <Typography margin="1.5rem 0" variant="h2">
-                {data?.category?.name}
-              </Typography>
-              <InfiniteLoader
-                hasMore={pageInfo?.hasNextPage || false}
-                loadMore={() =>
-                  fetchMore({
-                    variables: {
-                      cursor: pageInfo?.endCursor,
-                    },
-                  })
-                }
-                loading={loading}
-              >
-                <Grid rowGap="3rem" direction="row" container>
-                  {nodes && nodes.length > 0 ? (
-                    nodes?.map((product) => (
-                      <Grid item xs={12} md={4} lg={3} sm={6} key={product.id}>
-                        <ProductCard
-                          name={product.name}
-                          media={product?.media}
-                          thumbnail={product.thumbnail?.url}
-                          discount={
-                            product.defaultVariant?.pricing?.discount?.gross
-                          }
-                          slug={product.slug}
-                          startPrice={
-                            product.defaultVariant?.pricing?.price?.gross
-                          }
-                          id={product.defaultVariant?.id}
-                          variant={`${product?.defaultVariant?.attributes
-                            .map((val) => val?.attribute.name)
-                            .join(' ')}:${product?.defaultVariant?.name}`}
-                        />
-                      </Grid>
-                    ))
-                  ) : (
-                    <Grid item xs={12}>
-                      <Typography
-                        textAlign="center"
-                        margin="1.5rem 0"
-                        variant="h2"
-                      >
-                        Natija topilmadi
-                      </Typography>
+        {loading ? (
+          loadingIndicator()
+        ) : (
+          <Stack spacing={2}>
+            <Typography margin="1.5rem 0" variant="h2">
+              {data?.category?.name}
+            </Typography>
+            <InfiniteLoader
+              hasMore={pageInfo?.hasNextPage || false}
+              loadMore={() =>
+                fetchMore({
+                  variables: {
+                    cursor: pageInfo?.endCursor,
+                  },
+                })
+              }
+              loading={loading}
+            >
+              <Grid rowGap="3rem" direction="row" container>
+                {nodes && nodes.length > 0 ? (
+                  nodes?.map((product) => (
+                    <Grid item xs={12} md={3} lg={2} sm={6} key={product.id}>
+                      <ProductCard
+                        infoProduct={product.isAvailableForPurchase || null}
+                        name={product.name}
+                        media={product?.media}
+                        thumbnail={product.thumbnail?.url}
+                        discount={
+                          product.defaultVariant?.pricing?.discount?.gross
+                        }
+                        slug={product.slug}
+                        startPrice={
+                          product.defaultVariant?.pricing?.price?.gross
+                        }
+                        id={product.defaultVariant?.id}
+                        variant={`${product?.defaultVariant?.attributes
+                          .map((val) => val?.attribute.name)
+                          .join(' ')}:${product?.defaultVariant?.name}`}
+                      />
                     </Grid>
                   )}
                 </Grid>

@@ -108,7 +108,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
 
   const sliderItems = data.product?.media?.slice(0, 4);
   
-  const dataInfo = data?.product?.isAvailable && data?.product?.isAvailableForPurchase;
+  const dataInfo = data?.product?.isAvailableForPurchase;
 
  
   

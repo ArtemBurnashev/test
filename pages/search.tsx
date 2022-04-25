@@ -72,6 +72,7 @@ const CategoryProducts: NextPage = () => {
                       key={product.id}
                     >
                       <ProductCard
+                        infoProduct={product.isAvailableForPurchase || null}
                         name={product.name}
                         media={product?.media}
                         thumbnail={product.thumbnail?.url}

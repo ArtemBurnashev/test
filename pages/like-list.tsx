@@ -26,6 +26,7 @@ const CategoryProducts: NextPage = () => {
                 key={like.id}
               >
                 <ProductCard
+                  infoProduct={null}
                   name={like.name}
                   media={[{ url: like.image, alt: 'product_photo' }]}
                   discount={
