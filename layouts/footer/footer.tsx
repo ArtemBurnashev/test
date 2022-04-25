@@ -189,7 +189,7 @@ const Footer = () => {
             </FooterLink>
             <Stack spacing={2} direction="row">
               <CartWrapper>
-                <UzCardIcon/>
+                <Image src={UzCard} alt='uzcard'/>
               </CartWrapper>
               <CartWrapper>
                 <HumoIcon />

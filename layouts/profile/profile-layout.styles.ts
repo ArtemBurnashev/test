@@ -7,4 +7,7 @@ export const ProfileLayoutLink = styled.div<{ isActive?: boolean }>`
   gap: 1rem;
   border: 1.5px solid ${({ isActive }) => (!isActive ? '#808080' : '#000000')};
   cursor: pointer;
+  @media (max-width:899px) {
+    margin-bottom: 12px;
+  }
 `;
