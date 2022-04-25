@@ -12,8 +12,9 @@ import cartReducer, {
 } from './features/cart-slice';
 
 import userReducer from './features/user-slice';
-import likeReducer from "./features/likes";
-import sidebarReducer from "./features/sidebar"
+import likeReducer from './features/likes';
+import sidebarReducer from './features/sidebar';
+import filterReducer from './features/filter';
 
 const storageMiddleware = createListenerMiddleware();
 
@@ -29,7 +30,8 @@ export const store = configureStore({
     cart: cartReducer,
     user: userReducer,
     like: likeReducer,
-    sidebar: sidebarReducer
+    sidebar: sidebarReducer,
+    filter: filterReducer
   },
 
   middleware: (getDefaultMiddleware) =>

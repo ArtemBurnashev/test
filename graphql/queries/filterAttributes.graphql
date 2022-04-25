@@ -1,0 +1,18 @@
+query InitialProductFilterAttributes {
+  attributes(
+    first: 100
+    filter: { filterableInDashboard: true, type: PRODUCT_TYPE }
+  ) {
+    edges {
+      node {
+        id
+        name
+        inputType
+        slug
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}

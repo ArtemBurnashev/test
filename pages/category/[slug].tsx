@@ -3,20 +3,36 @@ import { ProductCard } from 'components/cards';
 import { ProductCardLoading } from 'components/cards/loading-cards';
 import { InfiniteLoader } from 'components/loaders/infinite-loader';
 import { SEO } from 'components/seo';
-import { useCategoryQuery } from 'graphql/generated.graphql';
+import { OrderDirection, ProductOrderField, useCategoryQuery } from 'graphql/generated.graphql';
+import Filter from 'layouts/filter';
 import { Main } from 'layouts/main';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useAppSelector } from 'redux-state/hook';
 
 const CategoryProducts: NextPage = () => {
   const router = useRouter();
+  const {price, sort,attributes} = useAppSelector(state => state.filter);
+
+  console.log(attributes)
   const { slug } = router.query;
   const { data, loading, fetchMore } = useCategoryQuery({
     variables: {
       first: 10,
       slug: Array.isArray(slug) ? slug[0] : slug || '',
       cursor: '',
+      filter: {
+        price: {
+          lte: price.lte,
+          gte: price.gte
+        },
+        attributes
+      },
+      sort: {
+        direction: sort?.direction || OrderDirection.Asc,
+        field: ProductOrderField.Price
+      }
     },
     skip: !slug,
   });
@@ -38,7 +54,7 @@ const CategoryProducts: NextPage = () => {
 
   return (
     <Main>
-      {loading || (
+      {data?.category?.name && (
         <SEO
           title={`${data?.category?.name} | GiperMart`}
           description={data?.category?.name}
@@ -86,22 +102,12 @@ const CategoryProducts: NextPage = () => {
                           .join(' ')}:${product?.defaultVariant?.name}`}
                       />
                     </Grid>
-                  ))
-                ) : (
-                  <Grid item xs={12}>
-                    <Typography
-                      textAlign="center"
-                      margin="1.5rem 0"
-                      variant="h2"
-                    >
-                      Natija topilmadi
-                    </Typography>
-                  </Grid>
-                )}
-              </Grid>
-            </InfiniteLoader>
-          </Stack>
-        )}
+                  )}
+                </Grid>
+              </InfiniteLoader>
+            </Stack>
+          )}
+        </Filter>
       </Container>
     </Main>
   );
