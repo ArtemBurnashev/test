@@ -226,7 +226,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
               </>
             )}
 
-            <Stack pl={2} spacing={2}>
+            <Stack pl={{lg:2,xs:0,md:2}} spacing={2}>
               <Typography sx={idenfy ? { marginTop:{ xs:'155px', lg:0 , md:0} } : { marginTop: 0 }} fontWeight={500} variant="h3">
                 Oписание
               </Typography>

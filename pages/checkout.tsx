@@ -319,6 +319,7 @@ const Checkout: NextPage = () => {
                     name="streetAddress1"
                     render={({ field, formState: { errors } }) => (
                       <Input
+                        multiline
                         label="Адрес"
                         error={!!errors.streetAddress1?.type}
                         helperText={errors.streetAddress1?.message}

@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrandWrapper } from './brands.styles';
 import { Skeleton } from '@mui/material';
-import Image from 'next/image';
 import { useBannersQuery } from 'graphql/generated.graphql';
 import { Stack } from '@mui/material';
 import { LazyImage } from 'components/image';
@@ -13,13 +12,13 @@ const PopularBrands = () => {
       filter: {
         type: "BRAND"
       },
-      first: 3
+      first: 50
     }
   })
   const brands = data?.banners?.edges.map((el) => el.node);
 
   return (
-    <Stack direction="row" margin="0 auto" flexWrap="wrap">
+    <Stack direction="row" gap='16px' margin="0 auto" flexWrap="wrap">
       {brands?.map((item) => (
         <BrandWrapper key={item.id}>
           {

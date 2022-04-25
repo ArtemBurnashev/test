@@ -172,7 +172,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               {isInCard ? <Eye /> : <Cart />}
             </Button>
             :
-            <Typography variant='body2'>Недоступно</Typography>
+            <Typography fontSize={{md:'12px'}} width='72px' variant='body2'>Временно Недоступно</Typography>
           }
 
         </Stack>

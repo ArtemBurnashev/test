@@ -25,7 +25,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
   const router = useRouter();
   return (
     <Box sx={{ margin: withMargin ? '0 .5rem' : 0 }}>
-      <CategoryCardWrapper>
+      <CategoryCardWrapper onClick={() => router.push(`${Paths.CATEGORY_PRODUCTS}${slug}`)}>
         <CategoryCardImageWrapper>
           {image && (
             <LazyImage
@@ -39,11 +39,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
             textTransform:'capitalize',
             flexGrow:1,
             textAlign:"center",
-            ':hover': {
-              color: colors.primary.hover,
-            },
           }}
-          onClick={() => router.push(`${Paths.CATEGORY_PRODUCTS}${slug}`)}
           variant="subtitle2"
         >
           {truncate(label, 25)?.toLowerCase()}
