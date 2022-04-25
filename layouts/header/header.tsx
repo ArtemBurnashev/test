@@ -138,7 +138,7 @@ const Header = () => {
         >
           <Catalog />
         </Dialog>
-        <Stack width='100%'>
+        <Stack sx={{['.gbjXkt']:{width:'100%'}}} width='100%'>
           <Stack
             width={{md:'100%'}}
             direction="row"
