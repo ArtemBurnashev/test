@@ -39,9 +39,6 @@ type Props = {
 
 const EditorJs = dynamic(() => import('components/editor'), { ssr: false });
 
-
-
-
 const SingleProduct: NextPage<Props> = ({ data }) => {
   const [variant, setVariant] = useState<any>();
   const dispatch = useAppDispatch();
