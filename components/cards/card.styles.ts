@@ -23,6 +23,7 @@ export const CategoryCardWrapper = styled.div`
     width: 100%;
     padding: 4px;
   }
+
 `;
 
 export const CategoryCardImageWrapper = styled.div`
@@ -103,6 +104,12 @@ export const HorizontalCardWrapper = styled.div`
   align-items: flex-start;
   gap: 1rem;
   max-height: 157px;
+  cursor: pointer;
+  :hover{
+    a{
+      color: ${colors.primary.hover};
+    }
+  }
 `;
 
 export const HorizontalCardImageWrapper = styled.div`

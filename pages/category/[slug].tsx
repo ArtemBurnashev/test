@@ -31,7 +31,7 @@ const CategoryProducts: NextPage = () => {
       },
       sort: {
         direction: sort?.direction || OrderDirection.Asc,
-        field: ProductOrderField.Date
+        field: ProductOrderField.Price
       }
     },
     skip: !slug,

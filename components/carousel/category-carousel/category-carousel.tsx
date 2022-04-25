@@ -17,11 +17,11 @@ const CategoryCarousel: FC = () => {
   const settings = {
     infinite: false,
     dots: false,
-    initialSlide: 0,
     slidesToShow: 5.5,
     arrows: false,
+    speed: 500,
     slidesToScroll: 3,
-    autoplay: false,
+    autoplay: true,
     responsive:[
       {
         breakpoint: 1517,
@@ -57,13 +57,6 @@ const CategoryCarousel: FC = () => {
         settings: {
           slidesToShow: 4.5,
           slidesToScroll: 2,
-        },
-      },
-      {
-        breakpoint: theme.breakpoints.values.xl,
-        settings: {
-          slidesToShow: 5.5,
-          slidesToScroll: 3,
         },
       },
     ]

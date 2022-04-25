@@ -13580,7 +13580,7 @@ export type BannersQueryVariables = Exact<{
 }>;
 
 
-export type BannersQuery = { __typename?: 'Query', banners?: { __typename?: 'BannerConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, edges: Array<{ __typename?: 'BannerEdge', node: { __typename?: 'Banner', id: string, title: string, description: string, redirectUrl: string, backgroundImage?: { __typename?: 'Image', url: string, alt?: string | null } | null } }> } | null };
+export type BannersQuery = { __typename?: 'Query', banners?: { __typename?: 'BannerConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, edges: Array<{ __typename?: 'BannerEdge', node: { __typename?: 'Banner', id: string, title: string, description: string, viewType: BannerViewType, redirectUrl: string, backgroundImage?: { __typename?: 'Image', url: string, alt?: string | null } | null } }> } | null };
 
 export type AllCategoriesQueryVariables = Exact<{
   first: Scalars['Int'];
@@ -14368,6 +14368,7 @@ export const BannersDocument = gql`
           url
           alt
         }
+        viewType
         redirectUrl
       }
     }

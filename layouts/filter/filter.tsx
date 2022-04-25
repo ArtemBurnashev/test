@@ -42,8 +42,8 @@ const Filter: React.FC = ({ children }) => {
             value={sort?.direction}
             placeholder="Сортировка"
           >
-            <MenuItem value={OrderDirection.Asc}>O'sish</MenuItem>
-            <MenuItem value={OrderDirection.Desc}>Kamayish</MenuItem>
+            <MenuItem value={OrderDirection.Asc}>Сначала по дешевле</MenuItem>
+            <MenuItem value={OrderDirection.Desc}>Сначала по дороже</MenuItem>
           </Select>
           <Accordion>
             <AccordionSummary>
@@ -88,7 +88,12 @@ const Filter: React.FC = ({ children }) => {
             </AccordionDetails>
           </Accordion>
           {attributes?.map((attr) => (
-           <FilterItem key={attr.id} name={attr.name} id={attr.id} slug={attr.slug} />
+            <FilterItem
+              key={attr.id}
+              name={attr.name}
+              id={attr.id}
+              slug={attr.slug}
+            />
           ))}
         </Stack>
       </Grid>
