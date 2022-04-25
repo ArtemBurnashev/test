@@ -31,7 +31,7 @@ const Home: NextPage = () => {
   const { data: categoryData } = useAllCategoriesQuery({ variables: { first: 10, cursor: "" } });
   const nodes = categoryData?.categories?.edges.map((edge) => edge.node);
   const { isOpen: productIsopen, open: productOpen } = useModal()
-  
+
 
   return (
     <Main>

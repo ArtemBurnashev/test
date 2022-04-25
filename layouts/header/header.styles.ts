@@ -34,6 +34,7 @@ export const Logo = styled.div`
   }
 `;
 export const MobileStack = styled(Stack)`
+  width: 100%;
   @media (max-width:899px){
     flex-grow: 1;
     .MuiStack-root-fLuFxz{

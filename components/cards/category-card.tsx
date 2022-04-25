@@ -36,6 +36,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
         </CategoryCardImageWrapper>
         <Typography
           sx={{
+            textTransform:'capitalize',
             flexGrow:1,
             textAlign:"center",
             ':hover': {
@@ -45,7 +46,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
           onClick={() => router.push(`${Paths.CATEGORY_PRODUCTS}${slug}`)}
           variant="subtitle2"
         >
-          {truncate(label, 25)}
+          {truncate(label, 25)?.toLowerCase()}
         </Typography>
       </CategoryCardWrapper>
     </Box>

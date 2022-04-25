@@ -13,8 +13,9 @@ const ProductColumn: React.FC<{ label: string, slug: string, modalOpen?: () => v
     },
     skip: !slug,
   });
-
-  const products = data?.category?.products?.edges.map(product => product.node)
+  
+  const products = data?.category?.products?.edges.map(product => product.node);
+  
 
   return (
     <Stack width="100%" spacing={2}>
