@@ -125,7 +125,7 @@ const Addresses: NextPage = () => {
                   <Skeleton variant="text" width="50%" />
                 </Stack>
               ) : (
-                <Grid container spacing={2}>
+                <Grid marginBottom={{xs:'20px',lg:0}} container spacing={2}>
                   {data?.me?.addresses?.map((e) => (
                     <AddresCard data={e} backdrop={backdrop} />
                   ))}
