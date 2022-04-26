@@ -1,11 +1,16 @@
 # import '../fragments/pageInfoFragment'
 
-query Orders ($first: Int!, $cursor: String) {
+query Orders($first: Int!, $cursor: String) {
   me {
-    orders (first: $first, after: $cursor){
-      edges{
-        node{
+    orders(first: $first, after: $cursor) {
+      edges {
+        node {
           id
+          number
+          payments {
+            id
+          }
+          statusDisplay
           status
           isPaid
           created
@@ -18,11 +23,10 @@ query Orders ($first: Int!, $cursor: String) {
               url
               alt
             }
-            
           }
         }
       }
-      pageInfo{
+      pageInfo {
         ...PageInfo
         __typename
       }
