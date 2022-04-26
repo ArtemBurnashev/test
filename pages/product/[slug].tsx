@@ -80,16 +80,16 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
 
   const handleLikeDislike = () => {
     if (
-      data.product?.id &&
+      data.product?.defaultVariant?.id &&
       data.product.defaultVariant?.pricing?.price?.gross
     ) {
       if (isInLikeList) {
-        return dispatch(dislike(data.product.id));
+        return dispatch(dislike(data.product.defaultVariant.id));
       }
       return dispatch(
         like({
-          id: data.product.id,
-          image: (data.product.media && data.product.media[0].url) || '',
+          id: data.product.defaultVariant.id,
+          image: (data.product.media && data.product.media.length > 0) ? data.product.media[0].url : '',
           price: data.product.defaultVariant.pricing.price.gross,
           discount: data.product.defaultVariant.pricing.discount?.gross,
           name: data.product.name,
