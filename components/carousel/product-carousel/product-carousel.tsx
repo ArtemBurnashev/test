@@ -4,10 +4,13 @@ import Slider from 'react-slick';
 import React from 'react';
 import { ProductCard } from 'components/cards';
 import { SampleNextArrow } from './SampleNextArrow';
+import colors from 'config/theme';
+import { Paths } from 'config/site-paths';
 import { SamplePrevArrow } from './SamplePrevArrow';
 import { Stack, Typography, useTheme } from '@mui/material';
 import { useCategoryQuery } from 'graphql/generated.graphql';
 import { ProductCardLoading } from 'components/cards/loading-cards';
+import { useRouter } from 'next/router';
 
 const Card = styled.div<{ height?: number; fullBorderRadius?: boolean }>`
   max-width: 100%;
@@ -91,7 +94,7 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug ,modalOpen}) =>
       </Stack>
     );
   }
-
+  const router = useRouter()
   return (
     <Card>
       <Stack
@@ -99,7 +102,12 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug ,modalOpen}) =>
         direction="row"
         alignItems="center"
         justifyContent="space-between"
-      >{products?.length ? <Typography variant="h2">{label}</Typography> : ''}
+      >{products?.length ? <Typography
+        sx={{cursor:'pointer',":hover":{color:colors.primary.hover}}}
+        onClick={() => router.push(`${Paths.CATEGORY_PRODUCTS}${slug}`)}
+        variant="subtitle1">
+        {label}
+      </Typography> : ''}
        
       </Stack>
       <Slider
