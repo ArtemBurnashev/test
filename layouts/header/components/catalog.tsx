@@ -4,6 +4,7 @@ import colors from 'config/theme';
 import { useAllCategoriesQuery } from 'graphql/generated.graphql';
 import React from 'react';
 import styled from 'styled-components';
+import { Backdrop } from '@mui/material';
 import CatalogItem from './catalog-item';
 
 
@@ -18,9 +19,9 @@ const Catalog = () => {
 
   if (loading) {
     return (
-      <Stack>
-        <CircularProgress color="primary" size={50} />
-      </Stack>
+        <Backdrop open={true}  color={colors.primary.default}>
+          <CircularProgress/>
+        </Backdrop>
     );
   }
 
