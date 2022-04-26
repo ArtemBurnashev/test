@@ -81,7 +81,7 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug ,modalOpen}) =>
 
 
   const products = data?.category?.products?.edges.map(edge => edge.node);
-  console.log(products);
+
   
   
   if (loading) {

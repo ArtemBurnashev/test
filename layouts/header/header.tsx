@@ -129,20 +129,20 @@ const Header = () => {
           )}
         </Container>
       </Box>
+      <Dialog
+        sx={{['.MuiPaper-root-jrhEqT']:{width:'100%',maxWidth:'100%'}}}
+        scroll="paper"
+        open={catalogModal.isOpen}
+        onClose={catalogModal.close}
+      >
+
+        <Catalog />
+      </Dialog>
       <Container maxWidth="xl">
-        <Dialog
-          scroll="paper"
-          maxWidth="lg"
-          open={catalogModal.isOpen}
-          onClose={catalogModal.close}
-          sx={{width:'100%'}}
-        >
-          
-          <Catalog />
-        </Dialog>
-        <Stack sx={{['.gbjXkt']:{width:'100%'},['.header__inner']:{width:'100%'}}} width='100%'>
+
+        <Stack sx={{ ['.gbjXkt']: { width: '100%' }, ['.header__inner']: { width: '100%' } }} width='100%'>
           <Stack
-            width={{md:'100%'}}
+            width={{ md: '100%' }}
             direction="row"
             alignItems="center"
             gap={'53px'}
@@ -172,7 +172,7 @@ const Header = () => {
                     startIcon={!mediaQuery && (catalogModal.isOpen ? <Close /> : <Hamburger />)}
                     onClick={() => catalogModal.toggle()}
                   >
-                   {!mediaQuery ? 'Каталог' : <BurgerMenu/>}
+                    {!mediaQuery ? 'Каталог' : <BurgerMenu />}
                   </Button>
                 </CatologButton>
 
