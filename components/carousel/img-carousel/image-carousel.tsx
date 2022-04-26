@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Slider from 'react-slick';
 import colors from 'config/theme';
 
- const Card = styled.div`
+const Card = styled.div`
    .slick-slider {
      /* max-height: 300px; */
      /* @media (max-width: 768px) {
@@ -25,6 +25,11 @@ import colors from 'config/theme';
        border-radius: 8px;
        padding: 5px;
        margin-bottom: 10px;
+     }
+     img{
+       width: 100%;
+       height: 100%;
+       object-fit: contain;
      }
      @media (max-width: 456px) {
        li {
@@ -65,7 +70,7 @@ const ImageCarousel: FC<{
     dotsClass: "slick-dots slick-thumb",
     afterChange: (currenSlide: any) => onSlide && onSlide(currenSlide),
     customPaging: function (i: any) {
-      
+
       return (
         <a>
           <img src={imgs ? imgs[i].url : ' '} />
@@ -73,8 +78,8 @@ const ImageCarousel: FC<{
       );
     },
   }
- 
-  
+
+
   return (
     <Card>
       <Slider {...settings}>
