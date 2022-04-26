@@ -135,6 +135,7 @@ const Header = () => {
           maxWidth="lg"
           open={catalogModal.isOpen}
           onClose={catalogModal.close}
+          sx={{width:'100%'}}
         >
           <Catalog />
         </Dialog>

@@ -18,6 +18,7 @@ import { LazyImage } from 'components/image';
 import { Paths } from 'config/site-paths';
 import { dislike, like } from 'redux-state/features/likes';
 import formatter from 'utils/currencyFormatter';
+import colors from 'config/theme';
 
 interface ProductCardProps {
   name: string;
@@ -158,7 +159,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               {currency}
             </Typography>
           </Stack>
-          {infoProduct ?
+          {infoProduct &&
             <Button
               onClick={handleAddToCart}
               variant="contained"
@@ -171,12 +172,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
             >
               {isInCard ? <Eye /> : <Cart />}
             </Button>
-            :
-            <Typography fontSize={{md:'12px'}} width='72px' variant='body2'>Временно Недоступно</Typography>
           }
 
         </Stack>
       </Stack>
+      {!infoProduct && <Typography color={colors.primary.hover} variant='body2'>Временно Недоступно</Typography>
+        }
     </ProductCardWrapper>
   );
 };

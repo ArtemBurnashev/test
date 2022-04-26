@@ -40,7 +40,8 @@ const CategoryProducts: NextPage = () => {
     },
     skip: !slug,
   });
-
+ 
+  
   const nodes = data?.category?.products?.edges.map((edge) => edge.node);
   const pageInfo = data?.category?.products?.pageInfo;
 
