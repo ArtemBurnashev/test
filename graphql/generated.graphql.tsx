@@ -168,16 +168,12 @@ export type AccountRegister = {
 };
 
 export type AccountRegisterInput = {
-  /** Slug of a channel which will be used to notify users. Optional when only one channel exists. */
-  channel?: InputMaybe<Scalars['String']>;
   /** Given name. */
   firstName?: InputMaybe<Scalars['String']>;
   /** User language code. */
   languageCode?: InputMaybe<LanguageCodeEnum>;
   /** Family name. */
   lastName?: InputMaybe<Scalars['String']>;
-  /** User public metadata. */
-  metadata?: InputMaybe<Array<MetadataInput>>;
   /** Password. */
   password: Scalars['String'];
   /** The phone number of the user. */
@@ -13641,7 +13637,7 @@ export type OrdersQueryVariables = Exact<{
 }>;
 
 
-export type OrdersQuery = { __typename?: 'Query', me?: { __typename?: 'User', orders?: { __typename?: 'OrderCountableConnection', edges: Array<{ __typename?: 'OrderCountableEdge', node: { __typename?: 'Order', id: string, status: OrderStatus, isPaid: boolean, created: any, fulfillments: Array<{ __typename?: 'Fulfillment', status: FulfillmentStatus } | null>, lines: Array<{ __typename?: 'OrderLine', productName: string, thumbnail?: { __typename?: 'Image', url: string, alt?: string | null } | null } | null> } }>, pageInfo: { __typename: 'PageInfo', endCursor?: string | null, startCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } } | null } | null };
+export type OrdersQuery = { __typename?: 'Query', me?: { __typename?: 'User', orders?: { __typename?: 'OrderCountableConnection', edges: Array<{ __typename?: 'OrderCountableEdge', node: { __typename?: 'Order', id: string, number?: string | null, statusDisplay?: string | null, status: OrderStatus, isPaid: boolean, created: any, fulfillments: Array<{ __typename?: 'Fulfillment', status: FulfillmentStatus } | null>, lines: Array<{ __typename?: 'OrderLine', productName: string, thumbnail?: { __typename?: 'Image', url: string, alt?: string | null } | null } | null> } }>, pageInfo: { __typename: 'PageInfo', endCursor?: string | null, startCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } } | null } | null };
 
 export type AllProductsQueryVariables = Exact<{
   first: Scalars['Int'];
@@ -14637,6 +14633,8 @@ export const OrdersDocument = gql`
       edges {
         node {
           id
+          number
+          statusDisplay
           status
           isPaid
           created
