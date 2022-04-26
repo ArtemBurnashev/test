@@ -10,6 +10,7 @@ const Wrapper = styled.div`
   padding: 52px 104px;
   background-color: ${colors.white};
   max-width: 1087px;
+  width: 100%;
   display: flex;
   @media (max-width: 492px){
     padding: 40px;

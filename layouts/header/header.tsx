@@ -137,6 +137,7 @@ const Header = () => {
           onClose={catalogModal.close}
           sx={{width:'100%'}}
         >
+          
           <Catalog />
         </Dialog>
         <Stack sx={{['.gbjXkt']:{width:'100%'},['.header__inner']:{width:'100%'}}} width='100%'>
