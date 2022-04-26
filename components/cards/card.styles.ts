@@ -121,6 +121,8 @@ export const HorizontalCardImageWrapper = styled.div`
   width: 140px;
   height: 140px;
   img {
-    ${imageCss}
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 `;

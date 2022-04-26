@@ -113,7 +113,7 @@ const AddtoCardSingle: React.FC<AddtoCardSingleProps> = ({
           )}
         </>
         : <Typography color={colors.primary.hover} variant='h2'>
-          Недоступно
+          Временно Недоступно
         </Typography>
       }
 
