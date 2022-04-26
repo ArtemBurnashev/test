@@ -3,6 +3,7 @@ import ProductCardHorizontal from 'components/cards/product-card-horizontal';
 import Spacer from 'components/common/spacer';
 import { useCategoryQuery } from 'graphql/generated.graphql';
 import React from 'react';
+import NoImage from "assets/png/no-photo-available.png";
 
 const ProductColumn: React.FC<{ label: string, slug: string, modalOpen?: () => void }> = ({ label, slug, modalOpen }) => {
   const { data, loading, fetchMore } = useCategoryQuery({
@@ -25,7 +26,7 @@ const ProductColumn: React.FC<{ label: string, slug: string, modalOpen?: () => v
         <ProductCardHorizontal
           name={product.name}
           slug={product.slug}
-          image={product?.media && product.media[0].url}
+          image={(product?.media && product.media.length > 0) ? product.media[0].url : NoImage.src}
           price={product.defaultVariant?.pricing?.price?.gross}
           discount={product.defaultVariant?.pricing?.discount?.gross}
           modalOpen={modalOpen}

@@ -19,7 +19,7 @@ import { Paths } from 'config/site-paths';
 import { dislike, like } from 'redux-state/features/likes';
 import formatter from 'utils/currencyFormatter';
 import colors from 'config/theme';
-
+import NoImage from "assets/png/no-photo-available.png";
 interface ProductCardProps {
   name: string;
   infoProduct: boolean | null;
@@ -129,8 +129,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <ProductCardImageWrapper>
           <LazyImage
 
-            src={(media && media[0]?.url) || ''}
-            alt={(media && media[0]?.alt) || 'product_image'}
+            src={((media && media.length > 0) ? media[0]?.url : NoImage.src) || ''}
+            alt={(media && media.length > 0 && media[0]?.alt) || 'product_image'}
           />
         </ProductCardImageWrapper>
         <Typography
