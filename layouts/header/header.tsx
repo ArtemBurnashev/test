@@ -130,7 +130,7 @@ const Header = () => {
         </Container>
       </Box>
       <Dialog
-        sx={{['.MuiPaper-root-jrhEqT']:{width:'100%',maxWidth:'100%'},['.jFWtCI']:{maxWidth:'100%'},maxWidth:'100%'}}
+        sx={{['.MuiPaper-root-jrhEqT']:{width:'100%',maxWidth:'100%'},['.jFWtCI']:{maxWidth:'75%'},maxWidth:'100%'}}
         scroll="paper"
         open={catalogModal.isOpen}
         onClose={catalogModal.close}
