@@ -15,6 +15,7 @@ import formatter from 'utils/currencyFormatter';
 
 interface ProductCardProps {
   name: string;
+  productInfo:boolean | null;
   image?: string | null;
   discount?: {
     currency: string;
@@ -38,9 +39,11 @@ const ProductCardHorizontal: React.FC<ProductCardProps> = ({
   image,
   name,
   modalOpen,
+  productInfo
 }) => {
   const { currency } = useAppSelector(state => state.cart);
   const navigator = useRouter();
+  const router = useRouter();
   return (
     <HorizontalCardWrapper onClick={() => { navigator.push(`${Paths.PRODUCT_DETAILS}${slug}`); modalOpen ? modalOpen() : '' }}>
       <HorizontalCardImageWrapper>
@@ -69,6 +72,7 @@ const ProductCardHorizontal: React.FC<ProductCardProps> = ({
             </Typography>
           )}
         </Stack>
+          {!productInfo && <Typography color={colors.primary.hover}>Временно Недоступно</Typography>}
       </Stack>
     </HorizontalCardWrapper>
   );

@@ -26,6 +26,12 @@ const LinkText = styled(Link)`
   cursor: pointer;
   text-transform: capitalize;
 `
+const SliderBlock = styled.div`
+  .slick-track{
+    display: flex;
+    align-items: center;
+  }
+`
 
 export const CategoryNavbar: React.FC = () => {
   const router = useRouter()
@@ -81,7 +87,7 @@ export const CategoryNavbar: React.FC = () => {
     ]
   };
 
-  
+
 
   if (router.pathname !== Paths.HOME) {
     return (
@@ -94,27 +100,29 @@ export const CategoryNavbar: React.FC = () => {
               <Skeleton variant="text" width="10%" />
             </Stack>
             :
-            <Slider {...settings}>
-              {elements?.map((links) =>
-                <LinkSet
-                  key={links.id}
-                  sx={{ textAlign: 'center' ,textTransform:'capitalize'}}
-                  variant='subtitle2'
-                >
-                  <LinkText
-                    key={links.id} href={`${Paths.CATEGORY_PRODUCTS}${links.slug}`}>
-                    {links.name.toLowerCase().slice(0, 30)}
-                  </LinkText>
-                </LinkSet>
-              )}
-              {data?.categories?.pageInfo.hasNextPage &&
-                <Button
-                  onClick={addElemets}
-                  sx={{ padding: '0', width: 'max-content', color: '#333' }}
-                  variant='text'
-                >Еще</Button>
-              }
-            </Slider>
+            <SliderBlock>
+              <Slider {...settings}>
+                {elements?.map((links) =>
+                  <LinkSet
+                    key={links.id}
+                    sx={{ textAlign: 'center', textTransform: 'capitalize' }}
+                    variant='subtitle2'
+                  >
+                    <LinkText
+                      key={links.id} href={`${Paths.CATEGORY_PRODUCTS}${links.slug}`}>
+                      {links.name.toLowerCase().slice(0, 30)}
+                    </LinkText>
+                  </LinkSet>
+                )}
+                {data?.categories?.pageInfo.hasNextPage &&
+                  <Button
+                    onClick={addElemets}
+                    sx={{ padding: '0', width: 'max-content', color: '#333' }}
+                    variant='text'
+                  >Еще</Button>
+                }
+              </Slider>
+            </SliderBlock>
           }
         </Container>
       </CategoryStyle>
