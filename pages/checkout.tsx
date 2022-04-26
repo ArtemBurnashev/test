@@ -84,7 +84,6 @@ const Checkout: NextPage = () => {
     usePaymeTransactionMutation();
   const router = useRouter();
   const completeModal = useModal();
-  const [isCreated, setIsCreated] = useState(false);
   const { data: addresses } = useAddressListQuery({ skip: !isAuthenticated });
 
   const { control, handleSubmit, setValue } = useForm<CheckoutCreateInput>({
@@ -108,22 +107,6 @@ const Checkout: NextPage = () => {
   const handleCheckout = (data: CheckoutCreateInput) => {
     const [firstName, lastName] = data.name.split(' ');
     const { phone, streetAddress1, streetAddress2 } = data;
-    if (isCreated) {
-      checkoutComplete({
-        variables: {
-          checkoutId: checkoutCreateData?.checkoutCreate?.checkout?.id,
-          paymentGateway:
-            paymentGateway === '2' ? 'mirumee.payments.payme' : undefined,
-        },
-        onCompleted: (data) => {
-          if (data.checkoutComplete?.errors.length === 0) {
-            dispatch(clearCart());
-            completeModal.open();
-          }
-        },
-      });
-      return;
-    }
     checkoutCreate({
       variables: {
         input: {
@@ -155,7 +138,20 @@ const Checkout: NextPage = () => {
       },
       onCompleted: (data) => {
         if (data.checkoutCreate?.errors.length === 0) {
-          setIsCreated(true);
+         checkoutComplete({
+            variables: {
+              checkoutId: data.checkoutCreate.checkout?.id,
+              paymentGateway:
+                paymentGateway === '2' ? 'mirumee.payments.payme' : undefined,
+            },
+            
+            onCompleted: (data) => {
+              if (data.checkoutComplete?.errors.length === 0) {
+                dispatch(clearCart());
+                completeModal.open();
+              }
+            },
+          });
         }
       },
     });
@@ -249,9 +245,17 @@ const Checkout: NextPage = () => {
                     aria-controls="panel1bh-content"
                     id="panel1bh-header"
                   >
-                    <Stack direction='row' alignItems='center' pr='20px' width='100%' justifyContent='space-between'>
+                    <Stack
+                      direction="row"
+                      alignItems="center"
+                      pr="20px"
+                      width="100%"
+                      justifyContent="space-between"
+                    >
                       <Typography variant="h6">Ваш заказ</Typography>
-                      <Typography variant="h2">{formatter(totalPrice) } Сум </Typography>
+                      <Typography variant="h2">
+                        {formatter(totalPrice)} Сум{' '}
+                      </Typography>
                     </Stack>
                   </AccordionSummary>
                   <AccordionDetails>

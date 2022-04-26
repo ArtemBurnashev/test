@@ -13,6 +13,8 @@ interface OrderProps {
   order: {
     id: string;
     status: string;
+    statusDisplay?: string | null;
+    number?: string | null;
     isPaid: boolean;
     created: any;
     fulfillments: ({
@@ -31,37 +33,45 @@ interface OrderProps {
 
 const OrdersCard: React.FC<OrderProps> = ({ order }) => {
 
-  
   return (
     <OrderCardStyle>
       <OrderBlock>
         <OrderImgBlock>
-          <OrderImg src={order.lines[0]?.thumbnail?.url} alt={order.lines[0]?.thumbnail?.alt || "productImg"} />
+          <OrderImg
+            src={order.lines[0]?.thumbnail?.url}
+            alt={order.lines[0]?.thumbnail?.alt || 'productImg'}
+          />
           <OrderImgTexts>
-            <Typography variant='body1'></Typography>
-            <Typography variant='body2'>{order.created} Доставлен</Typography>
+            <Typography variant="body1"></Typography>
+            <Typography variant="body2">{new Date(order.created).toLocaleString("uz")}</Typography>
           </OrderImgTexts>
         </OrderImgBlock>
         <div>
-          <Typography mb={1.5} variant='h2' sx={{ fontSize: '16px' }}>{order.id}</Typography>
-          <Typography variant='h3' sx={{ maxWidth: '315px' }}>{order.lines[0]?.productName}</Typography>
+          <Typography mb={1.5} variant="h2" sx={{ fontSize: '16px' }}>
+            Заказ №: {order.number}
+          </Typography>
+          <Typography variant="h3" sx={{ maxWidth: '315px' }}>
+            {order.lines[0]?.productName}
+          </Typography>
         </div>
       </OrderBlock>
       <div>
         <Button
-          type='button'
+          type="button"
           sx={{
-            ":hover": {
+            ':hover': {
               backgroundColor: '#8E8E8E',
             },
             padding: '33px',
             color: '#000',
-            backgroundColor: '#8E8E8E'
+            backgroundColor: '#8E8E8E',
           }}
-        >Завершенный</Button>
+        >
+          {order.statusDisplay}
+        </Button>
       </div>
     </OrderCardStyle>
-  )
+  );
 }
 
 export default OrdersCard 
