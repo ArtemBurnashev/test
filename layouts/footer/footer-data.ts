@@ -37,6 +37,10 @@ const useFullLinks = [
     link: '#',
   },
   {
+    label: 'О компании',
+    link: '/compInfo',
+  },
+  {
     label: 'Контакты',
     link: '#',
   },
