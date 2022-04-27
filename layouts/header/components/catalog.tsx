@@ -1,13 +1,20 @@
-import { CircularProgress, Grid, Paper ,Stack} from '@mui/material';
+import { CircularProgress, Grid, Paper } from '@mui/material';
 import { InfiniteLoader } from 'components/loaders/infinite-loader';
 import colors from 'config/theme';
 import { useAllCategoriesQuery } from 'graphql/generated.graphql';
 import React from 'react';
 import styled from 'styled-components';
-import { Backdrop } from '@mui/material';
 import CatalogItem from './catalog-item';
 
-
+const Wrapper = styled.div`
+  padding: 52px 104px;
+  background-color: ${colors.white};
+  max-width: 1087px;
+  display: flex;
+  @media (max-width: 492px){
+    padding: 40px;
+  }
+`;
 
 const Catalog = () => {
   const { data, loading, fetchMore } = useAllCategoriesQuery({
@@ -16,19 +23,16 @@ const Catalog = () => {
   const nodes = data?.categories?.edges.filter(category => category.node.children?.edges && category.node.children?.edges?.length > 0).map((category) => category.node);
   const pageInfo = data?.categories?.pageInfo;
 
-
   if (loading) {
     return (
-        <Backdrop open={true}  color={colors.primary.default}>
-          <CircularProgress/>
-        </Backdrop>
+      <Wrapper>
+        <CircularProgress color="primary" size={50} />
+      </Wrapper>
     );
   }
 
-  console.log(data);
-  
   return (
-    <Stack padding={{md:'40px',lg:'52px 88px',xs:'30px'}}>
+    <Wrapper>
       <Grid
         mb="2rem"
         justifyContent="space-between"
@@ -58,7 +62,7 @@ const Catalog = () => {
           ))}
         </InfiniteLoader>
       </Grid>
-    </Stack>
+    </Wrapper>
   );
 };
 

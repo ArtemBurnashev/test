@@ -20,9 +20,8 @@ import Link from 'next/link';
 import { FooterIcon } from 'components/icons/footer-icon';
 import UzCard from 'assets/png/uzcard.png';
 import { useMediaQuery } from '@mui/material';
-import Humo from 'assets/png/humo.png';
-import { UzCardIcon } from 'components/icons/uzCard-icon';
 import { HumoIcon } from 'components/icons/humo-icon';
+import colors from 'config/theme';
 
 const Footer = () => {
   const querys = useMediaQuery('(max-width:768px)');
@@ -71,9 +70,10 @@ const Footer = () => {
               <>
                 <Grid item xs={12} sm={6} lg={3}>
                   <Stack spacing={2}>
+                    
                     {useFullLinks.map((info) => (
                       <Link passHref key={info.label} href={info.link}>
-                        <Typography component="a" variant="body1" key={info.label}>
+                        <Typography sx={{":hover":{color:colors.primary.hover}}} component="a" variant="body1" key={info.label}>
                           {info.label}
                         </Typography>
                       </Link>
@@ -84,7 +84,7 @@ const Footer = () => {
                   <Stack spacing={2}>
                     {aboutSite.map((info) => (
                       <Link passHref key={info.label} href={info.link}>
-                        <Typography variant="body1" component="a" key={info.label}>
+                        <Typography sx={{":hover":{color:colors.primary.hover}}} variant="body1" component="a" key={info.label}>
                           {info.label}
                         </Typography>
                       </Link>
@@ -95,7 +95,7 @@ const Footer = () => {
                   <Stack spacing={2}>
                     {siteInfo.map((info) => (
                       <Link passHref key={info.label} href={info.link}>
-                        <Typography variant="body1" component="a" key={info.label}>
+                        <Typography sx={{":hover":{color:colors.primary.hover}}} variant="body1" component="a" key={info.label}>
                           {info.label}
                         </Typography>
                       </Link>
@@ -117,7 +117,7 @@ const Footer = () => {
                     {useFullLinks.map((info) => (
                       <AccordionDetails key={info.label}>
                         <Link passHref href={info.link}>
-                          <Typography component="a" variant="body1" key={info.label}>
+                          <Typography sx={{":hover":{color:colors.primary.hover}}} component="a" variant="body1" key={info.label}>
                             {info.label}
                           </Typography>
                         </Link>
@@ -139,7 +139,7 @@ const Footer = () => {
                     {aboutSite.map((info) => (
                       <AccordionDetails key={info.label}>
                         <Link passHref href={info.link}>
-                          <Typography component="a" variant="body1" key={info.label}>
+                          <Typography sx={{":hover":{color:colors.primary.hover}}} component="a" variant="body1" key={info.label}>
                             {info.label}
                           </Typography>
                         </Link>
@@ -161,7 +161,7 @@ const Footer = () => {
                     {siteInfo.map((info) => (
                       <AccordionDetails key={info.label}>
                         <Link passHref href={info.link}>
-                          <Typography component="a" variant="body1" key={info.label}>
+                          <Typography sx={{":hover":{color:colors.primary.hover}}} component="a" variant="body1" key={info.label}>
                             {info.label}
                           </Typography>
                         </Link>

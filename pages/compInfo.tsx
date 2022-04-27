@@ -54,7 +54,7 @@ const compInfo: NextPage = () => {
         <Typography variant='body1' mb={6}>
           {t("compInfo-lastText2")}
           <CompInfoLink>
-            <Link href='#'> https://www.Gipermart.ru/collection/doc-settings/product/razdel-menyu</Link>
+            <Link href='/'> https://www.Gipermart.uz/collection/doc-settings/product/razdel-menyu</Link>
           </CompInfoLink>
 
         </Typography>
