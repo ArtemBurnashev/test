@@ -87,14 +87,14 @@ const Filter: React.FC = ({ children }) => {
               </Stack>
             </AccordionDetails>
           </Accordion>
-          {attributes?.map((attr) => (
+          {/* {attributes?.map((attr) => (
             <FilterItem
               key={attr.id}
               name={attr.name}
               id={attr.id}
               slug={attr.slug}
             />
-          ))}
+          ))} */}
         </Stack>
       </Grid>
     </Grid>
