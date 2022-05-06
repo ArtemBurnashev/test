@@ -41,10 +41,11 @@ const CatalogItem: React.FC<CatalogItemProps> = ({
   slug,
 }) => {
   const [expanded, setExpanded] = useState(false);
+  console.log(slug)
   return (
     <ItemWrapper>
       <Link href={`${Paths.CATEGORY_PRODUCTS}${slug}`}>
-        <CategoryCard label={title} image={image} />
+        <CategoryCard slug={slug} label={title} image={image} />
       </Link>
       {children?.slice(0, expanded ? children.length : 3).map((child) => (
         <StyledLink href={`${Paths.CATEGORY_PRODUCTS}${child.slug}`}>
