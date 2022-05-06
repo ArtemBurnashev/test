@@ -4,32 +4,29 @@ import Slider from 'react-slick';
 import { LazyImage } from 'components/image';
 import colors from 'config/theme';
 import Arrow from 'components/icons/arrow';
-import { Skeleton } from '@mui/material';
+import { Skeleton, useMediaQuery } from '@mui/material';
 import { useBannersQuery } from 'graphql/generated.graphql';
 
 
 const Card = styled.div<{ height?: number; fullBorderRadius?: boolean }>`
   max-width: 100%;
-  height: 310px;
   
-  @media (max-width:1118px) {
-    height: auto;
-  }
-  @media (max-width:560px){
-    max-height: 300px;
-  }
   overflow: hidden;
+  max-height: 310px;
   .slick-list {
-    /* height: ${({ height }) => (height ? `${height}px` : '100%')}; */
-   
+    max-height: 310px;
     .slick-track {
+      
       .slick-slide {
-        div > div {
-          height: ${({ height }) => (height ? `${height}px` : '100%')};
-          img {
-            object-fit: cover;
-            width: 100%;
-            height: 100%;
+        div {
+
+          height: 100%;
+           div {
+            img {
+              object-fit: cover;
+              width: 100%;
+              height: 100%;
+            }
           }
         }
       }
@@ -67,18 +64,6 @@ const NextArrow = styled(Arrow)`
   transform: rotate(180deg) translate(0, 50%);
 `;
 
-const Image = styled(LazyImage) <{ height?: number }>`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-
-const images = [
-  "https://picsum.photos/id/209/700",
-  "https://picsum.photos/id/234/700",
-  "https://picsum.photos/id/210/700",
-];
-
 const ImageCarousel: FC<{
   height?: number;
   fullBorderRadius?: boolean;
@@ -86,17 +71,17 @@ const ImageCarousel: FC<{
   initialSlide?: number;
   onSlide?: (currenSlide: number) => void;
 }> = ({ height, fullBorderRadius, initialSlide, onSlide }) => {
+  const isMobile = useMediaQuery("(max-width: 768px)")
   const { data } = useBannersQuery({
     variables: {
       filter: {
-        type: "CAROUSEL"
+        type: "CAROUSEL",
+        viewType: isMobile ? "MOBILE" : "WEB"
       },
       first: 10
     }
   })
   const products = data?.banners?.edges.map((el) => el.node);
-
-
 
   return (
     <Card height={height}>
@@ -110,7 +95,7 @@ const ImageCarousel: FC<{
         autoplaySpeed={4000}
         prevArrow={<Arrow />}
         nextArrow={<NextArrow />}
-        adaptiveHeight={true}
+        // adaptiveHeight={true}
         lazyLoad="progressive"
         afterChange={(currenSlide) => onSlide && onSlide(currenSlide)}
       >

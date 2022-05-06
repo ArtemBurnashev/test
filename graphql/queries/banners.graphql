@@ -9,6 +9,7 @@ query Banners($first:Int!,$after:String,$filter:BannerFilterInput!){
         id
         title
         description
+        viewType
         backgroundImage {
           url
           alt

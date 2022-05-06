@@ -1369,6 +1369,7 @@ export enum BannerErrorCode {
 export type BannerFilterInput = {
   search?: InputMaybe<Scalars['String']>;
   type?: InputMaybe<Scalars['String']>;
+  viewType?: InputMaybe<Scalars['String']>;
 };
 
 export type BannerInput = {
@@ -13637,7 +13638,7 @@ export type OrdersQueryVariables = Exact<{
 }>;
 
 
-export type OrdersQuery = { __typename?: 'Query', me?: { __typename?: 'User', orders?: { __typename?: 'OrderCountableConnection', edges: Array<{ __typename?: 'OrderCountableEdge', node: { __typename?: 'Order', id: string, number?: string | null, statusDisplay?: string | null, status: OrderStatus, isPaid: boolean, created: any, fulfillments: Array<{ __typename?: 'Fulfillment', status: FulfillmentStatus } | null>, lines: Array<{ __typename?: 'OrderLine', productName: string, thumbnail?: { __typename?: 'Image', url: string, alt?: string | null } | null } | null> } }>, pageInfo: { __typename: 'PageInfo', endCursor?: string | null, startCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } } | null } | null };
+export type OrdersQuery = { __typename?: 'Query', me?: { __typename?: 'User', orders?: { __typename?: 'OrderCountableConnection', edges: Array<{ __typename?: 'OrderCountableEdge', node: { __typename?: 'Order', id: string, number?: string | null, statusDisplay?: string | null, status: OrderStatus, isPaid: boolean, created: any, payments?: Array<{ __typename?: 'Payment', id: string } | null> | null, fulfillments: Array<{ __typename?: 'Fulfillment', status: FulfillmentStatus } | null>, lines: Array<{ __typename?: 'OrderLine', productName: string, thumbnail?: { __typename?: 'Image', url: string, alt?: string | null } | null } | null> } }>, pageInfo: { __typename: 'PageInfo', endCursor?: string | null, startCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } } | null } | null };
 
 export type AllProductsQueryVariables = Exact<{
   first: Scalars['Int'];
@@ -14386,6 +14387,7 @@ export const BannersDocument = gql`
         id
         title
         description
+        viewType
         backgroundImage {
           url
           alt
@@ -14634,6 +14636,9 @@ export const OrdersDocument = gql`
         node {
           id
           number
+          payments {
+            id
+          }
           statusDisplay
           status
           isPaid
