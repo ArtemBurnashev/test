@@ -35,6 +35,7 @@ export const ProfileElements: React.FC<ProfileProps> = ({
     <>
       {!md ? (
         <>
+        
           {/* DECKTOP VERSION */}
           <Stack gap="1rem">
             <Typography variant="h2">Персональные данные</Typography>
@@ -53,6 +54,7 @@ export const ProfileElements: React.FC<ProfileProps> = ({
               sx={{ maxWidth: 'max-content' }}
               color="secondary"
             >
+
               ИЗМЕНИТЬ
             </Button>
             <Typography variant="h2">Пароль</Typography>
