@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useModal } from 'hooks/use-modal';
 import { useMediaQuery } from '@mui/material';
 import { useDeleteAddressMutation } from 'graphql/generated.graphql';
+import { useUserAddressDeleteMutation } from 'graphql/generated.graphql';
 import { Typography, Grid, Stack, Dialog } from '@mui/material';
 import { AddressCreate } from 'components/address-items';
 import colors from 'config/theme';
@@ -40,7 +41,7 @@ interface AddressProps {
 }
 
 export const AddresCard: React.FC<AddressProps> = ({ data, backdrop, isCheckoutPage, isActive, onClick }) => {
-  const [mutation, mutationData] = useDeleteAddressMutation();
+  const [mutation, mutationData] = useUserAddressDeleteMutation();
   const editModal = useModal();
   const { t } = useTranslation();
   const md = useMediaQuery('(max-width:899px)');
