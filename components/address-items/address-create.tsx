@@ -6,9 +6,9 @@ import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
-import styled from 'styled-components';
-import { CountryCode, useAddressCreateMutation } from 'graphql/generated.graphql';
-import { useAddressUpdateMutation } from 'graphql/generated.graphql';
+import { useUserAddressCreateMutation } from 'graphql/generated.graphql';
+import { CountryCode } from 'graphql/generated.graphql';
+import { useUserAddressUpdateMutation } from 'graphql/generated.graphql';
 import { AddressFormStyle } from './address-create-style';
 import { useAppSelector } from 'redux-state/hook';
 
@@ -39,9 +39,9 @@ interface AddressProp {
 }
 
 export const AddressCreate: React.FC<AddressProp> = ({ modalClose, backdrop, data }) => {
-  const [mutation, datamutation] = useAddressCreateMutation();
+  const [createAddres] = useUserAddressCreateMutation();
   const { user } = useAppSelector((state) => state.user);
-  const [updeteAdderss, dataUpdateAddress] = useAddressUpdateMutation();
+  const [updeteAdderss, dataUpdateAddress] = useUserAddressUpdateMutation();
 
   const { t } = useTranslation()
   const validationSchema = Yup.object().shape({
@@ -63,27 +63,27 @@ export const AddressCreate: React.FC<AddressProp> = ({ modalClose, backdrop, dat
   const { errors } = formState;
 
   const onSubmit = (data: any) => {
-    console.log(data);
+   
 
     if (user.userId) {
       reset();
       backdrop?.open()
-      mutation({
-        variables: {
-          input: {
-            city: data.city,
+      createAddres({
+        variables:{
+          input:{
+            city:data.city,
             firstName: data.name,
             phone: data.phone,
             streetAddress1: data.address,
             country: CountryCode.Uz,
-          },
-          userId: user.userId
+          }
         },
-        refetchQueries: ['AddressList'],
+        refetchQueries:['AddressList'],
         onCompleted: () => {
           backdrop?.close()
         }
       })
+   
       modalClose();
       return false;
     }
