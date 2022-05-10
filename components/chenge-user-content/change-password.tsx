@@ -33,7 +33,7 @@ export const ChengePassword: React.FC<ChengePasswordProp> = ({ modal }) => {
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
 
-  const { register, handleSubmit, reset, formState } = useForm(formOptions);
+  const { register, handleSubmit, reset, setError, formState } = useForm(formOptions);
   const { errors } = formState;
 
 
@@ -42,12 +42,25 @@ export const ChengePassword: React.FC<ChengePasswordProp> = ({ modal }) => {
       {
         variables: {
           oldPassword: data.lastPassword,
-          newPassword: data.password
-        }
+          newPassword: data.password,
+        },
+        onCompleted: (res) => {
+          if (res.passwordChange?.errors.length) {
+            setError("lastPassword",{
+              message:res.passwordChange.errors[0].message || '',
+              type:'setValueAs'
+            })
+          }
+          else {
+            reset()
+            modal()
+          }
+
+        },
       }
     )
-    reset()
-    modal()
+
+
     return false;
   }
   return (
