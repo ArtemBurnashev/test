@@ -28,11 +28,11 @@ export const StyledInput = styled(OutlinedInput)`
     background-color: #fff;
     font-size: 16px;
     transition: ${(props) =>
-      props.theme.transitions.create([
-        "border-color",
-        "background-color",
-        "box-shadow",
-      ])};
+    props.theme.transitions.create([
+      "border-color",
+      "background-color",
+      "box-shadow",
+    ])};
 
     &:-webkit-autofill,
     &:-webkit-autofill:hover,
@@ -78,7 +78,7 @@ export const StyledLabel = styled(InputLabel)`
 export const ToggleIcon = styled(
   ({ showPassword, ...props }: IconButtonProps & { showPassword: boolean }) => (
     <IconButton className="toggle-btn" {...props}>
-      {showPassword ? <EyeDisabled /> : <EyeEnabled />}
+      {showPassword ? <EyeEnabled /> : <EyeDisabled />}
     </IconButton>
   )
 )`

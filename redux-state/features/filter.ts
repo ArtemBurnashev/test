@@ -20,8 +20,8 @@ interface FilterState {
 
 const initialState: FilterState = {
   price: {
-    lte: 100,
-    gte: 10,
+    lte: 1000,
+    gte: 0,
   },
   attributes: []
 };

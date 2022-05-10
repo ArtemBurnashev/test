@@ -42,12 +42,13 @@ export const ChengePassword: React.FC<ChengePasswordProp> = ({ modal }) => {
       {
         variables: {
           oldPassword: data.lastPassword,
-          newPassword: data.password
+          newPassword: data.password,
         }
       }
     )
     reset()
     modal()
+    
     return false;
   }
   return (
