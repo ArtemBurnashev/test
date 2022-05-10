@@ -35,7 +35,7 @@ export const ProfileElements: React.FC<ProfileProps> = ({
     <>
       {!md ? (
         <>
-        
+
           {/* DECKTOP VERSION */}
           <Stack gap="1rem">
             <Typography variant="h2">Персональные данные</Typography>
@@ -111,7 +111,7 @@ export const ProfileElements: React.FC<ProfileProps> = ({
               onClick={catalogModal.close}
             />
             {modalType ? (
-              <ChengeData />
+              <ChengeData modal={catalogModal.close}/>
             ) : (
               <ChengePassword modal={catalogModal.close} />
             )}
