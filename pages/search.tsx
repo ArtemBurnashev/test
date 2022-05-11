@@ -46,7 +46,7 @@ const CategoryProducts: NextPage = () => {
         ) : (
           <Stack spacing={2}>
             <Typography margin="1.5rem 0" variant="h2">
-              "{query}" so'rovi bo'yicha qidiruv natijalari
+              Результаты поиска по запросу "{query}"
             </Typography>
             <InfiniteLoader
               hasMore={pageInfo?.hasNextPage}
@@ -93,7 +93,7 @@ const CategoryProducts: NextPage = () => {
                 ) : (
                   <Grid item xs={12}>
                     <Typography textAlign="center" variant="h2">
-                      Hech narsa topilmadi
+                      Ничего не найдено
                     </Typography>
                   </Grid>
                 )}
