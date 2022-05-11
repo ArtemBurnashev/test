@@ -24,9 +24,15 @@ const ProductColumn: React.FC<{ label: string, slug: string, modalOpen?: () => v
   return (
     <Stack width="100%" spacing={2}>
       <Typography
-        sx={{cursor:'pointer',":hover":{color:colors.primary.hover}}}
+        sx={{
+          cursor: 'pointer',
+          ':hover': { color: colors.primary.hover },
+          height: '2rem',
+          overflow: "hidden"
+        }}
         onClick={() => router.push(`${Paths.CATEGORY_PRODUCTS}${slug}`)}
-        variant="subtitle1">
+        variant="subtitle1"
+      >
         {data?.category?.name}
       </Typography>
       <Spacer />
@@ -35,7 +41,11 @@ const ProductColumn: React.FC<{ label: string, slug: string, modalOpen?: () => v
           productInfo={product.isAvailableForPurchase || null}
           name={product.name}
           slug={product.slug}
-          image={(product?.media && product.media.length > 0) ? product.media[0].url : NoImage.src}
+          image={
+            product?.media && product.media.length > 0
+              ? product.media[0].url
+              : NoImage.src
+          }
           price={product.defaultVariant?.pricing?.price?.gross}
           discount={product.defaultVariant?.pricing?.discount?.gross}
           modalOpen={modalOpen}

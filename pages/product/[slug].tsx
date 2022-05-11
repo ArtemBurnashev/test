@@ -31,7 +31,6 @@ import { useAppDispatch, useAppSelector } from 'redux-state/hook';
 import { dislike, like } from 'redux-state/features/likes';
 import dynamic from 'next/dynamic';
 
-
 type Props = {
   data: SingleProductQuery;
   [key: string]: any;
@@ -45,7 +44,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
   const characteristicsRef = useRef<HTMLDivElement>(null);
   const { likeList } = useAppSelector((state) => state.like);
   const isInLikeList = likeList.some(
-    (product) => data.product && product.id === data?.product.id
+    (product) => data.product && product.id === data?.product?.defaultVariant?.id
   );
 
   const links = [
@@ -89,7 +88,10 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
       return dispatch(
         like({
           id: data.product.defaultVariant.id,
-          image: (data.product.media && data.product.media.length > 0) ? data.product.media[0].url : '',
+          image:
+            data.product.media && data.product.media.length > 0
+              ? data.product.media[0].url
+              : '',
           price: data.product.defaultVariant.pricing.price.gross,
           discount: data.product.defaultVariant.pricing.discount?.gross,
           name: data.product.name,
@@ -103,16 +105,14 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
   const executeScroll = () =>
     characteristicsRef.current?.scrollIntoView({ behavior: 'smooth' });
 
-  const idenfy = (data.product?.media?.length ? data.product?.media?.length : []) > 1 ? true : false
-
+  const idenfy =
+    (data.product?.media?.length ? data.product?.media?.length : []) > 1
+      ? true
+      : false;
 
   const sliderItems = data.product?.media?.slice(0, 4);
-  
-  const dataInfo = data?.product?.isAvailableForPurchase;
 
- 
-  
-  
+  const dataInfo = data?.product?.isAvailableForPurchase;
 
   return (
     <Main>
@@ -146,7 +146,11 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
             justifyContent="space-between"
             spacing={2}
           >
-            <Rating size='small' defaultValue={data?.product?.rating || 0} precision={0.5} />
+            <Rating
+              size="small"
+              defaultValue={data?.product?.rating || 0}
+              precision={0.5}
+            />
             <Typography variant="subtitle2" color={colors.green.default}>
               ({data?.product?.rating || 0})
             </Typography>
@@ -170,7 +174,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
           </Stack>
         </Stack>
         <Spacer />
-        <Grid mt='24px' container>
+        <Grid mt="24px" container>
           <Grid sm={12} xs={12} item md={7} lg={4}>
             <ImageCarousel imgs={data?.product?.media}>
               {sliderItems?.map((media) => (
@@ -192,7 +196,15 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
             {data?.product?.variants && data?.product?.variants?.length > 1 && (
               <>
                 {
-                  <Typography sx={idenfy ? { marginTop:{ md:'130px', lg:0} } : { marginTop: 0 }} variant="body1" fontWeight={500}>
+                  <Typography
+                    sx={
+                      idenfy
+                        ? { marginTop: { md: '130px', lg: 0 } }
+                        : { marginTop: 0 }
+                    }
+                    variant="body1"
+                    fontWeight={500}
+                  >
                     {data.product.defaultVariant?.attributes[0].attribute.name}
                   </Typography>
                 }
@@ -211,9 +223,9 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
                         display: 'none',
                       },
                       ['.MuiOutlinedInput-root .MuiOutlinedInput-input .MuiInputBase-input ']:
-                      {
-                        paddingRight: 0,
-                      },
+                        {
+                          paddingRight: 0,
+                        },
                     },
                   }}
                 >
@@ -226,8 +238,16 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
               </>
             )}
 
-            <Stack pl={{lg:2,xs:0,md:2}} spacing={2}>
-              <Typography sx={idenfy ? { marginTop:{ xs:'155px', lg:0 , md:0} } : { marginTop: 0 }} fontWeight={500} variant="h3">
+            <Stack pl={{ lg: 2, xs: 0, md: 2 }} spacing={2}>
+              <Typography
+                sx={
+                  idenfy
+                    ? { marginTop: { xs: '155px', lg: 0, md: 0 } }
+                    : { marginTop: 0 }
+                }
+                fontWeight={500}
+                variant="h3"
+              >
                 Oписание
               </Typography>
               {data?.product?.description && (
@@ -240,17 +260,18 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
                   </Typography>
                   {data?.product?.attributes.slice(0, 5).map((attr) => (
                     <React.Fragment key={attr.attribute.id}>
-                      {attr.values.map((val) => val?.name).join(' ') ?
+                      {attr.values.map((val) => val?.name).join(' ') ? (
                         <DataLine
                           field={attr.attribute.name || ''}
                           value={attr.values.map((val) => val?.name).join(' ')}
                           key={attr.attribute.name}
-                        /> :
-                        ""
-                      }
+                        />
+                      ) : (
+                        ''
+                      )}
                     </React.Fragment>
                   ))}
-                  {data?.product?.characteristics &&
+                  {data?.product?.characteristics && (
                     <Typography
                       onClick={executeScroll}
                       color={colors.red.default}
@@ -259,13 +280,21 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
                     >
                       Все характеристики
                     </Typography>
-                  }
-
+                  )}
                 </>
               )}
             </Stack>
           </Grid>
-          <Grid sx={idenfy ? { marginTop:{ md:'150px', lg:0} } : { marginTop: 0 }}  xs={12} sm={12} md={6} item lg={3}>
+          <Grid
+            sx={
+              idenfy ? { marginTop: { md: '150px', lg: 0 } } : { marginTop: 0 }
+            }
+            xs={12}
+            sm={12}
+            md={6}
+            item
+            lg={3}
+          >
             <AddtoCardSingle
               available={dataInfo ? dataInfo : null}
               price={
@@ -286,11 +315,15 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
             />
           </Grid>
         </Grid>
-        {data?.product?.characteristics &&
-          <Typography sx={idenfy ? { marginTop:{ lg:'150px'} } : { marginTop: 0 }} fontWeight={500} variant="h2">
+        {data?.product?.characteristics && (
+          <Typography
+            sx={idenfy ? { marginTop: { lg: '150px' } } : { marginTop: 0 }}
+            fontWeight={500}
+            variant="h2"
+          >
             Характеристики
           </Typography>
-        }
+        )}
         <Grid
           ref={characteristicsRef}
           marginTop="2rem"

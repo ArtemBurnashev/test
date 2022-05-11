@@ -105,7 +105,7 @@ export const CategoryNavbar: React.FC = () => {
                 {elements?.map((links) =>
                   <LinkSet
                     key={links.id}
-                    sx={{ textAlign: 'center', textTransform: 'capitalize' }}
+                    sx={{ textAlign: 'center', textTransform: 'capitalize', maxWidth: "max-content", overflow: "hidden" }}
                     variant='subtitle2'
                   >
                     <LinkText

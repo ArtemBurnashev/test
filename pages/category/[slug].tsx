@@ -116,7 +116,7 @@ const CategoryProducts: NextPage = () => {
                         margin="1.5rem 0"
                         variant="h2"
                       >
-                        Natija topilmadi
+                        Ничего не найдено
                       </Typography>
                     </Grid>
                   )}

@@ -82,7 +82,7 @@ const SignUp: React.FC<PagePropsWithPhoneNumber> = ({ changeRoute, onPhoneChange
           name="firstName"
           render={({ field, formState: { errors } }) => (
             <Input
-              label="First name"
+              label="Имя"
               error={
                 !!errors.firstName?.type ||
                 data?.accountRegister?.errors.some(
@@ -105,7 +105,7 @@ const SignUp: React.FC<PagePropsWithPhoneNumber> = ({ changeRoute, onPhoneChange
           name="lastName"
           render={({ field, formState: { errors } }) => (
             <Input
-              label="Last name"
+              label="Фамилия"
               error={
                 !!errors.lastName?.type ||
                 data?.accountRegister?.errors.some(
@@ -154,7 +154,7 @@ const SignUp: React.FC<PagePropsWithPhoneNumber> = ({ changeRoute, onPhoneChange
           name="confirmPassword"
           render={({ field, formState: { errors } }) => (
             <Input
-              label="Confirm password"
+              label="Подтвердить Пароль"
               type="password"
               placeholder="*******"
               error={

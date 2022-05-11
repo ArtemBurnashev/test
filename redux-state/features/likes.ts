@@ -33,8 +33,11 @@ export const likeSlice = createSlice({
   initialState,
   reducers: {
     like: (state, action: PayloadAction<Product>) => {
-      const data = { likeList: [...state.likeList, action.payload] };
-      return { ...state, productsCount: state.productsCount + 1, ...data };
+      if (!state.likeList.map(like => like.id).includes(action.payload.id)) {
+        const data = { likeList: [...state.likeList, action.payload] };
+        return { ...state, productsCount: state.productsCount + 1, ...data };
+      }
+      return state;
     },
     dislike: (state, action: PayloadAction<string>) => {
       const temp = state.likeList.filter(
