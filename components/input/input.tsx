@@ -31,6 +31,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
          return showPassword ? 'text' : 'password';
        }
        return type;
+       
      }, [type, showPassword]);
 
     return (
