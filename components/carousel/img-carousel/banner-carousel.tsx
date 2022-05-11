@@ -10,9 +10,23 @@ import { useBannersQuery } from 'graphql/generated.graphql';
 
 const Card = styled.div<{ height?: number; fullBorderRadius?: boolean }>`
   max-width: 100%;
-  
+  .slick-prev {
+    left: 8px;
+    z-index: 10;
+    width: 42px;
+    height: 42px;
+    opacity: 0;
+    transition: opacity .4s ease;
+  }
+  .slick-next {
+    right: 8px;
+    width: 42px;
+    height: 42px;
+    opacity: 0;
+    transition: opacity .4s ease;
+  }
   overflow: hidden;
-  max-height: 310px;
+  max-height: 350px;
   .slick-list {
     max-height: 310px;
     .slick-track {
@@ -30,6 +44,15 @@ const Card = styled.div<{ height?: number; fullBorderRadius?: boolean }>`
           }
         }
       }
+    }
+    
+  }
+  &:hover{
+    .slick-prev {
+      opacity: 1;
+    }
+    .slick-next {
+      opacity: 1;
     }
   }
   .slick-slider {
@@ -51,13 +74,7 @@ const Card = styled.div<{ height?: number; fullBorderRadius?: boolean }>`
       }
     }
   }
-  .slick-prev {
-    left: 8px;
-    z-index: 10;
-  }
-  .slick-next {
-    right: 8px;
-  }
+  
 `;
 
 const NextArrow = styled(Arrow)`
