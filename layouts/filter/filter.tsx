@@ -45,11 +45,11 @@ const Filter: React.FC = ({ children }) => {
             <MenuItem value={OrderDirection.Asc}>Сначала по дешевле</MenuItem>
             <MenuItem value={OrderDirection.Desc}>Сначала по дороже</MenuItem>
           </Select>
-          <Accordion>
+          <Accordion sx={{border:'1px solid #e5e5e5'}}>
             <AccordionSummary>
               <Typography variant="subtitle2">Цена</Typography>
             </AccordionSummary>
-            <AccordionDetails>
+            <AccordionDetails >
               <Stack alignItems="center" gap={2} direction="row">
                 <Input
                   value={price.gte || 0}
