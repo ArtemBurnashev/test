@@ -16,8 +16,28 @@ export const OrderCardStyle = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 24px;
+  @media (max-width:900px){
+    flex-direction: column;
+    gap: 20px;
+  }
+  @media (max-width:539px){
+    padding: 20px
+
+  }
 
 `
+export const OredButtonBlock = styled.div`
+  @media (max-width:900px){
+    position: relative;
+    button{
+      position: absolute;
+      right: 0;
+      top: -54px;
+    }
+  }
+
+`
+
 export const OrderBlock = styled.div`
   display: flex;
 `
@@ -33,6 +53,6 @@ export const OrderImg = styled.img`
   margin-bottom: 20px;
 `
 export const OrderImgTexts = styled.div`
- margin-left: 25px;
+ /* margin-left: 25px; */
   
 `

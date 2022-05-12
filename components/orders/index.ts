@@ -5,4 +5,5 @@ export {
   OrderBlock,
   OrderImgBlock,
   OrderImgTexts,
+  OredButtonBlock,
 } from './orders'; 

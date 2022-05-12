@@ -7,6 +7,7 @@ import {
   OrderBlock,
   OrderImgBlock,
   OrderImgTexts,
+  OredButtonBlock
 } from 'components/orders';
 
 interface OrderProps {
@@ -55,7 +56,7 @@ const OrdersCard: React.FC<OrderProps> = ({ order }) => {
           </Typography>
         </div>
       </OrderBlock>
-      <div>
+      <OredButtonBlock>
         <Button
           type="button"
           sx={{
@@ -69,7 +70,7 @@ const OrdersCard: React.FC<OrderProps> = ({ order }) => {
         >
           {order.statusDisplay}
         </Button>
-      </div>
+      </OredButtonBlock>
     </OrderCardStyle>
   );
 }

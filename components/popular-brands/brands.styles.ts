@@ -16,7 +16,7 @@ export const BrandWrapper = styled.div`
     min-width: 100%;
     min-height: auto;
   }
-  @media (max-width:507px){
+  @media (max-width:625px){
     min-width: 40%;
     
   }
