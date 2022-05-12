@@ -19,7 +19,6 @@ const CategoryProducts: NextPage = () => {
   const router = useRouter();
   const { price, sort, attributes } = useAppSelector((state) => state.filter);
 
-  console.log(attributes);
   const { slug } = router.query;
   const { data, loading, fetchMore } = useCategoryQuery({
     variables: {

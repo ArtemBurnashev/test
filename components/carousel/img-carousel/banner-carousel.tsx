@@ -101,8 +101,9 @@ const ImageCarousel: FC<{
   const products = data?.banners?.edges.map((el) => el.node);
 
   return (
-    <Card height={height}>
+    <Card>
       <Slider
+        adaptiveHeight={true}
         infinite
         dots={false}
         slidesToShow={1}

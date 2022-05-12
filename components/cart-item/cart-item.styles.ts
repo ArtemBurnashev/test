@@ -12,7 +12,7 @@ export const CartItemImage = styled.div`
     padding: 1rem;
     img {
       width: 100%;
-      object-fit: cover;
+      object-fit: contain;
     }
 `;
 
