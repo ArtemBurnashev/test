@@ -26,9 +26,12 @@ const Card = styled.div<{ height?: number; fullBorderRadius?: boolean }>`
     transition: opacity .4s ease;
   }
   overflow: hidden;
-  max-height: 350px;
+
   .slick-list {
     max-height: 310px;
+    @media (max-width:700px){
+      max-height: auto;
+    }
     .slick-track {
       
       .slick-slide {
