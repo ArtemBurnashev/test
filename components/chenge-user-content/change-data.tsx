@@ -11,7 +11,7 @@ import { useAccountUpdateMutation } from 'graphql/generated.graphql';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
-  modal:()=> void;
+  modal?:()=> void;
 }
 
 export const ChengeData: React.FC<Props> = ({modal}) => {
@@ -40,7 +40,9 @@ export const ChengeData: React.FC<Props> = ({modal}) => {
         }
       }
     })
-    modal()
+    if(modal){
+      modal()
+    }
   }
   return (
     <FormStyle onSubmit={handleSubmit(onSubmit)}>
