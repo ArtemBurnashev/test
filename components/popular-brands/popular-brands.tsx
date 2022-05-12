@@ -18,7 +18,7 @@ const PopularBrands = () => {
   const brands = data?.banners?.edges.map((el) => el.node);
 
   return (
-    <Stack direction="row" gap='16px' margin="0 auto" flexWrap="wrap">
+    <Stack direction="row" justifyContent={{sm:'center',xs:'center',lg:'start',md:'start'}} gap='16px' margin="0 auto" flexWrap="wrap">
       {brands?.map((item) => (
         <BrandWrapper key={item.id}>
           {
