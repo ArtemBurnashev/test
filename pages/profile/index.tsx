@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux';
 import { ProfileElements } from 'components/profile-elements';
 
 const ProfilePage: NextPage = () => {
+  
   const catalogModal = useModal();
   const {
     close: logoutClose,
@@ -27,6 +28,8 @@ const ProfilePage: NextPage = () => {
   const router = useRouter();
   const { t } = useTranslation();
   const { data, loading } = useMeQuery();
+  console.log(data);
+  
   const dispatch = useDispatch();
   const links = [
     {

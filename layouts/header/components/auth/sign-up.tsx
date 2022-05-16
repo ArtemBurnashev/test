@@ -3,6 +3,8 @@ import { Button } from 'components/button';
 import Input from 'components/input';
 import React from 'react';
 import * as yup from 'yup';
+// @ts-expect-error
+import InputMask from "react-input-mask";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
 import { useRegisterMutation } from 'graphql/generated.graphql';
@@ -20,10 +22,7 @@ interface LoginInput {
 const schema = yup.object({
   phone: yup
     .string()
-    .matches(
-      /(?:\+\998([0123456789][012345789]|6[125679]|7[01234569])[0-9]{7})$/,
-      'Phone number is invalid'
-    )
+    .min(15)
     .required('Phone number required.'),
   password: yup.string().required('Password required.'),
   confirmPassword: yup.string().required('Password confirmation required.'),
@@ -39,6 +38,8 @@ const SignUp: React.FC<PagePropsWithPhoneNumber> = ({ changeRoute, onPhoneChange
   });
 
   const onSubmit = (data: LoginInput) => {
+    data.phone = data.phone.replace("(","").replace(")","")
+    
     mutate({
       variables: data,
       onCompleted: (res) => {
@@ -59,22 +60,29 @@ const SignUp: React.FC<PagePropsWithPhoneNumber> = ({ changeRoute, onPhoneChange
         <Controller
           control={control}
           name="phone"
-          render={({ field, formState: { errors } }) => (
-            <Input
-              label="Номер телефона"
-              error={
-                !!errors.phone?.type ||
-                data?.accountRegister?.errors.some((e) => e.field === 'phone')
-              }
-              helperText={
-                errors.phone?.message ||
-                data?.accountRegister?.errors
-                  .filter((e) => e.field === 'phone')
-                  .map((e) => e.message)
-                  .join(' ')
-              }
-              {...field}
-            />
+          render={({ field: { onChange, value }, formState: { errors } }) => (
+            <InputMask  mask="+999(99)9999999" value={value} onChange={onChange}>
+              {(inputProps: any) => (
+                  <Input
+                    label="Номер телефона"
+                    error={
+                      !!errors.phone?.type ||
+                      data?.accountRegister?.errors.some((e) => e.field === 'phone')
+                    }
+                    helperText={
+                      errors.phone?.message ||
+                      data?.accountRegister?.errors
+                        .filter((e) => e.field === 'phone')
+                        .map((e) => e.message)
+                        .join(' ')
+                    }
+                    {...inputProps}
+                  />
+              )}
+
+
+            </InputMask>
+
           )}
         />
         <Controller
