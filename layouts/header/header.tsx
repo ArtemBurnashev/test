@@ -77,143 +77,176 @@ const Header = () => {
   useEffect(() => {
     catalogModal.close();
   }, [router.query]);
+  const styles = {
+    position: 'fixed',
+    zIndex: '11',
+    right: '0',
+    left: '0',
+    top: '0',
+  }
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+    setScrollPosition(position);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+  
 
   return (
-    <Box
-      sx={
-        router.asPath === '/'
-          ? { backgroundColor: '#fff' }
-          : { backgroundColor: '#FCFCFC' }
-      }
-    >
-      {isMobile &&
-        <MobileHeaderButtons
-          isAuthenticated={isAuthenticated}
-          onProfileIconClick={() =>
-            isAuthenticated
-              ? router.push(Paths.PROFILE)
-              : dispatch(toggle(!showLoginMenu))
-          }
-        />
-      }
-      <Box sx={{ backgroundColor: '#FCFCFC' }}>
-        <Container maxWidth="xl">
-          {!isMobile && (
-            <Stack
-              direction="row"
-              spacing={4}
-              padding="8px 0"
-              justifyContent="flex-end"
-              sx={{ backgroundColor: '#FCFCFC' }}
-            >
-              {headerTopLinks.map((top, i) => (
-                <Link passHref key={top.label} href={top.link}>
-                  {i === headerTopLinks.length - 1 ? (
-                    <Stack
-                      component="a"
-                      spacing={2}
-                      direction="row"
-                      alignItems="center"
-                    >
-                      <Phone />
-                      <Typography variant="subtitle2">{top.label}</Typography>
-                    </Stack>
-                  ) : (
-                    <Typography component="a" variant="subtitle2">
-                      {top.label}
-                    </Typography>
-                  )}
-                </Link>
-              ))}
-            </Stack>
-          )}
-        </Container>
-      </Box>
-      <Container maxWidth="xl">
-        <Dialog
-          scroll="paper"
-          maxWidth="lg"
-          open={catalogModal.isOpen}
-          onClose={catalogModal.close}
-          sx={{width:'100%'}}
-        >
-          <Catalog />
-        </Dialog>
-        <Stack sx={{['.gbjXkt']:{width:'100%'},['.header__inner']:{width:'100%'}}} width='100%'>
-          <Stack
-            width={{md:'100%'}}
-            direction="row"
-            alignItems="center"
-            gap={'53px'}
-            padding={{ md: "18px 0", xs: "0 0 18px" }}
-            className='header__inner'
-
-          >
-            <MobileStack direction="row" >
-              {isSmallDevice || (
-                <Link href="/">
-                  <Logo>
-                    <Image layout="fixed" src={LogoImage} alt="logo" />
-                  </Logo>
-                </Link>
-              )}
-              <Stack width='100%' direction="row" spacing={2} alignItems="center">
-                <CatologButton>
-                  <Button
-                    className={''}
-                    sx={{
-                      '&&&&&.MuiButtonBase-root': {
-                        pl: (!mediaQuery ? '3rem' : 0),
-                        pr: (!mediaQuery ? '3rem' : 0),
-                      },
-                    }}
-                    variant="contained"
-                    startIcon={!mediaQuery && (catalogModal.isOpen ? <Close /> : <Hamburger />)}
-                    onClick={() => catalogModal.toggle()}
-                  >
-                   {!mediaQuery ? 'Каталог' : <BurgerMenu/>}
-                  </Button>
-                </CatologButton>
-
-
-                <SearchField />
-                {/* {isMobile && <Burger open={isOpen} setOpen={setIsOpen} />} */}
-              </Stack>
-            </MobileStack>
-
+    <>
+      <Box
+        sx={
+          router.asPath === '/'
+            ? { backgroundColor: '#fff', ...styles }
+            : { backgroundColor: '#FCFCFC', ...styles }
+        }
+      >
+        {isMobile &&
+          <MobileHeaderButtons
+            isAuthenticated={isAuthenticated}
+            onProfileIconClick={() =>
+              isAuthenticated
+                ? router.push(Paths.PROFILE)
+                : dispatch(toggle(!showLoginMenu))
+            }
+          />
+        }
+        <Box sx={{ backgroundColor: '#FCFCFC' }}>
+          <Container maxWidth="xl">
             {!isMobile && (
-              <HeaderButtons
-                isAuthenticated={isAuthenticated}
-                onProfileIconClick={() =>
-                  isAuthenticated
-                    ? router.push(Paths.PROFILE)
-                    : dispatch(toggle(!showLoginMenu))
+              <>
+                {scrollPosition < 53 &&
+                  <Stack
+                    direction="row"
+                    spacing={4}
+                    padding="8px 0"
+                    justifyContent="flex-end"
+                    sx={{ backgroundColor: '#FCFCFC' }}
+                  >
+                    {headerTopLinks.map((top, i) => (
+                      <Link passHref key={top.label} href={top.link}>
+                        {i === headerTopLinks.length - 1 ? (
+                          <Stack
+                            component="a"
+                            spacing={2}
+                            direction="row"
+                            alignItems="center"
+                          >
+                            <Phone />
+                            <Typography variant="subtitle2">{top.label}</Typography>
+                          </Stack>
+                        ) : (
+                          <Typography component="a" variant="subtitle2">
+                            {top.label}
+                          </Typography>
+                        )}
+                      </Link>
+                    ))}
+
+                  </Stack>
                 }
-              />
+
+              </>
+
+
+            )}
+          </Container>
+        </Box>
+        <Container maxWidth="xl">
+          <Dialog
+            scroll="paper"
+            maxWidth="lg"
+            open={catalogModal.isOpen}
+            onClose={catalogModal.close}
+            sx={{ width: '100%' }}
+          >
+            <Catalog />
+          </Dialog>
+          <Stack sx={{ ['.gbjXkt']: { width: '100%' }, ['.header__inner']: { width: '100%' } }} width='100%'>
+            <Stack
+              width={{ md: '100%' }}
+              direction="row"
+              alignItems="center"
+              gap={'53px'}
+              padding={{ md: "18px 0", xs: "0 0 18px" }}
+              className='header__inner'
+
+            >
+              <MobileStack direction="row" >
+                {isSmallDevice || (
+                  <Link href="/">
+                    <Logo>
+                      <Image layout="fixed" src={LogoImage} alt="logo" />
+                    </Logo>
+                  </Link>
+                )}
+                <Stack width='100%' direction="row" spacing={2} alignItems="center">
+                  <CatologButton>
+                    <Button
+                      className={''}
+                      sx={{
+                        '&&&&&.MuiButtonBase-root': {
+                          pl: (!mediaQuery ? '3rem' : 0),
+                          pr: (!mediaQuery ? '3rem' : 0),
+                        },
+                      }}
+                      variant="contained"
+                      startIcon={!mediaQuery && (catalogModal.isOpen ? <Close /> : <Hamburger />)}
+                      onClick={() => catalogModal.toggle()}
+                    >
+                      {!mediaQuery ? 'Каталог' : <BurgerMenu />}
+                    </Button>
+                  </CatologButton>
+
+
+                  <SearchField />
+                  {/* {isMobile && <Burger open={isOpen} setOpen={setIsOpen} />} */}
+                </Stack>
+              </MobileStack>
+
+              {!isMobile && (
+                <HeaderButtons
+                  isAuthenticated={isAuthenticated}
+                  onProfileIconClick={() =>
+                    isAuthenticated
+                      ? router.push(Paths.PROFILE)
+                      : dispatch(toggle(!showLoginMenu))
+                  }
+                />
+              )}
+            </Stack>
+
+
+            {!isAuthenticated && (
+              <Sidebar
+                isOpen={showLoginMenu}
+                toggleDrawer={toggleLoginMenu}
+              >
+                <Box sx={{ position: 'relative' }}>
+                  <IconButton
+                    onClick={() => dispatch(toggle(false))}
+                    sx={{ position: 'absolute', top: '-2rem', right: '1rem' }}
+                  >
+                    <Close />
+                  </IconButton>
+                  <Auth />
+                </Box>
+              </Sidebar>
             )}
           </Stack>
+        </Container>
+        {scrollPosition < 53 && <CategoryNavbar />}
+      </Box>
+      <Stack mb={router.asPath === '/' ? '127px' : '190px'} />
+    </>
 
-
-          {!isAuthenticated && (
-            <Sidebar
-              isOpen={showLoginMenu}
-              toggleDrawer={toggleLoginMenu}
-            >
-              <Box sx={{ position: 'relative' }}>
-                <IconButton
-                  onClick={() => dispatch(toggle(false))}
-                  sx={{ position: 'absolute', top: '-2rem', right: '1rem' }}
-                >
-                  <Close />
-                </IconButton>
-                <Auth />
-              </Box>
-            </Sidebar>
-          )}
-        </Stack>
-      </Container>
-      <CategoryNavbar />
-    </Box>
   );
 };
 

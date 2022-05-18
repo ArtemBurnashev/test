@@ -136,9 +136,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <Typography
           height="auto"
           variant="subtitle2"
-          textTransform="capitalize"
         >
-          {name.toLowerCase()}
+          {name}
         </Typography>
         <Stack
           direction="row"
