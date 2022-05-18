@@ -29,7 +29,9 @@ import { initializeApollo } from 'lib/apollo';
 import { Button } from 'components/button';
 import { useAppDispatch, useAppSelector } from 'redux-state/hook';
 import { dislike, like } from 'redux-state/features/likes';
+import { useCategoryQuery } from 'graphql/generated.graphql';
 import dynamic from 'next/dynamic';
+import { ProductCarousel } from 'components/carousel/product-carousel';
 
 type Props = {
   data: SingleProductQuery;
@@ -101,7 +103,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
       );
     }
   };
-
+  
   const executeScroll = () =>
     characteristicsRef.current?.scrollIntoView({ behavior: 'smooth' });
 
@@ -113,6 +115,15 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
   const sliderItems = data.product?.media?.slice(0, 4);
 
   const dataInfo = data?.product?.isAvailableForPurchase;
+
+  const { data: categoryData } = useCategoryQuery({
+    variables: {
+      first: 10,
+      slug: data.product?.category?.slug ? data.product?.category?.slug : '',
+      cursor: "",
+    }
+  })
+
 
   return (
     <Main>
@@ -179,6 +190,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
             <ImageCarousel imgs={data?.product?.media}>
               {sliderItems?.map((media) => (
                 <ProductImage key={media.alt}>
+
                   <LazyImage
                     src={media.url || ''}
                     alt={data?.product?.name || 'product image'}
@@ -223,9 +235,9 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
                         display: 'none',
                       },
                       ['.MuiOutlinedInput-root .MuiOutlinedInput-input .MuiInputBase-input ']:
-                        {
-                          paddingRight: 0,
-                        },
+                      {
+                        paddingRight: 0,
+                      },
                     },
                   }}
                 >
@@ -258,7 +270,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
                   <Typography fontWeight={500} variant="h3">
                     Характеристики
                   </Typography>
-                  {data?.product?.attributes.slice(0, 5).map((attr) => (
+                  {data?.product?.attributes.map((attr) => (
                     <React.Fragment key={attr.attribute.id}>
                       {attr.values.map((val) => val?.name).join(' ') ? (
                         <DataLine
@@ -337,6 +349,11 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
             )}
           </Grid>
         </Grid>
+        {data.product?.category
+          ?
+          <ProductCarousel slug={data.product?.category?.slug}  label='Похожие товары'/> :
+          ""
+        }
       </Container>
     </Main>
   );
