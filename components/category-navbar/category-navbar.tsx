@@ -3,7 +3,6 @@ import { CategoryStyle } from './category-navbar-style';
 import { Container } from '@mui/material';
 import { useRouter } from 'next/router';
 import { Paths } from 'config/site-paths';
-import colors from 'config/theme';
 import { useAllCategoriesQuery } from 'graphql/generated.graphql';
 import Slider from 'react-slick';
 import { Typography, Skeleton, Stack, } from '@mui/material';
@@ -39,7 +38,7 @@ const SliderBlock = styled.div`
 export const CategoryNavbar: React.FC = () => {
   const router = useRouter()
   const { data, fetchMore, loading } = useAllCategoriesQuery({
-    variables: { first: 100, cursor: '' },
+    variables: { first: 50, cursor: '' },
   });
   const elements = data?.categories?.edges.map((item) => item.node)
     .map((links) => links);
@@ -106,7 +105,7 @@ export const CategoryNavbar: React.FC = () => {
       <CategoryStyle>
         <Container maxWidth="xl">
           {loading ?
-            <Stack width='100%' spacing={8} direction='row' display="flex">
+            <Stack width='100%' p='12px 0' spacing={8} direction='row' display="flex">
               <Skeleton variant="text" width="10%" />
               <Skeleton variant="text" width="10%" />
               <Skeleton variant="text" width="10%" />
