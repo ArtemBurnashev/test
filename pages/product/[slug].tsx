@@ -33,6 +33,7 @@ import { useCategoryQuery } from 'graphql/generated.graphql';
 import dynamic from 'next/dynamic';
 import { ProductCarousel } from 'components/carousel/product-carousel';
 
+
 type Props = {
   data: SingleProductQuery;
   [key: string]: any;
@@ -103,7 +104,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
       );
     }
   };
-  
+
   const executeScroll = () =>
     characteristicsRef.current?.scrollIntoView({ behavior: 'smooth' });
 
@@ -116,13 +117,6 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
 
   const dataInfo = data?.product?.isAvailableForPurchase;
 
-  const { data: categoryData } = useCategoryQuery({
-    variables: {
-      first: 10,
-      slug: data.product?.category?.slug ? data.product?.category?.slug : '',
-      cursor: "",
-    }
-  })
 
 
   return (
@@ -199,6 +193,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
               ))}
             </ImageCarousel>
           </Grid>
+          
           <Grid item md={5} lg={5}>
             {data?.product?.variants?.length === 1 && variant && (
               <Typography variant="body1" fontWeight={500}>
@@ -251,23 +246,14 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
             )}
 
             <Stack pl={{ lg: 2, xs: 0, md: 2 }} spacing={2}>
-              <Typography
-                sx={
-                  idenfy
-                    ? { marginTop: { xs: '155px', lg: 0, md: 0 } }
-                    : { marginTop: 0 }
-                }
-                fontWeight={500}
-                variant="h3"
-              >
-                Oписание
-              </Typography>
-              {data?.product?.description && (
-                <EditorJs data={JSON.parse(data.product.description)} />
-              )}
+
               {data.product?.attributes && data.product?.attributes.length > 0 && (
                 <>
-                  <Typography fontWeight={500} variant="h3">
+                  <Typography sx={
+                    idenfy
+                      ? { marginTop: { xs: '155px', lg: 0, md: 0 } }
+                      : { marginTop: 0 }
+                  } fontWeight={500} variant="h3">
                     Характеристики
                   </Typography>
                   {data?.product?.attributes.map((attr) => (
@@ -336,6 +322,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
             Характеристики
           </Typography>
         )}
+
         <Grid
           ref={characteristicsRef}
           marginTop="2rem"
@@ -343,17 +330,35 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
           container
           columnSpacing={4}
         >
-          <Grid item xs={12}>
+
+          <Grid item lg={6}>
             {data?.product?.characteristics && (
               <EditorJs data={JSON.parse(data.product.characteristics)} />
             )}
           </Grid>
+
+          <Grid item md={6}>
+            <Typography
+              p='0.6em 0 3px'
+              fontWeight={500}
+              variant="h3"
+            >
+              Oписание
+            </Typography>
+            {data?.product?.description && (
+              <EditorJs data={JSON.parse(data.product.description)} />
+            )}
+          </Grid>
         </Grid>
-        {data.product?.category
-          ?
-          <ProductCarousel slug={data.product?.category?.slug}  label='Похожие товары'/> :
-          ""
-        }
+
+        <Stack mb='30px'>
+          {data.product?.category
+            ?
+            <ProductCarousel slug={data.product?.category?.slug} label='Похожие товары' /> :
+            ""
+          }
+        </Stack>
+
       </Container>
     </Main>
   );
