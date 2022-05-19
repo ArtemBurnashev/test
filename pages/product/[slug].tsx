@@ -32,6 +32,7 @@ import { dislike, like } from 'redux-state/features/likes';
 import { useCategoryQuery } from 'graphql/generated.graphql';
 import dynamic from 'next/dynamic';
 import { ProductCarousel } from 'components/carousel/product-carousel';
+import { ImageMagnifier } from 'components/image-magnifier';
 
 type Props = {
   data: SingleProductQuery;
@@ -44,9 +45,15 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
   const [variant, setVariant] = useState<any>();
   const dispatch = useAppDispatch();
   const characteristicsRef = useRef<HTMLDivElement>(null);
+  const [[x, y], setXY] = useState([0, 0]);
+  const [[imgWidth, imgHeight], setSize] = useState([0, 0]);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const [showMagnifier, setShowMagnifier] = useState(false);
   const { likeList } = useAppSelector((state) => state.like);
   const isInLikeList = likeList.some(
-    (product) => data.product && product.id === data?.product?.defaultVariant?.id
+    (product) =>
+      data.product && product.id === data?.product?.defaultVariant?.id
   );
 
   const links = [
@@ -103,7 +110,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
       );
     }
   };
-  
+
   const executeScroll = () =>
     characteristicsRef.current?.scrollIntoView({ behavior: 'smooth' });
 
@@ -120,10 +127,9 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
     variables: {
       first: 10,
       slug: data.product?.category?.slug ? data.product?.category?.slug : '',
-      cursor: "",
-    }
-  })
-
+      cursor: '',
+    },
+  });
 
   return (
     <Main>
@@ -187,17 +193,41 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
         <Spacer />
         <Grid mt="24px" container>
           <Grid sm={12} xs={12} item md={7} lg={4}>
-            <ImageCarousel imgs={data?.product?.media}>
+            <ImageCarousel imgs={data?.product?.media} onSlide={(currentSlide) => setCurrentSlide(currentSlide)}>
               {sliderItems?.map((media) => (
                 <ProductImage key={media.alt}>
-
                   <LazyImage
                     src={media.url || ''}
                     alt={data?.product?.name || 'product image'}
+                    onMouseEnter={(e) => {
+                      const elem = e.currentTarget;
+                      const { width, height } = elem.getBoundingClientRect();
+                      setSize([width, height]);
+                      setShowMagnifier(true);
+                    }}
+                    onMouseMove={(e) => {
+                      const elem = e.currentTarget;
+                      const { top, left } = elem.getBoundingClientRect();
+
+                      const x = e.pageX - left - window.pageXOffset;
+                      const y = e.pageY - top - window.pageYOffset;
+                      setXY([x, y]);
+                    }}
+                    onMouseLeave={(e) => setShowMagnifier(false)}
                   />
                 </ProductImage>
               ))}
             </ImageCarousel>
+            {showMagnifier && (
+              <ImageMagnifier
+                coordinates={{ x, y }}
+                magnifieWidth={150}
+                magnifierHeight={150}
+                sizes={{ imgWidth, imgHeight }}
+                zoomLevel={2}
+                src={sliderItems ? sliderItems[currentSlide].url : ""}
+              />
+            )}
           </Grid>
           <Grid item md={5} lg={5}>
             {data?.product?.variants?.length === 1 && variant && (
@@ -235,9 +265,9 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
                         display: 'none',
                       },
                       ['.MuiOutlinedInput-root .MuiOutlinedInput-input .MuiInputBase-input ']:
-                      {
-                        paddingRight: 0,
-                      },
+                        {
+                          paddingRight: 0,
+                        },
                     },
                   }}
                 >
@@ -349,11 +379,14 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
             )}
           </Grid>
         </Grid>
-        {data.product?.category
-          ?
-          <ProductCarousel slug={data.product?.category?.slug}  label='Похожие товары'/> :
-          ""
-        }
+        {data.product?.category ? (
+          <ProductCarousel
+            slug={data.product?.category?.slug}
+            label="Похожие товары"
+          />
+        ) : (
+          ''
+        )}
       </Container>
     </Main>
   );
