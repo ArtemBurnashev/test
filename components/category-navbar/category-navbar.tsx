@@ -10,21 +10,24 @@ import { Typography, Skeleton, Stack, } from '@mui/material';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { Button } from '@mui/material';
-import truncate from 'utils/truncate';
 
 const LinkSet = styled(Typography)`
     transition: all .4s ease;
+    padding: 12px 0;
+    a{
+      transition: all .1s ease;
+    }
     &:hover{
-      a{
-        color: ${colors.primary.hover};
-      }
+     background-color: #fff240c9;
+     a{
+       font-weight: 600;
+     }
     }
   `
 
 
 const LinkText = styled(Link)`
   cursor: pointer;
-  text-transform: capitalize;
 `
 const SliderBlock = styled.div`
   .slick-track{
@@ -36,24 +39,33 @@ const SliderBlock = styled.div`
 export const CategoryNavbar: React.FC = () => {
   const router = useRouter()
   const { data, fetchMore, loading } = useAllCategoriesQuery({
-    variables: { first: 6, cursor: '' },
+    variables: { first: 100, cursor: '' },
   });
   const elements = data?.categories?.edges.map((item) => item.node)
     .map((links) => links);
+  
+  const categories = data?.categories?.edges.filter((item )=> {
+    if(!item.node.children?.edges.length){
+      return item
+    }
+   
+  }) 
 
   const addElemets = (): void => {
     if (data?.categories?.pageInfo.hasNextPage) {
-      fetchMore({ variables: { cursor: data?.categories?.pageInfo.endCursor } })
+      fetchMore({ variables: { cursor: data?.categories?.pageInfo.endCursor} })
     }
   }
 
 
   const settings = {
     dots: false,
-    infinite: false,
+    infinite: true,
+    autoplay:true,
     slidesToShow: (loading ? 1 : 6),
     slidesToScroll: 3,
     arrows: false,
+    autoplaySpeed:4000,
     responsive: [
       {
         breakpoint: 1160,
@@ -105,12 +117,12 @@ export const CategoryNavbar: React.FC = () => {
                 {elements?.map((links) =>
                   <LinkSet
                     key={links.id}
-                    sx={{ textAlign: 'center', textTransform: 'capitalize', maxWidth: "max-content", overflow: "hidden" }}
+                    sx={{ textAlign: 'center', overflow: "hidden" }}
                     variant='subtitle2'
                   >
                     <LinkText
-                      key={links.id} href={`${Paths.CATEGORY_PRODUCTS}${links.slug}`}>
-                      {links.name.toLowerCase().slice(0, 30)}
+                      href={`${Paths.CATEGORY_PRODUCTS}${links.slug}`}>
+                      {links.name.slice(0,28)}
                     </LinkText>
                   </LinkSet>
                 )}
