@@ -53,6 +53,7 @@ export const ProductDetailTab: React.FC<TabProps> = ({ characteristicsRef, chare
 
 
   return (
+    
     <Box pt='30px' ref={characteristicsRef} width='100%'>
       <Tabs value={value} onChange={handleChangeTab} aria-label="basic tabs example">
         <Tab label="Oписание" {...a11yProps(0)} />
