@@ -137,7 +137,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           height="auto"
           variant="subtitle2"
         >
-          {name}
+          {name.length <= 50 ? name : `${name.slice(0,50)}...`}
         </Typography>
         <Stack
           direction="row"
