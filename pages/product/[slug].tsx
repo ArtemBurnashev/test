@@ -29,10 +29,9 @@ import { initializeApollo } from 'lib/apollo';
 import { Button } from 'components/button';
 import { useAppDispatch, useAppSelector } from 'redux-state/hook';
 import { dislike, like } from 'redux-state/features/likes';
-import { useCategoryQuery } from 'graphql/generated.graphql';
-import dynamic from 'next/dynamic';
 import { ProductCarousel } from 'components/carousel/product-carousel';
 import { ImageMagnifier } from 'components/image-magnifier';
+import { ProductDetailTab } from 'components/product-detali-tab';
 
 
 type Props = {
@@ -40,7 +39,6 @@ type Props = {
   [key: string]: any;
 };
 
-const EditorJs = dynamic(() => import('components/editor'), { ssr: false });
 
 const SingleProduct: NextPage<Props> = ({ data }) => {
   const [variant, setVariant] = useState<any>();
@@ -224,7 +222,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
               />
             )}
           </Grid>
-          
+
           <Grid item md={5} lg={5}>
             {data?.product?.variants?.length === 1 && variant && (
               <Typography variant="body1" fontWeight={500}>
@@ -261,9 +259,9 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
                         display: 'none',
                       },
                       ['.MuiOutlinedInput-root .MuiOutlinedInput-input .MuiInputBase-input ']:
-                        {
-                          paddingRight: 0,
-                        },
+                      {
+                        paddingRight: 0,
+                      },
                     },
                   }}
                 >
@@ -344,43 +342,8 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
             />
           </Grid>
         </Grid>
-        {data?.product?.characteristics && (
-          <Typography
-            sx={idenfy ? { marginTop: { lg: '150px' } } : { marginTop: 0 }}
-            fontWeight={500}
-            variant="h2"
-          >
-            Характеристики
-          </Typography>
-        )}
-
-        <Grid
-          ref={characteristicsRef}
-          marginTop="2rem"
-          marginBottom="2rem"
-          container
-          columnSpacing={4}
-        >
-
-          <Grid item lg={6}>
-            {data?.product?.characteristics && (
-              <EditorJs data={JSON.parse(data.product.characteristics)} />
-            )}
-          </Grid>
-
-          <Grid item md={6}>
-            <Typography
-              p='0.6em 0 3px'
-              fontWeight={500}
-              variant="h3"
-            >
-              Oписание
-            </Typography>
-            {data?.product?.description && (
-              <EditorJs data={JSON.parse(data.product.description)} />
-            )}
-          </Grid>
-        </Grid>
+        <Stack ref={characteristicsRef} sx={idenfy ? { pt: { lg: '150px' } } : { pt: 0 }}/>
+        <ProductDetailTab des={data?.product?.description ? data?.product?.description : ''} charektr={data?.product?.characteristics ? data?.product?.characteristics : null} />
 
         <Stack mb='30px'>
           {data.product?.category
