@@ -1,8 +1,16 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import lod from 'assets/loder.gif';
-const placeHolder = lod.src
-  // "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII=";
+
+interface LazyImageProps {
+  src: string;
+  alt?: string;
+  onMouseEnter?: (e: React.MouseEvent<HTMLImageElement>) => void;
+  onMouseLeave?: (e: React.MouseEvent<HTMLImageElement>) => void;
+  onMouseMove?: (e: React.MouseEvent<HTMLImageElement>) => void;
+}
+
+const placeHolder = lod.src;
 
 const Image = styled.img`
   display: block;
@@ -24,19 +32,22 @@ const Image = styled.img`
   }
 `;
 
-export const LazyImage: React.FC<{ src: string; alt: string }> = ({
+export const LazyImage: React.FC<LazyImageProps> = ({
   src,
   alt,
+  onMouseEnter,
+  onMouseLeave,
+  onMouseMove,
 }) => {
   const [imageSrc, setImageSrc] = useState(placeHolder);
   const [imageRef, setImageRef] = useState<any>();
 
   const onLoad = (event: any) => {
-    event.target.classList.add("loaded");
+    event.target.classList.add('loaded');
   };
 
   const onError = (event: any) => {
-    event.target.classList.add("has-error");
+    event.target.classList.add('has-error');
   };
 
   useEffect(() => {
@@ -59,7 +70,7 @@ export const LazyImage: React.FC<{ src: string; alt: string }> = ({
           },
           {
             threshold: 0.01,
-            rootMargin: "75%",
+            rootMargin: '75%',
           }
         );
         observer.observe(imageRef);
@@ -78,6 +89,9 @@ export const LazyImage: React.FC<{ src: string; alt: string }> = ({
     <Image
       ref={setImageRef}
       src={imageSrc}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      onMouseMove={onMouseMove}
       alt={alt}
       onLoad={onLoad}
       onError={onError}
