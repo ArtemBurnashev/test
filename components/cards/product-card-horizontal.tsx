@@ -43,7 +43,7 @@ const ProductCardHorizontal: React.FC<ProductCardProps> = ({
 }) => {
   const { currency } = useAppSelector(state => state.cart);
   const navigator = useRouter();
-  const router = useRouter();
+  const router = useRouter();  
   return (
     <HorizontalCardWrapper onClick={() => { navigator.push(`${Paths.PRODUCT_DETAILS}${slug}`); modalOpen ? modalOpen() : '' }}>
       <HorizontalCardImageWrapper>
