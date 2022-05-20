@@ -81,7 +81,7 @@ const AddtoCardSingle: React.FC<AddtoCardSingleProps> = ({
             <Typography variant="h3" sx={{ color: colors.white }}>
               {discount.amountInSum !== price?.amountInSum && '-'}
               {Math.floor(
-                100 - (discount?.amountInSum / price?.amountInSum) * 100
+                (discount.amountInSum / price?.amountInSum) * 100
               )}
               %
             </Typography>
@@ -90,12 +90,12 @@ const AddtoCardSingle: React.FC<AddtoCardSingleProps> = ({
       )}
 
       <Typography variant="h1" fontWeight={600}>
-        {discount
-          ? formatter(discount.amountInSum)
-          : formatter(price?.amountInSum)}{' '}
+        {discount?.amountInSum && price?.amountInSum
+          ? formatter(price?.amountInSum - discount?.amountInSum)
+          : formatter(price?.amountInSum || 0)}
         {currency}
       </Typography>
-      {available ?
+      {available ? (
         <>
           {isInCard ? (
             <>
@@ -112,12 +112,11 @@ const AddtoCardSingle: React.FC<AddtoCardSingleProps> = ({
             </Button>
           )}
         </>
-        : <Typography color={colors.primary.hover} variant='h2'>
+      ) : (
+        <Typography color={colors.primary.hover} variant="h2">
           Временно Недоступно
         </Typography>
-      }
-
-
+      )}
     </AddToCardWrapper>
   );
 };
