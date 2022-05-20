@@ -19,16 +19,16 @@ import { Paths } from 'config/site-paths';
 import { dislike, like } from 'redux-state/features/likes';
 import formatter from 'utils/currencyFormatter';
 import colors from 'config/theme';
-import NoImage from "assets/png/no-photo-available.png";
+import NoImage from 'assets/png/no-photo-available.png';
 interface ProductCardProps {
   name: string;
   infoProduct: boolean | null;
   media?:
-  | {
-    url: string;
-    alt: string;
-  }[]
-  | null;
+    | {
+        url: string;
+        alt: string;
+      }[]
+    | null;
   thumbnail?: string;
   discount?: {
     currency: string;
@@ -43,7 +43,7 @@ interface ProductCardProps {
     amountInSum?: number | null;
   };
   variant: string;
-  modalOpen?: () => void
+  modalOpen?: () => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -63,7 +63,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const { likeList } = useAppSelector((state) => state.like);
   const isInCard = cartProducts.some((product) => product.id === id);
   const isInLikeList = likeList.some((product) => product.id === id);
-
 
   const handleAddToCart = (
     e: React.MouseEvent<HTMLButtonElement | MouseEvent>
@@ -88,7 +87,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const handleLikeDislike = (
     e: React.MouseEvent<HTMLButtonElement | MouseEvent>
   ) => {
-    e.stopPropagation()
+    e.stopPropagation();
     if (id && startPrice?.amountInSum) {
       if (isInLikeList) {
         return dispatch(dislike(id));
@@ -108,14 +107,19 @@ const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   return (
-    <ProductCardWrapper onClick={() => { navigator.push(`${Paths.PRODUCT_DETAILS}${slug}`); modalOpen ? modalOpen() : '' }}>
+    <ProductCardWrapper
+      onClick={() => {
+        navigator.push(`${Paths.PRODUCT_DETAILS}${slug}`);
+        modalOpen ? modalOpen() : '';
+      }}
+    >
       {discount && startPrice && (
         <ProductCardLabel isNew={!!!discount}>
           {discount.amountInSum && startPrice.amountInSum && (
             <Typography color="white" fontSize="0.75rem">
               {discount.amountInSum !== startPrice.amountInSum && '-'}
               {Math.floor(
-                100 - (discount.amountInSum / startPrice?.amountInSum) * 100
+                (discount.amountInSum / startPrice?.amountInSum) * 100
               )}
               %
             </Typography>
@@ -128,16 +132,16 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <Stack justifyContent="space-between" height={323} spacing={2}>
         <ProductCardImageWrapper>
           <LazyImage
-
-            src={((media && media.length > 0) ? media[0]?.url : NoImage.src) || ''}
-            alt={(media && media.length > 0 && media[0]?.alt) || 'product_image'}
+            src={
+              (media && media.length > 0 ? media[0]?.url : NoImage.src) || ''
+            }
+            alt={
+              (media && media.length > 0 && media[0]?.alt) || 'product_image'
+            }
           />
         </ProductCardImageWrapper>
-        <Typography
-          height="auto"
-          variant="subtitle2"
-        >
-          {name.length <= 50 ? name : `${name.slice(0,50)}...`}
+        <Typography height="auto" variant="subtitle2">
+          {name.length <= 50 ? name : `${name.slice(0, 50)}...`}
         </Typography>
         <Stack
           direction="row"
@@ -153,12 +157,18 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 {formatter(startPrice?.amountInSum || 0)} {currency}
               </Typography>
             )}
-            <Typography variant="h3" fontWeight={600} onClick={(e) => e.stopPropagation()}>
-              {discount ? formatter(discount?.amountInSum || 0) : formatter(startPrice?.amountInSum || 0)}{' '}
+            <Typography
+              variant="h3"
+              fontWeight={600}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {discount?.amountInSum && startPrice?.amountInSum
+                ? formatter(startPrice?.amountInSum - discount?.amountInSum)
+                : formatter(startPrice?.amountInSum || 0)}
               {currency}
             </Typography>
           </Stack>
-          {infoProduct &&
+          {infoProduct && (
             <Button
               onClick={handleAddToCart}
               variant="contained"
@@ -171,12 +181,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
             >
               {isInCard ? <Eye /> : <Cart />}
             </Button>
-          }
-
+          )}
         </Stack>
       </Stack>
-      {!infoProduct && <Typography color={colors.primary.hover} variant='body2'>Временно Недоступно</Typography>
-        }
+      {!infoProduct && (
+        <Typography color={colors.primary.hover} variant="body2">
+          Временно Недоступно
+        </Typography>
+      )}
     </ProductCardWrapper>
   );
 };

@@ -45,16 +45,21 @@ const ProductCardHorizontal: React.FC<ProductCardProps> = ({
   const navigator = useRouter();
   const router = useRouter();  
   return (
-    <HorizontalCardWrapper onClick={() => { navigator.push(`${Paths.PRODUCT_DETAILS}${slug}`); modalOpen ? modalOpen() : '' }}>
+    <HorizontalCardWrapper
+      onClick={() => {
+        navigator.push(`${Paths.PRODUCT_DETAILS}${slug}`);
+        modalOpen ? modalOpen() : '';
+      }}
+    >
       <HorizontalCardImageWrapper>
         <LazyImage src={image || ''} alt="product" />
       </HorizontalCardImageWrapper>
       <Stack spacing={4} justifyContent="space-between">
         <Typography
           sx={{
-            textTransform:'capitalize',
+            textTransform: 'capitalize',
             cursor: 'pointer',
-            maxWidth:'249px'
+            maxWidth: '249px',
           }}
           component="a"
           variant="h3"
@@ -63,7 +68,9 @@ const ProductCardHorizontal: React.FC<ProductCardProps> = ({
         </Typography>
         <Stack spacing={2} direction="row">
           <Typography fontWeight={500} variant="h3">
-            {discount ? formatter(discount?.amountInSum) : formatter(price?.amountInSum)}{' '}
+            {discount?.amountInSum && price?.amountInSum
+              ? formatter(price?.amountInSum - discount?.amountInSum)
+              : formatter(price?.amountInSum || 0)}
             {currency}
           </Typography>
           {discount && (
@@ -72,7 +79,11 @@ const ProductCardHorizontal: React.FC<ProductCardProps> = ({
             </Typography>
           )}
         </Stack>
-          {!productInfo && <Typography color={colors.primary.hover}>Временно Недоступно</Typography>}
+        {!productInfo && (
+          <Typography color={colors.primary.hover}>
+            Временно Недоступно
+          </Typography>
+        )}
       </Stack>
     </HorizontalCardWrapper>
   );
