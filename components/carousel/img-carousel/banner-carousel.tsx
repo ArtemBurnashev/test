@@ -60,7 +60,7 @@ const Card = styled.div<{ height?: number; fullBorderRadius?: boolean }>`
   }
   .slick-slider {
     @media (max-width: 568px) {
-       height: 180px;
+       /* height: 180px; */
        overflow: hidden;
      }
     .slick-dots {
