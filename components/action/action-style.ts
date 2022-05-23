@@ -17,7 +17,7 @@ const ActionWrapper = styled.div`
     }
 `;
 const StyleImgBlock = styled.div`
-  min-height: 240px;
+  max-height: 240px;
   img{
     width: 100%;
     height: 100%;

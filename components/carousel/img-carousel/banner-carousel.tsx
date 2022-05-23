@@ -126,13 +126,13 @@ const ImageCarousel: FC<{
       >
         {products?.map((item) => (
           <div key={item.id}>
-            {item.backgroundImage ?
+            {item.backgroundImage &&
               <LazyImage
                 src={item.backgroundImage?.url}
                 alt={item.backgroundImage?.alt ? item.backgroundImage?.alt : 'products'}
               />
-              :
-              <Skeleton variant="rectangular" width='100%' height='100%' />
+              // :
+              // <Skeleton variant="rectangular" width='100%' height='100%' />
             }
           </div>
         ))}
