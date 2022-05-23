@@ -116,7 +116,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       {discount && startPrice && (
         <ProductCardLabel isNew={!!!discount}>
           {discount.amountInSum && startPrice.amountInSum && (
-            <Typography color="white" fontSize="0.75rem">
+            <Typography color="white" fontSize="15px">
               {discount.amountInSum !== startPrice.amountInSum && '-'}
               {Math.floor(
                 (discount.amountInSum / startPrice?.amountInSum) * 100
@@ -159,6 +159,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             )}
             <Typography
               variant="h3"
+              fontSize={{sm:'1.125rem',xs:'16px'}}
               fontWeight={600}
               onClick={(e) => e.stopPropagation()}
             >
@@ -177,7 +178,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
                   pl: 0,
                   pr: 0,
                 },
+                minWidth:{xs:'36px'},
+                p:{xs:'9px'},
               }}
+              
             >
               {isInCard ? <Eye /> : <Cart />}
             </Button>

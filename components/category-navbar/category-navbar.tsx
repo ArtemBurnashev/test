@@ -42,24 +42,17 @@ export const CategoryNavbar: React.FC = () => {
   });
   const elements = data?.categories?.edges.map((item) => item.node)
     .map((links) => links);
-  
-  const categories = data?.categories?.edges.filter((item )=> {
-    if(!item.node.children?.edges.length){
-      return item
-    }
-   
-  }) 
 
   const addElemets = (): void => {
     if (data?.categories?.pageInfo.hasNextPage) {
-      fetchMore({ variables: { cursor: data?.categories?.pageInfo.endCursor} })
+      fetchMore({ variables: { cursor: data?.categories?.pageInfo.endCursor } })
     }
   }
 
-
+  
   const settings = {
     dots: false,
-    infinite: true,
+    infinite: false,
     autoplay:true,
     slidesToShow: (loading ? 1 : 6),
     slidesToScroll: 3,
@@ -98,7 +91,7 @@ export const CategoryNavbar: React.FC = () => {
     ]
   };
 
-
+    
 
   if (router.pathname !== Paths.HOME) {
     return (

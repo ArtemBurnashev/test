@@ -1,9 +1,6 @@
 import styled from "styled-components";
 const ActionWrapper = styled.div`
-
   margin: 32px  0;
-  padding-top: 30px;
-  padding-bottom: 30px;
   overflow: hidden;
   img {
     width: 100%;

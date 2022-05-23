@@ -71,7 +71,7 @@ export const ProductCardLabel = styled.div<{ isNew: boolean }>`
   left: 6px;
   padding: 6px;
   background-color: ${({ isNew }) =>
-    isNew ? colors.green.default : colors.red.default};
+    isNew ? colors.green.default : '#f92222'};
   z-index: 2;
 `;
 
