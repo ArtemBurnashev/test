@@ -53,7 +53,7 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug ,modalOpen}) =>
       {
         breakpoint: theme.breakpoints.values.xs,
         settings: {
-          slidesToShow: 1.5,
+          slidesToShow: 1,
           slidesToScroll: 1,
         },
       },
@@ -66,7 +66,7 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug ,modalOpen}) =>
       {
         breakpoint: theme.breakpoints.values.sm,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 1,
           slidesToScroll: 1,
         },
       },
