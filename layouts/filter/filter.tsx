@@ -31,9 +31,6 @@ const Filter: React.FC = ({ children }) => {
   const attributes = data?.attributes?.edges.map((edge) => edge.node);
   return (
     <Grid container>
-      <Grid item md={7} lg={9}>
-        {children}
-      </Grid>
       <Grid item md={5} lg={3}>
         <Stack sx={{ padding: '1rem 0.5rem' }} gap={2}>
           <Select
@@ -45,11 +42,11 @@ const Filter: React.FC = ({ children }) => {
             <MenuItem value={OrderDirection.Asc}>Сначала по дешевле</MenuItem>
             <MenuItem value={OrderDirection.Desc}>Сначала по дороже</MenuItem>
           </Select>
-          <Accordion sx={{border:'1px solid #e5e5e5'}}>
+          <Accordion sx={{ border: '1px solid #e5e5e5' }}>
             <AccordionSummary>
               <Typography variant="subtitle2">Цена</Typography>
             </AccordionSummary>
-            <AccordionDetails >
+            <AccordionDetails>
               <Stack alignItems="center" gap={2} direction="row">
                 <Input
                   value={price.gte || 0}
@@ -96,6 +93,9 @@ const Filter: React.FC = ({ children }) => {
             />
           ))} */}
         </Stack>
+      </Grid>
+      <Grid item md={7} lg={9}>
+        {children}
       </Grid>
     </Grid>
   );
