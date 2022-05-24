@@ -53,19 +53,19 @@ export const ProductDetailTab: React.FC<TabProps> = ({ characteristicsRef, chare
 
 
   return (
-    
+
     <Box pt='30px' ref={characteristicsRef} width='100%'>
       <Tabs value={value} onChange={handleChangeTab} aria-label="basic tabs example">
         <Tab label="Oписание" {...a11yProps(0)} />
         <Tab label="Характеристики" {...a11yProps(1)} />
       </Tabs>
       <TabPanel value={value} index={0}>
-        <Box  sx={{ '.ce-block__content': { maxWidth: '100%' } }}>
-          <EditorJs data={JSON.parse(des)} />
+        <Box sx={{ '.ce-block__content': { maxWidth: '100%' } }}>
+          <EditorJs data={des ? JSON.parse(des) : {}} />
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <EditorJs data={JSON.parse(charektr)} />
+        <EditorJs data={charektr ? JSON.parse(charektr) : {}} />
       </TabPanel>
     </Box>
   )
