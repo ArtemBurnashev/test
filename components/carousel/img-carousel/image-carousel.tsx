@@ -69,13 +69,13 @@ const ImageCarousel: FC<{
     adaptiveHeight: true,
     dotsClass: "slick-dots slick-thumb",
     afterChange: (currenSlide: any) => onSlide && onSlide(currenSlide),
-    customPaging: function (i: any) {
-
+    customPaging:(i: any) => {
       return (
         <a>
-          <img src={imgs ? imgs[i].url : ' '} />
+          <img src={imgs ? imgs[i].url : ''} />
         </a>
       );
+
     },
   }
 
