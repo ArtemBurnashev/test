@@ -32,23 +32,17 @@ import { dislike, like } from 'redux-state/features/likes';
 import { ProductCarousel } from 'components/carousel/product-carousel';
 import { ImageMagnifier } from 'components/image-magnifier';
 import { ProductDetailTab } from 'components/product-detali-tab';
-
+import Zoom from 'components/image-magnifier/zoom-image';
 
 type Props = {
   data: SingleProductQuery;
   [key: string]: any;
 };
 
-
 const SingleProduct: NextPage<Props> = ({ data }) => {
   const [variant, setVariant] = useState<any>();
   const dispatch = useAppDispatch();
   const characteristicsRef = useRef<HTMLDivElement>(null);
-  const [[x, y], setXY] = useState([0, 0]);
-  const [[imgWidth, imgHeight], setSize] = useState([0, 0]);
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  const [showMagnifier, setShowMagnifier] = useState(false);
   const { likeList } = useAppSelector((state) => state.like);
   const isInLikeList = likeList.some(
     (product) =>
@@ -122,8 +116,6 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
 
   const dataInfo = data?.product?.isAvailableForPurchase;
 
-
-
   return (
     <Main>
       {data.product && (
@@ -186,41 +178,21 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
         <Spacer />
         <Grid mt="24px" container>
           <Grid sm={12} xs={12} item md={7} lg={4}>
-            <ImageCarousel imgs={data?.product?.media} onSlide={(currentSlide) => setCurrentSlide(currentSlide)}>
+            <ImageCarousel
+              imgs={data?.product?.media}
+            >
               {sliderItems?.map((media) => (
                 <ProductImage key={media.alt}>
-                  <LazyImage
-                    src={media.url || ''}
-                    alt={data?.product?.name || 'product image'}
-                    onMouseEnter={(e) => {
-                      const elem = e.currentTarget;
-                      const { width, height } = elem.getBoundingClientRect();
-                      setSize([width, height]);
-                      setShowMagnifier(true);
-                    }}
-                    onMouseMove={(e) => {
-                      const elem = e.currentTarget;
-                      const { top, left } = elem.getBoundingClientRect();
-
-                      const x = e.pageX - left - window.pageXOffset;
-                      const y = e.pageY - top - window.pageYOffset;
-                      setXY([x, y]);
-                    }}
-                    onMouseLeave={(e) => setShowMagnifier(false)}
+                  <Zoom
+                    img={media.url}
+                    zoomScale={2}
+                    width={435}
+                    height={435}
+                    transitionTime={.3}
                   />
                 </ProductImage>
               ))}
             </ImageCarousel>
-            {showMagnifier && (
-              <ImageMagnifier
-                coordinates={{ x, y }}
-                magnifieWidth={150}
-                magnifierHeight={150}
-                sizes={{ imgWidth, imgHeight }}
-                zoomLevel={2}
-                src={sliderItems ? sliderItems[currentSlide].url : ""}
-              />
-            )}
           </Grid>
 
           <Grid item md={5} lg={5}>
@@ -259,9 +231,9 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
                         display: 'none',
                       },
                       ['.MuiOutlinedInput-root .MuiOutlinedInput-input .MuiInputBase-input ']:
-                      {
-                        paddingRight: 0,
-                      },
+                        {
+                          paddingRight: 0,
+                        },
                     },
                   }}
                 >
@@ -275,14 +247,17 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
             )}
 
             <Stack pl={{ lg: 2, xs: 0, md: 2 }} spacing={2}>
-
               {data.product?.attributes && data.product?.attributes.length > 0 && (
                 <>
-                  <Typography sx={
-                    idenfy
-                      ? { marginTop: { xs: '155px', lg: 0, md: 0 } }
-                      : { marginTop: 0 }
-                  } fontWeight={500} variant="h3">
+                  <Typography
+                    sx={
+                      idenfy
+                        ? { marginTop: { xs: '155px', lg: 0, md: 0 } }
+                        : { marginTop: 0 }
+                    }
+                    fontWeight={500}
+                    variant="h3"
+                  >
                     Характеристики
                   </Typography>
                   {data?.product?.attributes.map((attr) => (
@@ -342,17 +317,29 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
             />
           </Grid>
         </Grid>
-        <Stack ref={characteristicsRef} sx={idenfy ? { pt: { lg: '150px' } } : { pt: 0 }}/>
-        <ProductDetailTab des={data?.product?.description ? data?.product?.description : ''} charektr={data?.product?.characteristics ? data?.product?.characteristics : null} />
-
-        <Stack mb='30px'>
-          {data.product?.category
-            ?
-            <ProductCarousel slug={data.product?.category?.slug} label='Похожие товары' /> :
-            ""
+        <Stack
+          ref={characteristicsRef}
+          sx={idenfy ? { pt: { lg: '150px' } } : { pt: 0 }}
+        />
+        <ProductDetailTab
+          des={data?.product?.description ? data?.product?.description : ''}
+          charektr={
+            data?.product?.characteristics
+              ? data?.product?.characteristics
+              : null
           }
-        </Stack>
+        />
 
+        <Stack mb="30px">
+          {data.product?.category ? (
+            <ProductCarousel
+              slug={data.product?.category?.slug}
+              label="Похожие товары"
+            />
+          ) : (
+            ''
+          )}
+        </Stack>
       </Container>
     </Main>
   );
