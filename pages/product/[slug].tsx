@@ -118,8 +118,6 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
   const dataInfo = data?.product?.isAvailableForPurchase;
   const md = useMediaQuery('(max-width:900px)');
 
-
-
   return (
     <Main>
       {data.product && (
@@ -182,24 +180,21 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
         <Spacer />
         <Grid mt="24px" container>
           <Grid sm={12} xs={12} item md={7} lg={4}>
-            <ImageCarousel
-              imgs={data?.product?.media}
-            >
+            <ImageCarousel imgs={data?.product?.media}>
               {sliderItems?.map((media) => (
                 <ProductImage key={media.alt}>
-                  {!md ?
-                    <Zoom
-                      img={media.url}
-                      zoomScale={2}
-                      transform
-                      width={435}
-                      height={435}
-                      transitionTime={.3}
-                    />
-                    :
-                    <LazyImage src={media.url} alt={media.alt}/>
-                  }
-
+                  {/* {!md ? */}
+                  <Zoom
+                    img={media.url}
+                    zoomScale={2}
+                    transform
+                    width={!md ? 435 : '100%'}
+                    height={435}
+                    transitionTime={0.3}
+                  />
+                  {/* :
+                    <LazyImage src={media.url} alt={media.alt}/> */}
+                  {/* } */}
                 </ProductImage>
               ))}
             </ImageCarousel>
@@ -241,9 +236,9 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
                         display: 'none',
                       },
                       ['.MuiOutlinedInput-root .MuiOutlinedInput-input .MuiInputBase-input ']:
-                      {
-                        paddingRight: 0,
-                      },
+                        {
+                          paddingRight: 0,
+                        },
                     },
                   }}
                 >
