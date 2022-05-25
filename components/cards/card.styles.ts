@@ -108,6 +108,7 @@ export const HorizontalCardWrapper = styled.div`
   display: flex;
   align-items: flex-start;
   gap: 1rem;
+  position: relative;
   max-height: 157px;
   cursor: pointer;
   :hover{

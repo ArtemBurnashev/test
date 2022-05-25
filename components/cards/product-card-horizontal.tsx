@@ -15,7 +15,7 @@ import formatter from 'utils/currencyFormatter';
 
 interface ProductCardProps {
   name: string;
-  productInfo:boolean | null;
+  productInfo: boolean | null;
   image?: string | null;
   discount?: {
     currency: string;
@@ -43,7 +43,7 @@ const ProductCardHorizontal: React.FC<ProductCardProps> = ({
 }) => {
   const { currency } = useAppSelector(state => state.cart);
   const navigator = useRouter();
-  const router = useRouter();  
+  const router = useRouter();
   return (
     <HorizontalCardWrapper
       onClick={() => {
@@ -74,9 +74,22 @@ const ProductCardHorizontal: React.FC<ProductCardProps> = ({
             {currency}
           </Typography>
           {discount && (
-            <Typography sx={{ textDecoration: 'line-through' }} variant="body2">
-              {formatter(price?.amountInSum)} {currency}
-            </Typography>
+            <>
+              <Typography sx={{ textDecoration: 'line-through' }} variant="body2">
+                {formatter(price?.amountInSum)} {currency}
+              </Typography>
+              {discount.amountInSum && price?.amountInSum ?
+                <Stack sx={{position:'absolute',top:'10px',right:'10px'}} bgcolor='red' fontSize='15px' p='6px'>
+                  <Typography color='white'>
+                    {Math.floor(
+                      (discount.amountInSum / price?.amountInSum) * 100
+                    )}
+                    %
+                  </Typography>
+                </Stack> :''
+              }
+
+            </>
           )}
         </Stack>
         {!productInfo && (
