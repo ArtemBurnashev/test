@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 
 interface ZoomProps {
   height: number;
-  width: number;
+  width: number | string;
   transitionTime: number;
   img: string;
   zoomScale: number;
@@ -31,7 +31,7 @@ const Zoom: React.FC<ZoomProps> = ({
   const imageRef = useRef<HTMLDivElement>(null);
   const outerDivStyle = {
     height: `${height}px`,
-    width: `${width}px`,
+    width: typeof width === "number" ? `${width}px` : width,
     overflow: 'hidden',
   };
 
