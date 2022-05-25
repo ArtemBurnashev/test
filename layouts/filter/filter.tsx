@@ -1,12 +1,10 @@
 import {
   AccordionDetails,
   Box,
+  Button,
   Checkbox,
-  FormControlLabel,
-  FormGroup,
   Grid,
   MenuItem,
-  SelectChangeEvent,
   Stack,
   Typography,
 } from '@mui/material';
@@ -14,6 +12,7 @@ import Accordion from 'components/accordion/accordion';
 import AccordionSummary from 'components/accordion/accordion-summary';
 import Input from 'components/input';
 import Select from 'components/select';
+import CostomRadio from 'components/radio/radio';
 import colors from 'config/theme';
 import {
   OrderDirection,
@@ -22,19 +21,60 @@ import {
 import React from 'react';
 import { changePrice, sort as sortFn } from 'redux-state/features/filter';
 import { useAppDispatch, useAppSelector } from 'redux-state/hook';
-import FilterItem from './filter-item';
+import ArrowDow from 'components/icons/arrow-down';
 
 const Filter: React.FC = ({ children }) => {
   const dispatch = useAppDispatch();
   const { price, sort } = useAppSelector((state) => state.filter);
   const { data } = useInitialProductFilterAttributesQuery();
   const attributes = data?.attributes?.edges.map((edge) => edge.node);
+
+  const checkBoxStyle = {
+    stack: {
+      transition: '.3s',
+      borderBottom: '0.5px solid #DCDCDC',
+      ':hover': { bgcolor: colors.primary.default },
+      p: '8px 0',
+      alignItems: 'center',
+    },
+    p:{
+      fontWeight:'500',
+      p:'16px 12px',
+      borderBottom: '0.5px solid #DCDCDC'
+    }
+
+  }
+
   return (
     <Grid container>
-      <Grid item md={7} lg={9}>
-        {children}
-      </Grid>
       <Grid item md={5} lg={3}>
+        <Stack sx={{ padding: '1rem 0.5rem' }}>
+          <Stack border='0.5px solid #DCDCDC'>
+            <Typography sx={{...checkBoxStyle.p}}  variant='subtitle2'>
+              Производитель
+            </Typography>
+            <Stack sx={{...checkBoxStyle.stack}} direction="row">
+              <Checkbox  sx={{ '&.Mui-checked': { color: colors.black } }} />
+              <Typography variant='subtitle2'>Все</Typography>
+            </Stack>
+            <Stack sx={{...checkBoxStyle.stack}} direction="row">
+              <Checkbox sx={{ '&.Mui-checked': { color: colors.black } }} />
+              <Typography variant='subtitle2'>Apple (1501)</Typography>
+            </Stack>
+            <Stack sx={{...checkBoxStyle.stack}} direction="row">
+              <Checkbox sx={{ '&.Mui-checked': { color: colors.black } }} />
+              <Typography variant='subtitle2'>Samsung (1501)</Typography>
+            </Stack>
+            <Stack sx={{...checkBoxStyle.stack}} direction="row">
+              <Checkbox sx={{ '&.Mui-checked': { color: colors.black } }} />
+              <Typography variant='subtitle2'>DELL (1501)</Typography>
+            </Stack>
+            <Button sx={{p:'20px'}}>
+                <ArrowDow color='#000'/>
+            </Button>
+          </Stack>
+        </Stack>
+
         <Stack sx={{ padding: '1rem 0.5rem' }} gap={2}>
           <Select
             //@ts-expect-error
@@ -45,11 +85,11 @@ const Filter: React.FC = ({ children }) => {
             <MenuItem value={OrderDirection.Asc}>Сначала по дешевле</MenuItem>
             <MenuItem value={OrderDirection.Desc}>Сначала по дороже</MenuItem>
           </Select>
-          <Accordion sx={{border:'1px solid #e5e5e5'}}>
+          <Accordion sx={{ border: '1px solid #e5e5e5' }}>
             <AccordionSummary>
               <Typography variant="subtitle2">Цена</Typography>
             </AccordionSummary>
-            <AccordionDetails >
+            <AccordionDetails>
               <Stack alignItems="center" gap={2} direction="row">
                 <Input
                   value={price.gte || 0}
@@ -96,6 +136,9 @@ const Filter: React.FC = ({ children }) => {
             />
           ))} */}
         </Stack>
+      </Grid>
+      <Grid item md={7} lg={9}>
+        {children}
       </Grid>
     </Grid>
   );
