@@ -3,6 +3,7 @@ import {
   Grid,
   MenuItem,
   Rating,
+  useMediaQuery,
   SelectChangeEvent,
   Stack,
   Typography,
@@ -115,6 +116,9 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
   const sliderItems = data.product?.media?.slice(0, 4);
 
   const dataInfo = data?.product?.isAvailableForPurchase;
+  const md = useMediaQuery('(max-width:900px)');
+
+
 
   return (
     <Main>
@@ -183,13 +187,19 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
             >
               {sliderItems?.map((media) => (
                 <ProductImage key={media.alt}>
-                  <Zoom
-                    img={media.url}
-                    zoomScale={2}
-                    width={435}
-                    height={435}
-                    transitionTime={.3}
-                  />
+                  {!md ?
+                    <Zoom
+                      img={media.url}
+                      zoomScale={2}
+                      transform
+                      width={435}
+                      height={435}
+                      transitionTime={.3}
+                    />
+                    :
+                    <LazyImage src={media.url} alt={media.alt}/>
+                  }
+
                 </ProductImage>
               ))}
             </ImageCarousel>
@@ -231,9 +241,9 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
                         display: 'none',
                       },
                       ['.MuiOutlinedInput-root .MuiOutlinedInput-input .MuiInputBase-input ']:
-                        {
-                          paddingRight: 0,
-                        },
+                      {
+                        paddingRight: 0,
+                      },
                     },
                   }}
                 >
