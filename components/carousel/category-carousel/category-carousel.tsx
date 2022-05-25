@@ -21,7 +21,7 @@ const CategoryCarousel: FC = () => {
   })
   
   const settings = {
-    infinite: false,
+    infinite: true,
     dots: false,
     slidesToShow: 5.5,
     arrows: false,

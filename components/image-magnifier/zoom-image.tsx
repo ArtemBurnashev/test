@@ -6,6 +6,8 @@ interface ZoomProps {
   transitionTime: number;
   img: string;
   zoomScale: number;
+  transform?:boolean;
+  // img height large
 }
 
 const Zoom: React.FC<ZoomProps> = ({
@@ -19,10 +21,12 @@ const Zoom: React.FC<ZoomProps> = ({
     zoom: boolean;
     mouseX: number | null;
     mouseY: number | null;
+    transform:boolean;
   }>({
     zoom: false,
     mouseX: null,
     mouseY: null,
+    transform:false
   });
   const imageRef = useRef<HTMLDivElement>(null);
   const outerDivStyle = {
@@ -35,17 +39,18 @@ const Zoom: React.FC<ZoomProps> = ({
     height: `${height}px`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
-    backgroundSize: 'auto 100%',
+    backgroundSize: 'contain',
+    // padding:'20px',
     transition: `transform ${transitionTime}s ease-out`,
     backgroundImage: `url('${img}')`,
   };
 
   const handleMouseOver = () => {
-    setState((oldState) => ({ ...oldState, zoom: true }));
+    setState((oldState) => ({ ...oldState, zoom: true ,transform:true}));
   };
 
   const handleMouseOut = () => {
-    setState((oldState) => ({ ...oldState, zoom: false }));
+    setState((oldState) => ({ ...oldState, zoom: false ,transform:false}));
   };
 
   const handleMouseMovement = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -84,7 +89,7 @@ const Zoom: React.FC<ZoomProps> = ({
         style={{
           ...transform,
           ...innerDivStyle,
-          transform: zoom ? `scale(${zoomScale})` : 'scale(1.0)',
+          transform: zoom ? `scale(${zoomScale}) translate(0,15%)` : 'scale(1.0)',
           willChange: 'transform',
         }}
       />
