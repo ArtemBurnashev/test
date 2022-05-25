@@ -71,7 +71,7 @@ const CategoryProducts: NextPage = () => {
             loadingIndicator()
           ) : (
             <Stack spacing={2}>
-              <Typography margin="1.5rem 0" marginTop='34px' variant="h2">
+              <Typography margin="1.5rem 0" mt={{xs:'34px',md:'11px'}} variant="h2">
                 {data?.category?.name}
               </Typography>
               <InfiniteLoader

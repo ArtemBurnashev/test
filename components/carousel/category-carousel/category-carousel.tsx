@@ -3,11 +3,15 @@ import styled from 'styled-components';
 import Slider from 'react-slick';
 import { CategoryCard } from 'components/cards';
 import { useTheme } from '@mui/material';
+import Arrow from 'components/icons/arrow';
 import { useAllCategoriesQuery } from 'graphql/generated.graphql';
-import { Paths } from 'config/site-paths';
 import { CategoryCaruselCard } from '../carusel-style';
 import { useRouter } from 'next/router';
 
+
+const NextArrow = styled(Arrow)`
+  transform: rotate(180deg) translate(0, 50%);
+`;
 
 const CategoryCarousel: FC = () => {
   const theme = useTheme();
@@ -21,54 +25,44 @@ const CategoryCarousel: FC = () => {
   })
   
   const settings = {
-    infinite: true,
+    infinite:true,
     dots: false,
-    slidesToShow: 5.5,
-    arrows: false,
+    slidesToShow: 5,
+    arrows: true,
     speed: 500,
-    slidesToScroll: 3,
+    slidesToScroll: 2,
     autoplay: true,
+    autoplaySpeed:4000,
+    prevArrow:<Arrow />,
+    nextArrow:<NextArrow />,
     responsive:[
-      {
-        breakpoint: 1517,
-        settings: {
-          slidesToShow: 5.5,
-          slidesToScroll: 1,
-        },
-      },
       {
         breakpoint: theme.breakpoints.values.md,
         settings: {
-          slidesToShow: 2.5,
+          slidesToShow: 2,
           slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: theme.breakpoints.values.xs,
-        settings: {
-          slidesToShow: 1.1,
-          slidesToScroll: 1,
+          arrows: false,
+
         },
       },
       {
         breakpoint: theme.breakpoints.values.sm,
         settings: {
-          slidesToShow: 2.5,
+          slidesToShow: 2,
           slidesToScroll: 2,
-          infinite: false
         },
       },
       {
-        breakpoint: theme.breakpoints.values.lg,
+        breakpoint: theme.breakpoints.values.xs,
         settings: {
-          slidesToShow: 4.5,
-          slidesToScroll: 2,
+          slidesToShow: 1,
+          slidesToScroll: 1,
         },
       },
+      
     ]
   }
   
-  const router = useRouter();
   return (
     <CategoryCaruselCard>
       <Slider

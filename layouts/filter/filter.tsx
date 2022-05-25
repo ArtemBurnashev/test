@@ -47,8 +47,8 @@ const Filter: React.FC = ({ children }) => {
 
   return (
     <Grid container>
-      <Grid item md={5} lg={3}>
-        <Stack sx={{ padding: '1rem 0.5rem' }}>
+      <Grid item md={3} lg={3}>
+        <Stack sx={{ padding: '1rem 0.5rem' }} mt={{xs:'34px',md:'0',lg:'0'}}>
           <Stack border='0.5px solid #DCDCDC'>
             <Typography sx={{...checkBoxStyle.p}}  variant='subtitle2'>
               Производитель
@@ -69,7 +69,7 @@ const Filter: React.FC = ({ children }) => {
               <Checkbox sx={{ '&.Mui-checked': { color: colors.black } }} />
               <Typography variant='subtitle2'>DELL (1501)</Typography>
             </Stack>
-            <Button sx={{p:'20px'}}>
+            <Button sx={{height:'40px'}}>
                 <ArrowDow color='#000'/>
             </Button>
           </Stack>
@@ -137,7 +137,7 @@ const Filter: React.FC = ({ children }) => {
           ))} */}
         </Stack>
       </Grid>
-      <Grid item md={7} lg={9}>
+      <Grid item md={9} lg={9}>
         {children}
       </Grid>
     </Grid>
