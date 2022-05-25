@@ -1,9 +1,6 @@
 import styled from "styled-components";
 const ActionWrapper = styled.div`
-
   margin: 32px  0;
-  padding-top: 30px;
-  padding-bottom: 30px;
   overflow: hidden;
   img {
     width: 100%;
@@ -20,7 +17,7 @@ const ActionWrapper = styled.div`
     }
 `;
 const StyleImgBlock = styled.div`
-  min-height: 240px;
+  max-height: 240px;
   img{
     width: 100%;
     height: 100%;

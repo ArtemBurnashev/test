@@ -4,6 +4,7 @@ import Slider from 'react-slick';
 import colors from 'config/theme';
 
 const Card = styled.div`
+    max-height: 435px;
    .slick-slider {
      /* max-height: 300px; */
      /* @media (max-width: 768px) {
@@ -16,6 +17,16 @@ const Card = styled.div`
      max-height: auto;
      object-fit: contain;
    }
+   .slick-list{
+     border: 1px solid transparent;
+     transition: all .4s ease;
+
+     &:hover{
+      border: 1px solid #e5e5e5;
+
+     }
+   }
+  
    .slick-dots {
      bottom: -150px;
      li {
@@ -45,7 +56,6 @@ const Card = styled.div`
      text-align: center;
    }
  `;
-
 const ImageCarousel: FC<{
   images?: string[];
   initialSlide?: number;
@@ -56,6 +66,8 @@ const ImageCarousel: FC<{
 
   onSlide?: (currenSlide: number) => void;
 }> = ({ initialSlide, onSlide, children, imgs }) => {
+
+  const currentImg = imgs?.map((i) => i.url)
 
 
   const settings = {
@@ -72,7 +84,10 @@ const ImageCarousel: FC<{
     customPaging:(i: any) => {
       return (
         <a>
-          <img src={imgs ? imgs[i].url : ''} />
+          {
+            // @ts-expect-error
+            <img src={currentImg[i] ? currentImg[i] : notImg} />
+          }
         </a>
       );
 
