@@ -114,7 +114,7 @@ export const CategoryNavbar: React.FC = () => {
                   >
                     <LinkText
                       href={`${Paths.CATEGORY_PRODUCTS}${links.slug}`}>
-                      {links.name.slice(0,28)}
+                      {links.name.slice(0,27)}
                     </LinkText>
                   </LinkSet>
                 )}

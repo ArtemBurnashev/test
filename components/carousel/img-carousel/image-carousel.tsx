@@ -18,14 +18,8 @@ const Card = styled.div`
      object-fit: contain;
    }
    .slick-list{
-     border: 1px solid transparent;
      transition: all .4s ease;
-
-     &:hover{
-      border: 1px solid #e5e5e5;
-
-     }
-   }
+    }
   
    .slick-dots {
      bottom: -150px;
