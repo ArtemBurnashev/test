@@ -12,6 +12,11 @@ export const newLinks = [
     icon: Document,
   },
   {
+    href:'/profile/payment-by-instalments',
+    label:'Данные для рассрочки',
+    icon: Document,
+  },
+  {
     href: '/profile/orders',
     label: 'Мои заказы',
     icon: Bag,
@@ -32,6 +37,11 @@ export default [
   {
     href: '/profile',
     label: 'Персональные данные',
+    icon: Document,
+  },
+  {
+    href:'/profile/payment-by-instalments',
+    label:'Данные для рассрочки',
     icon: Document,
   },
   {

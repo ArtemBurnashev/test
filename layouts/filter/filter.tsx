@@ -12,7 +12,6 @@ import Accordion from 'components/accordion/accordion';
 import AccordionSummary from 'components/accordion/accordion-summary';
 import Input from 'components/input';
 import Select from 'components/select';
-import CostomRadio from 'components/radio/radio';
 import colors from 'config/theme';
 import {
   OrderDirection,
@@ -27,7 +26,6 @@ const Filter: React.FC = ({ children }) => {
   const dispatch = useAppDispatch();
   const { price, sort } = useAppSelector((state) => state.filter);
   const { data } = useInitialProductFilterAttributesQuery();
-  const attributes = data?.attributes?.edges.map((edge) => edge.node);
 
   const checkBoxStyle = {
     stack: {
@@ -48,7 +46,7 @@ const Filter: React.FC = ({ children }) => {
   return (
     <Grid container>
       <Grid item md={3} lg={3}>
-        <Stack sx={{ padding: '1rem 0.5rem' }} mt={{xs:'34px',md:'0',lg:'0'}}>
+        <Stack sx={{ padding: '1rem 0.5rem' }}>
           <Stack border='0.5px solid #DCDCDC'>
             <Typography sx={{...checkBoxStyle.p}}  variant='subtitle2'>
               Производитель
