@@ -49,7 +49,7 @@ const ProfilePage: NextPage = () => {
       <Container maxWidth="xl">
         {!md ? <Breadcrumb data={links} /> :
         <>
-          <Typography mt='20px' mb='4px' variant='h2'>{data?.me?.phone}</Typography>
+          <Typography mt='30px' mb='4px' variant='h2'>{data?.me?.phone}</Typography>
           <Typography mb='24px' variant='body2'>Неподтвержденный профиль</Typography>
         </>
         }

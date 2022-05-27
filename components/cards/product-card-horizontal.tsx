@@ -4,6 +4,7 @@ import {
   HorizontalCardImageWrapper,
   HorizontalCardWrapper,
 } from './card.styles';
+import styled from 'styled-components';
 import Phone from 'assets/png/phone.png';
 import { Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
@@ -31,6 +32,13 @@ interface ProductCardProps {
   };
   modalOpen?: () => void;
 }
+
+const StyleBageStack = styled(Stack)`
+  @media (max-width:1399px){
+    left:0;
+  }
+
+`
 
 const ProductCardHorizontal: React.FC<ProductCardProps> = ({
   slug,
@@ -79,14 +87,14 @@ const ProductCardHorizontal: React.FC<ProductCardProps> = ({
                 {formatter(price?.amountInSum)} {currency}
               </Typography>
               {discount.amountInSum && price?.amountInSum ?
-                <Stack sx={{position:'absolute',top:'10px',right:'10px'}} bgcolor='red' fontSize='15px' p='6px'>
+                <StyleBageStack sx={{position:'absolute',top:'10px',right:{lg:'10px'}}} bgcolor='red' fontSize='15px' p='6px'>
                   <Typography color='white'>
-                    {Math.floor(
+                    -{Math.floor(
                       (discount.amountInSum / price?.amountInSum) * 100
                     )}
                     %
                   </Typography>
-                </Stack> :''
+                </StyleBageStack> :''
               }
 
             </>

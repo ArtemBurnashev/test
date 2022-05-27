@@ -60,7 +60,7 @@ export const CategoryNavbar: React.FC = () => {
     autoplaySpeed:4000,
     responsive: [
       {
-        breakpoint: 1160,
+        breakpoint: 1321,
         settings: {
           slidesToShow: 5,
           slidesToScroll: 3,
