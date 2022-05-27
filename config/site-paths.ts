@@ -7,5 +7,6 @@ export enum Paths {
   CATEGORY_PRODUCTS = '/category/',
   SEARCH = '/search/',
   ORDERS = '/profile/orders',
-  LIKES = '/like-list'
+  LIKES = '/like-list',
+  INSTALMENTS = '/profile/payment-by-instalments',
 }

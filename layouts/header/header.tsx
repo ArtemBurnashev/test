@@ -49,6 +49,7 @@ const Header = () => {
   const dispatch = useAppDispatch()
   const { isAuthenticated } = useAppSelector((state) => state.user);
   const mediaQuery = useMediaQuery('(max-width:768px)');
+  const lg = useMediaQuery('(max-width:1321px)');
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -97,7 +98,7 @@ const Header = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  
+
 
   return (
     <>
@@ -244,7 +245,11 @@ const Header = () => {
         </Container>
         {scrollPosition < 53 && <CategoryNavbar />}
       </Box>
-      <Stack mb={router.asPath === '/' ? '127px' : '190px'} />
+      {lg ?
+        <Stack mb={router.asPath === '/' ? '127px' : '201px'} />
+        :
+        <Stack mb={router.asPath === '/' ? '127px' : '190px'} />
+      }
     </>
 
   );
