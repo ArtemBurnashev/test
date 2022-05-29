@@ -33,12 +33,7 @@ interface ProductCardProps {
   modalOpen?: () => void;
 }
 
-const StyleBageStack = styled(Stack)`
-  @media (max-width:1399px){
-    left:0;
-  }
 
-`
 
 const ProductCardHorizontal: React.FC<ProductCardProps> = ({
   slug,
@@ -87,14 +82,14 @@ const ProductCardHorizontal: React.FC<ProductCardProps> = ({
                 {formatter(price?.amountInSum)} {currency}
               </Typography>
               {discount.amountInSum && price?.amountInSum ?
-                <StyleBageStack sx={{position:'absolute',top:'10px',right:{lg:'10px'}}} bgcolor='red' fontSize='15px' p='6px'>
+                <Stack sx={{position:'absolute',top:'10px',left:'0'}} bgcolor='red' fontSize='15px' p='6px'>
                   <Typography color='white'>
                     -{Math.floor(
                       (discount.amountInSum / price?.amountInSum) * 100
                     )}
                     %
                   </Typography>
-                </StyleBageStack> :''
+                </Stack> :''
               }
 
             </>
