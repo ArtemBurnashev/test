@@ -7302,8 +7302,6 @@ export type Order = Node & ObjectWithMetadata & {
   /** Undiscounted total amount of the order. */
   undiscountedTotal: TaxedMoney;
   user?: Maybe<User>;
-  /** Email address of the customer. */
-  userEmail?: Maybe<Scalars['String']>;
   voucher?: Maybe<Voucher>;
   weight?: Maybe<Weight>;
 };
@@ -8023,8 +8021,6 @@ export type OrderUpdateInput = {
   billingAddress?: InputMaybe<AddressInput>;
   /** Shipping address of the customer. */
   shippingAddress?: InputMaybe<AddressInput>;
-  /** Email address of the customer. */
-  userEmail?: InputMaybe<Scalars['String']>;
 };
 
 /** Updates a shipping method of the order. Requires shipping method ID to update, when null is passed then currently assigned shipping method is removed. */
@@ -13646,10 +13642,11 @@ export type CategoryQueryVariables = Exact<{
   cursor: Scalars['String'];
   filter?: InputMaybe<ProductFilterInput>;
   sort?: InputMaybe<ProductOrder>;
+  id?: InputMaybe<Scalars['ID']>;
 }>;
 
 
-export type CategoryQuery = { __typename?: 'Query', category?: { __typename?: 'Category', name: string, products?: { __typename?: 'ProductCountableConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'ProductCountableEdge', cursor: string, node: { __typename: 'Product', name: string, id: string, slug: string, isAvailable?: boolean | null, isAvailableForPurchase?: boolean | null, media?: Array<{ __typename?: 'ProductMedia', url: string, alt: string }> | null, thumbnail?: { __typename?: 'Image', url: string, alt?: string | null } | null, productType: { __typename?: 'ProductType', id: string }, defaultVariant?: { __typename?: 'ProductVariant', id: string, name: string, sku?: string | null, attributes: Array<{ __typename?: 'SelectedAttribute', attribute: { __typename?: 'Attribute', name?: string | null, id: string }, values: Array<{ __typename?: 'AttributeValue', value?: string | null, name?: string | null, id: string } | null> }>, pricing?: { __typename?: 'VariantPricingInfo', discount?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number, amountInSum?: number | null } } | null, price?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amountInSum?: number | null, amount: number } } | null } | null } | null, pricing?: { __typename?: 'ProductPricingInfo', onSale?: boolean | null, discount?: { __typename?: 'TaxedMoney', currency: string, gross: { __typename?: 'Money', currency: string, amountInSum?: number | null, amount: number } } | null, priceRange?: { __typename?: 'TaxedMoneyRange', start?: { __typename?: 'TaxedMoney', net: { __typename?: 'Money', currency: string, amountInSum?: number | null, amount: number }, gross: { __typename?: 'Money', currency: string, amount: number, amountInSum?: number | null } } | null, stop?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number, amountInSum?: number | null } } | null } | null } | null } }> } | null } | null };
+export type CategoryQuery = { __typename?: 'Query', category?: { __typename?: 'Category', name: string, id: string, products?: { __typename?: 'ProductCountableConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'ProductCountableEdge', cursor: string, node: { __typename: 'Product', name: string, id: string, slug: string, isAvailable?: boolean | null, isAvailableForPurchase?: boolean | null, media?: Array<{ __typename?: 'ProductMedia', url: string, alt: string }> | null, thumbnail?: { __typename?: 'Image', url: string, alt?: string | null } | null, productType: { __typename?: 'ProductType', id: string }, defaultVariant?: { __typename?: 'ProductVariant', id: string, name: string, sku?: string | null, attributes: Array<{ __typename?: 'SelectedAttribute', attribute: { __typename?: 'Attribute', name?: string | null, id: string }, values: Array<{ __typename?: 'AttributeValue', value?: string | null, name?: string | null, id: string } | null> }>, pricing?: { __typename?: 'VariantPricingInfo', discount?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number, amountInSum?: number | null } } | null, price?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amountInSum?: number | null, amount: number } } | null } | null } | null, pricing?: { __typename?: 'ProductPricingInfo', onSale?: boolean | null, discount?: { __typename?: 'TaxedMoney', currency: string, gross: { __typename?: 'Money', currency: string, amountInSum?: number | null, amount: number } } | null, priceRange?: { __typename?: 'TaxedMoneyRange', start?: { __typename?: 'TaxedMoney', net: { __typename?: 'Money', currency: string, amountInSum?: number | null, amount: number }, gross: { __typename?: 'Money', currency: string, amount: number, amountInSum?: number | null } } | null, stop?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number, amountInSum?: number | null } } | null } | null } | null } }> } | null } | null };
 
 export type InitialProductFilterAttributesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -14672,9 +14669,10 @@ export type AllCategoriesQueryHookResult = ReturnType<typeof useAllCategoriesQue
 export type AllCategoriesLazyQueryHookResult = ReturnType<typeof useAllCategoriesLazyQuery>;
 export type AllCategoriesQueryResult = Apollo.QueryResult<AllCategoriesQuery, AllCategoriesQueryVariables>;
 export const CategoryDocument = gql`
-    query category($first: Int!, $slug: String!, $cursor: String!, $filter: ProductFilterInput, $sort: ProductOrder) {
-  category(slug: $slug) {
+    query category($first: Int!, $slug: String!, $cursor: String!, $filter: ProductFilterInput, $sort: ProductOrder, $id: ID) {
+  category(slug: $slug, id: $id) {
     name
+    id
     products(
       channel: "default-channel"
       first: $first
@@ -14716,6 +14714,7 @@ export const CategoryDocument = gql`
  *      cursor: // value for 'cursor'
  *      filter: // value for 'filter'
  *      sort: // value for 'sort'
+ *      id: // value for 'id'
  *   },
  * });
  */

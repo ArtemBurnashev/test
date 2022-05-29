@@ -1,5 +1,6 @@
 import { ThemeProvider } from '@mui/material/styles';
 import theme from 'config/mui-config';
+import React from 'react';
 import type { AppProps } from 'next/app';
 import { createGlobalStyle } from 'styled-components';
 import 'slick-carousel/slick/slick.css';
@@ -45,19 +46,30 @@ store.subscribe(() => {
 
 function MyApp({ Component, pageProps }: AppProps) {
   const apolloClient = useApollo(pageProps);
+  const [load, setLoad] = React.useState(false);
+
+  React.useEffect(() => {
+    setLoad(true)
+  }, [])
+
   return (
     <>
-      <Head>
-        <title>Giper Mart</title>
-      </Head>
-      <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        <ApolloProvider client={apolloClient}>
-          <Provider store={store}>
-            <Component {...pageProps} />
-          </Provider>
-        </ApolloProvider>
-      </ThemeProvider>
+      {load ?
+        <>
+          <Head>
+            <title>Giper Mart</title>
+          </Head>
+          <GlobalStyle />
+          <ThemeProvider theme={theme}>
+            <ApolloProvider client={apolloClient}>
+              <Provider store={store}>
+                <Component {...pageProps} />
+              </Provider>
+            </ApolloProvider>
+          </ThemeProvider>
+        </> 
+        :""
+      }
     </>
   );
 }
