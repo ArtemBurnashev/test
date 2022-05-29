@@ -100,9 +100,6 @@ const Header = () => {
     };
   }, []);
 
-  if(isMobile){
-    return <HeaderMobille />
-  }
   return (
     <>
       <Box
