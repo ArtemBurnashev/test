@@ -33,9 +33,11 @@ query category(
   $cursor: String!
   $filter: ProductFilterInput
   $sort: ProductOrder
+  $id:ID
 ) {
-  category(slug: $slug) {
+  category(slug: $slug,id:$id) {
     name
+    id
     products(
       channel: "default-channel"
       first: $first

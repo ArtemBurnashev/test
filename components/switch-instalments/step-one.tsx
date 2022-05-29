@@ -40,7 +40,7 @@ const StepOne: React.FC<Props> = ({ setStepActive }) => {
   const { register, handleSubmit, reset, formState } = useForm<LoginInput>(formOptions);
   const { errors } = formState;
   const onSubmit = (item:LoginInput) => {
-    setStepActive(2)
+    setStepActive(1)
   }
 
   return (

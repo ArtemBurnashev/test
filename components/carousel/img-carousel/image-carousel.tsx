@@ -80,7 +80,7 @@ const ImageCarousel: FC<{
         <a>
           {
             // @ts-expect-error
-            <img src={currentImg[i] ? currentImg[i] : notImg} />
+            <img src={currentImg[i] ? currentImg[i] : ''} />
           }
         </a>
       );
