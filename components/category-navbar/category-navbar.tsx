@@ -84,7 +84,7 @@ export const CategoryNavbar: React.FC = () => {
       {
         breakpoint: 611,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 1,
           slidesToScroll: 1
         }
       }
