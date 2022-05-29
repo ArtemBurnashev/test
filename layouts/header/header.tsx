@@ -123,35 +123,41 @@ const Header = () => {
           <Container maxWidth="xl">
             {!isMobile && (
               <>
-                {scrollPosition < 53 &&
-                  <Stack
-                    direction="row"
-                    spacing={4}
-                    padding="8px 0"
-                    justifyContent="flex-end"
-                    sx={{ backgroundColor: '#FCFCFC' }}
-                  >
-                    {headerTopLinks.map((top, i) => (
-                      <Link passHref key={top.label} href={top.link}>
-                        {i === headerTopLinks.length - 1 ? (
-                          <Stack
-                            component="a"
-                            spacing={2}
-                            direction="row"
-                            alignItems="center"
-                          >
-                            <Phone />
-                            <Typography variant="subtitle2">{top.label}</Typography>
-                          </Stack>
-                        ) : (
-                          <Typography component="a" variant="subtitle2">
-                            {top.label}
-                          </Typography>
-                        )}
-                      </Link>
-                    ))}
+                {
+                  !mediaQuery &&
 
-                  </Stack>
+                  <>
+                    {scrollPosition < 53 &&
+                      <Stack
+                        direction="row"
+                        spacing={4}
+                        padding="8px 0"
+                        justifyContent="flex-end"
+                        sx={{ backgroundColor: '#FCFCFC' }}
+                      >
+                        {headerTopLinks.map((top, i) => (
+                          <Link passHref key={top.label} href={top.link}>
+                            {i === headerTopLinks.length - 1 ? (
+                              <Stack
+                                component="a"
+                                spacing={2}
+                                direction="row"
+                                alignItems="center"
+                              >
+                                <Phone />
+                                <Typography variant="subtitle2">{top.label}</Typography>
+                              </Stack>
+                            ) : (
+                              <Typography component="a" variant="subtitle2">
+                                {top.label}
+                              </Typography>
+                            )}
+                          </Link>
+                        ))}
+
+                      </Stack>
+                    }
+                  </>
                 }
 
               </>
