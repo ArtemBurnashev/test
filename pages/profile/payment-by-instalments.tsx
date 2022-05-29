@@ -62,14 +62,14 @@ const PaymentByInstalments: NextPage = () => {
               <Skeleton variant="text" width="50%" />
             </Stack>
           }>
-          <Stack mb='24px'>
+          <Stack mt='24px' mb='24px'>
             <Stepper
               activeStep={stepActive}
               sx={
                 {
-                  '.Mui-active': { color: colors.black },
+                  '.iTqaTQ.Mui-active': { color: colors.black },
                   '.MuiStepIcon-text': { fill: colors.white },
-                  '.Mui-completed':{color:colors.black}
+                  '.iTqaTQ.Mui-completed':{color:colors.black}
                 }
               }
               alternativeLabel
