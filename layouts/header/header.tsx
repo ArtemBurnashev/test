@@ -36,7 +36,6 @@ import Hamburger from 'components/icons/hamburger';
 import Auth from './components/auth';
 import { CategoryNavbar } from 'components/category-navbar';
 import { toggle } from 'redux-state/features/sidebar';
-import HeaderMobille from './header-mobille';
 
 
 const Header = () => {

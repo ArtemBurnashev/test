@@ -54,22 +54,21 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      {load ?
-        <>
-          <Head>
-            <title>Giper Mart</title>
-          </Head>
-          <GlobalStyle />
-          <ThemeProvider theme={theme}>
-            <ApolloProvider client={apolloClient}>
-              <Provider store={store}>
-                <Component {...pageProps} />
-              </Provider>
-            </ApolloProvider>
-          </ThemeProvider>
-        </> 
-        :""
-      }
+
+      <>
+        <Head>
+          <title>Giper Mart</title>
+        </Head>
+        <GlobalStyle />
+        <ThemeProvider theme={theme}>
+          <ApolloProvider client={apolloClient}>
+            <Provider store={store}>
+              <Component {...pageProps} />
+            </Provider>
+          </ApolloProvider>
+        </ThemeProvider>
+      </>
+
     </>
   );
 }
