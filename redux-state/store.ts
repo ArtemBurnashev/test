@@ -14,7 +14,10 @@ import cartReducer, {
 import userReducer from './features/user-slice';
 import likeReducer from './features/likes';
 import sidebarReducer from './features/sidebar';
-import filterReducer from './features/filter';
+import filterReducer, {
+  clearFilters,
+  filterAttributes,
+} from './features/filter';
 
 const storageMiddleware = createListenerMiddleware();
 
@@ -25,13 +28,25 @@ storageMiddleware.startListening({
   },
 });
 
+storageMiddleware.startListening({
+  matcher: isAnyOf(filterAttributes),
+  effect: (action, api) => {
+    const { filter } = api.getState() as RootState;
+    if (filter.attributes?.length === 1) {
+      if (filter.attributes[0].values.length === 0) {
+        api.dispatch(clearFilters());
+      }
+    }
+  },
+});
+
 export const store = configureStore({
   reducer: {
     cart: cartReducer,
     user: userReducer,
     like: likeReducer,
     sidebar: sidebarReducer,
-    filter: filterReducer
+    filter: filterReducer,
   },
 
   middleware: (getDefaultMiddleware) =>
