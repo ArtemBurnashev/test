@@ -13648,10 +13648,12 @@ export type CategoryQueryVariables = Exact<{
 
 export type CategoryQuery = { __typename?: 'Query', category?: { __typename?: 'Category', name: string, id: string, products?: { __typename?: 'ProductCountableConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'ProductCountableEdge', cursor: string, node: { __typename: 'Product', name: string, id: string, slug: string, isAvailable?: boolean | null, isAvailableForPurchase?: boolean | null, media?: Array<{ __typename?: 'ProductMedia', url: string, alt: string }> | null, thumbnail?: { __typename?: 'Image', url: string, alt?: string | null } | null, productType: { __typename?: 'ProductType', id: string }, defaultVariant?: { __typename?: 'ProductVariant', id: string, name: string, sku?: string | null, attributes: Array<{ __typename?: 'SelectedAttribute', attribute: { __typename?: 'Attribute', name?: string | null, id: string }, values: Array<{ __typename?: 'AttributeValue', value?: string | null, name?: string | null, id: string } | null> }>, pricing?: { __typename?: 'VariantPricingInfo', discount?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number, amountInSum?: number | null } } | null, price?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amountInSum?: number | null, amount: number } } | null } | null } | null, pricing?: { __typename?: 'ProductPricingInfo', onSale?: boolean | null, discount?: { __typename?: 'TaxedMoney', currency: string, gross: { __typename?: 'Money', currency: string, amountInSum?: number | null, amount: number } } | null, priceRange?: { __typename?: 'TaxedMoneyRange', start?: { __typename?: 'TaxedMoney', net: { __typename?: 'Money', currency: string, amountInSum?: number | null, amount: number }, gross: { __typename?: 'Money', currency: string, amount: number, amountInSum?: number | null } } | null, stop?: { __typename?: 'TaxedMoney', gross: { __typename?: 'Money', currency: string, amount: number, amountInSum?: number | null } } | null } | null } | null } }> } | null } | null };
 
-export type InitialProductFilterAttributesQueryVariables = Exact<{ [key: string]: never; }>;
+export type InitialProductFilterAttributesQueryVariables = Exact<{
+  slug: Scalars['String'];
+}>;
 
 
-export type InitialProductFilterAttributesQuery = { __typename?: 'Query', attributes?: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name?: string | null, inputType?: AttributeInputTypeEnum | null, slug?: string | null } }> } | null };
+export type InitialProductFilterAttributesQuery = { __typename?: 'Query', category?: { __typename?: 'Category', products?: { __typename?: 'ProductCountableConnection', edges: Array<{ __typename?: 'ProductCountableEdge', node: { __typename?: 'Product', productType: { __typename?: 'ProductType', productAttributes?: Array<{ __typename?: 'Attribute', name?: string | null, slug?: string | null, availableInGrid: boolean, inputType?: AttributeInputTypeEnum | null, choices?: { __typename?: 'AttributeValueCountableConnection', edges: Array<{ __typename?: 'AttributeValueCountableEdge', node: { __typename?: 'AttributeValue', id: string, slug?: string | null, name?: string | null, value?: string | null } }> } | null } | null> | null } } }> } | null } | null };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -14730,22 +14732,32 @@ export type CategoryQueryHookResult = ReturnType<typeof useCategoryQuery>;
 export type CategoryLazyQueryHookResult = ReturnType<typeof useCategoryLazyQuery>;
 export type CategoryQueryResult = Apollo.QueryResult<CategoryQuery, CategoryQueryVariables>;
 export const InitialProductFilterAttributesDocument = gql`
-    query InitialProductFilterAttributes {
-  attributes(
-    first: 100
-    filter: {filterableInDashboard: true, type: PRODUCT_TYPE}
-  ) {
-    edges {
-      node {
-        id
-        name
-        inputType
-        slug
-        __typename
+    query InitialProductFilterAttributes($slug: String!) {
+  category(slug: $slug) {
+    products(first: 1) {
+      edges {
+        node {
+          productType {
+            productAttributes {
+              name
+              slug
+              availableInGrid
+              choices {
+                edges {
+                  node {
+                    id
+                    slug
+                    name
+                    value
+                  }
+                }
+              }
+              inputType
+            }
+          }
+        }
       }
-      __typename
     }
-    __typename
   }
 }
     `;
@@ -14762,10 +14774,11 @@ export const InitialProductFilterAttributesDocument = gql`
  * @example
  * const { data, loading, error } = useInitialProductFilterAttributesQuery({
  *   variables: {
+ *      slug: // value for 'slug'
  *   },
  * });
  */
-export function useInitialProductFilterAttributesQuery(baseOptions?: Apollo.QueryHookOptions<InitialProductFilterAttributesQuery, InitialProductFilterAttributesQueryVariables>) {
+export function useInitialProductFilterAttributesQuery(baseOptions: Apollo.QueryHookOptions<InitialProductFilterAttributesQuery, InitialProductFilterAttributesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<InitialProductFilterAttributesQuery, InitialProductFilterAttributesQueryVariables>(InitialProductFilterAttributesDocument, options);
       }
