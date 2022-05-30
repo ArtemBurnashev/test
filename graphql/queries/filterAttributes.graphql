@@ -1,18 +1,28 @@
-query InitialProductFilterAttributes {
-  attributes(
-    first: 100
-    filter: { filterableInDashboard: true, type: PRODUCT_TYPE }
-  ) {
-    edges {
-      node {
-        id
-        name
-        inputType
-        slug
-        __typename
+query InitialProductFilterAttributes($slug: String!) {
+  category(slug: $slug) {
+    products(first: 1) {
+      edges {
+        node {
+          productType {
+            productAttributes {
+              name
+              slug
+              availableInGrid
+              choices {
+                edges {
+                  node {
+                    id
+                    slug
+                    name
+                    value
+                  }
+                }
+              }
+              inputType
+            }
+          }
+        }
       }
-      __typename
     }
-    __typename
   }
 }

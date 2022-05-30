@@ -7,7 +7,7 @@ interface attribute {
   values: string[];
 }
 
-interface FilterState {
+export interface FilterState {
   price: {
     lte: number;
     gte: number;
@@ -51,7 +51,6 @@ export const filter = createSlice({
       const isExists = state.attributes?.find(
         (attr) => attr.slug === action.payload.slug
       )?.slug;
-      console.log(isExists)
       if (!isExists && state.attributes?.length !== undefined) {
         return {
           ...state,
@@ -64,7 +63,12 @@ export const filter = createSlice({
           if (attr.slug === isExists) {
             const valueOrder = attr.values.indexOf(action.payload.values[0]);
             if(valueOrder > -1) {
-              return {...attr}
+              return {
+                ...attr,
+                values: attr.values.filter(
+                  (val) => val !== action.payload.values[0]
+                ),
+              };
             }
             return { ...attr, values: [...attr.values, action.payload.values[0]]  };
           }
@@ -72,8 +76,11 @@ export const filter = createSlice({
         }),
       };
     },
+    clearFilters: (state) => {
+      return {...state, attributes: [], sort: undefined}
+    }
   },
 });
 
-export const { changePrice, sort, filterAttributes } = filter.actions;
+export const { changePrice, sort, filterAttributes, clearFilters } = filter.actions;
 export default filter.reducer;
