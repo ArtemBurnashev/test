@@ -21,7 +21,8 @@ const colors = {
     input: '#534343',
     brand: '#F8F8F8',
     controller: '#EDEDED',
-    darc:'#808080'
+    darc:'#808080',
+    dlight:'#d9d9d9'
   },
 };
 

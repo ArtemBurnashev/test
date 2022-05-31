@@ -30,7 +30,7 @@ const stepLable = [
 
 const PaymentByInstalments: NextPage = () => {
   const md = useMediaQuery('(max-width:899px)');
-  const [stepActive, setStepActive] = React.useState(0)
+  const [stepActive, setStepActive] = React.useState(2)
   const links = [
     {
       name: 'оплата в рассрочку',
@@ -39,7 +39,6 @@ const PaymentByInstalments: NextPage = () => {
   ];
 
   const changeStep = (id:number) => {
-    console.log(id);
     
     if(id <= stepActive){
       setStepActive(id-1);
@@ -62,7 +61,7 @@ const PaymentByInstalments: NextPage = () => {
               <Skeleton variant="text" width="50%" />
             </Stack>
           }>
-          <Stack mt='24px' mb='24px'>
+          <Stack sx={{marginTop:{xs:'30px',lg:'0'}}} mb='24px'>
             <Stepper
               activeStep={stepActive}
               sx={
