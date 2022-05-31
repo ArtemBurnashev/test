@@ -38,8 +38,8 @@ const SignUp: React.FC<PagePropsWithPhoneNumber> = ({ changeRoute, onPhoneChange
   });
 
   const onSubmit = (data: LoginInput) => {
-    data.phone = data.phone.replace("(","").replace(")","")
-    
+    data.phone = data.phone.replace("(", "").replace(")", "")
+
     mutate({
       variables: data,
       onCompleted: (res) => {
@@ -57,27 +57,27 @@ const SignUp: React.FC<PagePropsWithPhoneNumber> = ({ changeRoute, onPhoneChange
         <Typography textAlign="center" variant="h2">
           Войти или создать профиль
         </Typography>
+        <Typography>Номер телефона</Typography>
         <Controller
           control={control}
           name="phone"
           render={({ field: { onChange, value }, formState: { errors } }) => (
-            <InputMask  mask="+999(99)9999999" value={value} onChange={onChange}>
+            <InputMask mask="+999(99)9999999" value={value} onChange={onChange}>
               {(inputProps: any) => (
-                  <Input
-                    label="Номер телефона"
-                    error={
-                      !!errors.phone?.type ||
-                      data?.accountRegister?.errors.some((e) => e.field === 'phone')
-                    }
-                    helperText={
-                      errors.phone?.message ||
-                      data?.accountRegister?.errors
-                        .filter((e) => e.field === 'phone')
-                        .map((e) => e.message)
-                        .join(' ')
-                    }
-                    {...inputProps}
-                  />
+                <Input
+                  error={
+                    !!errors.phone?.type ||
+                    data?.accountRegister?.errors.some((e) => e.field === 'phone')
+                  }
+                  helperText={
+                    errors.phone?.message ||
+                    data?.accountRegister?.errors
+                      .filter((e) => e.field === 'phone')
+                      .map((e) => e.message)
+                      .join(' ')
+                  }
+                  {...inputProps}
+                />
               )}
 
 
@@ -85,12 +85,12 @@ const SignUp: React.FC<PagePropsWithPhoneNumber> = ({ changeRoute, onPhoneChange
 
           )}
         />
+        <Typography>Имя</Typography>
         <Controller
           control={control}
           name="firstName"
           render={({ field, formState: { errors } }) => (
             <Input
-              label="Имя"
               error={
                 !!errors.firstName?.type ||
                 data?.accountRegister?.errors.some(
@@ -98,7 +98,7 @@ const SignUp: React.FC<PagePropsWithPhoneNumber> = ({ changeRoute, onPhoneChange
                 )
               }
               helperText={
-                errors.phone?.message ||
+                errors.firstName?.message ||
                 data?.accountRegister?.errors
                   .filter((e) => e.field === 'firstName')
                   .map((e) => e.message)
@@ -108,12 +108,12 @@ const SignUp: React.FC<PagePropsWithPhoneNumber> = ({ changeRoute, onPhoneChange
             />
           )}
         />
+        <Typography>Фамилия</Typography>
         <Controller
           control={control}
           name="lastName"
           render={({ field, formState: { errors } }) => (
             <Input
-              label="Фамилия"
               error={
                 !!errors.lastName?.type ||
                 data?.accountRegister?.errors.some(
@@ -131,13 +131,13 @@ const SignUp: React.FC<PagePropsWithPhoneNumber> = ({ changeRoute, onPhoneChange
             />
           )}
         />
+        <Typography>Пароль</Typography>
 
         <Controller
           control={control}
           name="password"
           render={({ field, formState: { errors } }) => (
             <Input
-              label="Пароль"
               type="password"
               placeholder="*******"
               error={
@@ -157,12 +157,13 @@ const SignUp: React.FC<PagePropsWithPhoneNumber> = ({ changeRoute, onPhoneChange
             />
           )}
         />
+        <Typography>Подтвердить Пароль</Typography>
+
         <Controller
           control={control}
           name="confirmPassword"
           render={({ field, formState: { errors } }) => (
             <Input
-              label="Подтвердить Пароль"
               type="password"
               placeholder="*******"
               error={
