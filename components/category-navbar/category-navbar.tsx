@@ -52,7 +52,7 @@ export const CategoryNavbar: React.FC = () => {
   
   const settings = {
     dots: false,
-    infinite: false,
+    infinite: true,
     autoplay:true,
     slidesToShow: (loading ? 1 : 6),
     slidesToScroll: 3,
@@ -118,13 +118,13 @@ export const CategoryNavbar: React.FC = () => {
                     </LinkText>
                   </LinkSet>
                 )}
-                {data?.categories?.pageInfo.hasNextPage &&
+                {/* {data?.categories?.pageInfo.hasNextPage &&
                   <Button
                     onClick={addElemets}
                     sx={{ padding: '0', width: 'max-content', color: '#333' }}
                     variant='text'
                   >Еще</Button>
-                }
+                } */}
               </Slider>
             </SliderBlock>
           }

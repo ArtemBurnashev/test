@@ -59,6 +59,7 @@ const Login: React.FC<PageProps> = ({ changeRoute }) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack margin="2rem" spacing={2}>
         <Typography textAlign="center" variant="h2">Войти или создать профиль</Typography>
+        <Typography>Номер телефона</Typography>
         <Controller
           control={control}
           name="phone"
@@ -66,7 +67,6 @@ const Login: React.FC<PageProps> = ({ changeRoute }) => {
             <InputMask mask="+999(99)9999999" value={value} onChange={onChange}>
               {(inputProps:any) => (
                 <Input
-                  label="Номер телефона"
                   error={
                     !!errors.phone?.type ||
                     data?.tokenCreate?.errors.some((e) => e.field === 'phone')
@@ -86,12 +86,12 @@ const Login: React.FC<PageProps> = ({ changeRoute }) => {
 
           )}
         />
+        <Typography>Пароль</Typography>
         <Controller
           control={control}
           name="password"
           render={({ field, formState: { errors } }) => (
             <Input
-              label="Пароль"
               type="password"
               placeholder="*******"
               error={
