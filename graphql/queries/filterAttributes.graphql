@@ -1,4 +1,4 @@
-query InitialProductFilterAttributes($slug: String!) {
+query InitialProductFilterAttributes($slug: String!, $choicesCursor: String) {
   category(slug: $slug) {
     products(first: 1) {
       edges {
@@ -8,7 +8,11 @@ query InitialProductFilterAttributes($slug: String!) {
               name
               slug
               availableInGrid
-              choices {
+              choices(after: $choicesCursor) {
+                pageInfo {
+                  hasNextPage
+                  endCursor
+                }
                 edges {
                   node {
                     id

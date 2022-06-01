@@ -48,7 +48,7 @@ export const CategoryCardImageWrapper = styled.div`
 export const ProductCardWrapper = styled.div<{ loading?: string }>`
   position: relative;
   transition: box-shadow .3s ease;
-  padding: 8px;
+  padding: 20px;
   height: 323px;
   margin: 10px 0;
   height: 100%;
