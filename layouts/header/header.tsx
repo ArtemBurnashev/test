@@ -31,9 +31,9 @@ import { useModal } from 'hooks/use-modal';
 import Catalog from './components/catalog';
 import { CatologButton } from './header.styles';
 import { BurgerMenu } from 'components/icons/Burger-menu';
-import Close from 'components/icons/close';
 import Hamburger from 'components/icons/hamburger';
 import Auth from './components/auth';
+import Close from 'components/icons/close';
 import { CategoryNavbar } from 'components/category-navbar';
 import { toggle } from 'redux-state/features/sidebar';
 
@@ -154,8 +154,6 @@ const Header = () => {
                 }
 
               </>
-
-
             )}
           </Container>
         </Box>
@@ -167,6 +165,11 @@ const Header = () => {
             onClose={catalogModal.close}
             sx={{ width: '100%' }}
           >
+            <IconButton onClick={catalogModal.close}
+              sx={{ position: 'absolute', left:{xs:'0',sm:'10px'}, top:{xs:'0',sm:'10px'} }}
+            >
+              <Close />
+            </IconButton>
             <Catalog />
           </Dialog>
           <Stack sx={{ ['.gbjXkt']: { width: '100%' }, ['.header__inner']: { width: '100%' } }} width='100%'>

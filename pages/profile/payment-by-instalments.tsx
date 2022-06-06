@@ -4,33 +4,13 @@ import { ProfileLayout } from 'layouts/profile';
 import { Main } from 'layouts/main';
 import { Paths } from 'config/site-paths';
 import { Breadcrumb } from 'components/breadcrumbs';
-import { SwitchInstalments } from 'components/switch-instalments';
+import { MainInstalments } from 'components/switch-instalments';
 import { Container, Stack, Typography, Skeleton, useMediaQuery, Stepper, Step, StepLabel } from '@mui/material';
-import colors from 'config/theme';
 
-
-const stepLable = [
-  {
-    lable:'Личные данные',
-    id:1,
-  },
-  {
-    lable:'Подтвердите личность',
-    id:2,
-  },
-  {
-    lable:'Телефоны',
-    id:3,
-  },
-  {
-    lable:'Данные о карте',
-    id:4,
-  }
-]
 
 const PaymentByInstalments: NextPage = () => {
   const md = useMediaQuery('(max-width:899px)');
-  const [stepActive, setStepActive] = React.useState(2)
+
   const links = [
     {
       name: 'оплата в рассрочку',
@@ -38,12 +18,7 @@ const PaymentByInstalments: NextPage = () => {
     },
   ];
 
-  const changeStep = (id:number) => {
-    
-    if(id <= stepActive){
-      setStepActive(id-1);
-    }
-  }
+ 
 
   return (
     <Main>
@@ -61,28 +36,8 @@ const PaymentByInstalments: NextPage = () => {
               <Skeleton variant="text" width="50%" />
             </Stack>
           }>
-          <Stack sx={{marginTop:{xs:'30px',lg:'0'}}} mb='24px'>
-            <Stepper
-              activeStep={stepActive}
-              sx={
-                {
-                  '.iTqaTQ.Mui-active': { color: colors.black },
-                  '.MuiStepIcon-text': { fill: colors.white },
-                  '.iTqaTQ.Mui-completed':{color:colors.black}
-                }
-              }
-              alternativeLabel
-            >
-              {stepLable.map((i) => (
-                <Step sx={{cursor:'pointer'}} onClick={()=> changeStep(i.id)} key={i.id}>
-                  <StepLabel>{i.lable}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-          </Stack>
-
-          <SwitchInstalments setStepActive={setStepActive} stepActive={stepActive} />
-
+          
+          <MainInstalments />
         </ProfileLayout>
       </Container>
     </Main>

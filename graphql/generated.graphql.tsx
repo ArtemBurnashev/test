@@ -13653,7 +13653,7 @@ export type InitialProductFilterAttributesQueryVariables = Exact<{
 }>;
 
 
-export type InitialProductFilterAttributesQuery = { __typename?: 'Query', category?: { __typename?: 'Category', products?: { __typename?: 'ProductCountableConnection', edges: Array<{ __typename?: 'ProductCountableEdge', node: { __typename?: 'Product', productType: { __typename?: 'ProductType', productAttributes?: Array<{ __typename?: 'Attribute', name?: string | null, slug?: string | null, availableInGrid: boolean, inputType?: AttributeInputTypeEnum | null, choices?: { __typename?: 'AttributeValueCountableConnection', edges: Array<{ __typename?: 'AttributeValueCountableEdge', node: { __typename?: 'AttributeValue', id: string, slug?: string | null, name?: string | null, value?: string | null } }> } | null } | null> | null } } }> } | null } | null };
+export type InitialProductFilterAttributesQuery = { __typename?: 'Query', category?: { __typename?: 'Category', parent?: { __typename?: 'Category', level: number, name: string } | null, products?: { __typename?: 'ProductCountableConnection', edges: Array<{ __typename?: 'ProductCountableEdge', node: { __typename?: 'Product', productType: { __typename?: 'ProductType', productAttributes?: Array<{ __typename?: 'Attribute', name?: string | null, slug?: string | null, availableInGrid: boolean, inputType?: AttributeInputTypeEnum | null, choices?: { __typename?: 'AttributeValueCountableConnection', edges: Array<{ __typename?: 'AttributeValueCountableEdge', node: { __typename?: 'AttributeValue', id: string, slug?: string | null, name?: string | null, value?: string | null } }> } | null } | null> | null } } }> } | null } | null };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -14734,6 +14734,10 @@ export type CategoryQueryResult = Apollo.QueryResult<CategoryQuery, CategoryQuer
 export const InitialProductFilterAttributesDocument = gql`
     query InitialProductFilterAttributes($slug: String!) {
   category(slug: $slug) {
+    parent {
+      level
+      name
+    }
     products(first: 1) {
       edges {
         node {

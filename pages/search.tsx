@@ -4,7 +4,6 @@ import { ProductCardLoading } from 'components/cards/loading-cards';
 import { InfiniteLoader } from 'components/loaders/infinite-loader';
 import {
   useAllProductsQuery,
-  useCategoryQuery,
 } from 'graphql/generated.graphql';
 import { Main } from 'layouts/main';
 import { NextPage } from 'next';

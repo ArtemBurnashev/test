@@ -8,22 +8,29 @@ import StepFour from './step-four';
 interface Props {
   setStepActive: React.Dispatch<React.SetStateAction<number>>;
   stepActive?: number;
+  idenfy: boolean;
 }
 
-const SwitchInstalments: React.FC<Props> = ({ setStepActive, stepActive }) => {
+const SwitchInstalments: React.FC<Props> = ({ setStepActive, stepActive, idenfy }) => {
 
-  if (stepActive === 0) {
-    return <StepOne setStepActive={setStepActive} />
+  if (idenfy) {
+    return <div>aefaefaf</div>
   }
-  if (stepActive === 1) {
-    return <StepTwo setStepActive={setStepActive} />
+  else {
+    if (stepActive === 0) {
+      return <StepOne setStepActive={setStepActive} />
+    }
+    if (stepActive === 1) {
+      return <StepTwo setStepActive={setStepActive} />
+    }
+    if (stepActive === 2) {
+      return <StepThree setStepActive={setStepActive} />
+    }
+    if (stepActive === 3) {
+      return <StepFour setStepActive={setStepActive} />
+    }
   }
-  if (stepActive === 2) {
-    return <StepThree setStepActive={setStepActive} />
-  }
-  if (stepActive === 3) {
-    return <StepFour setStepActive={setStepActive} />
-  }
+
 
   return null;
 }

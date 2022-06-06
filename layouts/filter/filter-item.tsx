@@ -33,6 +33,7 @@ const FilterItem: React.FC<FilterItemProps> = ({ name, id, slug }) => {
 
   const choices = data?.attribute?.choices?.edges.map((edge) => edge.node);
 
+  
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
@@ -50,8 +51,7 @@ const FilterItem: React.FC<FilterItemProps> = ({ name, id, slug }) => {
     console.log(event);
     
   };
-  
-  
+    
   
   return (
     <Accordion
@@ -63,7 +63,7 @@ const FilterItem: React.FC<FilterItemProps> = ({ name, id, slug }) => {
       </AccordionSummary>
       <AccordionDetails>
         <FormGroup sx={{ gap: 0 }}>
-          {choices?.map((choice) => (
+          {/* {choices?.map((choice) => (
             <FormControlLabel
               key={choice.id}
               control={
@@ -75,7 +75,7 @@ const FilterItem: React.FC<FilterItemProps> = ({ name, id, slug }) => {
               }
               label={choice.name || ''}
             />
-          ))}
+          ))} */}
         </FormGroup>
       </AccordionDetails>
     </Accordion>

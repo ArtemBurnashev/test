@@ -7,6 +7,7 @@ import {
   MenuItem,
   Stack,
   Typography,
+  InputAdornment
 } from '@mui/material';
 import Accordion from 'components/accordion/accordion';
 import AccordionSummary from 'components/accordion/accordion-summary';
@@ -26,6 +27,7 @@ import {
 } from 'redux-state/features/filter';
 import { useAppDispatch, useAppSelector } from 'redux-state/hook';
 import ArrowDow from 'components/icons/arrow-down';
+import { CurensyIcon } from 'components/icons/curensy-icon';
 import { useRouter } from 'next/router';
 
 const Filter: React.FC = ({ children }) => {
@@ -39,7 +41,16 @@ const Filter: React.FC = ({ children }) => {
       slug: Array.isArray(slug) ? slug[0] : slug || '',
     },
   });
+  const parentCategory = data?.category?.parent;
+
   const attributes = data?.category?.products?.edges.map((edge) => edge.node);
+
+  const onlyBrend = data?.category?.products?.edges.map((i) => {
+    if (i.node.productType.productAttributes) {
+      return i.node.productType.productAttributes[0]
+    }
+  })
+  console.log(onlyBrend);
 
   const handleCheckboxChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -74,18 +85,19 @@ const Filter: React.FC = ({ children }) => {
     dispatch(clearFilters())
   }, [router.asPath])
 
+
   return (
     <Grid container>
       <Grid item md={3} lg={3}>
         <Stack sx={{ padding: '1rem 0.5rem' }}>
           <Stack border="0.5px solid #DCDCDC">
-            {attributes?.map((attr) =>
-              attr.productType.productAttributes?.map((productType) => (
+            {!parentCategory ? <>
+              {onlyBrend?.map((attr) => (
                 <>
                   <Typography sx={{ ...checkBoxStyle.p }} variant="subtitle2">
-                    {productType?.name}
+                    {attr?.name}
                   </Typography>
-                  {productType?.choices?.edges.map((edge) => (
+                  {attr?.choices?.edges.map((edge) => (
                     <Stack
                       key={edge.node.id}
                       sx={{ ...checkBoxStyle.stack }}
@@ -96,7 +108,7 @@ const Filter: React.FC = ({ children }) => {
                         value={edge.node.id}
                         name={edge.node.slug || edge.node.name?.toLocaleLowerCase()}
                         onChange={(e) =>
-                          handleCheckboxChange(e, productType.slug)
+                          handleCheckboxChange(e, attr.slug)
                         }
                       />
                       <Typography variant="subtitle2">
@@ -105,8 +117,41 @@ const Filter: React.FC = ({ children }) => {
                     </Stack>
                   ))}
                 </>
-              ))
-            )}
+
+              ))}
+            </>
+              :
+              <>
+                {attributes?.map((attr) =>
+                  attr.productType.productAttributes?.map((productType) => (
+                    <>
+                      <Typography sx={{ ...checkBoxStyle.p }} variant="subtitle2">
+                        {productType?.name}
+                      </Typography>
+                      {productType?.choices?.edges.map((edge) => (
+                        <Stack
+                          key={edge.node.id}
+                          sx={{ ...checkBoxStyle.stack }}
+                          direction="row"
+                        >
+                          <Checkbox
+                            sx={{ '&.Mui-checked': { color: colors.black } }}
+                            value={edge.node.id}
+                            name={edge.node.slug || edge.node.name?.toLocaleLowerCase()}
+                            onChange={(e) =>
+                              handleCheckboxChange(e, productType.slug)
+                            }
+                          />
+                          <Typography variant="subtitle2">
+                            {edge.node.name}
+                          </Typography>
+                        </Stack>
+                      ))}
+                    </>
+                  ))
+                )}
+              </>
+            }
             <Button sx={{ height: '40px' }}>
               <ArrowDow color="#000" />
             </Button>
@@ -130,7 +175,12 @@ const Filter: React.FC = ({ children }) => {
             <AccordionDetails>
               <Stack alignItems="center" gap={2} direction="row">
                 <Input
-                  value={price.gte || 0}
+                  startAdornment={
+                    <InputAdornment position='start'>
+                      <CurensyIcon />
+                    </InputAdornment>
+                  }
+                  placeholder={`${price.gte || 0}`}
                   type="number"
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     dispatch(
@@ -150,7 +200,12 @@ const Filter: React.FC = ({ children }) => {
                   }}
                 />
                 <Input
-                  value={price.lte || 0}
+                  startAdornment={
+                    <InputAdornment position='start'>
+                      <CurensyIcon />
+                    </InputAdornment>
+                  }
+                  placeholder={`${price.lte || 0}`}
                   type="number"
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     dispatch(
