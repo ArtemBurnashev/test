@@ -41,7 +41,6 @@ const CatalogItem: React.FC<CatalogItemProps> = ({
   slug,
 }) => {
   const [expanded, setExpanded] = useState(false);
-  console.log(slug)
   return (
     <ItemWrapper>
       <Link href={`${Paths.CATEGORY_PRODUCTS}${slug}`}>

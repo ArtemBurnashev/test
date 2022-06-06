@@ -1,5 +1,9 @@
 query InitialProductFilterAttributes($slug: String!) {
   category(slug: $slug) {
+    parent{
+      level
+      name
+    }
     products(first: 1) {
       edges {
         node {
