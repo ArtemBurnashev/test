@@ -86,13 +86,7 @@ const headerStyle = {
 }
 const specialProduct = {
   stack: {
-    width: '120px',
-    p: '12px',
-    bgcolor: colors.primary.default,
-    position: 'absolute',
-    zIndex: '100',
-    top: '400px',
-    right: '0'
+    
   },
   typograh:{
     mb:'8px',

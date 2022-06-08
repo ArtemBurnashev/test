@@ -28,9 +28,10 @@ const HeaderButtons: React.FC<HeadeButtonsProps> = ({
       {/* <Stack >
         < Airplane />
       </Stack> */}
+
       <Stack
         onClick={onProfileIconClick}
-        sx={{ cursor: 'pointer' }}
+        sx={{ cursor: 'pointer'}}
         alignItems="center"
       >
         <Profile />
