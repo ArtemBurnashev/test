@@ -23,7 +23,6 @@ import MobileHeaderButtons from './components/mobile-header-buttons';
 import { Burger } from 'components/burger';
 import SearchField from './components/search-field';
 import { MobileStack } from './header.styles';
-import Login from './components/auth/login';
 import { useAppDispatch, useAppSelector } from 'redux-state/hook';
 import { useRouter } from 'next/router';
 import { Paths } from 'config/site-paths';
@@ -34,6 +33,7 @@ import { BurgerMenu } from 'components/icons/Burger-menu';
 import Hamburger from 'components/icons/hamburger';
 import Auth from './components/auth';
 import Close from 'components/icons/close';
+import { headerStyle } from './header.styles';
 import { CategoryNavbar } from 'components/category-navbar';
 import { toggle } from 'redux-state/features/sidebar';
 
@@ -78,13 +78,8 @@ const Header = () => {
   useEffect(() => {
     catalogModal.close();
   }, [router.query]);
-  const styles = {
-    position: 'fixed',
-    zIndex: '11',
-    right: '0',
-    left: '0',
-    top: '0',
-  }
+
+
   const [scrollPosition, setScrollPosition] = useState(0);
   const handleScroll = () => {
     const position = window.pageYOffset;
@@ -104,8 +99,8 @@ const Header = () => {
       <Box
         sx={
           router.asPath === '/'
-            ? { backgroundColor: '#fff', ...styles }
-            : { backgroundColor: '#FCFCFC', ...styles }
+            ? { backgroundColor: '#fff', ...headerStyle }
+            : { backgroundColor: '#FCFCFC', ...headerStyle }
         }
       >
         {isMobile &&
@@ -166,7 +161,7 @@ const Header = () => {
             sx={{ width: '100%' }}
           >
             <IconButton onClick={catalogModal.close}
-              sx={{ position: 'absolute', left:{xs:'0',sm:'10px'}, top:{xs:'0',sm:'10px'} }}
+              sx={{ position: 'absolute', left: { xs: '0', sm: '10px' }, top: { xs: '0', sm: '10px' } }}
             >
               <Close />
             </IconButton>
@@ -252,6 +247,7 @@ const Header = () => {
         :
         <Stack mb={router.asPath === '/' ? '127px' : '190px'} />
       }
+     
     </>
 
   );

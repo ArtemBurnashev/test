@@ -46,7 +46,7 @@ const stepperStyle = {
 
 const MainInstalments: React.FC = () => {
   const [stepActive, setStepActive] = React.useState(0)
-  const idf = false;
+  const idf = true;
   const changeStep = (id: number) => {
 
     if (id <= stepActive) {

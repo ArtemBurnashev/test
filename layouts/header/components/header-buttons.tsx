@@ -2,6 +2,7 @@ import { Badge, Stack, Typography } from '@mui/material';
 import Cart from 'components/icons/cart';
 import Heart from 'components/icons/heart';
 import Profile from 'components/icons/profile';
+import { Airplane } from 'components/icons/airplane';
 import { Paths } from 'config/site-paths';
 import Link from 'next/link';
 import React from 'react';
@@ -20,10 +21,13 @@ const HeaderButtons: React.FC<HeadeButtonsProps> = ({
 }) => {
   const { productsCount } = useAppSelector((state) => state.cart);
   const { productsCount: likedProductsCount } = useAppSelector(state => state.like)
- 
+
 
   return (
     <Stack sx={{ flexGrow: 1, width: '100%', justifyContent: 'end' }} direction="row" spacing={4}>
+      {/* <Stack >
+        < Airplane />
+      </Stack> */}
       <Stack
         onClick={onProfileIconClick}
         sx={{ cursor: 'pointer' }}
