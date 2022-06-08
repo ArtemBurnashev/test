@@ -11,14 +11,13 @@ interface Props {
 
 const StepTwo: React.FC<Props> = ({ setStepActive }) => {
 
-  const [fileCount,setFileCount] = React.useState(0)
 
   const setValue = (a: string, b: string) => {
     console.log(a, b);
   }
   const submit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
+    setStepActive(2)
   }
 
   return (
@@ -28,7 +27,7 @@ const StepTwo: React.FC<Props> = ({ setStepActive }) => {
         {/* IMg upload */}
         <UploadFile onChange={(fileName) => setValue('profile_photo', fileName)}>
           {({ isLoading, handleClick, preview }) => (<Box mb='32px'>
-            <Stack direction='row' alignItems='center' gap="24px">
+            <Stack direction={{lg:'row',md:'row',xs:"column"}} alignItems='center' gap="24px">
               <Stack height='96px' minWidth='130px' maxWidth='130px' bgcolor='#6981A5' flexGrow={1}>
                 {preview && (
                   <img
@@ -41,11 +40,11 @@ const StepTwo: React.FC<Props> = ({ setStepActive }) => {
                 )}
               </Stack>
               <Stack flexGrow={2} >
-                <Typography mb='12px' variant='subtitle2'>Фото паспорта с первой страницы</Typography>
-                <Typography p='4px 12px' variant='subtitle2' bgcolor={colors.grey.dlight}>Фото паспорта не загружено</Typography>
+                <Typography mb='12px' maxWidth='362px'  variant='subtitle2'>Фото паспорта с первой страницы</Typography>
+                <Typography p='4px 12px' maxWidth='362px'  variant='subtitle2' bgcolor={colors.grey.dlight}>Фото паспорта не загружено</Typography>
               </Stack>
-              <Stack flexGrow={1}>
-                <Button sx={{ color: '#000' }} variant='text' {...(!isLoading && { onClick: handleClick })}>Прикрепить</Button>
+              <Stack maxWidth='158px' flexGrow={1}>
+                <Button sx={{ color: '#000',maxWidth:'158px' }} variant='text' {...(!isLoading && { onClick: handleClick })}>Прикрепить</Button>
               </Stack>
             </Stack>
           </Box>)}
@@ -53,7 +52,7 @@ const StepTwo: React.FC<Props> = ({ setStepActive }) => {
         {/* IMg upload */}
         <UploadFile onChange={(fileName) => setValue('profile_photo', fileName)}>
           {({ isLoading, handleClick, preview }) => (<Box mb='32px'>
-            <Stack direction='row' alignItems='center' gap="24px">
+            <Stack direction={{lg:'row',xs:"column",md:'row'}} alignItems='center' gap="24px">
               <Stack height='96px' maxWidth='130px' minWidth='130px' bgcolor='#6981A5' flexGrow={1}>
                 {preview && (
                   <img
@@ -66,11 +65,11 @@ const StepTwo: React.FC<Props> = ({ setStepActive }) => {
                 )}
               </Stack>
               <Stack flexGrow={2} >
-                <Typography mb='12px' variant='subtitle2'>Фото паспорта с первой страницы</Typography>
-                <Typography p='4px 12px' variant='subtitle2' bgcolor={colors.grey.dlight}>Фото паспорта не загружено</Typography>
+                <Typography mb='12px' maxWidth='362px' textAlign={{lg:'start',md:'start',xs:"center"}} variant='subtitle2'>Загрузите фото лица на фоне паспорта</Typography>
+                <Typography p='4px 12px' maxWidth='362px' variant='subtitle2' bgcolor={colors.grey.dlight}>Фото пасспорта на фоне лица не загружено</Typography>
               </Stack>
-              <Stack flexGrow={1}>
-                <Button sx={{ color: '#000' }} variant='text' {...(!isLoading && { onClick: handleClick })}>Прикрепить</Button>
+              <Stack maxWidth='158px' flexGrow={1}>
+                <Button sx={{ color: '#000',maxWidth:'158px' }} variant='text' {...(!isLoading && { onClick: handleClick })}>Прикрепить</Button>
               </Stack>
             </Stack>
           </Box>)}
@@ -78,7 +77,7 @@ const StepTwo: React.FC<Props> = ({ setStepActive }) => {
         {/* IMg upload */}
         <UploadFile onChange={(fileName) => setValue('profile_photo', fileName)}>
           {({ isLoading, handleClick, preview }) => (<Box >
-            <Stack direction='row' alignItems='center' gap="24px">
+            <Stack direction={{lg:'row',xs:"column",md:'row'}} alignItems='center' gap="24px">
               <Stack height='96px' maxWidth='130px' minWidth='130px' bgcolor='#6981A5' flexGrow={1}>
                 {preview && (
                   <img
@@ -91,11 +90,11 @@ const StepTwo: React.FC<Props> = ({ setStepActive }) => {
                 )}
               </Stack>
               <Stack flexGrow={2} >
-                <Typography mb='12px' variant='subtitle2'>Фото паспорта с первой страницы</Typography>
-                <Typography p='4px 12px' variant='subtitle2' bgcolor={colors.grey.dlight}>Фото паспорта не загружено</Typography>
+                <Typography mb='12px' maxWidth='362px'  variant='subtitle2'>Загрузите фото прописки с паспорта</Typography>
+                <Typography p='4px 12px' maxWidth='362px'  variant='subtitle2' bgcolor={colors.grey.dlight}>Фото паспорта не загружено</Typography>
               </Stack>
-              <Stack flexGrow={1}>
-                <Button sx={{ color: '#000' }} variant='text' {...(!isLoading && { onClick: handleClick })}>Прикрепить</Button>
+              <Stack maxWidth='158px' flexGrow={1}>
+                <Button sx={{ color: '#000' ,maxWidth:'158px'}} variant='text' {...(!isLoading && { onClick: handleClick })}>Прикрепить</Button>
               </Stack>
             </Stack>
           </Box>)}

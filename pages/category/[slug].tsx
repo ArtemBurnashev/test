@@ -1,4 +1,4 @@
-import { Container, Grid, Skeleton, Stack, Typography } from '@mui/material';
+import { Container, Grid, Skeleton, Stack, Typography, IconButton } from '@mui/material';
 import { ProductCard } from 'components/cards';
 import { ProductCardLoading } from 'components/cards/loading-cards';
 import { InfiniteLoader } from 'components/loaders/infinite-loader';
@@ -9,15 +9,28 @@ import {
   useCategoryQuery,
 } from 'graphql/generated.graphql';
 import Filter from 'layouts/filter';
+import { useScrollPositsion } from 'hooks/use-scroll-positsion';
 import { Main } from 'layouts/main';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
+import Arrow from 'components/icons/arrow';
 import React from 'react';
 import { useAppSelector } from 'redux-state/hook';
+
+const btnTopStyle = {
+  position: 'fixed',
+  zIndex: '99',
+  bottom: '30px',
+  left: '30px',
+  transform: 'rotate(90deg)',
+  bgcolor: 'rgba(0,0,0,0.08)',
+  ':hover': { bgcolor: 'rgba(0,0,0,0.04)' }
+}
 
 const CategoryProducts: NextPage = () => {
   const router = useRouter();
   const { price, sort, attributes } = useAppSelector((state) => state.filter);
+  const { scrollPosition } = useScrollPositsion()
 
   const { slug } = router.query;
   const { data, loading, fetchMore } = useCategoryQuery({
@@ -39,8 +52,8 @@ const CategoryProducts: NextPage = () => {
     },
     skip: !slug,
   });
- 
-  
+
+
   const nodes = data?.category?.products?.edges.map((edge) => edge.node);
   const pageInfo = data?.category?.products?.pageInfo;
 
@@ -55,7 +68,12 @@ const CategoryProducts: NextPage = () => {
       </Stack>
     </Stack>
   );
-
+  const goToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
   return (
     <Main>
       {data?.category?.name && (
@@ -71,7 +89,7 @@ const CategoryProducts: NextPage = () => {
             loadingIndicator()
           ) : (
             <Stack spacing={2}>
-              <Typography margin="1.5rem 0" mt={{xs:'34px',md:'11px'}} variant="h2">
+              <Typography margin="1.5rem 0" mt={{ xs: '34px', md: '11px' }} variant="h2">
                 {data?.category?.name}
               </Typography>
               <InfiniteLoader
@@ -124,6 +142,12 @@ const CategoryProducts: NextPage = () => {
             </Stack>
           )}
         </Filter>
+        {scrollPosition > 600 &&
+          <IconButton onClick={goToTop} sx={{ ...btnTopStyle }}>
+            <Arrow />
+          </IconButton>
+        }
+
       </Container>
     </Main>
   );
