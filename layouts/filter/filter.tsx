@@ -50,6 +50,7 @@ const Filter: React.FC = ({ children }) => {
       return i.node.productType.productAttributes[0]
     }
   })
+
   const handleCheckboxChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     slug?: string | null
