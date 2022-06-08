@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button } from 'components/button';
+import colors from 'config/theme';
 import { Stack } from '@mui/material';
 export const Logo = styled.div`
   max-width: 192px;
@@ -77,3 +77,28 @@ export const CatologButton = styled.div`
   }
   
 `
+const headerStyle = {
+  position: 'fixed',
+  zIndex: '101',
+  right: '0',
+  left: '0',
+  top: '0',
+}
+const specialProduct = {
+  stack: {
+    
+  },
+  typograh:{
+    mb:'8px',
+    textAlign:'center',
+    fontSize:'12px',
+  },
+  button:{
+    color: colors.black, 
+    bgcolor: colors.white ,
+    ':hover':{bgcolor:colors.white}
+  }
+
+}
+
+export { headerStyle ,specialProduct}
