@@ -85,9 +85,7 @@ const headerStyle = {
   top: '0',
 }
 const specialProduct = {
-  stack: {
-    
-  },
+  
   typograh:{
     mb:'8px',
     textAlign:'center',

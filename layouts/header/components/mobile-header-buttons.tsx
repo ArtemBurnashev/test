@@ -6,6 +6,7 @@ import {
   ListItemIcon,
   ListItemText,
   Stack,
+  Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
@@ -17,10 +18,12 @@ import { Paths } from 'config/site-paths';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import { useRouter } from 'next/router';
 import { useAppSelector } from 'redux-state/hook';
 import { headerTopLinks } from '../header.data';
 import LogoImage from 'assets/logo.svg';
 import styled from 'styled-components';
+import colors from 'config/theme';
 
 const LogoLink = styled.a`
   display: block;
@@ -50,6 +53,15 @@ const RowStack = styled(Stack)`
     display: block;
   }
 `
+const styleSpecialOrder = {
+  position: 'fixed',
+  top: '60%',
+  bgcolor: colors.primary.default,
+  right: '-25px',
+  zIndex: '100',
+  p: '5px',
+  transform: 'rotate(90deg)'
+}
 
 const MobileHeaderButtons: React.FC<HeadeButtonsProps> = ({
   onProfileIconClick,
@@ -61,10 +73,21 @@ const MobileHeaderButtons: React.FC<HeadeButtonsProps> = ({
   const { productsCount: likedProductsCount } = useAppSelector(
     (state) => state.like
   );
+  const router = useRouter();
+  const specialOrder = () => {
+    if (!isAuthenticated) {
+      onProfileIconClick()
+    }
+    router.push(Paths.SPECIAL_ORDER);
+  }
 
   return (
     <RowStack direction='row'>
-
+      {router.asPath !== '/special-order' &&
+        <Stack onClick={specialOrder} sx={{ ...styleSpecialOrder }}>
+          <Typography variant='body1'>Cпецзаказ</Typography>
+        </Stack>
+      }
       <Stack p='10px' onClick={onProfileIconClick}>
         <Profile />
       </Stack>
@@ -79,7 +102,7 @@ const MobileHeaderButtons: React.FC<HeadeButtonsProps> = ({
         <Link href={Paths.LIKES}>
           <Stack p='10px'>
             <Badge
-              
+
               color="secondary"
               overlap="circular"
               badgeContent={likedProductsCount}
@@ -95,7 +118,7 @@ const MobileHeaderButtons: React.FC<HeadeButtonsProps> = ({
         <Link href={Paths.CART}>
           <Stack p='10px'>
             <Badge
-              
+
               color="secondary"
               overlap="circular"
               badgeContent={productsCount}

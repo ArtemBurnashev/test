@@ -21,6 +21,7 @@ import { AddressCreate } from 'components/address-items';
 import { Button } from 'components/button';
 import { useRouter } from 'next/router';
 import { Drawer } from '@mui/material';
+import { WithAuth } from 'components/private-route';
 import { useModal } from 'hooks/use-modal';
 import { BackArrow } from 'components/icons/back-arrow';
 import Close from 'components/icons/close';
@@ -162,4 +163,4 @@ const Addresses: NextPage = () => {
   );
 };
 
-export default Addresses;
+export default WithAuth(Addresses);

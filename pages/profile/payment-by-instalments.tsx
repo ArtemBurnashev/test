@@ -2,6 +2,7 @@ import { NextPage } from 'next';
 import React from 'react';
 import { ProfileLayout } from 'layouts/profile';
 import { Main } from 'layouts/main';
+import { WithAuth } from 'components/private-route';
 import { Paths } from 'config/site-paths';
 import { Breadcrumb } from 'components/breadcrumbs';
 import { MainInstalments } from 'components/switch-instalments';
@@ -45,4 +46,4 @@ const PaymentByInstalments: NextPage = () => {
   )
 }
 
-export default PaymentByInstalments;
+export default WithAuth(PaymentByInstalments);

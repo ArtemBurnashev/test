@@ -43,10 +43,30 @@ const stepperStyle = {
   '.MuiStepIcon-text': { fill: colors.white },
   '.iTqaTQ.Mui-completed': { color: colors.black },
 }
+interface ObjType {
+  method: string;
+  body: string;
+  redirect: string;
+}
 
 const MainInstalments: React.FC = () => {
   const [stepActive, setStepActive] = React.useState(0)
-  const idf = true;
+  const [idefy, setIdefy] = React.useState(false);
+  React.useEffect(() => {
+
+    fetch("https://api.gipermart.uz/paymart/phone-verify/", {
+      method: 'POST',
+      mode: 'no-cors',
+      body: "{\n    \"phone\": \"998932115566\"\n}",
+      redirect: 'follow'
+    })
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+
+  }, [])
+
+
   const changeStep = (id: number) => {
 
     if (id <= stepActive) {
@@ -57,7 +77,7 @@ const MainInstalments: React.FC = () => {
   return (
     <>
       <Stack sx={{ marginTop: { xs: '30px', lg: '0' } }} mb='24px'>
-        {idf ?
+        {idefy ?
           <Stepper
             activeStep={stepActive}
             sx={{ ...stepperStyle }}
@@ -86,7 +106,7 @@ const MainInstalments: React.FC = () => {
         }
 
       </Stack>
-      <SwitchInstalments setStepActive={setStepActive} idenfy={idf} stepActive={stepActive} />
+      <SwitchInstalments setStepActive={setStepActive} idenfy={idefy} stepActive={stepActive} />
     </>
 
   )

@@ -9,4 +9,5 @@ export enum Paths {
   ORDERS = '/profile/orders',
   LIKES = '/like-list',
   INSTALMENTS = '/profile/payment-by-instalments',
+  SPECIAL_ORDER = '/special-order'
 }

@@ -6,8 +6,9 @@ import { Airplane } from 'components/icons/airplane';
 import { Paths } from 'config/site-paths';
 import Link from 'next/link';
 import React from 'react';
+import { useRouter } from 'next/router';
 import { useAppSelector } from 'redux-state/hook';
-import styled from 'styled-components';
+
 
 interface HeadeButtonsProps {
   onProfileIconClick: () => void;
@@ -20,18 +21,28 @@ const HeaderButtons: React.FC<HeadeButtonsProps> = ({
   isAuthenticated,
 }) => {
   const { productsCount } = useAppSelector((state) => state.cart);
-  const { productsCount: likedProductsCount } = useAppSelector(state => state.like)
+  const { productsCount: likedProductsCount } = useAppSelector(state => state.like);
+  const router = useRouter()
 
+  const specialOrder = () => {
+    if (!isAuthenticated) {
+      onProfileIconClick()
+    }
+   
+    router.push(Paths.SPECIAL_ORDER);
+    
+  }
 
   return (
     <Stack sx={{ flexGrow: 1, width: '100%', justifyContent: 'end' }} direction="row" spacing={4}>
-      {/* <Stack >
+      <Stack onClick={specialOrder} sx={{ cursor: 'pointer' }} direction='column' alignItems='center'>
         < Airplane />
-      </Stack> */}
+        <Typography variant="subtitle2">Cпецзаказ</Typography>
+      </Stack>
 
       <Stack
         onClick={onProfileIconClick}
-        sx={{ cursor: 'pointer'}}
+        sx={{ cursor: 'pointer' }}
         alignItems="center"
       >
         <Profile />

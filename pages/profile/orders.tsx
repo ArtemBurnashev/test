@@ -7,6 +7,7 @@ import { Main } from 'layouts/main';
 import { BackArrow } from 'components/icons/back-arrow';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
+import { WithAuth } from 'components/private-route';
 import { Paths } from 'config/site-paths';
 import { useMediaQuery } from '@mui/material';
 import { InfiniteLoader } from 'components/loaders/infinite-loader';
@@ -95,4 +96,4 @@ const orders: NextPage = () => {
   );
 };
 
-export default orders;
+export default WithAuth(orders);
