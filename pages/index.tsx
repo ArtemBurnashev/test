@@ -42,8 +42,8 @@ const Home: NextPage = () => {
         <CategoyrCarousel />
         <ProductCarousel
           modalOpen={productOpen}
-          slug={nodes ? nodes[0].slug : ''}
-          label={nodes ? nodes[0].name : ''}
+          slug={'гипермарт-рекомендуеттест'}
+          label={'Гипермарт Рекомендует(Тест)'}
         />
       </Container>
       <Action />

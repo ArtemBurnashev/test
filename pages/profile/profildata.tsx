@@ -5,6 +5,7 @@ import { Container, Typography, Stack } from '@mui/material';
 import { useMeQuery } from 'graphql/generated.graphql';
 import { useModal } from 'hooks/use-modal';
 import { useRouter } from 'next/router';
+import { WithAuth } from 'components/private-route';
 import { ProfileElements } from 'components/profile-elements';
 import { BackArrow } from 'components/icons/back-arrow';
 
@@ -35,4 +36,4 @@ const profildata: NextPage = () => {
     </Main>
   );
 };
-export default profildata;
+export default WithAuth(profildata);

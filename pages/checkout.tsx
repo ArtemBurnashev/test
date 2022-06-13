@@ -138,13 +138,13 @@ const Checkout: NextPage = () => {
       },
       onCompleted: (data) => {
         if (data.checkoutCreate?.errors.length === 0) {
-         checkoutComplete({
+          checkoutComplete({
             variables: {
               checkoutId: data.checkoutCreate.checkout?.id,
               paymentGateway:
                 paymentGateway === '2' ? 'mirumee.payments.payme' : undefined,
             },
-            
+
             onCompleted: (data) => {
               if (data.checkoutComplete?.errors.length === 0) {
                 dispatch(clearCart());
@@ -290,25 +290,24 @@ const Checkout: NextPage = () => {
                   <Typography variant="h2" fontSize={27}>
                     Контактные данные
                   </Typography>
+                  <Typography>Контактное лицо (ФИО)</Typography>
                   <Controller
                     control={control}
                     name="name"
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        label="Контактное лицо (ФИО)"
                         error={!!errors.name?.type}
                         helperText={errors.name?.message}
                         {...field}
                       />
                     )}
                   />
-
+                  <Typography>Контактный телефон</Typography>
                   <Controller
                     control={control}
                     name="phone"
                     render={({ field, formState: { errors } }) => (
                       <Input
-                        label="Контактный телефон"
                         error={!!errors.phone?.type}
                         helperText={errors.phone?.message}
                         {...field}
@@ -318,26 +317,26 @@ const Checkout: NextPage = () => {
                   <Typography variant="h2" fontSize={27}>
                     Доставка
                   </Typography>
+                  <Typography>Адрес</Typography>
                   <Controller
                     control={control}
                     name="streetAddress1"
                     render={({ field, formState: { errors } }) => (
                       <Input
                         multiline
-                        label="Адрес"
                         error={!!errors.streetAddress1?.type}
                         helperText={errors.streetAddress1?.message}
                         {...field}
                       />
                     )}
                   />
+                  <Typography>Комментарии к заказу</Typography>
                   <Controller
                     control={control}
                     name="streetAddress2"
                     render={({ field, formState: { errors } }) => (
                       <Input
                         multiline
-                        label="Комментарии к заказу"
                         error={!!errors.streetAddress2?.type}
                         helperText={errors.streetAddress2?.message}
                         {...field}

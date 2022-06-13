@@ -27,7 +27,7 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ label, slug ,modalOpen}) =>
 
   const theme = useTheme();
   const { data, loading } = useCategoryQuery({
-    variables: { first: 10, cursor: '', slug },
+    variables: { first: 30, cursor: '', slug },
     skip: !slug
   });
 
