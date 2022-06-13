@@ -20,7 +20,6 @@ import { headerTopLinks } from './header.data';
 import HeaderButtons from './components/header-buttons';
 import { Sidebar } from 'layouts/sidebar';
 import MobileHeaderButtons from './components/mobile-header-buttons';
-import { Burger } from 'components/burger';
 import SearchField from './components/search-field';
 import { MobileStack } from './header.styles';
 import { useAppDispatch, useAppSelector } from 'redux-state/hook';
@@ -172,7 +171,7 @@ const Header = () => {
               width={{ md: '100%' }}
               direction="row"
               alignItems="center"
-              gap={'53px'}
+              gap={'10px'}
               padding={{ md: "18px 0", xs: "0 0 18px" }}
               className='header__inner'
 
