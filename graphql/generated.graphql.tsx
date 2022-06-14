@@ -5517,6 +5517,11 @@ export type Mutation = {
   shopSettingsTranslate?: Maybe<ShopSettingsTranslate>;
   /** Updates shop settings. */
   shopSettingsUpdate?: Maybe<ShopSettingsUpdate>;
+  /** Cancel a special order. */
+  specialOrderCancel?: Maybe<SpecialOrderCancel>;
+  specialOrderCreate?: Maybe<SpecialOrderCreate>;
+  /** Change status of the special order. */
+  specialOrderStatusUpdate?: Maybe<SpecialOrderUpdateStatus>;
   /** Deletes staff users. */
   staffBulkDelete?: Maybe<StaffBulkDelete>;
   /** Creates a new staff user. */
@@ -7006,6 +7011,23 @@ export type MutationShopSettingsTranslateArgs = {
 
 export type MutationShopSettingsUpdateArgs = {
   input: ShopSettingsInput;
+};
+
+
+export type MutationSpecialOrderCancelArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationSpecialOrderCreateArgs = {
+  status?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']>;
+};
+
+
+export type MutationSpecialOrderStatusUpdateArgs = {
+  id: Scalars['Int'];
+  status: Scalars['String'];
 };
 
 
@@ -10353,6 +10375,9 @@ export type Query = {
   shippingZones?: Maybe<ShippingZoneCountableConnection>;
   /** Return information about the shop. */
   shop: Shop;
+  specialOrderById?: Maybe<SpecialOrderType>;
+  specialOrderByUserId?: Maybe<Array<Maybe<SpecialOrderType>>>;
+  specialOrders?: Maybe<Array<Maybe<SpecialOrderType>>>;
   /** List of the shop's staff users. */
   staffUsers?: Maybe<UserCountableConnection>;
   /** Look up a stock by ID */
@@ -10840,6 +10865,16 @@ export type QueryShippingZonesArgs = {
   filter?: InputMaybe<ShippingZoneFilterInput>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QuerySpecialOrderByIdArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type QuerySpecialOrderByUserIdArgs = {
+  userId?: InputMaybe<Scalars['ID']>;
 };
 
 
@@ -11965,6 +12000,56 @@ export type SiteDomainInput = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+/** Cancel a special order. */
+export type SpecialOrderCancel = {
+  __typename?: 'SpecialOrderCancel';
+  ok?: Maybe<Scalars['Boolean']>;
+};
+
+export type SpecialOrderCreate = {
+  __typename?: 'SpecialOrderCreate';
+  created?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['ID']>;
+  status?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+  user?: Maybe<UserType>;
+};
+
+/** An enumeration. */
+export enum SpecialOrderStatus {
+  /** Canceled */
+  Canceled = 'CANCELED',
+  /** Draft */
+  Draft = 'DRAFT',
+  /** Fulfilled */
+  Fulfilled = 'FULFILLED',
+  /** Partially fulfilled */
+  PartiallyFulfilled = 'PARTIALLY_FULFILLED',
+  /** Partially returned */
+  PartiallyReturned = 'PARTIALLY_RETURNED',
+  /** Returned */
+  Returned = 'RETURNED',
+  /** Unconfirmed */
+  Unconfirmed = 'UNCONFIRMED',
+  /** Unfulfilled */
+  Unfulfilled = 'UNFULFILLED'
+}
+
+export type SpecialOrderType = {
+  __typename?: 'SpecialOrderType';
+  created: Scalars['DateTime'];
+  id: Scalars['ID'];
+  status: SpecialOrderStatus;
+  url: Scalars['String'];
+  user?: Maybe<UserType>;
+};
+
+/** Change status of the special order. */
+export type SpecialOrderUpdateStatus = {
+  __typename?: 'SpecialOrderUpdateStatus';
+  specialOrder?: Maybe<SpecialOrderType>;
+};
+
 /** Deletes staff users. */
 export type StaffBulkDelete = {
   __typename?: 'StaffBulkDelete';
@@ -12527,6 +12612,16 @@ export type UserCreateInput = {
   redirectUrl?: InputMaybe<Scalars['String']>;
 };
 
+/** An enumeration. */
+export enum UserLanguageCode {
+  /** English */
+  En = 'EN',
+  /** Russian */
+  Ru = 'RU',
+  /** Uzbek */
+  Uz = 'UZ'
+}
+
 export type UserPermission = {
   __typename?: 'UserPermission';
   /** Internal code for permission. */
@@ -12558,6 +12653,29 @@ export type UserSortingInput = {
   direction: OrderDirection;
   /** Sort users by the selected field. */
   field: UserSortField;
+};
+
+export type UserType = {
+  __typename?: 'UserType';
+  avatar?: Maybe<Scalars['String']>;
+  dateJoined: Scalars['DateTime'];
+  firstName: Scalars['String'];
+  id: Scalars['ID'];
+  isActive: Scalars['Boolean'];
+  isStaff: Scalars['Boolean'];
+  /** Designates that this user has all permissions without explicitly assigning them. */
+  isSuperuser: Scalars['Boolean'];
+  jwtTokenKey: Scalars['String'];
+  languageCode: UserLanguageCode;
+  lastLogin?: Maybe<Scalars['DateTime']>;
+  lastName: Scalars['String'];
+  metadata?: Maybe<Scalars['JSONString']>;
+  note?: Maybe<Scalars['String']>;
+  password: Scalars['String'];
+  phone: Scalars['String'];
+  privateMetadata?: Maybe<Scalars['JSONString']>;
+  searchDocument: Scalars['String'];
+  specialOrder: Array<SpecialOrderType>;
 };
 
 /** Represents a VAT rate for a country. */
@@ -13529,6 +13647,13 @@ export type AddressCreateMutationVariables = Exact<{
 
 export type AddressCreateMutation = { __typename?: 'Mutation', addressCreate?: { __typename?: 'AddressCreate', address?: { __typename: 'Address', id: string, firstName: string, lastName: string, phone?: string | null, streetAddress1: string, streetAddress2: string, postalCode: string, country: { __typename?: 'CountryDisplay', code: string, country: string } } | null, errors: Array<{ __typename?: 'AccountError', field?: string | null, message?: string | null }> } | null };
 
+export type CanselSpecialOrderMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type CanselSpecialOrderMutation = { __typename?: 'Mutation', specialOrderCancel?: { __typename?: 'SpecialOrderCancel', ok?: boolean | null } | null };
+
 export type CheckoutCompleteMutationVariables = Exact<{
   checkoutId?: InputMaybe<Scalars['ID']>;
   paymentGateway?: InputMaybe<Scalars['String']>;
@@ -13575,6 +13700,14 @@ export type PaymeTransactionMutationVariables = Exact<{
 
 
 export type PaymeTransactionMutation = { __typename?: 'Mutation', paymeTransactionCreate?: { __typename?: 'PaymeTransactionCreate', url?: string | null, errors: Array<{ __typename?: 'PaymentError', field?: string | null, message?: string | null }> } | null };
+
+export type SpecialOrderMutationVariables = Exact<{
+  status?: InputMaybe<Scalars['String']>;
+  url: Scalars['String'];
+}>;
+
+
+export type SpecialOrderMutation = { __typename?: 'Mutation', specialOrderCreate?: { __typename?: 'SpecialOrderCreate', id?: string | null, url?: string | null, status?: string | null, user?: { __typename?: 'UserType', id: string, phone: string } | null } | null };
 
 export type LoginMutationVariables = Exact<{
   phone: Scalars['String'];
@@ -13655,6 +13788,13 @@ export type InitialProductFilterAttributesQueryVariables = Exact<{
 
 
 export type InitialProductFilterAttributesQuery = { __typename?: 'Query', category?: { __typename?: 'Category', parent?: { __typename?: 'Category', level: number, name: string } | null, products?: { __typename?: 'ProductCountableConnection', edges: Array<{ __typename?: 'ProductCountableEdge', node: { __typename?: 'Product', productType: { __typename?: 'ProductType', productAttributes?: Array<{ __typename?: 'Attribute', name?: string | null, slug?: string | null, availableInGrid: boolean, inputType?: AttributeInputTypeEnum | null, choices?: { __typename?: 'AttributeValueCountableConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, edges: Array<{ __typename?: 'AttributeValueCountableEdge', node: { __typename?: 'AttributeValue', id: string, slug?: string | null, name?: string | null, value?: string | null } }> } | null } | null> | null } } }> } | null } | null };
+
+export type GetSpecialOrderQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+}>;
+
+
+export type GetSpecialOrderQuery = { __typename?: 'Query', specialOrderByUserId?: Array<{ __typename?: 'SpecialOrderType', status: SpecialOrderStatus, url: string, user?: { __typename?: 'UserType', id: string, firstName: string } | null } | null> | null };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -14065,6 +14205,39 @@ export function useAddressCreateMutation(baseOptions?: Apollo.MutationHookOption
 export type AddressCreateMutationHookResult = ReturnType<typeof useAddressCreateMutation>;
 export type AddressCreateMutationResult = Apollo.MutationResult<AddressCreateMutation>;
 export type AddressCreateMutationOptions = Apollo.BaseMutationOptions<AddressCreateMutation, AddressCreateMutationVariables>;
+export const CanselSpecialOrderDocument = gql`
+    mutation canselSpecialOrder($id: ID!) {
+  specialOrderCancel(id: $id) {
+    ok
+  }
+}
+    `;
+export type CanselSpecialOrderMutationFn = Apollo.MutationFunction<CanselSpecialOrderMutation, CanselSpecialOrderMutationVariables>;
+
+/**
+ * __useCanselSpecialOrderMutation__
+ *
+ * To run a mutation, you first call `useCanselSpecialOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCanselSpecialOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [canselSpecialOrderMutation, { data, loading, error }] = useCanselSpecialOrderMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useCanselSpecialOrderMutation(baseOptions?: Apollo.MutationHookOptions<CanselSpecialOrderMutation, CanselSpecialOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CanselSpecialOrderMutation, CanselSpecialOrderMutationVariables>(CanselSpecialOrderDocument, options);
+      }
+export type CanselSpecialOrderMutationHookResult = ReturnType<typeof useCanselSpecialOrderMutation>;
+export type CanselSpecialOrderMutationResult = Apollo.MutationResult<CanselSpecialOrderMutation>;
+export type CanselSpecialOrderMutationOptions = Apollo.BaseMutationOptions<CanselSpecialOrderMutation, CanselSpecialOrderMutationVariables>;
 export const CheckoutCompleteDocument = gql`
     mutation checkoutComplete($checkoutId: ID, $paymentGateway: String) {
   checkoutComplete(checkoutId: $checkoutId, paymentGateway: $paymentGateway) {
@@ -14324,6 +14497,46 @@ export function usePaymeTransactionMutation(baseOptions?: Apollo.MutationHookOpt
 export type PaymeTransactionMutationHookResult = ReturnType<typeof usePaymeTransactionMutation>;
 export type PaymeTransactionMutationResult = Apollo.MutationResult<PaymeTransactionMutation>;
 export type PaymeTransactionMutationOptions = Apollo.BaseMutationOptions<PaymeTransactionMutation, PaymeTransactionMutationVariables>;
+export const SpecialOrderDocument = gql`
+    mutation specialOrder($status: String, $url: String!) {
+  specialOrderCreate(status: $status, url: $url) {
+    id
+    user {
+      id
+      phone
+    }
+    url
+    status
+  }
+}
+    `;
+export type SpecialOrderMutationFn = Apollo.MutationFunction<SpecialOrderMutation, SpecialOrderMutationVariables>;
+
+/**
+ * __useSpecialOrderMutation__
+ *
+ * To run a mutation, you first call `useSpecialOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSpecialOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [specialOrderMutation, { data, loading, error }] = useSpecialOrderMutation({
+ *   variables: {
+ *      status: // value for 'status'
+ *      url: // value for 'url'
+ *   },
+ * });
+ */
+export function useSpecialOrderMutation(baseOptions?: Apollo.MutationHookOptions<SpecialOrderMutation, SpecialOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SpecialOrderMutation, SpecialOrderMutationVariables>(SpecialOrderDocument, options);
+      }
+export type SpecialOrderMutationHookResult = ReturnType<typeof useSpecialOrderMutation>;
+export type SpecialOrderMutationResult = Apollo.MutationResult<SpecialOrderMutation>;
+export type SpecialOrderMutationOptions = Apollo.BaseMutationOptions<SpecialOrderMutation, SpecialOrderMutationVariables>;
 export const LoginDocument = gql`
     mutation login($phone: String!, $password: String!) {
   tokenCreate(password: $password, phone: $phone) {
@@ -14799,6 +15012,46 @@ export function useInitialProductFilterAttributesLazyQuery(baseOptions?: Apollo.
 export type InitialProductFilterAttributesQueryHookResult = ReturnType<typeof useInitialProductFilterAttributesQuery>;
 export type InitialProductFilterAttributesLazyQueryHookResult = ReturnType<typeof useInitialProductFilterAttributesLazyQuery>;
 export type InitialProductFilterAttributesQueryResult = Apollo.QueryResult<InitialProductFilterAttributesQuery, InitialProductFilterAttributesQueryVariables>;
+export const GetSpecialOrderDocument = gql`
+    query getSpecialOrder($id: ID) {
+  specialOrderByUserId(userId: $id) {
+    status
+    url
+    user {
+      id
+      firstName
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetSpecialOrderQuery__
+ *
+ * To run a query within a React component, call `useGetSpecialOrderQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSpecialOrderQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSpecialOrderQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetSpecialOrderQuery(baseOptions?: Apollo.QueryHookOptions<GetSpecialOrderQuery, GetSpecialOrderQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSpecialOrderQuery, GetSpecialOrderQueryVariables>(GetSpecialOrderDocument, options);
+      }
+export function useGetSpecialOrderLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSpecialOrderQuery, GetSpecialOrderQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSpecialOrderQuery, GetSpecialOrderQueryVariables>(GetSpecialOrderDocument, options);
+        }
+export type GetSpecialOrderQueryHookResult = ReturnType<typeof useGetSpecialOrderQuery>;
+export type GetSpecialOrderLazyQueryHookResult = ReturnType<typeof useGetSpecialOrderLazyQuery>;
+export type GetSpecialOrderQueryResult = Apollo.QueryResult<GetSpecialOrderQuery, GetSpecialOrderQueryVariables>;
 export const MeDocument = gql`
     query Me {
   me {

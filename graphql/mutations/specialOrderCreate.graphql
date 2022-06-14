@@ -1,0 +1,11 @@
+mutation specialOrder($status:String,$url:String!){
+  specialOrderCreate(status:$status,url:$url){
+    id
+    user{
+      id
+      phone
+    }
+    url
+    status
+  }
+}

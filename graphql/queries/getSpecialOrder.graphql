@@ -1,0 +1,10 @@
+query getSpecialOrder($id:ID){
+  specialOrderByUserId(userId:$id){
+    status
+    url
+    user{
+      id
+      firstName
+    }
+  }
+}
