@@ -13783,10 +13783,11 @@ export type CategoryQuery = { __typename?: 'Query', category?: { __typename?: 'C
 
 export type InitialProductFilterAttributesQueryVariables = Exact<{
   slug: Scalars['String'];
+  choicesCursor?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type InitialProductFilterAttributesQuery = { __typename?: 'Query', category?: { __typename?: 'Category', parent?: { __typename?: 'Category', level: number, name: string } | null, products?: { __typename?: 'ProductCountableConnection', edges: Array<{ __typename?: 'ProductCountableEdge', node: { __typename?: 'Product', productType: { __typename?: 'ProductType', productAttributes?: Array<{ __typename?: 'Attribute', name?: string | null, slug?: string | null, availableInGrid: boolean, inputType?: AttributeInputTypeEnum | null, choices?: { __typename?: 'AttributeValueCountableConnection', edges: Array<{ __typename?: 'AttributeValueCountableEdge', node: { __typename?: 'AttributeValue', id: string, slug?: string | null, name?: string | null, value?: string | null } }> } | null } | null> | null } } }> } | null } | null };
+export type InitialProductFilterAttributesQuery = { __typename?: 'Query', category?: { __typename?: 'Category', parent?: { __typename?: 'Category', level: number, name: string } | null, products?: { __typename?: 'ProductCountableConnection', edges: Array<{ __typename?: 'ProductCountableEdge', node: { __typename?: 'Product', productType: { __typename?: 'ProductType', productAttributes?: Array<{ __typename?: 'Attribute', name?: string | null, slug?: string | null, availableInGrid: boolean, inputType?: AttributeInputTypeEnum | null, choices?: { __typename?: 'AttributeValueCountableConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, edges: Array<{ __typename?: 'AttributeValueCountableEdge', node: { __typename?: 'AttributeValue', id: string, slug?: string | null, name?: string | null, value?: string | null } }> } | null } | null> | null } } }> } | null } | null };
 
 export type GetSpecialOrderQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
@@ -14945,7 +14946,7 @@ export type CategoryQueryHookResult = ReturnType<typeof useCategoryQuery>;
 export type CategoryLazyQueryHookResult = ReturnType<typeof useCategoryLazyQuery>;
 export type CategoryQueryResult = Apollo.QueryResult<CategoryQuery, CategoryQueryVariables>;
 export const InitialProductFilterAttributesDocument = gql`
-    query InitialProductFilterAttributes($slug: String!) {
+    query InitialProductFilterAttributes($slug: String!, $choicesCursor: String) {
   category(slug: $slug) {
     parent {
       level
@@ -14959,7 +14960,11 @@ export const InitialProductFilterAttributesDocument = gql`
               name
               slug
               availableInGrid
-              choices {
+              choices(after: $choicesCursor) {
+                pageInfo {
+                  hasNextPage
+                  endCursor
+                }
                 edges {
                   node {
                     id
@@ -14992,6 +14997,7 @@ export const InitialProductFilterAttributesDocument = gql`
  * const { data, loading, error } = useInitialProductFilterAttributesQuery({
  *   variables: {
  *      slug: // value for 'slug'
+ *      choicesCursor: // value for 'choicesCursor'
  *   },
  * });
  */

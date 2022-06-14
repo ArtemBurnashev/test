@@ -33,13 +33,13 @@ export const SEO: React.FC<SeoProps> = ({
       property="og:description"
       content={description}
     />
-    <meta property="og:site_name" content="Hilal mart" />
+    <meta property="og:site_name" content="Giper mart" />
     <meta property="og:url" content={`${canonical}`} />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:site" content="@propernounco" />
-    <meta name="twitter:creator" content="@propernounco" />
+    <meta name="twitter:site" content="@asadbek2304" />
+    <meta name="twitter:creator" content="@asadbek2304" />
     {css && <link rel="stylesheet" href={`${css}`} />}
     {image ? (
       <meta property="og:image" content={`${image}`} />
