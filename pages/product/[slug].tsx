@@ -117,6 +117,7 @@ const SingleProduct: NextPage<Props> = ({ data }) => {
 
   const dataInfo = data?.product?.isAvailableForPurchase;
   const md = useMediaQuery('(max-width:900px)');
+ console.log(data);
 
   return (
     <Main>

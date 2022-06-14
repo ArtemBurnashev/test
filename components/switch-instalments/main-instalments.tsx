@@ -52,13 +52,14 @@ interface ObjType {
 const MainInstalments: React.FC = () => {
   const [stepActive, setStepActive] = React.useState(0)
   const [idefy, setIdefy] = React.useState(false);
+  const item = {phone: "+998932115566"};
   React.useEffect(() => {
 
     fetch("https://api.gipermart.uz/paymart/phone-verify/", {
       method: 'POST',
       mode: 'no-cors',
-      body: "{\n    \"phone\": \"998932115566\"\n}",
-      redirect: 'follow'
+      body: JSON.stringify(item),
+      redirect: 'follow',
     })
       .then(response => response.text())
       .then(result => console.log(result))

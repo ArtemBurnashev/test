@@ -1,13 +1,15 @@
 import React from 'react';
 import { WithAuth } from 'components/private-route';
-import { Button, Container, Stack, Typography, useMediaQuery } from '@mui/material';
+import { Button, Container, Stack, Typography, useMediaQuery, Dialog } from '@mui/material';
 import brand1 from 'assets/brends/brand1.png';
 import brand2 from 'assets/brends/brand2.png';
 import brand3 from 'assets/brends/brand3.png';
 import Image from 'next/image';
 import * as Yup from 'yup';
+import { useModal } from 'hooks/use-modal';
 import { useForm } from "react-hook-form";
 import Input from 'components/input/input';
+import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Breadcrumb } from 'components/breadcrumbs';
 import { useSpecialOrderMutation } from 'graphql/generated.graphql';
@@ -25,7 +27,7 @@ const specialrder: NextPage = () => {
 
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
-
+  const { close, isOpen, open } = useModal()
   const { register, handleSubmit, formState, reset } = useForm(formOptions);
   const { errors } = formState;
   const [orderCreate] = useSpecialOrderMutation()
@@ -45,7 +47,9 @@ const specialrder: NextPage = () => {
               data.specialOrderCreate?.user?.id : ''
           )
         },
+        refetchQueries: ['getSpecialOrder'],
       })
+    open()
 
   }
   const links = [
@@ -54,9 +58,18 @@ const specialrder: NextPage = () => {
     },
 
   ]
-
+  const router = useRouter()
+  const changePath = () => {
+    router.push('/');
+  }
   return (
     <Main>
+      <Dialog open={isOpen} onClose={close}>
+        <Stack sx={{ bgcolor: '#fff', p: '30px' }}>
+          <Typography mb='20px' variant='h4'>successfuly</Typography>
+          <Button onClick={changePath} variant='contained'>Home</Button>
+        </Stack>
+      </Dialog>
       <Container maxWidth='xl'>
         {!md && <Breadcrumb data={links} />}
         <Typography mt='8px' mb='23px' variant='h2'>Популярные бренды</Typography>
