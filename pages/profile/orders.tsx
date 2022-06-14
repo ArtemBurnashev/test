@@ -69,11 +69,12 @@ const orders: NextPage = () => {
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 placeholder='заказы'
+                defaultValue='заказы'
                 onChange={orderTypeChange}
               >
                 <MenuItem selected value='order'>заказы</MenuItem>
                 <MenuItem value='special'>Cпецзаказ</MenuItem>
-                <MenuItem value='instalments'>Thirty</MenuItem>
+                <MenuItem value='instalments'>рассрочки</MenuItem>
               </Select>
             </Stack>
           ) : (
