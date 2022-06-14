@@ -6,11 +6,11 @@ import brand2 from 'assets/brends/brand2.png';
 import brand3 from 'assets/brends/brand3.png';
 import Image from 'next/image';
 import * as Yup from 'yup';
-import { useAppSelector } from 'redux-state/hook';
 import { useForm } from "react-hook-form";
 import Input from 'components/input/input';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Breadcrumb } from 'components/breadcrumbs';
+import { useSpecialOrderMutation } from 'graphql/generated.graphql';
 import { Main } from 'layouts/main';
 import { NextPage } from 'next';
 
@@ -26,11 +26,26 @@ const specialrder: NextPage = () => {
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
 
-  const { register, handleSubmit, formState } = useForm(formOptions);
+  const { register, handleSubmit, formState, reset } = useForm(formOptions);
   const { errors } = formState;
-  const { user } = useAppSelector((state) => state.user)
-  const onSubmit = (data: any) => {
-    const { userId } = user;
+  const [orderCreate] = useSpecialOrderMutation()
+  const onSubmit = (item: any) => {
+    orderCreate(
+      {
+        variables: {
+          url: item.url
+        },
+        onCompleted(data) {
+          reset()
+          if (localStorage.getItem('specialOrderID')) {
+            return;
+          }
+          localStorage.setItem('specialOrderID',
+            data.specialOrderCreate?.user?.id ?
+              data.specialOrderCreate?.user?.id : ''
+          )
+        },
+      })
 
   }
   const links = [

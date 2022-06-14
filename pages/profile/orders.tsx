@@ -9,13 +9,16 @@ import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
 import { WithAuth } from 'components/private-route';
 import { Paths } from 'config/site-paths';
-import { useMediaQuery } from '@mui/material';
+import { Select, MenuItem, useMediaQuery } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material';
 import { InfiniteLoader } from 'components/loaders/infinite-loader';
 import { Container, Stack, Typography, Skeleton } from '@mui/material';
 import { useOrdersQuery } from 'graphql/generated.graphql';
 import { Breadcrumb } from 'components/breadcrumbs';
 
 const orders: NextPage = () => {
+  const [order, setOrder] = React.useState('order');
+
   const { data, loading, fetchMore } = useOrdersQuery({
     variables: {
       first: 10,
@@ -37,6 +40,10 @@ const orders: NextPage = () => {
   const orders = data?.me?.orders?.edges.map((edge) => edge.node);
   const pageInfor = data?.me?.orders?.pageInfo;
 
+  const orderTypeChange = (item: SelectChangeEvent) => {
+    console.log(item);
+
+  }
   return (
     <Main>
       <Container maxWidth="xl">
@@ -55,7 +62,20 @@ const orders: NextPage = () => {
           }
         >
           {!md ? (
-            <OrderTitle>Мои заказы</OrderTitle>
+            <Stack direction='row' mb='30px' alignItems='center' justifyContent='space-between'>
+              <OrderTitle>Мои заказы</OrderTitle>
+              <Select
+                sx={{width:'300px'}}
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                placeholder='заказы'
+                onChange={orderTypeChange}
+              >
+                <MenuItem selected value='order'>заказы</MenuItem>
+                <MenuItem value='special'>Cпецзаказ</MenuItem>
+                <MenuItem value='instalments'>Thirty</MenuItem>
+              </Select>
+            </Stack>
           ) : (
             <Stack
               onClick={() => router.back()}
@@ -68,6 +88,7 @@ const orders: NextPage = () => {
               <Typography variant="h2">Мои заказы</Typography>
             </Stack>
           )}
+
           {orders?.length ? (
             <InfiniteLoader
               loadMore={() =>
@@ -88,7 +109,7 @@ const orders: NextPage = () => {
             <Typography sx={{ textAlign: 'center' }} variant="h2">
               {t('emty')}
             </Typography>
-            
+
           )}
         </ProfileLayout>
       </Container>
