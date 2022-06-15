@@ -59,7 +59,8 @@ const MainInstalments: React.FC = () => {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-type': 'application/json; charset=utf-8'
+        'Content-type': 'application/json',      
+        'Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJpYXQiOjE2NTUyOTM2ODAsIm93bmVyIjoic2FsZW9yIiwiZXhwIjoxNzQxNjkzNjgwLCJ0b2tlbiI6Imwzb3VESk9QRUkycCIsInBob25lIjoiKzk5ODkwNDMxODQ1OSIsInR5cGUiOiJhY2Nlc3MiLCJ1c2VyX2lkIjoiVlhObGNqb3hNRE0xIiwiaXNfc3RhZmYiOmZhbHNlfQ.FSZ4-KG9ah9fB3BlVjxvQz4sKnwin-2ppxrbC9F3v7iUsgQVn4FsvTIIwKCvedxfPk2i02gji4hzGIbapizHXqL9ytoRdhHS5oCpKGZO8d_dH4p_Fm3eF3zlq5nk-FDSmgKsCusIEa0CMUBXqu807mQXDiofFqHR-YAKBkzG04h1Q0t28aaOWJXFwUTCsXW4oFMuB4vTXCuJvwx1xME8EviZO_qu0DMJQdS-jHb6OADGFgrzMr2RIg6OFXwDM4L9UJUwJrQ3g5_U-WJcTD-00Sd0jx5CydF0mOiZhZJfwidQUg3tIsa0h3e0-jBjayuzHa1lmfeWLTgMeIi-N6X6iQ'
       },
       body: JSON.stringify(item)
     })
